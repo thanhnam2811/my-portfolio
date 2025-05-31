@@ -1,7 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
@@ -20,17 +20,44 @@ export default function Contact() {
 		message: '',
 	});
 	const [isSubmitting, setIsSubmitting] = useState(false);
+	const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
+
+	// Clear status message after 5 seconds
+	useEffect(() => {
+		if (submitStatus !== 'idle') {
+			const timer = setTimeout(() => {
+				setSubmitStatus('idle');
+			}, 5000);
+			return () => clearTimeout(timer);
+		}
+	}, [submitStatus]);
 
 	const handleSubmit = async (e: React.FormEvent) => {
 		e.preventDefault();
 		setIsSubmitting(true);
+		setSubmitStatus('idle');
 
-		// Simulate form submission
-		setTimeout(() => {
-			alert(contentData.messages.contactForm.successMessage);
-			setFormData({ name: '', email: '', message: '' });
+		try {
+			const response = await fetch('https://getform.io/f/axoywdzb', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+				},
+				body: JSON.stringify(formData),
+			});
+
+			if (response.ok) {
+				setSubmitStatus('success');
+				setFormData({ name: '', email: '', message: '' });
+			} else {
+				throw new Error('Failed to send message');
+			}
+		} catch (error) {
+			console.error('Error sending message:', error);
+			setSubmitStatus('error');
+		} finally {
 			setIsSubmitting(false);
-		}, 1000);
+		}
 	};
 
 	const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -68,6 +95,7 @@ export default function Contact() {
 						</CardHeader>
 						<CardContent>
 							<form onSubmit={handleSubmit} className="space-y-4">
+								<input type="hidden" name="_gotcha" style={{ display: 'none !important' }} />
 								<div>
 									<Label htmlFor="name" className="block text-sm font-medium mb-2">
 										Name
@@ -115,6 +143,19 @@ export default function Contact() {
 										? contentData.messages.contactForm.submittingButton
 										: contentData.messages.contactForm.submitButton}
 								</Button>
+
+								{/* Status Messages */}
+								{submitStatus === 'success' && (
+									<div className="p-4 bg-green-50 border border-green-200 rounded-lg text-green-800">
+										{contentData.messages.contactForm.successMessage}
+									</div>
+								)}
+
+								{submitStatus === 'error' && (
+									<div className="p-4 bg-red-50 border border-red-200 rounded-lg text-red-800">
+										Failed to send message. Please try again or contact me directly via email.
+									</div>
+								)}
 							</form>
 						</CardContent>
 					</Card>
