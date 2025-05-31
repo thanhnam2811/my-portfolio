@@ -17,7 +17,7 @@ const siteName = "Nam's Portfolio";
 const siteDescription =
 	'Welcome to my portfolio! I am a game server developer with a passion for creating engaging and immersive gaming experiences. Explore my projects and skills in game development.';
 const siteTitle = `${siteName} | Game Server Developer`;
-const siteUrl = 'https://yourportfolio.com';
+const siteUrl = 'https://thanhnam2811.vercel.app';
 
 export const metadata: Metadata = {
 	title: siteTitle,
@@ -40,12 +40,6 @@ export const metadata: Metadata = {
 		title: siteTitle,
 		description: siteDescription,
 		siteName: siteName,
-	},
-	twitter: {
-		card: 'summary_large_image',
-		title: siteTitle,
-		description: siteDescription,
-		creator: '@yourtwitterhandle',
 	},
 };
 
