@@ -60,11 +60,11 @@
 
 ## Phase 6: Deployment
 
-- [ ] Setup hosting on Vercel
-- [ ] Configure custom domain
-- [ ] Setup environment variables
-- [ ] Setup monitoring (uptime, errors)
+- [x] Setup hosting on Vercel
+- [x] Configure custom domain: https://thanhnam2811.vercel.app/
+- [x] Setup environment variables
+- [ ] Setup monitoring (uptime, errors) _(optional)_
 
 ---
 
-> ✏️ Updated: Jan 31, 2026
+> ✏️ Updated: Jan 31, 2026 - **All core phases completed!** 🎉
