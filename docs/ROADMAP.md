@@ -30,8 +30,8 @@
 
 - [x] Add Dark/Light mode toggle
 - [x] Smooth scroll navigation
-- [ ] Loading animations
-- [ ] Page transitions with Framer Motion
+- [x] Loading animations
+- [x] Page transitions with Framer Motion
 - [x] Responsive design for mobile/tablet
 - [x] Hover effects for interactive elements
 

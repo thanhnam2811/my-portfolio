@@ -1,3 +1,6 @@
+'use client';
+
+import PageTransition from '@/components/PageTransition';
 import AboutMe from './_sections/AboutMe';
 import Contact from './_sections/Contact';
 import Experience from './_sections/Experience';
@@ -7,13 +10,15 @@ import Skills from './_sections/Skills';
 
 export default function Home() {
 	return (
-		<main>
-			<Hero />
-			<AboutMe />
-			<Skills />
-			<Experience />
-			<Projects />
-			<Contact />
-		</main>
+		<PageTransition>
+			<main>
+				<Hero />
+				<AboutMe />
+				<Skills />
+				<Experience />
+				<Projects />
+				<Contact />
+			</main>
+		</PageTransition>
 	);
 }
