@@ -49,12 +49,12 @@
 
 ## Phase 5: Optimization & SEO
 
-- [ ] Optimize images with next/image
-- [ ] Lazy loading components
-- [ ] Add meta tags, Open Graph
-- [ ] Create sitemap.xml and robots.txt
-- [ ] Check Lighthouse score (target: 90+)
-- [ ] Check accessibility (a11y)
+- [x] Optimize images with next/image
+- [x] Lazy loading components _(Framer Motion whileInView)_
+- [x] Add meta tags, Open Graph, Twitter Cards
+- [x] Create sitemap.xml and robots.txt
+- [ ] Check Lighthouse score _(manual verification)_
+- [ ] Check accessibility _(manual verification)_
 
 ---
 

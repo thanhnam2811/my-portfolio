@@ -23,7 +23,11 @@ const siteTitle = `${siteName} | Backend Developer`;
 const siteUrl = 'https://thanhnam2811.vercel.app';
 
 export const metadata: Metadata = {
-	title: siteTitle,
+	metadataBase: new URL(siteUrl),
+	title: {
+		default: siteTitle,
+		template: `%s | ${siteName}`,
+	},
 	description: siteDescription,
 	keywords: [
 		'Backend Developer',
@@ -33,9 +37,23 @@ export const metadata: Metadata = {
 		'WebSocket',
 		'Real-time Systems',
 		'Portfolio',
+		'Vietnam Developer',
+		'Ho Chi Minh City',
 	],
-	authors: [{ name: 'Thai Thanh Nam' }],
+	authors: [{ name: 'Thai Thanh Nam', url: siteUrl }],
 	creator: 'Thai Thanh Nam',
+	publisher: 'Thai Thanh Nam',
+	robots: {
+		index: true,
+		follow: true,
+		googleBot: {
+			index: true,
+			follow: true,
+			'max-video-preview': -1,
+			'max-image-preview': 'large',
+			'max-snippet': -1,
+		},
+	},
 	openGraph: {
 		type: 'website',
 		locale: 'en_US',
@@ -43,6 +61,27 @@ export const metadata: Metadata = {
 		title: siteTitle,
 		description: siteDescription,
 		siteName: siteName,
+		images: [
+			{
+				url: '/images/og-image.png',
+				width: 1200,
+				height: 630,
+				alt: siteName,
+			},
+		],
+	},
+	twitter: {
+		card: 'summary_large_image',
+		title: siteTitle,
+		description: siteDescription,
+		images: ['/images/og-image.png'],
+		creator: '@thanhnam2811',
+	},
+	manifest: '/site.webmanifest',
+	icons: {
+		icon: '/favicon.svg',
+		shortcut: '/favicon.svg',
+		apple: '/apple-touch-icon.png',
 	},
 };
 
