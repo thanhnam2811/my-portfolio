@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import AnimatedLogo from '@/components/AnimatedLogo';
+import { ThemeToggle } from '@/components/ThemeToggle';
 
 const navLinks = [
 	{ label: 'About', href: '#about' },
@@ -68,18 +69,21 @@ export default function Navbar() {
 									{link.label}
 								</motion.button>
 							))}
+							<ThemeToggle />
 						</div>
 
-						{/* Mobile Menu Button */}
-						<Button
-							variant="ghost"
-							size="icon"
-							className="md:hidden"
-							onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-							aria-label="Toggle menu"
-						>
-							{isMobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
-						</Button>
+						{/* Mobile Menu Button + Theme Toggle */}
+						<div className="flex items-center gap-2 md:hidden">
+							<ThemeToggle />
+							<Button
+								variant="ghost"
+								size="icon"
+								onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+								aria-label="Toggle menu"
+							>
+								{isMobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+							</Button>
+						</div>
 					</div>
 				</nav>
 			</motion.header>

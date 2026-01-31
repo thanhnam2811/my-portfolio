@@ -28,12 +28,12 @@
 
 ## Phase 3: UI/UX Enhancements
 
-- [ ] Add Dark/Light mode toggle
-- [ ] Smooth scroll navigation
+- [x] Add Dark/Light mode toggle
+- [x] Smooth scroll navigation
 - [ ] Loading animations
 - [ ] Page transitions with Framer Motion
-- [ ] Responsive design for mobile/tablet
-- [ ] Hover effects for interactive elements
+- [x] Responsive design for mobile/tablet
+- [x] Hover effects for interactive elements
 
 ---
 

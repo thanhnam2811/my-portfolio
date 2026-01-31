@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from 'next/font/google';
 import './globals.css';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
+import { ThemeProvider } from '@/components/ThemeProvider';
 
 const geistSans = Geist({
 	variable: '--font-geist-sans',
@@ -17,21 +18,21 @@ const geistMono = Geist_Mono({
 // Shared metadata for the entire application
 const siteName = "Nam's Portfolio";
 const siteDescription =
-	'Welcome to my portfolio! I am a game server developer with a passion for creating engaging and immersive gaming experiences. Explore my projects and skills in game development.';
-const siteTitle = `${siteName} | Game Server Developer`;
+	'Backend Developer specializing in high-performance game server architecture and real-time systems. Explore my projects and technical expertise.';
+const siteTitle = `${siteName} | Backend Developer`;
 const siteUrl = 'https://thanhnam2811.vercel.app';
 
 export const metadata: Metadata = {
 	title: siteTitle,
 	description: siteDescription,
 	keywords: [
-		'Game Server Developer',
-		'React',
-		'Next.js',
+		'Backend Developer',
+		'Game Server',
 		'Node.js',
+		'TypeScript',
+		'WebSocket',
+		'Real-time Systems',
 		'Portfolio',
-		'Web Development',
-		'Game Development',
 	],
 	authors: [{ name: 'Thai Thanh Nam' }],
 	creator: 'Thai Thanh Nam',
@@ -51,8 +52,9 @@ export default function RootLayout({
 	children: React.ReactNode;
 }>) {
 	return (
-		<html lang="en">
+		<html lang="en" suppressHydrationWarning>
 			<head>
+				<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 				<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
 				<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
 				<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
@@ -60,9 +62,11 @@ export default function RootLayout({
 			</head>
 
 			<body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-				<Navbar />
-				{children}
-				<Footer />
+				<ThemeProvider>
+					<Navbar />
+					{children}
+					<Footer />
+				</ThemeProvider>
 			</body>
 		</html>
 	);
