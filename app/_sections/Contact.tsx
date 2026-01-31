@@ -1,7 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
@@ -10,6 +10,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { profileData } from '@/app/_data/profile';
 import { contentData } from '@/app/_data/content';
 import { getContactInfo } from '@/app/_data/contact';
+import { toast } from 'sonner';
 
 const contactHeading = contentData.headings.contact;
 
@@ -20,22 +21,10 @@ export default function Contact() {
 		message: '',
 	});
 	const [isSubmitting, setIsSubmitting] = useState(false);
-	const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
-
-	// Clear status message after 5 seconds
-	useEffect(() => {
-		if (submitStatus !== 'idle') {
-			const timer = setTimeout(() => {
-				setSubmitStatus('idle');
-			}, 5000);
-			return () => clearTimeout(timer);
-		}
-	}, [submitStatus]);
 
 	const handleSubmit = async (e: React.FormEvent) => {
 		e.preventDefault();
 		setIsSubmitting(true);
-		setSubmitStatus('idle');
 
 		try {
 			const response = await fetch('https://getform.io/f/axoywdzb', {
@@ -47,14 +36,18 @@ export default function Contact() {
 			});
 
 			if (response.ok) {
-				setSubmitStatus('success');
+				toast.success('Message sent successfully!', {
+					description: "Thanks for reaching out. I'll get back to you soon.",
+				});
 				setFormData({ name: '', email: '', message: '' });
 			} else {
 				throw new Error('Failed to send message');
 			}
 		} catch (error) {
 			console.error('Error sending message:', error);
-			setSubmitStatus('error');
+			toast.error('Failed to send message', {
+				description: 'Please try again or contact me directly via email.',
+			});
 		} finally {
 			setIsSubmitting(false);
 		}
@@ -144,19 +137,6 @@ export default function Contact() {
 										? contentData.messages.contactForm.submittingButton
 										: contentData.messages.contactForm.submitButton}
 								</Button>
-
-								{/* Status Messages */}
-								{submitStatus === 'success' && (
-									<div className="p-4 bg-green-50 border border-green-200 rounded-lg text-green-800">
-										{contentData.messages.contactForm.successMessage}
-									</div>
-								)}
-
-								{submitStatus === 'error' && (
-									<div className="p-4 bg-red-50 border border-red-200 rounded-lg text-red-800">
-										Failed to send message. Please try again or contact me directly via email.
-									</div>
-								)}
 							</form>
 						</CardContent>
 					</Card>

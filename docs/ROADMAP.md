@@ -39,11 +39,11 @@
 
 ## Phase 4: Advanced Features
 
-- [ ] Working contact form (integrate email service)
-- [ ] Toast notifications
-- [ ] Scroll animations (animate on scroll)
-- [ ] Blog section with MDX (optional)
-- [ ] Analytics integration
+- [x] Working contact form (integrate email service)
+- [x] Toast notifications
+- [x] Scroll animations (animate on scroll) _(done with Framer Motion whileInView)_
+- [ ] Blog section with MDX _(optional - skipped)_
+- [ ] Analytics integration _(optional - skipped)_
 
 ---
 
