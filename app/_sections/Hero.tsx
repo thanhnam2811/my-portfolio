@@ -168,9 +168,11 @@ export default function Hero() {
 						show: { opacity: 1, y: 0 },
 					}}
 				>
-					<Button size="lg" variant="ghost" className="gap-2">
-						<Download className="h-4 w-4" />
-						Download CV
+					<Button size="lg" variant="ghost" className="gap-2" asChild>
+						<a href="/files/MyCV.pdf" download="CV_NodeJS_ThaiThanhNam.pdf">
+							<Download className="h-4 w-4" />
+							Download CV
+						</a>
 					</Button>
 				</motion.div>
 			</motion.div>

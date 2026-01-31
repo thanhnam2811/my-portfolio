@@ -1,0 +1,88 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400">
+  <defs>
+    <!-- Gradient definitions -->
+    <linearGradient id="bgGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#3b82f6;stop-opacity:0.1"/>
+      <stop offset="100%" style="stop-color:#06b6d4;stop-opacity:0.1"/>
+    </linearGradient>
+    
+    <linearGradient id="accentGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#3b82f6"/>
+      <stop offset="100%" style="stop-color:#06b6d4"/>
+    </linearGradient>
+    
+    <linearGradient id="codeGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#64748b;stop-opacity:0.8"/>
+      <stop offset="100%" style="stop-color:#475569;stop-opacity:0.6"/>
+    </linearGradient>
+  </defs>
+  
+  <!-- Background circle -->
+  <circle cx="200" cy="200" r="180" fill="url(#bgGradient)" stroke="url(#accentGradient)" stroke-width="2"/>
+  
+  <!-- Decorative rings -->
+  <circle cx="200" cy="200" r="160" fill="none" stroke="url(#accentGradient)" stroke-width="1" opacity="0.3"/>
+  <circle cx="200" cy="200" r="140" fill="none" stroke="url(#accentGradient)" stroke-width="1" opacity="0.2"/>
+  
+  <!-- Code window frame -->
+  <rect x="80" y="100" width="240" height="200" rx="12" fill="#1e293b" stroke="url(#accentGradient)" stroke-width="2"/>
+  
+  <!-- Window header -->
+  <rect x="80" y="100" width="240" height="32" rx="12" fill="#334155"/>
+  <rect x="80" y="120" width="240" height="12" fill="#334155"/>
+  
+  <!-- Window buttons -->
+  <circle cx="100" cy="116" r="6" fill="#ef4444"/>
+  <circle cx="120" cy="116" r="6" fill="#eab308"/>
+  <circle cx="140" cy="116" r="6" fill="#22c55e"/>
+  
+  <!-- Code lines -->
+  <g fill="url(#codeGradient)" font-family="monospace" font-size="14">
+    <!-- Line 1: const -->
+    <text x="100" y="160">
+      <tspan fill="#c084fc">const</tspan>
+      <tspan fill="#e2e8f0"> developer = {</tspan>
+    </text>
+    
+    <!-- Line 2: name -->
+    <text x="115" y="182">
+      <tspan fill="#22d3ee">name</tspan>
+      <tspan fill="#e2e8f0">: </tspan>
+      <tspan fill="#a3e635">"Nam"</tspan>
+      <tspan fill="#e2e8f0">,</tspan>
+    </text>
+    
+    <!-- Line 3: role -->
+    <text x="115" y="204">
+      <tspan fill="#22d3ee">role</tspan>
+      <tspan fill="#e2e8f0">: </tspan>
+      <tspan fill="#a3e635">"Backend Dev"</tspan>
+      <tspan fill="#e2e8f0">,</tspan>
+    </text>
+    
+    <!-- Line 4: passion -->
+    <text x="115" y="226">
+      <tspan fill="#22d3ee">passion</tspan>
+      <tspan fill="#e2e8f0">: </tspan>
+      <tspan fill="#f472b6">true</tspan>
+    </text>
+    
+    <!-- Line 5: closing -->
+    <text x="100" y="248" fill="#e2e8f0">};</text>
+    
+    <!-- Cursor -->
+    <rect x="120" y="252" width="8" height="16" fill="#3b82f6" opacity="0.8">
+      <animate attributeName="opacity" values="0.8;0;0.8" dur="1s" repeatCount="indefinite"/>
+    </rect>
+  </g>
+  
+  <!-- Decorative dots -->
+  <circle cx="320" cy="120" r="4" fill="url(#accentGradient)" opacity="0.6"/>
+  <circle cx="340" cy="150" r="3" fill="url(#accentGradient)" opacity="0.4"/>
+  <circle cx="60" cy="280" r="5" fill="url(#accentGradient)" opacity="0.5"/>
+  <circle cx="80" cy="320" r="3" fill="url(#accentGradient)" opacity="0.3"/>
+  
+  <!-- Connection lines -->
+  <path d="M320 120 L340 150" stroke="url(#accentGradient)" stroke-width="1" opacity="0.3"/>
+  <path d="M60 280 L80 320" stroke="url(#accentGradient)" stroke-width="1" opacity="0.3"/>
+</svg>

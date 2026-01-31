@@ -21,16 +21,17 @@ export default function AboutMe() {
 			<div className="flex flex-col md:flex-row items-center gap-8">
 				<motion.div
 					initial={{ opacity: 0, x: -20 }}
-					animate={{ opacity: 1, x: 0 }}
+					whileInView={{ opacity: 1, x: 0 }}
 					transition={{ duration: 0.5 }}
+					viewport={{ once: true }}
 					className="shrink-0"
 				>
 					<Image
-						src="/images/about.png"
+						src="/images/about-illustration.svg"
 						alt="About me"
 						width={300}
 						height={300}
-						className="rounded-xl shadow-lg"
+						className="rounded-xl"
 					/>
 				</motion.div>
 
