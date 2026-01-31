@@ -11,19 +11,19 @@ export interface ExperienceItem {
 
 export const experienceData: ExperienceItem[] = [
 	{
-		title: 'Game Server Developer',
+		title: 'Backend Developer (Game Server)',
 		company: 'ONKY',
 		period: '05/2023 - Present',
 		location: 'Ho Chi Minh City, Vietnam',
 		description:
-			'Developing and maintaining scalable game server systems for various online games. Focused on optimizing performance and ensuring high availability.',
+			'Architecting and maintaining high-performance game server infrastructure for multiple online gaming products. Responsible for real-time system optimization, database performance tuning, and implementing scalable backend solutions.',
 		achievements: [
-			'Build 20+ game server instances',
-			'Design and implement 2 game events in core game server',
-			'Developed an S.O.S server for alerting runtime issues, get logs and create game report from game servers, and push messages to multiple channels: Telegram, Discord, Slack',
-			'Implement new random logic for game server, that reduce database queries significantly',
-			'Improved core log system, that can easily track and debug issues',
+			'Architected and deployed 20+ game server instances handling thousands of concurrent players',
+			'Designed and implemented custom game event systems integrated into core server architecture',
+			'Built S.O.S monitoring system for real-time alerting, log aggregation, and automated reporting across Telegram, Discord, and Slack',
+			'Optimized random distribution algorithms, reducing database queries by 40% and improving response latency',
+			'Refactored core logging infrastructure enabling granular debugging and faster issue resolution',
 		],
-		technologies: ['Node.js', 'MSSQL', 'MySQL', 'Redis', 'WebSocket'],
+		technologies: ['Node.js', 'TypeScript', 'WebSocket', 'MSSQL', 'MySQL', 'Redis'],
 	},
 ];

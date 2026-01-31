@@ -17,11 +17,11 @@
 
 ## Phase 2: Content & Data
 
-- [ ] Update personal information (`app/_data/personal.ts`)
-- [ ] Add profile picture and social links
-- [ ] Update skills list (`app/_data/skills.ts`)
-- [ ] Add work experience (`app/_data/experience.ts`)
-- [ ] Add 3-5 featured projects (`app/_data/project.ts`)
+- [x] Update personal information (`app/_data/personal.ts`)
+- [x] Add profile picture and social links
+- [x] Update skills list (`app/_data/skills.ts`)
+- [x] Add work experience (`app/_data/experience.ts`)
+- [ ] Add 3-5 featured projects (`app/_data/project.ts`) _(1/5 - pending side projects)_
 - [ ] Add screenshots/demos for projects
 
 ---
