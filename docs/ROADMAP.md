@@ -10,8 +10,8 @@
 - [x] Build Experience Section
 - [x] Build Projects Section
 - [x] Build Contact Section
-- [ ] Create Navbar/Header component
-- [ ] Create Footer component
+- [x] Create Navbar/Header component
+- [x] Create Footer component
 
 ---
 

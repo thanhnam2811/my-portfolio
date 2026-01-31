@@ -10,7 +10,7 @@ const experienceHeading = contentData.headings.experience;
 
 export default function Experience() {
 	return (
-		<section className="w-full max-w-6xl mx-auto py-24 px-4 sm:px-6 lg:px-8">
+		<section id="experience" className="w-full max-w-6xl mx-auto py-24 px-4 sm:px-6 lg:px-8">
 			<motion.h2
 				initial={{ opacity: 0, y: 10 }}
 				animate={{ opacity: 1, y: 0 }}
