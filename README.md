@@ -1,36 +1,60 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# My Portfolio - NodeJS Developer
 
-## Getting Started
+Personal portfolio website built with Next.js.
 
-First, run the development server:
+## 🛠️ Tech Stack
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+- **Framework**: Next.js 15
+- **Language**: TypeScript
+- **Styling**: TailwindCSS 4
+- **Animations**: Framer Motion
+- **UI Components**: Radix UI
+- **Carousel**: Embla Carousel
+
+## 📁 Project Structure
+
+```
+my-portfolio/
+├── app/
+│   ├── _data/      # Static data (personal, skills, projects, etc.)
+│   ├── _sections/  # Section components
+│   └── page.tsx    # Main page
+├── components/
+│   └── ui/         # UI components
+├── docs/           # Documentation & Roadmap
+├── lib/            # Utilities
+└── public/         # Static files
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 🚀 Getting Started
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+# Install dependencies
+pnpm install
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+# Run development server
+pnpm dev
 
-## Learn More
+# Build for production
+pnpm build
 
-To learn more about Next.js, take a look at the following resources:
+# Start production server
+pnpm start
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Open [http://localhost:3000](http://localhost:3000) to view the result.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## 📋 Roadmap
 
-## Deploy on Vercel
+See the development roadmap at [docs/ROADMAP.md](./docs/ROADMAP.md).
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 🔗 Useful Links
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- [Next.js Documentation](https://nextjs.org/docs)
+- [TailwindCSS Docs](https://tailwindcss.com/docs)
+- [Framer Motion](https://www.framer.com/motion/)
+- [Vercel Deployment](https://vercel.com/docs)
+
+## 📄 License
+
+MIT License
