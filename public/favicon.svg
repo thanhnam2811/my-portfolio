@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <defs>
+    <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#3b82f6"/>
+      <stop offset="100%" style="stop-color:#06b6d4"/>
+    </linearGradient>
+  </defs>
+  
+  <!-- Background circle -->
+  <circle cx="256" cy="256" r="240" fill="url(#gradient)"/>
+  
+  <!-- Letter N -->
+  <path 
+    d="M160 160 L160 352 L200 352 L200 240 L280 352 L320 352 L320 160 L280 160 L280 272 L200 160 Z" 
+    fill="white"
+  />
+  
+  <!-- Code brackets decoration -->
+  <path 
+    d="M100 200 L70 256 L100 312" 
+    stroke="white" 
+    stroke-width="16" 
+    fill="none" 
+    stroke-linecap="round" 
+    stroke-linejoin="round"
+    opacity="0.6"
+  />
+  <path 
+    d="M412 200 L442 256 L412 312" 
+    stroke="white" 
+    stroke-width="16" 
+    fill="none" 
+    stroke-linecap="round" 
+    stroke-linejoin="round"
+    opacity="0.6"
+  />
+</svg>

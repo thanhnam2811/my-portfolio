@@ -9,10 +9,11 @@ export default function AboutMe() {
 	return (
 		<section id="about" className="w-full max-w-5xl mx-auto py-24 px-4 sm:px-6 lg:px-8">
 			<motion.h2
-				initial={{ opacity: 0, y: 10 }}
-				animate={{ opacity: 1, y: 0 }}
-				transition={{ duration: 0.4 }}
-				className="text-3xl sm:text-4xl font-bold mb-6 text-center"
+				initial={{ opacity: 0, y: 20 }}
+				whileInView={{ opacity: 1, y: 0 }}
+				transition={{ duration: 0.5 }}
+				viewport={{ once: true }}
+				className="text-3xl sm:text-4xl font-bold mb-8 text-center"
 			>
 				{contentData.headings.about}
 			</motion.h2>

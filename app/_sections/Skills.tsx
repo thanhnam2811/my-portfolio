@@ -11,9 +11,10 @@ export default function Skills() {
 	return (
 		<section id="skills" className="w-full max-w-6xl mx-auto py-24 px-4 sm:px-6 lg:px-8">
 			<motion.h2
-				initial={{ opacity: 0, y: 10 }}
-				animate={{ opacity: 1, y: 0 }}
-				transition={{ duration: 0.4 }}
+				initial={{ opacity: 0, y: 20 }}
+				whileInView={{ opacity: 1, y: 0 }}
+				transition={{ duration: 0.5 }}
+				viewport={{ once: true }}
 				className="text-3xl sm:text-4xl font-bold mb-12 text-center"
 			>
 				{skillsHeading}

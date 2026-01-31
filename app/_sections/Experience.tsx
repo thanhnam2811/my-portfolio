@@ -12,9 +12,10 @@ export default function Experience() {
 	return (
 		<section id="experience" className="w-full max-w-6xl mx-auto py-24 px-4 sm:px-6 lg:px-8">
 			<motion.h2
-				initial={{ opacity: 0, y: 10 }}
-				animate={{ opacity: 1, y: 0 }}
-				transition={{ duration: 0.4 }}
+				initial={{ opacity: 0, y: 20 }}
+				whileInView={{ opacity: 1, y: 0 }}
+				transition={{ duration: 0.5 }}
+				viewport={{ once: true }}
 				className="text-3xl sm:text-4xl font-bold mb-12 text-center"
 			>
 				{experienceHeading}
@@ -28,8 +29,9 @@ export default function Experience() {
 						whileInView={{ opacity: 1, y: 0 }}
 						transition={{ duration: 0.5, delay: index * 0.1 }}
 						viewport={{ once: true }}
+						whileHover={{ scale: 1.02, y: -5 }}
 					>
-						<Card className="overflow-hidden">
+						<Card className="overflow-hidden hover:shadow-lg hover:border-primary/20 transition-all duration-300">
 							<CardHeader>
 								<div className="flex flex-col md:flex-row md:items-center md:justify-between gap-2">
 									<div>

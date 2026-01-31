@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { profileData } from '@/app/_data/profile';
+import AnimatedLogo from '@/components/AnimatedLogo';
 
 const navLinks = [
 	{ label: 'About', href: '#about' },
@@ -47,18 +47,13 @@ export default function Navbar() {
 				<nav className="container mx-auto px-4 sm:px-6 lg:px-8">
 					<div className="flex items-center justify-between h-16">
 						{/* Logo */}
-						<motion.a
-							href="#"
-							onClick={(e) => {
-								e.preventDefault();
-								window.scrollTo({ top: 0, behavior: 'smooth' });
-							}}
-							className="text-xl font-bold hover:text-primary transition-colors"
-							whileHover={{ scale: 1.05 }}
-							whileTap={{ scale: 0.95 }}
+						<motion.div
+							onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+							whileHover={{ scale: 1.02 }}
+							whileTap={{ scale: 0.98 }}
 						>
-							{profileData.name}
-						</motion.a>
+							<AnimatedLogo />
+						</motion.div>
 
 						{/* Desktop Navigation */}
 						<div className="hidden md:flex items-center gap-1">

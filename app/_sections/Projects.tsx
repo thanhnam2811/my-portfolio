@@ -15,9 +15,10 @@ export default function Projects() {
 	return (
 		<section id="projects" className="w-full max-w-6xl mx-auto py-24 px-4 sm:px-6 lg:px-8">
 			<motion.h2
-				initial={{ opacity: 0, y: 10 }}
-				animate={{ opacity: 1, y: 0 }}
-				transition={{ duration: 0.4 }}
+				initial={{ opacity: 0, y: 20 }}
+				whileInView={{ opacity: 1, y: 0 }}
+				transition={{ duration: 0.5 }}
+				viewport={{ once: true }}
 				className="text-3xl sm:text-4xl font-bold mb-12 text-center"
 			>
 				{projectHeading}
@@ -37,7 +38,7 @@ export default function Projects() {
 								key={index}
 								className="pl-2 md:pl-4 basis-[85%] sm:basis-[75%] md:basis-1/2 lg:basis-1/3"
 							>
-								<Card className="h-full">
+								<Card className="h-full hover:shadow-xl hover:border-primary/20 transition-all duration-300 group">
 									<CardHeader className="p-0">
 										<Image
 											src={project.image}
