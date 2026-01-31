@@ -15,16 +15,20 @@ export interface ProfileData {
 export const profileData: ProfileData = {
 	// Basic Info
 	name: 'Nam',
-	title: 'Game Server Developer',
-	tagLine: 'I build scalable game servers & real-time platforms.',
+	title: 'Backend Developer',
+	tagLine: 'Specializing in high-performance game server architecture & real-time systems.',
 	location: 'Ho Chi Minh City, Vietnam',
-	availability: 'Currently available for freelance projects only.',
+	availability: 'Open to freelance projects and consulting opportunities.',
 
 	// About Me
 	about: {
-		description: `I'm a passionate game server developer with over 2 years of experience in building scalable game server systems and real-time platforms.`,
-		contactDescription: `I'm passionate about creating amazing web experiences and always excited to discuss new projects. Whether you have a specific project in mind or just want to connect, I'd love to hear from you.`,
-		highlights: ['2+ years in game server developer', 'Expert in Node.js, WebSocket, MSSQL, MySQL, Redis'],
+		description: `Backend Developer with 2+ years of hands-on experience architecting and optimizing game server infrastructure. I specialize in designing scalable, low-latency real-time systems that handle thousands of concurrent connections. My expertise spans socket programming, distributed systems, and database optimization for high-throughput gaming workloads.`,
+		contactDescription: `Interested in discussing game server architecture, real-time systems, or backend optimization? Whether you're building a multiplayer game, need server infrastructure consulting, or want to explore collaboration opportunities—let's connect.`,
+		highlights: [
+			'2+ years specializing in game server architecture',
+			'Proficient in Node.js, TypeScript, WebSocket, TCP/UDP protocols',
+			'Experience with MSSQL, MySQL, Redis for high-performance data layers',
+		],
 	},
 };
 
