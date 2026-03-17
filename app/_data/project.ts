@@ -23,7 +23,7 @@ export const projectsData: ProjectItem[] = [
 			'A streamlined URL shortening service focused on high performance, reliability, and observability, specifically designed for Free-tier environments.',
 		stack: ['Node.js', 'TypeScript', 'Fastify', 'PostgreSQL', 'Redis', 'Docker'],
 		image: '/images/projects/tiny-link.png',
-		link: 'https://tiny-link-jpmd.onrender.com',
+		link: 'https://tnli.vercel.app',
 		github: 'https://github.com/thanhnam2811/tiny-link',
 	},
 	// Add more projects here as you build them

@@ -3,6 +3,7 @@
 import { motion } from 'framer-motion';
 import Image from 'next/image';
 import Link from 'next/link';
+import { Github } from 'lucide-react';
 import { projectsData } from '../_data/project';
 import { contentData } from '@/app/_data/content';
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel';
@@ -59,18 +60,29 @@ export default function Projects() {
 											))}
 										</div>
 									</CardContent>
-									<CardFooter className="px-6 pb-4 pt-0">
+									<CardFooter className="px-6 pb-4 pt-0 flex gap-4 items-center">
 										{project.link ? (
 											<Link
 												href={project.link}
 												target="_blank"
 												rel="noopener noreferrer"
-												className="text-primary font-medium hover:underline"
+												className="text-primary font-medium hover:underline flex items-center gap-1"
 											>
 												View Project
 											</Link>
 										) : (
 											<span className="text-muted-foreground italic">Private Project</span>
+										)}
+										{project.github && (
+											<Link
+												href={project.github}
+												target="_blank"
+												rel="noopener noreferrer"
+												className="text-primary font-medium hover:underline flex items-center gap-1"
+											>
+												<Github className="w-4 h-4" />
+												GitHub
+											</Link>
 										)}
 									</CardFooter>
 								</Card>
