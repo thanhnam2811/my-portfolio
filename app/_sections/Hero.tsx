@@ -5,12 +5,20 @@ import { ArrowRight, Download } from 'lucide-react';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { profileData } from '@/app/_data/profile';
+import Magnetic from '@/components/Magnetic';
+import { useLenis } from 'lenis/react';
 
 export default function Hero() {
+	const lenis = useLenis();
+
 	const handleNavClick = (href: string) => {
-		const element = document.querySelector(href);
-		if (element) {
-			element.scrollIntoView({ behavior: 'smooth' });
+		if (lenis) {
+			lenis.scrollTo(href);
+		} else {
+			const element = document.querySelector(href);
+			if (element) {
+				element.scrollIntoView({ behavior: 'smooth' });
+			}
 		}
 	};
 
@@ -78,23 +86,31 @@ export default function Hero() {
 					className="absolute -inset-8 bg-gradient-to-tr from-primary/30 via-accent/20 to-primary/30 rounded-full blur-3xl opacity-50 animate-pulse"
 					style={{ animationDuration: '4s' }}
 				/>
-				<div className="relative group">
-					<Image
-						src="/images/avatar.png"
-						alt={profileData.name}
-						width={180}
-						height={180}
-						className="rounded-full border-[6px] border-background/50 shadow-premium relative z-10 backdrop-blur-sm transition-transform duration-500 group-hover:scale-105"
-					/>
-					{/* Animated Rings */}
-					<div
-						className="absolute inset-0 rounded-full border border-primary/20 animate-ping opacity-20"
-						style={{ animationDuration: '4s' }}
-					/>
-					<div
-						className="absolute inset-[-10px] rounded-full border border-accent/10 animate-ping opacity-10"
-						style={{ animationDuration: '6s', animationDelay: '1s' }}
-					/>
+				<div className="relative group p-4">
+					<Magnetic strength={0.15}>
+						<div className="relative">
+							<Image
+								src="/images/avatar.png"
+								alt={profileData.name}
+								width={180}
+								height={180}
+								className="rounded-full border-[6px] border-background/50 shadow-premium relative z-10 backdrop-blur-sm transition-transform duration-500 group-hover:scale-105 cursor-pointer"
+							/>
+							{/* Animated Rings - Enhanced visibility */}
+							<div
+								className="absolute inset-0 rounded-full border-2 border-primary/60 animate-ping opacity-60 z-0"
+								style={{ animationDuration: '2.5s' }}
+							/>
+							<div
+								className="absolute inset-[-20px] rounded-full border-2 border-accent/40 animate-ping opacity-30 z-0"
+								style={{ animationDuration: '4s', animationDelay: '0.8s' }}
+							/>
+							<div
+								className="absolute inset-[-40px] rounded-full border border-primary/20 animate-ping opacity-10 z-0"
+								style={{ animationDuration: '6s', animationDelay: '1.5s' }}
+							/>
+						</div>
+					</Magnetic>
 				</div>
 			</motion.div>
 
@@ -148,14 +164,16 @@ export default function Hero() {
 						show: { opacity: 1, y: 0 },
 					}}
 				>
-					<Button
-						size="lg"
-						className="h-12 px-8 rounded-full gap-2 shadow-lg shadow-primary/20 hover:shadow-xl hover:shadow-primary/30 hover:-translate-y-0.5 transition-all duration-300 font-semibold"
-						onClick={() => handleNavClick('#projects')}
-					>
-						View Projects
-						<ArrowRight className="h-4 w-4" />
-					</Button>
+					<Magnetic strength={0.3}>
+						<Button
+							size="lg"
+							className="h-12 px-8 rounded-full gap-2 shadow-lg shadow-primary/20 hover:shadow-xl hover:shadow-primary/30 hover:-translate-y-0.5 transition-all duration-300 font-semibold"
+							onClick={() => handleNavClick('#projects')}
+						>
+							View Projects
+							<ArrowRight className="h-4 w-4" />
+						</Button>
+					</Magnetic>
 				</motion.div>
 
 				<motion.div
@@ -164,14 +182,16 @@ export default function Hero() {
 						show: { opacity: 1, y: 0 },
 					}}
 				>
-					<Button
-						size="lg"
-						variant="outline"
-						className="h-12 px-8 rounded-full gap-2 glass border-primary/20 hover:bg-primary/10 hover:border-primary/40 hover:-translate-y-0.5 transition-all duration-300 font-semibold"
-						onClick={() => handleNavClick('#contact')}
-					>
-						Contact Me
-					</Button>
+					<Magnetic strength={0.3}>
+						<Button
+							size="lg"
+							variant="outline"
+							className="h-12 px-8 rounded-full gap-2 glass border-primary/20 hover:bg-primary/10 hover:border-primary/40 hover:-translate-y-0.5 transition-all duration-300 font-semibold"
+							onClick={() => handleNavClick('#contact')}
+						>
+							Contact Me
+						</Button>
+					</Magnetic>
 				</motion.div>
 
 				<motion.div

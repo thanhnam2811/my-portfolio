@@ -77,10 +77,10 @@
 
 ## Phase 8: Interactive Experience
 
-- [ ] Implement Custom Cursor with trailing Aura effect (synced with avatar)
-- [ ] Implement Magnetic Interaction for all clickable items & avatar
-- [ ] Integrate **Lenis** for smooth, inertial scrolling experience
-- [ ] Enhance Section Reveals & Layout Transitions
+- [x] Implement Custom Cursor with trailing Aura effect (synced with avatar)
+- [x] Implement Magnetic Interaction for all clickable items & avatar
+- [x] Integrate **Lenis** for smooth, inertial scrolling experience
+- [x] Enhance Section Reveals & Layout Transitions
 
 ---
 

@@ -6,6 +6,8 @@ import { Menu, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import AnimatedLogo from '@/components/AnimatedLogo';
 import { ThemeToggle } from '@/components/ThemeToggle';
+import Magnetic from '@/components/Magnetic';
+import { useLenis } from 'lenis/react';
 
 const navLinks = [
 	{ label: 'About', href: '#about' },
@@ -27,11 +29,17 @@ export default function Navbar() {
 		return () => window.removeEventListener('scroll', handleScroll);
 	}, []);
 
+	const lenis = useLenis();
+
 	const handleNavClick = (href: string) => {
 		setIsMobileMenuOpen(false);
-		const element = document.querySelector(href);
-		if (element) {
-			element.scrollIntoView({ behavior: 'smooth' });
+		if (lenis) {
+			lenis.scrollTo(href);
+		} else {
+			const element = document.querySelector(href);
+			if (element) {
+				element.scrollIntoView({ behavior: 'smooth' });
+			}
 		}
 	};
 
@@ -54,22 +62,26 @@ export default function Navbar() {
 							onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
 							whileHover={{ scale: 1.02 }}
 							whileTap={{ scale: 0.98 }}
+							className="cursor-pointer"
 						>
-							<AnimatedLogo />
+							<Magnetic strength={0.2}>
+								<AnimatedLogo />
+							</Magnetic>
 						</motion.div>
 
 						{/* Desktop Navigation */}
 						<div className="hidden md:flex items-center gap-1">
 							{navLinks.map((link) => (
-								<motion.button
-									key={link.href}
-									onClick={() => handleNavClick(link.href)}
-									className="px-4 py-2 text-sm font-medium text-muted-foreground hover:text-foreground transition-colors rounded-md hover:bg-white/10 dark:hover:bg-white/5"
-									whileHover={{ scale: 1.05 }}
-									whileTap={{ scale: 0.95, boxShadow: 'var(--shadow-neu-inset)' }}
-								>
-									{link.label}
-								</motion.button>
+								<Magnetic key={link.href} strength={0.3}>
+									<motion.button
+										onClick={() => handleNavClick(link.href)}
+										className="px-4 py-2 text-sm font-medium text-muted-foreground hover:text-foreground transition-colors rounded-md hover:bg-white/10 dark:hover:bg-white/5"
+										whileHover={{ scale: 1.05 }}
+										whileTap={{ scale: 0.95 }}
+									>
+										{link.label}
+									</motion.button>
+								</Magnetic>
 							))}
 							<ThemeToggle />
 						</div>

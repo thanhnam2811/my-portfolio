@@ -4,6 +4,8 @@ import './globals.css';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import { ThemeProvider } from '@/components/ThemeProvider';
+import SmoothScroll from '@/components/SmoothScroll';
+import CustomCursor from '@/components/CustomCursor';
 
 const geistSans = Geist({
 	variable: '--font-geist-sans',
@@ -105,11 +107,14 @@ export default function RootLayout({
 				<div className="fixed inset-0 -z-50 bg-[linear-gradient(120deg,var(--bg-mesh-1),var(--bg-mesh-2),var(--bg-mesh-3))] bg-[length:200%_200%] animate-mesh opacity-80 dark:opacity-50" />
 
 				<ThemeProvider>
-					<div className="relative z-0">
-						<Navbar />
-						{children}
-						<Footer />
-					</div>
+					<SmoothScroll>
+						<CustomCursor />
+						<div className="relative z-0">
+							<Navbar />
+							{children}
+							<Footer />
+						</div>
+					</SmoothScroll>
 				</ThemeProvider>
 			</body>
 		</html>
