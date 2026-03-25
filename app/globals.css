@@ -41,6 +41,11 @@
 	--radius-md: calc(var(--radius) - 2px);
 	--radius-lg: var(--radius);
 	--radius-xl: calc(var(--radius) + 4px);
+
+	/* NEW: Neumorphism & Glass */
+	--shadow-neu: var(--neu-shadow);
+	--shadow-neu-inset: var(--neu-shadow-inset);
+	--animate-mesh: mesh 10s ease-in-out infinite alternate;
 }
 
 :root {
@@ -77,6 +82,15 @@
 	--sidebar-accent-foreground: oklch(0.25 0.02 260);
 	--sidebar-border: oklch(0.9 0.01 250);
 	--sidebar-ring: oklch(0.55 0.2 250);
+
+	/* NEW: Neumorphism Light */
+	--neu-shadow: 4px 4px 10px rgba(0, 0, 0, 0.05), -4px -4px 10px rgba(255, 255, 255, 0.8);
+	--neu-shadow-inset: inset 4px 4px 10px rgba(0, 0, 0, 0.05), inset -4px -4px 10px rgba(255, 255, 255, 0.8);
+
+	/* NEW: Mesh backgrounds Light */
+	--bg-mesh-1: oklch(0.95 0.02 240);
+	--bg-mesh-2: oklch(0.92 0.05 260);
+	--bg-mesh-3: oklch(0.97 0.03 280);
 }
 
 .dark {
@@ -112,6 +126,15 @@
 	--sidebar-accent-foreground: oklch(0.96 0.01 250);
 	--sidebar-border: oklch(0.25 0.02 260);
 	--sidebar-ring: oklch(0.7 0.18 250);
+
+	/* NEW: Neumorphism Dark */
+	--neu-shadow: 4px 4px 10px rgba(0, 0, 0, 0.5), -4px -4px 10px rgba(255, 255, 255, 0.02);
+	--neu-shadow-inset: inset 4px 4px 10px rgba(0, 0, 0, 0.5), inset -4px -4px 10px rgba(255, 255, 255, 0.02);
+
+	/* NEW: Mesh backgrounds Dark */
+	--bg-mesh-1: oklch(0.15 0.05 260);
+	--bg-mesh-2: oklch(0.12 0.07 280);
+	--bg-mesh-3: oklch(0.14 0.06 295);
 }
 
 @layer base {
@@ -127,14 +150,28 @@
 	}
 }
 
-/* Alternating section backgrounds */
-main > section:nth-child(even) {
-	@apply bg-muted/30;
+/* Glassmorphism Utilities */
+@utility glass {
+	@apply bg-background/60 backdrop-blur-xl border border-white/20 dark:border-white/10 shadow-sm;
+}
+@utility glass-panel {
+	@apply bg-background/40 backdrop-blur-2xl border border-white/30 dark:border-white/10 shadow-lg;
+}
+
+/* Mesh Animation */
+@keyframes mesh {
+	0% {
+		background-position: 0% 50%;
+	}
+	100% {
+		background-position: 100% 50%;
+	}
 }
 
 /* Smooth transitions for theme changes */
 * {
 	transition:
 		background-color 0.3s ease,
-		border-color 0.3s ease;
+		border-color 0.3s ease,
+		box-shadow 0.3s ease;
 }

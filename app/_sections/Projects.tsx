@@ -39,7 +39,7 @@ export default function Projects() {
 								key={index}
 								className="pl-2 md:pl-4 basis-[85%] sm:basis-[75%] md:basis-1/2 lg:basis-1/3"
 							>
-								<Card className="h-full hover:shadow-xl hover:border-primary/20 transition-all duration-300 group">
+								<Card className="h-full hover:shadow-[var(--shadow-neu)] hover:border-primary/40 transition-all duration-300 group">
 									<CardHeader className="p-0">
 										<Image
 											src={project.image}

@@ -100,11 +100,16 @@ export default function RootLayout({
 				<link rel="manifest" href="/site.webmanifest"></link>
 			</head>
 
-			<body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+			<body className={`${geistSans.variable} ${geistMono.variable} antialiased relative`}>
+				{/* Global Mesh Background */}
+				<div className="fixed inset-0 -z-50 bg-[linear-gradient(120deg,var(--bg-mesh-1),var(--bg-mesh-2),var(--bg-mesh-3))] bg-[length:200%_200%] animate-mesh opacity-80 dark:opacity-50" />
+
 				<ThemeProvider>
-					<Navbar />
-					{children}
-					<Footer />
+					<div className="relative z-0">
+						<Navbar />
+						{children}
+						<Footer />
+					</div>
 				</ThemeProvider>
 			</body>
 		</html>

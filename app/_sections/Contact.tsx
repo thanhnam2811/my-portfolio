@@ -172,7 +172,7 @@ export default function Contact() {
 									href={info.href}
 									target={info.href.startsWith('http') ? '_blank' : undefined}
 									rel={info.href.startsWith('http') ? 'noopener noreferrer' : undefined}
-									className="block p-4 rounded-lg border border-border hover:bg-secondary/50 transition-colors"
+									className="block p-4 rounded-xl glass hover:shadow-[var(--shadow-neu-inset)] hover:bg-white/5 transition-all"
 								>
 									<div className="font-medium">{info.title}</div>
 									<div className="text-sm text-muted-foreground">{info.value}</div>

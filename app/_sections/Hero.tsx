@@ -16,9 +16,8 @@ export default function Hero() {
 
 	return (
 		<section className="relative w-full min-h-screen flex flex-col items-center justify-center text-center px-4 sm:px-6 lg:px-8 overflow-hidden">
-			{/* Background gradient */}
+			{/* Background layout bits (keeping blobs for color, removing solid/opaque background) */}
 			<div className="absolute inset-0 -z-10">
-				<div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-background to-accent/10" />
 				<div className="absolute top-1/4 left-1/4 w-96 h-96 bg-primary/10 rounded-full blur-3xl" />
 				<div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-accent/10 rounded-full blur-3xl" />
 			</div>

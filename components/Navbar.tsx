@@ -42,7 +42,9 @@ export default function Navbar() {
 				animate={{ y: 0 }}
 				transition={{ duration: 0.5 }}
 				className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-					isScrolled ? 'bg-background/80 backdrop-blur-md border-b border-border shadow-sm' : 'bg-transparent'
+					isScrolled
+						? 'bg-background/60 backdrop-blur-xl border-b border-white/20 dark:border-white/10 shadow-sm'
+						: 'bg-transparent'
 				}`}
 			>
 				<nav className="container mx-auto px-4 sm:px-6 lg:px-8">
@@ -62,9 +64,9 @@ export default function Navbar() {
 								<motion.button
 									key={link.href}
 									onClick={() => handleNavClick(link.href)}
-									className="px-4 py-2 text-sm font-medium text-muted-foreground hover:text-foreground transition-colors rounded-md hover:bg-accent"
+									className="px-4 py-2 text-sm font-medium text-muted-foreground hover:text-foreground transition-colors rounded-md hover:bg-white/10 dark:hover:bg-white/5"
 									whileHover={{ scale: 1.05 }}
-									whileTap={{ scale: 0.95 }}
+									whileTap={{ scale: 0.95, boxShadow: 'var(--shadow-neu-inset)' }}
 								>
 									{link.label}
 								</motion.button>
@@ -96,7 +98,7 @@ export default function Navbar() {
 						animate={{ opacity: 1, y: 0 }}
 						exit={{ opacity: 0, y: -20 }}
 						transition={{ duration: 0.2 }}
-						className="fixed inset-x-0 top-16 z-40 bg-background/95 backdrop-blur-md border-b border-border md:hidden"
+						className="fixed inset-x-0 top-16 z-40 bg-background/60 backdrop-blur-xl border-b border-white/20 dark:border-white/10 md:hidden shadow-lg"
 					>
 						<div className="container mx-auto px-4 py-4">
 							<div className="flex flex-col gap-2">
@@ -104,8 +106,8 @@ export default function Navbar() {
 									<motion.button
 										key={link.href}
 										onClick={() => handleNavClick(link.href)}
-										className="px-4 py-3 text-left text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-accent rounded-md transition-colors"
-										whileTap={{ scale: 0.98 }}
+										className="px-4 py-3 text-left text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-white/10 dark:hover:bg-white/5 rounded-md transition-colors"
+										whileTap={{ scale: 0.98, boxShadow: 'var(--shadow-neu-inset)' }}
 									>
 										{link.label}
 									</motion.button>

@@ -28,7 +28,7 @@ export default function Skills() {
 						whileInView={{ opacity: 1, y: 0 }}
 						transition={{ duration: 0.5, delay: categoryIndex * 0.1 }}
 						viewport={{ once: true }}
-						className="space-y-4"
+						className="space-y-4 glass-panel p-6 sm:p-8 rounded-[2rem]"
 					>
 						<h3 className="text-xl font-semibold text-center mb-6">{category.category}</h3>
 						<div className="flex flex-wrap gap-3 justify-center">
