@@ -82,7 +82,7 @@ export default function Contact() {
 					transition={{ duration: 0.5 }}
 					viewport={{ once: true }}
 				>
-					<Card>
+					<Card className="glass-panel border-white/10 shadow-premium rounded-2xl overflow-hidden">
 						<CardHeader>
 							<CardTitle>{contentData.messages.contactForm.title}</CardTitle>
 							<CardDescription>{contentData.messages.contactForm.description}</CardDescription>
@@ -132,7 +132,11 @@ export default function Contact() {
 										placeholder="Tell me about your project or opportunity..."
 									/>
 								</div>
-								<Button type="submit" disabled={isSubmitting} className="w-full">
+								<Button
+									type="submit"
+									disabled={isSubmitting}
+									className="w-full h-12 rounded-full font-bold shadow-lg shadow-primary/20 hover:shadow-xl hover:shadow-primary/30 transition-all duration-300"
+								>
 									{isSubmitting
 										? contentData.messages.contactForm.submittingButton
 										: contentData.messages.contactForm.submitButton}
@@ -158,8 +162,7 @@ export default function Contact() {
 						<p className="text-muted-foreground mb-6">{profileData.about.contactDescription}</p>
 					</div>
 
-					<div className="space-y-4">
-						<h4 className="text-lg font-medium">{contentData.messages.contactSection.contactInfo}</h4>
+					<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-4">
 						{contactInfo.map((info, index) => (
 							<motion.div
 								key={info.title}
@@ -172,10 +175,12 @@ export default function Contact() {
 									href={info.href}
 									target={info.href.startsWith('http') ? '_blank' : undefined}
 									rel={info.href.startsWith('http') ? 'noopener noreferrer' : undefined}
-									className="block p-4 rounded-xl glass hover:shadow-[var(--shadow-neu-inset)] hover:bg-white/5 transition-all"
+									className="block p-5 rounded-2xl glass-card border-white/10 shadow-sm hover:shadow-premium hover:border-primary/30 hover:-translate-y-1 transition-all duration-300"
 								>
-									<div className="font-medium">{info.title}</div>
-									<div className="text-sm text-muted-foreground">{info.value}</div>
+									<div className="text-xs font-bold uppercase tracking-wider text-primary mb-1">
+										{info.title}
+									</div>
+									<div className="text-base font-semibold text-foreground/90">{info.value}</div>
 								</a>
 							</motion.div>
 						))}

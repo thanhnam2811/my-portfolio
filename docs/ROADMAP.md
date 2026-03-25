@@ -67,4 +67,29 @@
 
 ---
 
-> ✏️ Updated: Jan 31, 2026 - **All core phases completed!** 🎉
+## Phase 7: Premium Design (Minimalist Glass)
+
+- [x] Redesign all sections (Hero, Projects, Experience, Contact) for a unified "Minimalist Glass" aesthetic
+- [x] Modernize `Input` and `Textarea` (remove neumorphism, use clean glass)
+- [x] Standardize layout spacing and grid alignment for extra scannability
+
+---
+
+## Phase 8: Interactive Experience
+
+- [ ] Implement Custom Cursor with trailing Aura effect (synced with avatar)
+- [ ] Implement Magnetic Interaction for all clickable items & avatar
+- [ ] Integrate **Lenis** for smooth, inertial scrolling experience
+- [ ] Enhance Section Reveals & Layout Transitions
+
+---
+
+## Phase 9: Final Polish & Optimization
+
+- [ ] Accessibility & Typography sweep
+- [ ] Performance check (Framer Motion optimization)
+- [ ] Final visual audit for "World-class" quality
+
+---
+
+> ✏️ Updated: Mar 25, 2026 - **Started Premium UI/UX Upgrade!** 🚀

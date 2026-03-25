@@ -16,10 +16,16 @@ export default function Hero() {
 
 	return (
 		<section className="relative w-full min-h-screen flex flex-col items-center justify-center text-center px-4 sm:px-6 lg:px-8 overflow-hidden">
-			{/* Background layout bits (keeping blobs for color, removing solid/opaque background) */}
-			<div className="absolute inset-0 -z-10">
-				<div className="absolute top-1/4 left-1/4 w-96 h-96 bg-primary/10 rounded-full blur-3xl" />
-				<div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-accent/10 rounded-full blur-3xl" />
+			{/* Background atmosphere (Refined Aura) */}
+			<div className="absolute inset-0 -z-10 overflow-hidden">
+				<div
+					className="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] bg-primary/10 rounded-full blur-[120px] animate-pulse"
+					style={{ animationDuration: '8s' }}
+				/>
+				<div
+					className="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] bg-accent/10 rounded-full blur-[120px] animate-pulse"
+					style={{ animationDuration: '10s', animationDelay: '2s' }}
+				/>
 			</div>
 
 			{/* Floating shapes */}
@@ -67,20 +73,27 @@ export default function Hero() {
 				transition={{ duration: 0.6 }}
 				className="relative mb-8"
 			>
-				{/* Glow effect */}
-				<div className="absolute -inset-4 bg-gradient-to-r from-primary/50 to-accent/50 rounded-full blur-2xl opacity-50 animate-pulse" />
-				<div className="relative">
+				{/* Refined Glow effect */}
+				<div
+					className="absolute -inset-8 bg-gradient-to-tr from-primary/30 via-accent/20 to-primary/30 rounded-full blur-3xl opacity-50 animate-pulse"
+					style={{ animationDuration: '4s' }}
+				/>
+				<div className="relative group">
 					<Image
 						src="/images/avatar.png"
 						alt={profileData.name}
-						width={160}
-						height={160}
-						className="rounded-full border-4 border-background shadow-2xl relative z-10"
+						width={180}
+						height={180}
+						className="rounded-full border-[6px] border-background/50 shadow-premium relative z-10 backdrop-blur-sm transition-transform duration-500 group-hover:scale-105"
 					/>
-					{/* Ring */}
+					{/* Animated Rings */}
 					<div
-						className="absolute inset-0 rounded-full border-2 border-primary/30 animate-ping"
-						style={{ animationDuration: '3s' }}
+						className="absolute inset-0 rounded-full border border-primary/20 animate-ping opacity-20"
+						style={{ animationDuration: '4s' }}
+					/>
+					<div
+						className="absolute inset-[-10px] rounded-full border border-accent/10 animate-ping opacity-10"
+						style={{ animationDuration: '6s', animationDelay: '1s' }}
 					/>
 				</div>
 			</motion.div>
@@ -137,7 +150,7 @@ export default function Hero() {
 				>
 					<Button
 						size="lg"
-						className="gap-2 shadow-lg shadow-primary/25 hover:shadow-xl hover:shadow-primary/30 transition-all"
+						className="h-12 px-8 rounded-full gap-2 shadow-lg shadow-primary/20 hover:shadow-xl hover:shadow-primary/30 hover:-translate-y-0.5 transition-all duration-300 font-semibold"
 						onClick={() => handleNavClick('#projects')}
 					>
 						View Projects
@@ -154,7 +167,7 @@ export default function Hero() {
 					<Button
 						size="lg"
 						variant="outline"
-						className="gap-2 hover:bg-primary hover:text-primary-foreground transition-all"
+						className="h-12 px-8 rounded-full gap-2 glass border-primary/20 hover:bg-primary/10 hover:border-primary/40 hover:-translate-y-0.5 transition-all duration-300 font-semibold"
 						onClick={() => handleNavClick('#contact')}
 					>
 						Contact Me
@@ -167,7 +180,12 @@ export default function Hero() {
 						show: { opacity: 1, y: 0 },
 					}}
 				>
-					<Button size="lg" variant="ghost" className="gap-2" asChild>
+					<Button
+						size="lg"
+						variant="ghost"
+						className="h-12 px-8 rounded-full gap-2 hover:bg-accent/5 hover:-translate-y-0.5 transition-all duration-300"
+						asChild
+					>
 						<a href="/files/MyCV.pdf" download="CV_BE_ThaiThanhNam.pdf">
 							<Download className="h-4 w-4" />
 							Download CV
