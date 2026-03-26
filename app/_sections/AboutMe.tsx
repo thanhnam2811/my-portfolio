@@ -8,13 +8,13 @@ import { contentData } from '@/app/_data/content';
 export default function AboutMe() {
 	return (
 		<section id="about" className="w-full max-w-5xl mx-auto py-24 px-4 sm:px-6 lg:px-8">
-			<div className="glass-panel p-8 sm:p-12 rounded-[2rem] flex flex-col items-center">
+			<div className="glass-panel p-8 sm:p-12 rounded-3xl flex flex-col items-center">
 				<motion.h2
 					initial={{ opacity: 0, y: 20 }}
 					whileInView={{ opacity: 1, y: 0 }}
 					transition={{ duration: 0.5 }}
 					viewport={{ once: true }}
-					className="text-3xl sm:text-4xl font-bold mb-8 text-center"
+					className="text-4xl sm:text-5xl premium-heading mb-8 text-center"
 				>
 					{contentData.headings.about}
 				</motion.h2>

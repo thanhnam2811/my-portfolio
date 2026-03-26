@@ -71,7 +71,7 @@ export default function Contact() {
 				whileInView={{ opacity: 1, y: 0 }}
 				transition={{ duration: 0.5 }}
 				viewport={{ once: true }}
-				className="text-3xl sm:text-4xl font-bold mb-12 text-center"
+				className="text-4xl sm:text-5xl premium-heading mb-16 text-center"
 			>
 				{contactHeading}
 			</motion.h2>
@@ -159,11 +159,10 @@ export default function Contact() {
 					className="space-y-8"
 				>
 					<div>
-						{' '}
-						<h3 className="text-2xl font-semibold mb-4">
-							{contentData.messages.contactSection.workTogether}
-						</h3>
-						<p className="text-muted-foreground mb-6">{profileData.about.contactDescription}</p>
+						<h3 className="section-label mb-6">{contentData.messages.contactSection.workTogether}</h3>
+						<p className="text-muted-foreground text-lg mb-8 leading-relaxed italic border-l-2 border-primary/20 pl-6">
+							{profileData.about.contactDescription}
+						</p>
 					</div>
 
 					<div className="grid grid-cols-1 gap-4">
@@ -195,8 +194,8 @@ export default function Contact() {
 											rel={info.href.startsWith('http') ? 'noopener noreferrer' : undefined}
 											className="flex items-center gap-5 p-5 rounded-2xl glass-card border-white/10 shadow-sm hover:shadow-premium hover:border-primary/30 transition-all duration-300"
 										>
-											<div className="p-3 rounded-xl bg-primary/10 text-primary">
-												<Icon className="w-6 h-6" />
+											<div className="p-3.5 rounded-xl bg-primary/10 text-primary group-hover:bg-primary group-hover:text-primary-foreground transition-all duration-300">
+												<Icon className="w-6 h-6" aria-hidden="true" />
 											</div>
 											<div className="flex-1">
 												<div className="text-xs font-bold uppercase tracking-wider text-primary mb-1">
@@ -213,9 +212,11 @@ export default function Contact() {
 						})}
 					</div>
 
-					<div>
-						<h4 className="text-lg font-medium mb-3">{contentData.messages.contactSection.availability}</h4>
-						<p className="text-muted-foreground">{profileData.availability}</p>
+					<div className="pt-4">
+						<h4 className="section-label mb-4">{contentData.messages.contactSection.availability}</h4>
+						<p className="text-muted-foreground bg-primary/5 px-6 py-4 rounded-2xl border border-primary/10 inline-block font-medium">
+							{profileData.availability}
+						</p>
 					</div>
 				</motion.div>
 			</div>

@@ -174,3 +174,11 @@
 		border-color 0.4s cubic-bezier(0.4, 0, 0.2, 1),
 		box-shadow 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
+
+@utility premium-heading {
+	@apply font-bold tracking-tighter leading-[1.1];
+}
+
+@utility section-label {
+	@apply text-[10px] uppercase tracking-[0.2em] font-black text-primary/80;
+}

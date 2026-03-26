@@ -119,7 +119,7 @@ export default function Hero() {
 				initial={{ opacity: 0, y: 20 }}
 				animate={{ opacity: 1, y: 0 }}
 				transition={{ delay: 0.3, duration: 0.5 }}
-				className="text-4xl sm:text-5xl md:text-6xl font-bold mb-4 bg-gradient-to-r from-foreground via-foreground to-primary bg-clip-text"
+				className="text-5xl sm:text-6xl md:text-7xl mb-4 premium-heading bg-gradient-to-r from-foreground via-foreground to-primary bg-clip-text"
 			>
 				I&apos;m <span className="text-primary">{profileData.name}</span>
 			</motion.h1>
@@ -128,7 +128,7 @@ export default function Hero() {
 				initial={{ opacity: 0, y: 10 }}
 				animate={{ opacity: 1, y: 0 }}
 				transition={{ delay: 0.4, duration: 0.4 }}
-				className="text-xl sm:text-2xl font-medium text-muted-foreground mb-2"
+				className="text-xl sm:text-2xl font-semibold tracking-tight text-muted-foreground mb-4"
 			>
 				{profileData.title}
 			</motion.p>
@@ -138,7 +138,7 @@ export default function Hero() {
 				initial={{ opacity: 0, y: 10 }}
 				animate={{ opacity: 1, y: 0 }}
 				transition={{ delay: 0.5, duration: 0.4 }}
-				className="text-muted-foreground max-w-xl text-lg mb-8"
+				className="text-muted-foreground max-w-2xl text-lg sm:text-xl mb-12 leading-relaxed"
 			>
 				{profileData.tagLine}
 			</motion.p>
@@ -169,9 +169,10 @@ export default function Hero() {
 							size="lg"
 							className="h-12 px-8 rounded-full gap-2 shadow-lg shadow-primary/20 hover:shadow-xl hover:shadow-primary/30 hover:-translate-y-0.5 transition-all duration-300 font-semibold"
 							onClick={() => handleNavClick('#projects')}
+							aria-label="Scroll to Projects section"
 						>
 							View Projects
-							<ArrowRight className="h-4 w-4" />
+							<ArrowRight className="h-4 w-4" aria-hidden="true" />
 						</Button>
 					</Magnetic>
 				</motion.div>
@@ -188,6 +189,7 @@ export default function Hero() {
 							variant="outline"
 							className="h-12 px-8 rounded-full gap-2 glass border-primary/20 hover:bg-primary/10 hover:border-primary/40 hover:-translate-y-0.5 transition-all duration-300 font-semibold"
 							onClick={() => handleNavClick('#contact')}
+							aria-label="Scroll to Contact section"
 						>
 							Contact Me
 						</Button>
@@ -200,17 +202,20 @@ export default function Hero() {
 						show: { opacity: 1, y: 0 },
 					}}
 				>
-					<Button
-						size="lg"
-						variant="ghost"
-						className="h-12 px-8 rounded-full gap-2 hover:bg-accent/5 hover:-translate-y-0.5 transition-all duration-300"
-						asChild
-					>
-						<a href="/files/MyCV.pdf" download="CV_BE_ThaiThanhNam.pdf">
-							<Download className="h-4 w-4" />
-							Download CV
-						</a>
-					</Button>
+					<Magnetic strength={0.3}>
+						<Button
+							size="lg"
+							variant="ghost"
+							className="h-12 px-8 rounded-full gap-2 hover:bg-accent/5 hover:-translate-y-0.5 transition-all duration-300"
+							asChild
+							aria-label="Download Thai Thanh Nam's CV"
+						>
+							<a href="/files/MyCV.pdf" download="CV_BE_ThaiThanhNam.pdf">
+								<Download className="h-4 w-4" aria-hidden="true" />
+								Download CV
+							</a>
+						</Button>
+					</Magnetic>
 				</motion.div>
 			</motion.div>
 

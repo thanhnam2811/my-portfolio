@@ -6,6 +6,7 @@ import Footer from '@/components/Footer';
 import { ThemeProvider } from '@/components/ThemeProvider';
 import SmoothScroll from '@/components/SmoothScroll';
 import CustomCursor from '@/components/CustomCursor';
+import MeshBackground from '@/components/MeshBackground';
 
 const geistSans = Geist({
 	variable: '--font-geist-sans',
@@ -103,15 +104,40 @@ export default function RootLayout({
 			</head>
 
 			<body className={`${geistSans.variable} ${geistMono.variable} antialiased relative`}>
+				{/* Accessibility: Skip to Content */}
+				<a
+					href="#main-content"
+					className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[100] focus:px-4 focus:py-2 focus:bg-primary focus:text-primary-foreground focus:rounded-lg"
+				>
+					Skip to content
+				</a>
+
+				{/* Premium Texture: Grain Overlay */}
+				<div className="fixed inset-0 z-[99] pointer-events-none opacity-[0.03] dark:opacity-[0.05] mix-blend-overlay isolate">
+					<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" className="w-full h-full opacity-20">
+						<filter id="noiseFilter">
+							<feTurbulence
+								type="fractalNoise"
+								baseFrequency="0.65"
+								numOctaves="3"
+								stitchTiles="stitch"
+							/>
+						</filter>
+						<rect width="100%" height="100%" filter="url(#noiseFilter)" />
+					</svg>
+				</div>
+
 				{/* Global Mesh Background */}
-				<div className="fixed inset-0 -z-50 bg-[linear-gradient(120deg,var(--bg-mesh-1),var(--bg-mesh-2),var(--bg-mesh-3))] bg-[length:200%_200%] animate-mesh opacity-80 dark:opacity-50" />
+				<MeshBackground />
 
 				<ThemeProvider>
 					<SmoothScroll>
 						<CustomCursor />
 						<div className="relative z-0">
 							<Navbar />
-							{children}
+							<main id="main-content" className="flex-grow">
+								{children}
+							</main>
 							<Footer />
 						</div>
 					</SmoothScroll>

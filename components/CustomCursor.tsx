@@ -1,10 +1,11 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { motion, useSpring, useMotionValue } from 'framer-motion';
+import { motion, useSpring, useMotionValue, useReducedMotion } from 'framer-motion';
 import { useIsTouchDevice } from '@/hooks/use-is-touch-device';
 
 export default function CustomCursor() {
+	const shouldReduceMotion = useReducedMotion();
 	const isTouch = useIsTouchDevice();
 	const [isVisible, setIsVisible] = useState(false);
 
@@ -41,7 +42,7 @@ export default function CustomCursor() {
 			document.removeEventListener('mouseleave', handleMouseLeave);
 			document.removeEventListener('mouseenter', handleMouseEnter);
 		};
-	}, [isTouch, mouseX, mouseY, isVisible]);
+	}, [isTouch, shouldReduceMotion, mouseX, mouseY, isVisible]);
 
 	if (isTouch) return null;
 
@@ -79,10 +80,10 @@ export default function CustomCursor() {
 					y: ringY,
 					translateX: '-50%',
 					translateY: '-50%',
-					opacity: isVisible ? 0.4 : 0,
+					opacity: isVisible && !shouldReduceMotion ? 0.4 : 0,
 				}}
 				animate={{
-					scale: isVisible ? [1, 1.2, 1] : 1,
+					scale: isVisible && !shouldReduceMotion ? [1, 1.2, 1] : 1,
 				}}
 				transition={{
 					scale: { duration: 4, repeat: Infinity, ease: 'easeInOut' },
@@ -97,7 +98,7 @@ export default function CustomCursor() {
 					y: ringY,
 					translateX: '-50%',
 					translateY: '-50%',
-					opacity: isVisible ? 0.8 : 0,
+					opacity: isVisible && !shouldReduceMotion ? 0.8 : 0,
 				}}
 			/>
 		</>

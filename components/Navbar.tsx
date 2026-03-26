@@ -89,14 +89,17 @@ export default function Navbar() {
 						{/* Mobile Menu Button + Theme Toggle */}
 						<div className="flex items-center gap-2 md:hidden">
 							<ThemeToggle />
-							<Button
-								variant="ghost"
-								size="icon"
-								onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-								aria-label="Toggle menu"
-							>
-								{isMobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
-							</Button>
+							<Magnetic strength={0.2}>
+								<Button
+									variant="ghost"
+									size="icon"
+									onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+									aria-label={isMobileMenuOpen ? 'Close menu' : 'Open menu'}
+									className="rounded-full hover:bg-white/10"
+								>
+									{isMobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+								</Button>
+							</Magnetic>
 						</div>
 					</div>
 				</nav>

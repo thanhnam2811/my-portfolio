@@ -89,12 +89,12 @@ export default function Footer() {
 									href={social.href}
 									target="_blank"
 									rel="noopener noreferrer"
-									className="p-2 rounded-full bg-background border border-border hover:border-primary hover:text-primary transition-colors"
+									className="p-3 rounded-full bg-background border border-border hover:border-primary hover:text-primary transition-all duration-300 shadow-sm flex items-center justify-center"
 									whileHover={{ scale: 1.1, y: -2 }}
 									whileTap={{ scale: 0.95 }}
-									aria-label={social.label}
+									aria-label={`Connect on ${social.label}`}
 								>
-									<social.icon className="h-5 w-5" />
+									<social.icon className="h-5 w-5" aria-hidden="true" />
 								</motion.a>
 							))}
 						</div>

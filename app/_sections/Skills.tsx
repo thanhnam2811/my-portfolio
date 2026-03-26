@@ -25,10 +25,10 @@ export default function Skills() {
 				whileInView={{ opacity: 1, y: 0 }}
 				transition={{ duration: 0.5 }}
 				viewport={{ once: true }}
-				className="text-center mb-16"
+				className="text-center mb-20"
 			>
-				<h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4">{skillsHeading}</h2>
-				<div className="h-1.5 w-20 bg-primary mx-auto rounded-full" />
+				<h2 className="text-4xl sm:text-5xl premium-heading mb-6">{skillsHeading}</h2>
+				<div className="h-1.5 w-24 bg-primary mx-auto rounded-full shadow-[0_0_15px_rgba(var(--primary),0.5)]" />
 			</motion.div>
 
 			<div className="grid grid-cols-1 md:grid-cols-6 lg:grid-cols-12 gap-6">

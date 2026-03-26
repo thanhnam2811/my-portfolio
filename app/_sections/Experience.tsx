@@ -16,7 +16,7 @@ export default function Experience() {
 				whileInView={{ opacity: 1, y: 0 }}
 				transition={{ duration: 0.5 }}
 				viewport={{ once: true }}
-				className="text-3xl sm:text-4xl font-bold mb-12 text-center"
+				className="text-4xl sm:text-5xl premium-heading mb-12 text-center"
 			>
 				{experienceHeading}
 			</motion.h2>
@@ -29,24 +29,32 @@ export default function Experience() {
 						whileInView={{ opacity: 1, y: 0 }}
 						transition={{ duration: 0.5, delay: index * 0.1 }}
 						viewport={{ once: true }}
-						whileHover={{ scale: 1.02, y: -5 }}
+						whileHover={{ y: -5 }}
 					>
-						<Card className="glass-card border-white/10 shadow-premium hover:border-primary/30 transition-all duration-500 rounded-2xl overflow-hidden relative group">
+						<Card className="glass-panel border-white/10 shadow-2xl hover:border-primary/30 transition-all duration-500 rounded-3xl overflow-hidden relative group">
 							{/* Subtle Left Indicator */}
 							<div className="absolute left-0 top-0 bottom-0 w-1 bg-primary/20 group-hover:bg-primary transition-colors duration-500" />
 
 							<CardHeader className="pb-2">
 								<div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
 									<div>
-										<CardTitle className="text-2xl font-bold">{experience.title}</CardTitle>
+										<CardTitle className="text-2xl font-bold tracking-tight">
+											{experience.title}
+										</CardTitle>
 										<CardDescription className="text-lg font-semibold text-primary/80 mt-1">
 											{experience.company}
 										</CardDescription>
 									</div>
-									<div className="flex flex-col md:items-end text-sm text-muted-foreground bg-primary/5 px-4 py-2 rounded-xl border border-primary/10">
+									<div
+										className="flex flex-col md:items-end text-sm text-muted-foreground bg-primary/5 px-4 py-2 rounded-2xl border border-primary/10"
+										aria-label={`Period: ${experience.period}, Location: ${experience.location}`}
+									>
 										<div className="font-bold text-foreground/80">{experience.period}</div>
 										<div className="flex items-center gap-1 mt-1">
-											<span className="w-1.5 h-1.5 rounded-full bg-primary/40" />
+											<span
+												className="w-1.5 h-1.5 rounded-full bg-primary/40"
+												aria-hidden="true"
+											/>
 											{experience.location}
 										</div>
 									</div>
@@ -59,8 +67,8 @@ export default function Experience() {
 
 								<div className="grid grid-cols-1 md:grid-cols-2 gap-8">
 									<div>
-										<h4 className="text-sm font-bold uppercase tracking-wider text-foreground/60 mb-3 flex items-center gap-2">
-											<span className="w-4 h-px bg-primary/30" />
+										<h4 className="section-label mb-4 flex items-center gap-2">
+											<span className="w-4 h-px bg-primary/40" aria-hidden="true" />
 											Key Achievements
 										</h4>
 										<ul className="space-y-3">
@@ -69,7 +77,10 @@ export default function Experience() {
 													key={achievementIndex}
 													className="text-sm text-muted-foreground flex items-start group/item"
 												>
-													<span className="text-primary mr-3 mt-1.5 w-1.5 h-1.5 rounded-full bg-primary/20 group-hover/item:bg-primary transition-colors" />
+													<span
+														className="text-primary mr-3 mt-1.5 w-1.5 h-1.5 rounded-full bg-primary/20 group-hover/item:bg-primary transition-colors"
+														aria-hidden="true"
+													/>
 													<span className="group-hover/item:text-foreground transition-colors">
 														{achievement}
 													</span>
@@ -79,8 +90,8 @@ export default function Experience() {
 									</div>
 
 									<div>
-										<h4 className="text-sm font-bold uppercase tracking-wider text-foreground/60 mb-3 flex items-center gap-2">
-											<span className="w-4 h-px bg-primary/30" />
+										<h4 className="section-label mb-4 flex items-center gap-2">
+											<span className="w-4 h-px bg-primary/40" aria-hidden="true" />
 											Technologies
 										</h4>
 										<div className="flex flex-wrap gap-2">
@@ -88,7 +99,7 @@ export default function Experience() {
 												<Badge
 													key={tech}
 													variant="secondary"
-													className="px-3 py-1 text-xs font-medium bg-primary/5 text-primary border-primary/10 hover:bg-primary/10 transition-colors"
+													className="px-3 py-1 text-xs font-medium bg-primary/5 text-primary border-primary/10 hover:bg-primary/20 hover:border-primary/30 transition-all"
 												>
 													{tech}
 												</Badge>
