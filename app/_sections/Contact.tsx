@@ -11,6 +11,8 @@ import { profileData } from '@/app/_data/profile';
 import { contentData } from '@/app/_data/content';
 import { getContactInfo } from '@/app/_data/contact';
 import { toast } from 'sonner';
+import Magnetic from '@/components/Magnetic';
+import { Github, Linkedin, Mail, MapPin, Phone, ExternalLink } from 'lucide-react';
 
 const contactHeading = contentData.headings.contact;
 
@@ -132,15 +134,17 @@ export default function Contact() {
 										placeholder="Tell me about your project or opportunity..."
 									/>
 								</div>
-								<Button
-									type="submit"
-									disabled={isSubmitting}
-									className="w-full h-12 rounded-full font-bold shadow-lg shadow-primary/20 hover:shadow-xl hover:shadow-primary/30 transition-all duration-300"
-								>
-									{isSubmitting
-										? contentData.messages.contactForm.submittingButton
-										: contentData.messages.contactForm.submitButton}
-								</Button>
+								<Magnetic strength={0.2} className="w-full">
+									<Button
+										type="submit"
+										disabled={isSubmitting}
+										className="w-full h-12 rounded-full font-bold shadow-lg shadow-primary/20 hover:shadow-xl hover:shadow-primary/30 transition-all duration-300"
+									>
+										{isSubmitting
+											? contentData.messages.contactForm.submittingButton
+											: contentData.messages.contactForm.submitButton}
+									</Button>
+								</Magnetic>
 							</form>
 						</CardContent>
 					</Card>
@@ -162,28 +166,51 @@ export default function Contact() {
 						<p className="text-muted-foreground mb-6">{profileData.about.contactDescription}</p>
 					</div>
 
-					<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-4">
-						{contactInfo.map((info, index) => (
-							<motion.div
-								key={info.title}
-								initial={{ opacity: 0, y: 10 }}
-								whileInView={{ opacity: 1, y: 0 }}
-								transition={{ duration: 0.3, delay: index * 0.1 }}
-								viewport={{ once: true }}
-							>
-								<a
-									href={info.href}
-									target={info.href.startsWith('http') ? '_blank' : undefined}
-									rel={info.href.startsWith('http') ? 'noopener noreferrer' : undefined}
-									className="block p-5 rounded-2xl glass-card border-white/10 shadow-sm hover:shadow-premium hover:border-primary/30 hover:-translate-y-1 transition-all duration-300"
+					<div className="grid grid-cols-1 gap-4">
+						{contactInfo.map((info, index) => {
+							const Icon = info.title.toLowerCase().includes('github')
+								? Github
+								: info.title.toLowerCase().includes('linkedin')
+									? Linkedin
+									: info.title.toLowerCase().includes('email')
+										? Mail
+										: info.title.toLowerCase().includes('phone')
+											? Phone
+											: info.title.toLowerCase().includes('location')
+												? MapPin
+												: ExternalLink;
+
+							return (
+								<motion.div
+									key={info.title}
+									initial={{ opacity: 0, y: 10 }}
+									whileInView={{ opacity: 1, y: 0 }}
+									transition={{ duration: 0.3, delay: index * 0.1 }}
+									viewport={{ once: true }}
 								>
-									<div className="text-xs font-bold uppercase tracking-wider text-primary mb-1">
-										{info.title}
-									</div>
-									<div className="text-base font-semibold text-foreground/90">{info.value}</div>
-								</a>
-							</motion.div>
-						))}
+									<Magnetic strength={0.15} className="w-full">
+										<a
+											href={info.href}
+											target={info.href.startsWith('http') ? '_blank' : undefined}
+											rel={info.href.startsWith('http') ? 'noopener noreferrer' : undefined}
+											className="flex items-center gap-5 p-5 rounded-2xl glass-card border-white/10 shadow-sm hover:shadow-premium hover:border-primary/30 transition-all duration-300"
+										>
+											<div className="p-3 rounded-xl bg-primary/10 text-primary">
+												<Icon className="w-6 h-6" />
+											</div>
+											<div className="flex-1">
+												<div className="text-xs font-bold uppercase tracking-wider text-primary mb-1">
+													{info.title}
+												</div>
+												<div className="text-base font-semibold text-foreground/90">
+													{info.value}
+												</div>
+											</div>
+										</a>
+									</Magnetic>
+								</motion.div>
+							);
+						})}
 					</div>
 
 					<div>
