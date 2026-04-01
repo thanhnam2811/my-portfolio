@@ -3,13 +3,14 @@
 import { Button } from '@/components/ui/button';
 import { ArrowRight, Download } from 'lucide-react';
 import Image from 'next/image';
-import { motion } from 'framer-motion';
+import { motion, useReducedMotion } from 'framer-motion';
 import { profileData } from '@/app/_data/profile';
 import Magnetic from '@/components/Magnetic';
 import { useLenis } from 'lenis/react';
 
 export default function Hero() {
 	const lenis = useLenis();
+	const shouldReduceMotion = useReducedMotion();
 
 	const handleNavClick = (href: string) => {
 		if (lenis) {
@@ -25,7 +26,7 @@ export default function Hero() {
 	return (
 		<section className="relative w-full min-h-screen flex flex-col items-center justify-center text-center px-4 sm:px-6 lg:px-8 overflow-hidden">
 			{/* Background atmosphere (Refined Aura) */}
-			<div className="absolute inset-0 -z-10 overflow-hidden">
+			<div className="absolute inset-0 -z-10 overflow-hidden" aria-hidden="true">
 				<div
 					className="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] bg-primary/10 rounded-full blur-[120px] animate-pulse"
 					style={{ animationDuration: '8s' }}
@@ -38,11 +39,16 @@ export default function Hero() {
 
 			{/* Floating shapes */}
 			<motion.div
+				aria-hidden="true"
 				className="absolute top-20 left-10 w-20 h-20 border border-primary/20 rounded-full"
-				animate={{
-					y: [0, -20, 0],
-					rotate: [0, 180, 360],
-				}}
+				animate={
+					shouldReduceMotion
+						? {}
+						: {
+								y: [0, -20, 0],
+								rotate: [0, 180, 360],
+							}
+				}
 				transition={{
 					duration: 8,
 					repeat: Infinity,
@@ -50,11 +56,16 @@ export default function Hero() {
 				}}
 			/>
 			<motion.div
+				aria-hidden="true"
 				className="absolute bottom-32 right-20 w-16 h-16 border border-accent/20 rounded-lg"
-				animate={{
-					y: [0, 20, 0],
-					rotate: [0, -180, -360],
-				}}
+				animate={
+					shouldReduceMotion
+						? {}
+						: {
+								y: [0, 20, 0],
+								rotate: [0, -180, -360],
+							}
+				}
 				transition={{
 					duration: 10,
 					repeat: Infinity,
@@ -62,11 +73,16 @@ export default function Hero() {
 				}}
 			/>
 			<motion.div
+				aria-hidden="true"
 				className="absolute top-1/3 right-10 w-12 h-12 bg-primary/10 rounded-full"
-				animate={{
-					scale: [1, 1.2, 1],
-					opacity: [0.5, 0.8, 0.5],
-				}}
+				animate={
+					shouldReduceMotion
+						? {}
+						: {
+								scale: [1, 1.2, 1],
+								opacity: [0.5, 0.8, 0.5],
+							}
+				}
 				transition={{
 					duration: 4,
 					repeat: Infinity,
@@ -83,6 +99,7 @@ export default function Hero() {
 			>
 				{/* Refined Glow effect */}
 				<div
+					aria-hidden="true"
 					className="absolute -inset-8 bg-gradient-to-tr from-primary/30 via-accent/20 to-primary/30 rounded-full blur-3xl opacity-50 animate-pulse"
 					style={{ animationDuration: '4s' }}
 				/>
@@ -94,21 +111,29 @@ export default function Hero() {
 								alt={profileData.name}
 								width={180}
 								height={180}
+								priority
 								className="rounded-full border-[6px] border-background/50 shadow-premium relative z-10 backdrop-blur-sm transition-transform duration-500 group-hover:scale-105 cursor-pointer"
 							/>
-							{/* Animated Rings - Enhanced visibility */}
-							<div
-								className="absolute inset-0 rounded-full border-2 border-primary/60 animate-ping opacity-60 z-0"
-								style={{ animationDuration: '2.5s' }}
-							/>
-							<div
-								className="absolute inset-[-20px] rounded-full border-2 border-accent/40 animate-ping opacity-30 z-0"
-								style={{ animationDuration: '4s', animationDelay: '0.8s' }}
-							/>
-							<div
-								className="absolute inset-[-40px] rounded-full border border-primary/20 animate-ping opacity-10 z-0"
-								style={{ animationDuration: '6s', animationDelay: '1.5s' }}
-							/>
+							{/* Animated Rings */}
+							{!shouldReduceMotion && (
+								<>
+									<div
+										aria-hidden="true"
+										className="absolute inset-0 rounded-full border-2 border-primary/60 animate-ping opacity-60 z-0"
+										style={{ animationDuration: '2.5s' }}
+									/>
+									<div
+										aria-hidden="true"
+										className="absolute inset-[-20px] rounded-full border-2 border-accent/40 animate-ping opacity-30 z-0"
+										style={{ animationDuration: '4s', animationDelay: '0.8s' }}
+									/>
+									<div
+										aria-hidden="true"
+										className="absolute inset-[-40px] rounded-full border border-primary/20 animate-ping opacity-10 z-0"
+										style={{ animationDuration: '6s', animationDelay: '1.5s' }}
+									/>
+								</>
+							)}
 						</div>
 					</Magnetic>
 				</div>
@@ -152,15 +177,15 @@ export default function Hero() {
 					hidden: {},
 					show: {
 						transition: {
-							staggerChildren: 0.15,
-							delayChildren: 0.6,
+							staggerChildren: shouldReduceMotion ? 0 : 0.15,
+							delayChildren: shouldReduceMotion ? 0 : 0.6,
 						},
 					},
 				}}
 			>
 				<motion.div
 					variants={{
-						hidden: { opacity: 0, y: 20 },
+						hidden: { opacity: 0, y: shouldReduceMotion ? 0 : 20 },
 						show: { opacity: 1, y: 0 },
 					}}
 				>
@@ -179,7 +204,7 @@ export default function Hero() {
 
 				<motion.div
 					variants={{
-						hidden: { opacity: 0, y: 20 },
+						hidden: { opacity: 0, y: shouldReduceMotion ? 0 : 20 },
 						show: { opacity: 1, y: 0 },
 					}}
 				>
@@ -198,7 +223,7 @@ export default function Hero() {
 
 				<motion.div
 					variants={{
-						hidden: { opacity: 0, y: 20 },
+						hidden: { opacity: 0, y: shouldReduceMotion ? 0 : 20 },
 						show: { opacity: 1, y: 0 },
 					}}
 				>
@@ -221,6 +246,7 @@ export default function Hero() {
 
 			{/* Scroll indicator */}
 			<motion.div
+				aria-hidden="true"
 				className="absolute bottom-8 left-1/2 -translate-x-1/2"
 				initial={{ opacity: 0 }}
 				animate={{ opacity: 1 }}
@@ -228,12 +254,12 @@ export default function Hero() {
 			>
 				<motion.div
 					className="w-6 h-10 border-2 border-muted-foreground/30 rounded-full flex justify-center"
-					animate={{ y: [0, 5, 0] }}
+					animate={shouldReduceMotion ? {} : { y: [0, 5, 0] }}
 					transition={{ duration: 2, repeat: Infinity }}
 				>
 					<motion.div
 						className="w-1.5 h-3 bg-primary rounded-full mt-2"
-						animate={{ opacity: [1, 0.5, 1], y: [0, 4, 0] }}
+						animate={shouldReduceMotion ? {} : { opacity: [1, 0.5, 1], y: [0, 4, 0] }}
 						transition={{ duration: 2, repeat: Infinity }}
 					/>
 				</motion.div>

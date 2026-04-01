@@ -8,10 +8,13 @@ export interface ContactInfo {
 	twitter?: string;
 }
 
+export type ContactIconType = 'github' | 'linkedin' | 'mail' | 'phone' | 'map-pin' | 'external-link';
+
 export interface ContactInfoItem {
 	title: string;
 	value: string;
 	href: string;
+	icon: ContactIconType;
 }
 
 export const contactData: ContactInfo = {
@@ -26,16 +29,19 @@ export const getContactInfo = (): ContactInfoItem[] => [
 		title: 'Email',
 		value: contactData.email,
 		href: `mailto:${contactData.email}`,
+		icon: 'mail',
 	},
 	{
 		title: 'LinkedIn',
 		value: contactData.linkedin,
 		href: `https://${contactData.linkedin}`,
+		icon: 'linkedin',
 	},
 	{
 		title: 'GitHub',
 		value: contactData.github,
 		href: `https://${contactData.github}`,
+		icon: 'github',
 	},
 ];
 

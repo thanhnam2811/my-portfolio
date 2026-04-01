@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import { motion } from 'framer-motion';
 import { useState } from 'react';
@@ -12,7 +12,17 @@ import { contentData } from '@/app/_data/content';
 import { getContactInfo } from '@/app/_data/contact';
 import { toast } from 'sonner';
 import Magnetic from '@/components/Magnetic';
-import { Github, Linkedin, Mail, MapPin, Phone, ExternalLink } from 'lucide-react';
+import { Github, Linkedin, Mail, MapPin, Phone, ExternalLink, type LucideIcon } from 'lucide-react';
+import { type ContactIconType } from '@/app/_data/contact';
+
+const iconMap: Record<ContactIconType, LucideIcon> = {
+	github: Github,
+	linkedin: Linkedin,
+	mail: Mail,
+	phone: Phone,
+	'map-pin': MapPin,
+	'external-link': ExternalLink,
+};
 
 const contactHeading = contentData.headings.contact;
 
@@ -94,7 +104,10 @@ export default function Contact() {
 								<input type="hidden" name="_gotcha" style={{ display: 'none !important' }} />
 								<div>
 									<Label htmlFor="name" className="block text-sm font-medium mb-2">
-										Name
+										Name{' '}
+										<span aria-hidden="true" className="text-destructive">
+											*
+										</span>
 									</Label>
 									<Input
 										type="text"
@@ -103,12 +116,16 @@ export default function Contact() {
 										value={formData.name}
 										onChange={handleChange}
 										required
+										autoComplete="name"
 										placeholder="Your name"
 									/>
 								</div>
 								<div>
 									<Label htmlFor="email" className="block text-sm font-medium mb-2">
-										Email
+										Email{' '}
+										<span aria-hidden="true" className="text-destructive">
+											*
+										</span>
 									</Label>
 									<Input
 										type="email"
@@ -117,12 +134,16 @@ export default function Contact() {
 										value={formData.email}
 										onChange={handleChange}
 										required
+										autoComplete="email"
 										placeholder="your.email@example.com"
 									/>
 								</div>
 								<div>
 									<Label htmlFor="message" className="block text-sm font-medium mb-2">
-										Message
+										Message{' '}
+										<span aria-hidden="true" className="text-destructive">
+											*
+										</span>
 									</Label>
 									<Textarea
 										id="message"
@@ -167,17 +188,7 @@ export default function Contact() {
 
 					<div className="grid grid-cols-1 gap-4">
 						{contactInfo.map((info, index) => {
-							const Icon = info.title.toLowerCase().includes('github')
-								? Github
-								: info.title.toLowerCase().includes('linkedin')
-									? Linkedin
-									: info.title.toLowerCase().includes('email')
-										? Mail
-										: info.title.toLowerCase().includes('phone')
-											? Phone
-											: info.title.toLowerCase().includes('location')
-												? MapPin
-												: ExternalLink;
+							const Icon = iconMap[info.icon] ?? ExternalLink;
 
 							return (
 								<motion.div
