@@ -10,7 +10,7 @@ interface ThemeProviderProps {
 
 export function ThemeProvider({ children }: ThemeProviderProps) {
 	return (
-		<NextThemesProvider attribute="class" defaultTheme="dark" enableSystem disableTransitionOnChange={false}>
+		<NextThemesProvider attribute="class" defaultTheme="dark" enableSystem disableTransitionOnChange>
 			{children}
 			<Toaster
 				position="top-right"

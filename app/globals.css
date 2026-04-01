@@ -167,12 +167,17 @@
 	}
 }
 
-/* Smooth transitions for theme changes */
-* {
+/* Smooth transitions for theme changes — scoped to avoid paint storm */
+body,
+header,
+nav,
+main,
+footer,
+section,
+aside {
 	transition:
-		background-color 0.4s cubic-bezier(0.4, 0, 0.2, 1),
-		border-color 0.4s cubic-bezier(0.4, 0, 0.2, 1),
-		box-shadow 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+		background-color 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+		border-color 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 @utility premium-heading {
