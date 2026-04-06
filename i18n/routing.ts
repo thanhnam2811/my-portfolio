@@ -10,6 +10,9 @@ export const routing = defineRouting({
 
 	// Always show the locale prefix in the URL
 	localePrefix: 'always',
+
+	// Disable automatic locale detection to always default to /en/ for new visitors
+	localeDetection: false,
 });
 
 // Lightweight wrappers around Next.js navigation APIs
