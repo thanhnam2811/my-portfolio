@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 
 import { motion } from 'framer-motion';
 import { useState } from 'react';
@@ -7,8 +7,6 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
-import { profileData } from '@/app/_data/profile';
-import { contentData } from '@/app/_data/content';
 import { getContactInfo } from '@/app/_data/contact';
 import { toast } from 'sonner';
 import Magnetic from '@/components/Magnetic';
@@ -24,9 +22,12 @@ const iconMap: Record<ContactIconType, LucideIcon> = {
 	'external-link': ExternalLink,
 };
 
-const contactHeading = contentData.headings.contact;
+import { useTranslations } from 'next-intl';
 
 export default function Contact() {
+	const tContact = useTranslations('Contact');
+	const tProfile = useTranslations('Profile');
+
 	const [formData, setFormData] = useState({
 		name: '',
 		email: '',
@@ -48,18 +49,14 @@ export default function Contact() {
 			});
 
 			if (response.ok) {
-				toast.success('Message sent successfully!', {
-					description: "Thanks for reaching out. I'll get back to you soon.",
-				});
+				toast.success(tContact('success'));
 				setFormData({ name: '', email: '', message: '' });
 			} else {
 				throw new Error('Failed to send message');
 			}
 		} catch (error) {
 			console.error('Error sending message:', error);
-			toast.error('Failed to send message', {
-				description: 'Please try again or contact me directly via email.',
-			});
+			toast.error(tContact('error'));
 		} finally {
 			setIsSubmitting(false);
 		}
@@ -74,6 +71,13 @@ export default function Contact() {
 
 	const contactInfo = getContactInfo();
 
+	// Mapping titles to translation keys
+	const contactTitleKeys: Record<string, string> = {
+		Email: 'email',
+		LinkedIn: 'linkedin',
+		GitHub: 'github',
+	};
+
 	return (
 		<section id="contact" className="w-full max-w-6xl mx-auto py-24 px-4 sm:px-6 lg:px-8">
 			<motion.h2
@@ -83,7 +87,7 @@ export default function Contact() {
 				viewport={{ once: true }}
 				className="text-4xl sm:text-5xl premium-heading mb-16 text-center"
 			>
-				{contactHeading}
+				{tContact('title')}
 			</motion.h2>
 
 			<div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
@@ -96,15 +100,15 @@ export default function Contact() {
 				>
 					<Card className="glass-panel border-white/10 shadow-premium rounded-2xl overflow-hidden">
 						<CardHeader>
-							<CardTitle>{contentData.messages.contactForm.title}</CardTitle>
-							<CardDescription>{contentData.messages.contactForm.description}</CardDescription>
+							<CardTitle>{tContact('formTitle')}</CardTitle>
+							<CardDescription>{tContact('formDescription')}</CardDescription>
 						</CardHeader>
 						<CardContent>
 							<form onSubmit={handleSubmit} className="space-y-4">
 								<input type="hidden" name="_gotcha" style={{ display: 'none !important' }} />
 								<div>
 									<Label htmlFor="name" className="block text-sm font-medium mb-2">
-										Name{' '}
+										{tContact('name')}{' '}
 										<span aria-hidden="true" className="text-destructive">
 											*
 										</span>
@@ -117,12 +121,12 @@ export default function Contact() {
 										onChange={handleChange}
 										required
 										autoComplete="name"
-										placeholder="Your name"
+										placeholder={tContact('name')}
 									/>
 								</div>
 								<div>
 									<Label htmlFor="email" className="block text-sm font-medium mb-2">
-										Email{' '}
+										{tContact('email')}{' '}
 										<span aria-hidden="true" className="text-destructive">
 											*
 										</span>
@@ -140,7 +144,7 @@ export default function Contact() {
 								</div>
 								<div>
 									<Label htmlFor="message" className="block text-sm font-medium mb-2">
-										Message{' '}
+										{tContact('message')}{' '}
 										<span aria-hidden="true" className="text-destructive">
 											*
 										</span>
@@ -152,7 +156,7 @@ export default function Contact() {
 										onChange={handleChange}
 										required
 										rows={5}
-										placeholder="Tell me about your project or opportunity..."
+										placeholder="..."
 									/>
 								</div>
 								<Magnetic strength={0.2} className="w-full">
@@ -161,9 +165,7 @@ export default function Contact() {
 										disabled={isSubmitting}
 										className="w-full h-12 rounded-full font-bold shadow-lg shadow-primary/20 hover:shadow-xl hover:shadow-primary/30 transition-all duration-300"
 									>
-										{isSubmitting
-											? contentData.messages.contactForm.submittingButton
-											: contentData.messages.contactForm.submitButton}
+										{isSubmitting ? tContact('sending') : tContact('send')}
 									</Button>
 								</Magnetic>
 							</form>
@@ -180,15 +182,16 @@ export default function Contact() {
 					className="space-y-8"
 				>
 					<div>
-						<h3 className="section-label mb-6">{contentData.messages.contactSection.workTogether}</h3>
+						<h3 className="section-label mb-6">{tContact('workTogether')}</h3>
 						<p className="text-muted-foreground text-lg mb-8 leading-relaxed italic border-l-2 border-primary/20 pl-6">
-							{profileData.about.contactDescription}
+							{tProfile('contactDescription')}
 						</p>
 					</div>
 
 					<div className="grid grid-cols-1 gap-4">
 						{contactInfo.map((info, index) => {
 							const Icon = iconMap[info.icon] ?? ExternalLink;
+							const titleKey = contactTitleKeys[info.title] || 'email';
 
 							return (
 								<motion.div
@@ -210,7 +213,7 @@ export default function Contact() {
 											</div>
 											<div className="flex-1">
 												<div className="text-xs font-bold uppercase tracking-wider text-primary mb-1">
-													{info.title}
+													{tContact(`Titles.${titleKey}`)}
 												</div>
 												<div className="text-base font-semibold text-foreground/90">
 													{info.value}
@@ -224,9 +227,9 @@ export default function Contact() {
 					</div>
 
 					<div className="pt-4">
-						<h4 className="section-label mb-4">{contentData.messages.contactSection.availability}</h4>
+						<h4 className="section-label mb-4">{tContact('availability')}</h4>
 						<p className="text-muted-foreground bg-primary/5 px-6 py-4 rounded-2xl border border-primary/10 inline-block font-medium">
-							{profileData.availability}
+							{tProfile('availability')}
 						</p>
 					</div>
 				</motion.div>

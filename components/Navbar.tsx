@@ -9,15 +9,19 @@ import { ThemeToggle } from '@/components/ThemeToggle';
 import Magnetic from '@/components/Magnetic';
 import { useLenis } from 'lenis/react';
 
+import { useTranslations } from 'next-intl';
+import LanguageSwitcher from '@/components/LanguageSwitcher';
+
 const navLinks = [
-	{ label: 'About', href: '#about' },
-	{ label: 'Skills', href: '#skills' },
-	{ label: 'Experience', href: '#experience' },
-	{ label: 'Projects', href: '#projects' },
-	{ label: 'Contact', href: '#contact' },
+	{ key: 'about', href: '#about' },
+	{ key: 'skills', href: '#skills' },
+	{ key: 'experience', href: '#experience' },
+	{ key: 'projects', href: '#projects' },
+	{ key: 'contact', href: '#contact' },
 ];
 
 export default function Navbar() {
+	const tNav = useTranslations('Nav');
 	const [isScrolled, setIsScrolled] = useState(false);
 	const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 	const [activeSection, setActiveSection] = useState('');
@@ -129,16 +133,22 @@ export default function Navbar() {
 											whileTap={{ scale: 0.95 }}
 											aria-current={isActive ? 'true' : undefined}
 										>
-											{link.label}
+											{tNav(link.key)}
 										</motion.button>
 									</Magnetic>
 								);
 							})}
-							<ThemeToggle />
+
+							<div className="flex items-center gap-2 ml-2 pl-2 border-l border-white/10">
+								<ThemeToggle />
+								<div className="w-px h-6 bg-white/10 mx-1" />
+								<LanguageSwitcher />
+							</div>
 						</div>
 
-						{/* Mobile Menu Button + Theme Toggle */}
+						{/* Mobile Menu Button + Language + Theme Toggle */}
 						<div className="flex items-center gap-2 md:hidden">
+							<LanguageSwitcher />
 							<ThemeToggle />
 							<Magnetic strength={0.2}>
 								<Button
@@ -183,7 +193,7 @@ export default function Navbar() {
 											whileTap={{ scale: 0.98, boxShadow: 'var(--shadow-neu-inset)' }}
 											aria-current={isActive ? 'true' : undefined}
 										>
-											{link.label}
+											{tNav(link.key)}
 										</motion.button>
 									);
 								})}

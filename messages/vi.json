@@ -1,0 +1,119 @@
+{
+	"Languages": {
+		"en": "EN",
+		"vi": "VI",
+		"english": "English",
+		"vietnamese": "Tiếng Việt"
+	},
+	"Nav": {
+		"about": "Giới thiệu",
+		"skills": "Kỹ năng",
+		"experience": "Kinh nghiệm",
+		"projects": "Dự án",
+		"contact": "Liên hệ"
+	},
+	"Metadata": {
+		"title": "Nam's Portfolio | Lập trình viên Backend",
+		"description": "Lập trình viên Backend chuyên về kiến trúc game server hiệu năng cao và hệ thống thời gian thực. Khám phá các dự án và chuyên môn kỹ thuật của tôi.",
+		"siteName": "Nam's Portfolio"
+	},
+	"Hero": {
+		"im": "Tôi là",
+		"viewProjects": "Xem dự án",
+		"contactMe": "Liên hệ với tôi",
+		"downloadCv": "Tải CV"
+	},
+	"About": {
+		"title": "Về tôi",
+		"highlights": "Điểm nổi bật"
+	},
+	"Skills": {
+		"title": "Kỹ năng & Công nghệ",
+		"Categories": {
+			"backend": "Backend & Runtime",
+			"realtime": "Real-time & Networking",
+			"database": "Cơ sở dữ liệu & Caching",
+			"frontend": "Frontend",
+			"devops": "DevOps & Công cụ"
+		}
+	},
+	"Experience": {
+		"title": "Kinh nghiệm làm việc",
+		"achievements": "Thành tựu chính",
+		"technologies": "Công nghệ",
+		"present": "Hiện tại"
+	},
+	"Projects": {
+		"title": "Dự án tiêu biểu",
+		"viewProject": "Xem dự án",
+		"privateProject": "Dự án nội bộ",
+		"github": "Mã nguồn"
+	},
+	"Contact": {
+		"title": "Liên hệ",
+		"formTitle": "Gửi tin nhắn cho tôi",
+		"formDescription": "Tôi luôn hứng thú với những cơ hội và sự hợp tác mới.",
+		"name": "Họ và tên",
+		"email": "Email",
+		"subject": "Tiêu đề",
+		"message": "Tin nhắn",
+		"send": "Gửi tin nhắn",
+		"sending": "Đang gửi...",
+		"success": "Đã gửi tin nhắn! Tôi sẽ phản hồi sớm nhất có thể.",
+		"error": "Đã có lỗi xảy ra. Vui lòng thử lại.",
+		"workTogether": "Hãy cùng làm việc",
+		"contactInfo": "Thông tin liên hệ",
+		"availability": "Trạng thái",
+		"Titles": {
+			"email": "Email",
+			"linkedin": "LinkedIn",
+			"github": "Mã nguồn"
+		}
+	},
+	"Profile": {
+		"name": "Thanh Nam Thai",
+		"title": "Lập trình viên Backend",
+		"tagLine": "Chuyên gia về kiến trúc game server hiệu năng cao & hệ thống thời gian thực.",
+		"location": "Thành phố Hồ Chí Minh, Việt Nam",
+		"availability": "Sẵn sàng cho các dự án freelance và tư vấn.",
+		"description": "Lập trình viên Backend với hơn 2 năm kinh nghiệm thiết kế và tối ưu hóa hạ tầng game server. Tôi chuyên thiết kế các hệ thống thời gian thực có khả năng mở rộng, độ trễ thấp, xử lý hàng nghìn kết nối đồng thời. Chuyên môn của tôi bao gồm lập trình socket, hệ thống phân tán và tối ưu hóa cơ sở dữ liệu cho các tác vụ game có lưu lượng truy cập lớn.",
+		"contactDescription": "Bạn muốn thảo luận về kiến trúc game server, hệ thống thời gian thực hoặc tối ưu hóa backend? Dù bạn đang xây dựng một game multiplayer, cần tư vấn hạ tầng server, hay muốn tìm kiếm cơ hội hợp tác—hãy kết nối với tôi.",
+		"highlights": [
+			"Hơn 2 năm chuyên sâu về kiến trúc game server",
+			"Thành thạo Node.js, TypeScript, WebSocket, giao thức TCP/UDP",
+			"Kinh nghiệm làm việc với MSSQL, MySQL, Redis cho các lớp dữ liệu hiệu năng cao"
+		]
+	},
+	"Works": {
+		"onky": {
+			"title": "Lập trình viên Backend (Game Server)",
+			"startDate": "2023-05-01",
+			"endDate": null,
+			"location": "Thành phố Hồ Chí Minh, Việt Nam",
+			"description": "Thiết kế và duy trì hạ tầng game server hiệu năng cao cho nhiều sản phẩm game online. Chịu trách nhiệm tối ưu hóa hệ thống thời gian thực, điều chỉnh hiệu năng cơ sở dữ liệu và triển khai các giải pháp backend có khả năng mở rộng.",
+			"achievements": [
+				"Thiết kế và triển khai hơn 20 instance game server xử lý hàng nghìn người chơi đồng thời",
+				"Thiết kế và triển khai hệ thống sự kiện game tùy chỉnh tích hợp vào kiến trúc server cốt lõi",
+				"Xây dựng hệ thống giám sát S.O.S để cảnh báo thời gian thực, tổng hợp log và báo cáo tự động qua Telegram, Discord và Slack",
+				"Tối ưu hóa các thuật toán phân phối ngẫu nhiên, giảm 40% truy vấn cơ sở dữ liệu và cải thiện độ trễ phản hồi",
+				"Refactor hạ tầng logging cốt lõi cho phép gỡ lỗi chi tiết và giải quyết vấn đề nhanh hơn"
+			]
+		}
+	},
+	"ProjectItems": {
+		"vmu": {
+			"title": "VMU Test Exam",
+			"description": "Nền tảng thi trắc nghiệm online cho sinh viên y khoa với ngân hàng câu hỏi toàn diện thuộc nhiều chuyên khoa. Bao gồm bảng điều khiển quản trị với quản lý phiên người dùng thời gian thực qua WebSocket để giám sát và phân tích hiệu suất chuẩn bị thi."
+		},
+		"tinylink": {
+			"title": "TinyLink",
+			"description": "Dịch vụ rút gọn URL tinh gọn tập trung vào hiệu năng cao, độ tin cậy và khả năng quan sát, được thiết kế riêng cho các môi trường Free-tier."
+		}
+	},
+	"Footer": {
+		"quickLinks": "Liên kết nhanh",
+		"connect": "Kết nối",
+		"madeWith": "Được thực hiện với",
+		"using": "bằng"
+	}
+}

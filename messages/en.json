@@ -1,0 +1,119 @@
+{
+	"Languages": {
+		"en": "EN",
+		"vi": "VI",
+		"english": "English",
+		"vietnamese": "Tiếng Việt"
+	},
+	"Nav": {
+		"about": "About",
+		"skills": "Skills",
+		"experience": "Experience",
+		"projects": "Projects",
+		"contact": "Contact"
+	},
+	"Metadata": {
+		"title": "Nam's Portfolio | Backend Developer",
+		"description": "Backend Developer specializing in high-performance game server architecture and real-time systems. Explore my projects and technical expertise.",
+		"siteName": "Nam's Portfolio"
+	},
+	"Hero": {
+		"im": "I'm",
+		"viewProjects": "View Projects",
+		"contactMe": "Contact Me",
+		"downloadCv": "Download CV"
+	},
+	"About": {
+		"title": "About Me",
+		"highlights": "Highlights"
+	},
+	"Skills": {
+		"title": "Skills & Technologies",
+		"Categories": {
+			"backend": "Backend & Runtime",
+			"realtime": "Real-time & Networking",
+			"database": "Databases & Caching",
+			"frontend": "Frontend",
+			"devops": "DevOps & Tools"
+		}
+	},
+	"Experience": {
+		"title": "Work Experience",
+		"achievements": "Key Achievements",
+		"technologies": "Technologies",
+		"present": "Present"
+	},
+	"Projects": {
+		"title": "Featured Projects",
+		"viewProject": "View Project",
+		"privateProject": "Private Project",
+		"github": "GitHub"
+	},
+	"Contact": {
+		"title": "Get In Touch",
+		"formTitle": "Send me a message",
+		"formDescription": "I'm always interested in new opportunities and collaborations.",
+		"name": "Name",
+		"email": "Email",
+		"subject": "Subject",
+		"message": "Message",
+		"send": "Send Message",
+		"sending": "Sending...",
+		"success": "Message sent! I'll get back to you soon.",
+		"error": "Something went wrong. Please try again.",
+		"workTogether": "Let's work together",
+		"contactInfo": "Contact Information",
+		"availability": "Availability",
+		"Titles": {
+			"email": "Email",
+			"linkedin": "LinkedIn",
+			"github": "GitHub"
+		}
+	},
+	"Profile": {
+		"name": "Thanh Nam Thai",
+		"title": "Backend Developer",
+		"tagLine": "Specializing in high-performance game server architecture & real-time systems.",
+		"location": "Ho Chi Minh City, Vietnam",
+		"availability": "Open to freelance projects and consulting opportunities.",
+		"description": "Backend Developer with 2+ years of hands-on experience architecting and optimizing game server infrastructure. I specialize in designing scalable, low-latency real-time systems that handle thousands of concurrent connections. My expertise spans socket programming, distributed systems, and database optimization for high-throughput gaming workloads.",
+		"contactDescription": "Interested in discussing game server architecture, real-time systems, or backend optimization? Whether you're building a multiplayer game, need server infrastructure consulting, or want to explore collaboration opportunities—let's connect.",
+		"highlights": [
+			"2+ years specializing in game server architecture",
+			"Proficient in Node.js, TypeScript, WebSocket, TCP/UDP protocols",
+			"Experience with MSSQL, MySQL, Redis for high-performance data layers"
+		]
+	},
+	"Works": {
+		"onky": {
+			"title": "Backend Developer (Game Server)",
+			"startDate": "2023-05-01",
+			"endDate": null,
+			"location": "Ho Chi Minh City, Vietnam",
+			"description": "Architecting and maintaining high-performance game server infrastructure for multiple online gaming products. Responsible for real-time system optimization, database performance tuning, and implementing scalable backend solutions.",
+			"achievements": [
+				"Architected and deployed 20+ game server instances handling thousands of concurrent players",
+				"Designed and implemented custom game event systems integrated into core server architecture",
+				"Built S.O.S monitoring system for real-time alerting, log aggregation, and automated reporting across Telegram, Discord, and Slack",
+				"Optimized random distribution algorithms, reducing database queries by 40% and improving response latency",
+				"Refactored core logging infrastructure enabling granular debugging and faster issue resolution"
+			]
+		}
+	},
+	"ProjectItems": {
+		"vmu": {
+			"title": "VMU Test Exam",
+			"description": "Online quiz platform for medical students featuring comprehensive question banks across various specialties. Includes admin dashboard with real-time user session management via WebSocket for moderation and performance analytics for exam preparation."
+		},
+		"tinylink": {
+			"title": "TinyLink",
+			"description": "A streamlined URL shortening service focused on high performance, reliability, and observability, specifically designed for Free-tier environments."
+		}
+	},
+	"Footer": {
+		"quickLinks": "Quick Links",
+		"connect": "Connect",
+		"madeWith": "Made with",
+		"using": "using"
+	}
+}

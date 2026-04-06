@@ -2,22 +2,23 @@
 
 import { motion } from 'framer-motion';
 import { Badge } from '@/components/ui/badge';
-import { contentData } from '@/app/_data/content';
 import { skillsData } from '@/app/_data/skills';
-import { Code2, Server, Layout, Wrench, Database, Globe, LucideIcon } from 'lucide-react';
-
-const skillsHeading = contentData.headings.skills;
+import { Code2, Server, Layout, Wrench, Database, LucideIcon } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 
 const categoryIcons: Record<string, LucideIcon> = {
-	'Frontend Development': Layout,
-	'Backend Development': Server,
-	'Programming Languages': Code2,
-	'Databases & Storage': Database,
-	'Tools & Devops': Wrench,
-	Others: Globe,
+	backend: Server,
+	realtime: Code2,
+	database: Database,
+	frontend: Layout,
+	devops: Wrench,
 };
 
+const categoryKeys = ['backend', 'realtime', 'database', 'frontend', 'devops'];
+
 export default function Skills() {
+	const t = useTranslations('Skills');
+
 	return (
 		<section id="skills" className="w-full max-w-7xl mx-auto py-24 px-4 sm:px-6 lg:px-8">
 			<motion.div
@@ -27,13 +28,14 @@ export default function Skills() {
 				viewport={{ once: true }}
 				className="text-center mb-20"
 			>
-				<h2 className="text-4xl sm:text-5xl premium-heading mb-6">{skillsHeading}</h2>
+				<h2 className="text-4xl sm:text-5xl premium-heading mb-6">{t('title')}</h2>
 				<div className="h-1.5 w-24 bg-primary mx-auto rounded-full shadow-[0_0_15px_rgba(var(--primary),0.5)]" />
 			</motion.div>
 
 			<div className="grid grid-cols-1 md:grid-cols-6 lg:grid-cols-12 gap-6">
 				{skillsData.map((category, index) => {
-					const Icon = categoryIcons[category.category] || Code2;
+					const categoryKey = categoryKeys[index] || 'backend';
+					const Icon = categoryIcons[categoryKey] || Code2;
 					// Determine bento spans
 					const spans =
 						index === 0
@@ -48,7 +50,7 @@ export default function Skills() {
 
 					return (
 						<motion.div
-							key={category.category}
+							key={categoryKey}
 							initial={{ opacity: 0, y: 20 }}
 							whileInView={{ opacity: 1, y: 0 }}
 							transition={{ duration: 0.5, delay: index * 0.1 }}
@@ -63,7 +65,7 @@ export default function Skills() {
 									<div className="p-3 rounded-2xl bg-primary/10 text-primary group-hover:bg-primary group-hover:text-primary-foreground transition-all duration-300">
 										<Icon className="w-6 h-6" />
 									</div>
-									<h3 className="text-xl font-bold">{category.category}</h3>
+									<h3 className="text-xl font-bold">{t(`Categories.${categoryKey}`)}</h3>
 								</div>
 
 								<div className="flex flex-wrap gap-2">

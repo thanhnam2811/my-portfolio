@@ -92,4 +92,14 @@
 
 ---
 
-> ✏️ Updated: Mar 26, 2026 - **Phase 8 Completed: Interactive Experience & Lenis Smooth Scroll!** 🚀
+## Phase 10: Multi-language Support (i18n)
+
+- [ ] Setup `next-intl` and i18n middleware
+- [ ] Migrate `app/` to `app/[locale]/` structure
+- [ ] Extract UI strings to translation JSON files
+- [ ] Implement Language Switcher component
+- [ ] Localized SEO & Metadata optimization
+
+---
+
+> ✏️ Updated: Apr 06, 2026 - **Phase 9 Completed! Starting Phase 10: Multi-language Support.** 🌍🚀

@@ -1,14 +1,17 @@
 'use client';
 
 import { Button } from '@/components/ui/button';
-import { ArrowRight, Download } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 import Image from 'next/image';
 import { motion, useReducedMotion } from 'framer-motion';
-import { profileData } from '@/app/_data/profile';
 import Magnetic from '@/components/Magnetic';
 import { useLenis } from 'lenis/react';
 
+import { useTranslations } from 'next-intl';
+
 export default function Hero() {
+	const tHero = useTranslations('Hero');
+	const tProfile = useTranslations('Profile');
 	const lenis = useLenis();
 	const shouldReduceMotion = useReducedMotion();
 
@@ -108,7 +111,7 @@ export default function Hero() {
 						<div className="relative">
 							<Image
 								src="/images/avatar.png"
-								alt={profileData.name}
+								alt={tProfile('name')}
 								width={180}
 								height={180}
 								priority
@@ -146,7 +149,7 @@ export default function Hero() {
 				transition={{ delay: 0.3, duration: 0.5 }}
 				className="text-5xl sm:text-6xl md:text-7xl mb-4 premium-heading bg-gradient-to-r from-foreground via-foreground to-primary bg-clip-text"
 			>
-				I&apos;m <span className="text-primary">{profileData.name}</span>
+				{tHero('im')} <span className="text-primary">{tProfile('name')}</span>
 			</motion.h1>
 
 			<motion.p
@@ -155,7 +158,7 @@ export default function Hero() {
 				transition={{ delay: 0.4, duration: 0.4 }}
 				className="text-xl sm:text-2xl font-semibold tracking-tight text-muted-foreground mb-4"
 			>
-				{profileData.title}
+				{tProfile('title')}
 			</motion.p>
 
 			{/* Tagline */}
@@ -165,7 +168,7 @@ export default function Hero() {
 				transition={{ delay: 0.5, duration: 0.4 }}
 				className="text-muted-foreground max-w-2xl text-lg sm:text-xl mb-12 leading-relaxed"
 			>
-				{profileData.tagLine}
+				{tProfile('tagLine')}
 			</motion.p>
 
 			{/* CTA Buttons */}
@@ -196,7 +199,7 @@ export default function Hero() {
 							onClick={() => handleNavClick('#projects')}
 							aria-label="Scroll to Projects section"
 						>
-							View Projects
+							{tHero('viewProjects')}
 							<ArrowRight className="h-4 w-4" aria-hidden="true" />
 						</Button>
 					</Magnetic>
@@ -216,7 +219,7 @@ export default function Hero() {
 							onClick={() => handleNavClick('#contact')}
 							aria-label="Scroll to Contact section"
 						>
-							Contact Me
+							{tHero('contactMe')}
 						</Button>
 					</Magnetic>
 				</motion.div>
@@ -236,8 +239,8 @@ export default function Hero() {
 							aria-label="Download Thai Thanh Nam's CV"
 						>
 							<a href="/files/MyCV.pdf" download="CV_BE_ThaiThanhNam.pdf">
-								<Download className="h-4 w-4" aria-hidden="true" />
-								Download CV
+								<ArrowRight className="h-4 w-4" aria-hidden="true" />
+								{tHero('downloadCv')}
 							</a>
 						</Button>
 					</Magnetic>
