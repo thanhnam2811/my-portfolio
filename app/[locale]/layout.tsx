@@ -140,7 +140,7 @@ export default async function RootLayout({
 					</a>
 
 					{/* Premium Texture: Grain Overlay */}
-					<div className="fixed inset-0 z-[99] pointer-events-none opacity-[0.03] dark:opacity-[0.05] mix-blend-overlay isolate">
+					<div className="fixed inset-0 z-[99] pointer-events-none opacity-[0.015] dark:opacity-[0.02] mix-blend-overlay isolate">
 						<svg
 							viewBox="0 0 200 200"
 							xmlns="http://www.w3.org/2000/svg"

@@ -1,11 +1,12 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { motion, useSpring, useMotionValue, useReducedMotion } from 'framer-motion';
+import { motion, useSpring, useMotionValue } from 'framer-motion';
 import { useIsTouchDevice } from '@/hooks/use-is-touch-device';
+import { usePrefersReducedMotion } from '@/hooks/use-prefers-reduced-motion';
 
 export default function CustomCursor() {
-	const shouldReduceMotion = useReducedMotion();
+	const shouldReduceMotion = usePrefersReducedMotion();
 	const isTouch = useIsTouchDevice();
 	const [isVisible, setIsVisible] = useState(false);
 
@@ -48,9 +49,8 @@ export default function CustomCursor() {
 
 	return (
 		<>
-			{/* Trace / Ring (Sharper now) */}
 			<motion.div
-				className="fixed top-0 left-0 w-10 h-10 border-2 border-primary/80 rounded-full pointer-events-none z-[9999] shadow-[0_0_15px_rgba(59,130,246,0.3)]"
+				className="fixed top-0 left-0 h-8 w-8 rounded-full border border-primary/55 pointer-events-none z-[9999]"
 				style={{
 					x: ringX,
 					y: ringY,
@@ -60,45 +60,14 @@ export default function CustomCursor() {
 				}}
 			/>
 
-			{/* Precision Dot */}
 			<motion.div
-				className="fixed top-0 left-0 w-2 h-2 bg-primary rounded-full pointer-events-none z-[9999] shadow-[0_0_10px_rgba(59,130,246,0.5)]"
+				className="fixed top-0 left-0 h-1.5 w-1.5 rounded-full bg-primary pointer-events-none z-[9999]"
 				style={{
 					x: dotX,
 					y: dotY,
 					translateX: '-50%',
 					translateY: '-50%',
 					opacity: isVisible ? 1 : 0,
-				}}
-			/>
-
-			{/* Subtle Aura (Large faint glow - more prominent now) */}
-			<motion.div
-				className="fixed top-0 left-0 w-64 h-64 bg-primary/20 rounded-full blur-[80px] pointer-events-none z-[9997]"
-				style={{
-					x: ringX,
-					y: ringY,
-					translateX: '-50%',
-					translateY: '-50%',
-					opacity: isVisible && !shouldReduceMotion ? 0.4 : 0,
-				}}
-				animate={{
-					scale: isVisible && !shouldReduceMotion ? [1, 1.2, 1] : 1,
-				}}
-				transition={{
-					scale: { duration: 4, repeat: Infinity, ease: 'easeInOut' },
-				}}
-			/>
-
-			{/* Inner Glowing Core (Moving with Ring) */}
-			<motion.div
-				className="fixed top-0 left-0 w-16 h-16 bg-primary/30 rounded-full blur-[25px] pointer-events-none z-[9998]"
-				style={{
-					x: ringX,
-					y: ringY,
-					translateX: '-50%',
-					translateY: '-50%',
-					opacity: isVisible && !shouldReduceMotion ? 0.8 : 0,
 				}}
 			/>
 		</>

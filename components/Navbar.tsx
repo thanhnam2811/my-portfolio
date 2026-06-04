@@ -13,10 +13,10 @@ import { useTranslations } from 'next-intl';
 import LanguageSwitcher from '@/components/LanguageSwitcher';
 
 const navLinks = [
-	{ key: 'about', href: '#about' },
-	{ key: 'skills', href: '#skills' },
 	{ key: 'experience', href: '#experience' },
 	{ key: 'projects', href: '#projects' },
+	{ key: 'skills', href: '#skills' },
+	{ key: 'about', href: '#about' },
 	{ key: 'contact', href: '#contact' },
 ];
 
@@ -93,22 +93,21 @@ export default function Navbar() {
 	return (
 		<>
 			<motion.header
-				initial={{ y: -100 }}
+				initial={{ y: -72 }}
 				animate={{ y: 0 }}
-				transition={{ duration: 0.5 }}
+				transition={{ duration: 0.28 }}
 				className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
 					isScrolled
-						? 'bg-background/60 backdrop-blur-xl border-b border-white/20 dark:border-white/10 shadow-sm'
-						: 'bg-transparent'
+						? 'bg-background/92 backdrop-blur-md border-b border-border shadow-sm'
+						: 'bg-background/72 backdrop-blur-sm border-b border-transparent'
 				}`}
 			>
-				<nav className="container mx-auto px-4 sm:px-6 lg:px-8">
+				<nav className="section-shell">
 					<div className="flex items-center justify-between h-16">
-						{/* Logo */}
 						<motion.div
 							onClick={handleLogoClick}
-							whileHover={{ scale: 1.02 }}
-							whileTap={{ scale: 0.98 }}
+							whileHover={{ scale: 1.01 }}
+							whileTap={{ scale: 0.99 }}
 							className="cursor-pointer"
 						>
 							<Magnetic strength={0.2}>
@@ -116,21 +115,20 @@ export default function Navbar() {
 							</Magnetic>
 						</motion.div>
 
-						{/* Desktop Navigation */}
-						<div className="hidden md:flex items-center gap-1">
+						<div className="hidden md:flex items-center gap-1.5">
 							{navLinks.map((link) => {
 								const isActive = activeSection === link.href.slice(1);
 								return (
 									<Magnetic key={link.href} strength={0.3}>
 										<motion.button
 											onClick={() => handleNavClick(link.href)}
-											className={`px-4 py-2 text-sm font-medium transition-colors rounded-md ${
+											className={`px-3 py-2 text-sm font-medium transition-colors rounded-full ${
 												isActive
-													? 'text-primary bg-primary/10'
-													: 'text-muted-foreground hover:text-foreground hover:bg-white/10 dark:hover:bg-white/5'
+													? 'text-foreground bg-foreground/[0.06]'
+													: 'text-muted-foreground hover:text-foreground hover:bg-foreground/[0.04]'
 											}`}
-											whileHover={{ scale: 1.05 }}
-											whileTap={{ scale: 0.95 }}
+											whileHover={{ y: -1 }}
+											whileTap={{ scale: 0.98 }}
 											aria-current={isActive ? 'true' : undefined}
 										>
 											{tNav(link.key)}
@@ -139,14 +137,13 @@ export default function Navbar() {
 								);
 							})}
 
-							<div className="flex items-center gap-2 ml-2 pl-2 border-l border-white/10">
+							<div className="flex items-center gap-2 ml-3 pl-3 border-l border-border">
 								<ThemeToggle />
-								<div className="w-px h-6 bg-white/10 mx-1" />
+								<div className="w-px h-6 bg-border mx-1" />
 								<LanguageSwitcher />
 							</div>
 						</div>
 
-						{/* Mobile Menu Button + Language + Theme Toggle */}
 						<div className="flex items-center gap-2 md:hidden">
 							<LanguageSwitcher />
 							<ThemeToggle />
@@ -157,7 +154,7 @@ export default function Navbar() {
 									onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
 									aria-label={isMobileMenuOpen ? 'Close menu' : 'Open menu'}
 									aria-expanded={isMobileMenuOpen}
-									className="rounded-full hover:bg-white/10"
+									className="rounded-full hover:bg-foreground/[0.05]"
 								>
 									{isMobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
 								</Button>
@@ -175,9 +172,9 @@ export default function Navbar() {
 						animate={{ opacity: 1, y: 0 }}
 						exit={{ opacity: 0, y: -20 }}
 						transition={{ duration: 0.2 }}
-						className="fixed inset-x-0 top-16 z-40 bg-background/60 backdrop-blur-xl border-b border-white/20 dark:border-white/10 md:hidden shadow-lg"
+						className="fixed inset-x-0 top-16 z-40 bg-background/96 backdrop-blur-md border-b border-border md:hidden shadow-lg"
 					>
-						<div className="container mx-auto px-4 py-4">
+						<div className="section-shell py-4">
 							<div className="flex flex-col gap-2">
 								{navLinks.map((link) => {
 									const isActive = activeSection === link.href.slice(1);
@@ -185,12 +182,12 @@ export default function Navbar() {
 										<motion.button
 											key={link.href}
 											onClick={() => handleNavClick(link.href)}
-											className={`px-4 py-3 text-left text-sm font-medium rounded-md transition-colors ${
+											className={`px-4 py-3 text-left text-sm font-medium rounded-2xl transition-colors ${
 												isActive
-													? 'text-primary bg-primary/10'
-													: 'text-muted-foreground hover:text-foreground hover:bg-white/10 dark:hover:bg-white/5'
+													? 'text-foreground bg-foreground/[0.06]'
+													: 'text-muted-foreground hover:text-foreground hover:bg-foreground/[0.04]'
 											}`}
-											whileTap={{ scale: 0.98, boxShadow: 'var(--shadow-neu-inset)' }}
+											whileTap={{ scale: 0.98 }}
 											aria-current={isActive ? 'true' : undefined}
 										>
 											{tNav(link.key)}

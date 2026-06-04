@@ -5,6 +5,7 @@ import { Badge } from '@/components/ui/badge';
 import { skillsData } from '@/app/_data/skills';
 import { Code2, Server, Layout, Wrench, Database, LucideIcon } from 'lucide-react';
 import { useTranslations } from 'next-intl';
+import { usePrefersReducedMotion } from '@/hooks/use-prefers-reduced-motion';
 
 const categoryIcons: Record<string, LucideIcon> = {
 	backend: Server,
@@ -14,80 +15,71 @@ const categoryIcons: Record<string, LucideIcon> = {
 	devops: Wrench,
 };
 
-const categoryKeys = ['backend', 'realtime', 'database', 'frontend', 'devops'];
+const categoryKeys = ['backend', 'realtime', 'database', 'frontend', 'devops'] as const;
 
 export default function Skills() {
 	const t = useTranslations('Skills');
+	const shouldReduceMotion = usePrefersReducedMotion();
 
 	return (
-		<section id="skills" className="w-full max-w-7xl mx-auto py-24 px-4 sm:px-6 lg:px-8">
+		<section id="skills" className="section-shell py-24 sm:py-28">
 			<motion.div
-				initial={{ opacity: 0, y: 20 }}
+				initial={{ opacity: 0, y: 18 }}
 				whileInView={{ opacity: 1, y: 0 }}
-				transition={{ duration: 0.5 }}
-				viewport={{ once: true }}
-				className="text-center mb-20"
+				transition={{ duration: shouldReduceMotion ? 0 : 0.28 }}
+				viewport={{ once: true, amount: 0.2 }}
+				className="max-w-3xl"
 			>
-				<h2 className="text-4xl sm:text-5xl premium-heading mb-6">{t('title')}</h2>
-				<div className="h-1.5 w-24 bg-primary mx-auto rounded-full shadow-[0_0_15px_rgba(var(--primary),0.5)]" />
+				<p className="section-label mb-4">{t('eyebrow')}</p>
+				<h2 className="premium-heading text-4xl sm:text-5xl">{t('title')}</h2>
+				<p className="mt-5 text-base leading-8 text-muted-foreground sm:text-lg">{t('intro')}</p>
 			</motion.div>
 
-			<div className="grid grid-cols-1 md:grid-cols-6 lg:grid-cols-12 gap-6">
+			<div className="mt-12 grid gap-5 lg:grid-cols-2">
 				{skillsData.map((category, index) => {
-					const categoryKey = categoryKeys[index] || 'backend';
-					const Icon = categoryIcons[categoryKey] || Code2;
-					// Determine bento spans
-					const spans =
-						index === 0
-							? 'md:col-span-3 lg:col-span-6'
-							: index === 1
-								? 'md:col-span-3 lg:col-span-6'
-								: index === 2
-									? 'md:col-span-2 lg:col-span-4'
-									: index === 3
-										? 'md:col-span-2 lg:col-span-4'
-										: 'md:col-span-2 lg:col-span-4';
+					const categoryKey = categoryKeys[index] ?? 'backend';
+					const Icon = categoryIcons[categoryKey] ?? Code2;
 
 					return (
-						<motion.div
+						<motion.article
 							key={categoryKey}
-							initial={{ opacity: 0, y: 20 }}
+							initial={{ opacity: 0, y: 18 }}
 							whileInView={{ opacity: 1, y: 0 }}
-							transition={{ duration: 0.5, delay: index * 0.1 }}
-							viewport={{ once: true }}
-							className={`${spans} group relative overflow-hidden glass-panel p-8 rounded-3xl border border-white/10 hover:border-primary/30 transition-all duration-500 hover:shadow-2xl hover:shadow-primary/5`}
+							transition={{
+								duration: shouldReduceMotion ? 0 : 0.28,
+								delay: shouldReduceMotion ? 0 : index * 0.04,
+							}}
+							viewport={{ once: true, amount: 0.16 }}
+							className="editorial-surface p-7 sm:p-8"
 						>
-							{/* Background Decoration */}
-							<div className="absolute -top-10 -right-10 w-32 h-32 bg-primary/5 rounded-full blur-3xl group-hover:bg-primary/10 transition-colors duration-500" />
-
-							<div className="relative z-10">
-								<div className="flex items-center gap-3 mb-6">
-									<div className="p-3 rounded-2xl bg-primary/10 text-primary group-hover:bg-primary group-hover:text-primary-foreground transition-all duration-300">
-										<Icon className="w-6 h-6" />
-									</div>
-									<h3 className="text-xl font-bold">{t(`Categories.${categoryKey}`)}</h3>
+							<div className="flex items-start justify-between gap-4">
+								<div>
+									<p className="section-label mb-3">{t(`Categories.${categoryKey}`)}</p>
+									<h3 className="text-2xl font-semibold tracking-tight text-foreground">
+										{category.category}
+									</h3>
 								</div>
-
-								<div className="flex flex-wrap gap-2">
-									{category.skills.map((skill, sIndex) => (
-										<motion.div
-											key={skill}
-											initial={{ opacity: 0, scale: 0.9 }}
-											whileInView={{ opacity: 1, scale: 1 }}
-											transition={{ duration: 0.3, delay: index * 0.1 + sIndex * 0.05 }}
-											viewport={{ once: true }}
-										>
-											<Badge
-												variant="secondary"
-												className="glass border-white/10 px-4 py-1.5 rounded-full text-sm font-medium hover:bg-primary/10 hover:text-primary transition-colors cursor-default"
-											>
-												{skill}
-											</Badge>
-										</motion.div>
-									))}
+								<div className="rounded-2xl border border-border bg-background/80 p-3 text-primary">
+									<Icon className="h-5 w-5" aria-hidden="true" />
 								</div>
 							</div>
-						</motion.div>
+
+							<p className="mt-4 text-sm leading-7 text-muted-foreground">
+								{t(`Descriptions.${categoryKey}`)}
+							</p>
+
+							<div className="mt-6 flex flex-wrap gap-2.5">
+								{category.skills.map((skill) => (
+									<Badge
+										key={skill}
+										variant="secondary"
+										className="rounded-full border border-border bg-background px-3.5 py-1.5 text-sm font-medium text-foreground/82 shadow-none"
+									>
+										{skill}
+									</Badge>
+								))}
+							</div>
+						</motion.article>
 					);
 				})}
 			</div>

@@ -17,10 +17,10 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
 		<PageTransition>
 			<main>
 				<Hero />
-				<AboutMe />
-				<Skills />
 				<Experience />
 				<Projects />
+				<Skills />
+				<AboutMe />
 				<Contact />
 			</main>
 		</PageTransition>

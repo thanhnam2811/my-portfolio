@@ -3,120 +3,146 @@
 import { motion } from 'framer-motion';
 import Image from 'next/image';
 import Link from 'next/link';
-import { Github } from 'lucide-react';
+import { ArrowUpRight, Github } from 'lucide-react';
 import { projectsData } from '@/app/_data/project';
-import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel';
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import Magnetic from '@/components/Magnetic';
 import { useTranslations } from 'next-intl';
+import { usePrefersReducedMotion } from '@/hooks/use-prefers-reduced-motion';
 
-const projectKeys = ['vmu', 'tinylink'];
+const projectKeys = ['vmu', 'tinylink'] as const;
 
 export default function Projects() {
 	const tProjects = useTranslations('Projects');
 	const tProjectItems = useTranslations('ProjectItems');
+	const shouldReduceMotion = usePrefersReducedMotion();
 
 	return (
-		<section id="projects" className="w-full max-w-6xl mx-auto py-24 px-4 sm:px-6 lg:px-8">
-			<motion.h2
-				initial={{ opacity: 0, y: 20 }}
+		<section id="projects" className="section-shell py-24 sm:py-28">
+			<motion.div
+				initial={{ opacity: 0, y: 18 }}
 				whileInView={{ opacity: 1, y: 0 }}
-				transition={{ duration: 0.5 }}
-				viewport={{ once: true }}
-				className="text-4xl sm:text-5xl premium-heading mb-16 text-center"
+				transition={{ duration: shouldReduceMotion ? 0 : 0.28 }}
+				viewport={{ once: true, amount: 0.2 }}
+				className="max-w-3xl"
 			>
-				{tProjects('title')}
-			</motion.h2>
+				<p className="section-label mb-4">{tProjects('eyebrow')}</p>
+				<h2 className="premium-heading text-4xl sm:text-5xl">{tProjects('title')}</h2>
+				<p className="mt-5 text-base leading-8 text-muted-foreground sm:text-lg">{tProjects('intro')}</p>
+			</motion.div>
 
-			<div className="relative px-4 md:px-16">
-				<Carousel
-					opts={{
-						align: 'start',
-						loop: true,
-					}}
-					className="w-full"
-				>
-					<CarouselContent className="-ml-2 md:-ml-4">
-						{projectsData.map((project, index) => {
-							const projectKey = projectKeys[index] || 'vmu';
+			<div className="mt-12 space-y-6">
+				{projectsData.map((project, index) => {
+					const projectKey = projectKeys[index] ?? 'vmu';
 
-							return (
-								<CarouselItem
-									key={index}
-									className="pl-2 md:pl-4 basis-[85%] sm:basis-[75%] md:basis-1/2 lg:basis-1/3"
-								>
-									<Card className="h-full glass-card border-white/10 shadow-premium hover:border-primary/30 transition-all duration-500 group flex flex-col rounded-2xl overflow-hidden">
-										<CardHeader className="p-0 relative overflow-hidden group/image">
-											<Image
-												src={project.image}
-												alt={project.title}
-												width={600}
-												height={300}
-												className="w-full h-56 object-cover transition-transform duration-700 group-hover/image:scale-110"
-											/>
-											<div className="absolute inset-0 bg-gradient-to-t from-background/80 to-transparent opacity-0 group-hover/image:opacity-100 transition-opacity duration-500" />
-										</CardHeader>
-										<CardContent className="px-6 py-6 flex-grow flex flex-col">
-											<CardTitle className="text-2xl mb-3 font-bold group-hover:text-primary transition-colors">
+					return (
+						<motion.article
+							key={project.title}
+							initial={{ opacity: 0, y: 18 }}
+							whileInView={{ opacity: 1, y: 0 }}
+							transition={{
+								duration: shouldReduceMotion ? 0 : 0.28,
+								delay: shouldReduceMotion ? 0 : index * 0.05,
+							}}
+							viewport={{ once: true, amount: 0.16 }}
+							className="editorial-surface overflow-hidden"
+						>
+							<div className="grid gap-0 lg:grid-cols-[0.9fr_1.1fr]">
+								<div className="relative min-h-64 border-b border-border lg:min-h-full lg:border-b-0 lg:border-r">
+									<Image
+										src={project.image}
+										alt={tProjectItems(`${projectKey}.title`)}
+										fill
+										className="object-cover"
+										sizes="(min-width: 1024px) 40vw, 100vw"
+									/>
+								</div>
+
+								<div className="p-7 sm:p-8 lg:p-10">
+									<div className="flex flex-wrap items-start justify-between gap-4">
+										<div>
+											<p className="section-label mb-3">{tProjects('title')}</p>
+											<h3 className="text-3xl font-semibold tracking-tight text-foreground">
 												{tProjectItems(`${projectKey}.title`)}
-											</CardTitle>
-											<CardDescription className="mb-4 text-sm leading-relaxed text-muted-foreground/90">
-												{tProjectItems(`${projectKey}.description`)}
-											</CardDescription>
-											<div className="flex flex-wrap gap-2 mt-auto">
+											</h3>
+										</div>
+
+										<div className="flex flex-wrap gap-2">
+											{project.link ? (
+												<Link
+													href={project.link}
+													target="_blank"
+													rel="noopener noreferrer"
+													className="inline-flex h-10 items-center justify-center rounded-full bg-primary px-4 text-sm font-semibold text-primary-foreground transition-transform duration-200 hover:-translate-y-0.5"
+												>
+													{tProjects('viewProject')}
+													<ArrowUpRight className="ml-2 h-4 w-4" aria-hidden="true" />
+												</Link>
+											) : (
+												<span className="inline-flex h-10 items-center rounded-full border border-border px-4 text-sm text-muted-foreground">
+													{tProjects('privateProject')}
+												</span>
+											)}
+
+											{project.github && (
+												<Link
+													href={project.github}
+													target="_blank"
+													rel="noopener noreferrer"
+													className="inline-flex h-10 items-center justify-center rounded-full border border-border bg-background px-4 text-sm font-semibold text-foreground transition-transform duration-200 hover:-translate-y-0.5"
+												>
+													<Github className="mr-2 h-4 w-4" aria-hidden="true" />
+													{tProjects('viewSource')}
+												</Link>
+											)}
+										</div>
+									</div>
+
+									<p className="mt-5 text-base leading-8 text-muted-foreground">
+										{tProjectItems(`${projectKey}.description`)}
+									</p>
+
+									<div className="mt-8 grid gap-6">
+										<div>
+											<p className="section-label mb-2">{tProjects('problem')}</p>
+											<p className="text-sm leading-7 text-muted-foreground">
+												{tProjectItems(`${projectKey}.problem`)}
+											</p>
+										</div>
+
+										<div>
+											<p className="section-label mb-2">{tProjects('role')}</p>
+											<p className="text-sm leading-7 text-muted-foreground">
+												{tProjectItems(`${projectKey}.role`)}
+											</p>
+										</div>
+
+										<div>
+											<p className="section-label mb-2">{tProjects('impact')}</p>
+											<p className="text-sm leading-7 text-muted-foreground">
+												{tProjectItems(`${projectKey}.impact`)}
+											</p>
+										</div>
+
+										<div>
+											<p className="section-label mb-3">{tProjects('stack')}</p>
+											<div className="flex flex-wrap gap-2.5">
 												{project.stack.map((tech) => (
 													<Badge
 														key={tech}
 														variant="secondary"
-														className="px-3 py-1 text-[13px] font-medium bg-primary/5 text-primary border-primary/10 hover:bg-primary/10 transition-colors"
+														className="rounded-full border border-border bg-background px-3.5 py-1.5 text-sm font-medium text-foreground/82 shadow-none"
 													>
 														{tech}
 													</Badge>
 												))}
 											</div>
-										</CardContent>
-										<CardFooter className="px-6 pb-6 pt-0 flex gap-4 items-center">
-											{project.link ? (
-												<Magnetic strength={0.3}>
-													<Link
-														href={project.link}
-														target="_blank"
-														rel="noopener noreferrer"
-														className="inline-flex h-9 items-center justify-center rounded-full bg-primary px-4 text-xs font-semibold text-primary-foreground shadow-sm hover:bg-primary/90 transition-all hover:shadow-md hover:-translate-y-0.5"
-														aria-label={`View live demo of ${project.title}`}
-													>
-														{tProjects('viewProject')}
-													</Link>
-												</Magnetic>
-											) : (
-												<span className="text-xs text-muted-foreground font-medium italic px-3 py-1.5 rounded-full border border-border/40">
-													{tProjects('privateProject')}
-												</span>
-											)}
-											{project.github && (
-												<Magnetic strength={0.3}>
-													<Link
-														href={project.github}
-														target="_blank"
-														rel="noopener noreferrer"
-														className="inline-flex h-9 items-center justify-center rounded-full border border-primary/20 bg-background/5 px-4 text-xs font-semibold text-primary transition-all hover:bg-primary/5 hover:border-primary/40 hover:-translate-y-0.5"
-														aria-label={`View GitHub source for ${project.title}`}
-													>
-														<Github className="w-3.5 h-3.5 mr-2" aria-hidden="true" />
-														{tProjects('github')}
-													</Link>
-												</Magnetic>
-											)}
-										</CardFooter>
-									</Card>
-								</CarouselItem>
-							);
-						})}
-					</CarouselContent>
-					<CarouselPrevious className="hidden md:flex -left-12" />
-					<CarouselNext className="hidden md:flex -right-12" />
-				</Carousel>
+										</div>
+									</div>
+								</div>
+							</div>
+						</motion.article>
+					);
+				})}
 			</div>
 		</section>
 	);

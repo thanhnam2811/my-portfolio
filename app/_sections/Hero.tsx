@@ -1,272 +1,147 @@
 'use client';
 
 import { Button } from '@/components/ui/button';
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight, Download } from 'lucide-react';
 import Image from 'next/image';
-import { motion, useReducedMotion } from 'framer-motion';
+import { motion } from 'framer-motion';
 import Magnetic from '@/components/Magnetic';
 import { useLenis } from 'lenis/react';
-
 import { useTranslations } from 'next-intl';
+import { usePrefersReducedMotion } from '@/hooks/use-prefers-reduced-motion';
+
+const capabilityKeys = ['gameServer', 'realtime', 'websocket', 'scalableBackend'] as const;
+const proofKeys = ['experience', 'domain', 'scale', 'availability'] as const;
 
 export default function Hero() {
 	const tHero = useTranslations('Hero');
 	const tProfile = useTranslations('Profile');
 	const lenis = useLenis();
-	const shouldReduceMotion = useReducedMotion();
+	const shouldReduceMotion = usePrefersReducedMotion();
 
 	const handleNavClick = (href: string) => {
 		if (lenis) {
 			lenis.scrollTo(href);
-		} else {
-			const element = document.querySelector(href);
-			if (element) {
-				element.scrollIntoView({ behavior: 'smooth' });
-			}
+			return;
+		}
+
+		const element = document.querySelector(href);
+		if (element) {
+			element.scrollIntoView({ behavior: 'smooth' });
 		}
 	};
 
 	return (
-		<section className="relative w-full min-h-screen flex flex-col items-center justify-center text-center px-4 sm:px-6 lg:px-8 overflow-hidden">
-			{/* Background atmosphere (Refined Aura) */}
-			<div className="absolute inset-0 -z-10 overflow-hidden" aria-hidden="true">
-				<div
-					className="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] bg-primary/10 rounded-full blur-[120px] animate-pulse"
-					style={{ animationDuration: '8s' }}
-				/>
-				<div
-					className="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] bg-accent/10 rounded-full blur-[120px] animate-pulse"
-					style={{ animationDuration: '10s', animationDelay: '2s' }}
-				/>
-			</div>
+		<section className="section-shell relative flex min-h-[90svh] items-center py-28 sm:py-32">
+			<div className="absolute inset-x-4 top-10 -z-10 h-64 rounded-[2.5rem] bg-gradient-to-br from-primary/10 via-transparent to-transparent blur-3xl sm:inset-x-12" />
 
-			{/* Floating shapes */}
-			<motion.div
-				aria-hidden="true"
-				className="absolute top-20 left-10 w-20 h-20 border border-primary/20 rounded-full"
-				animate={
-					shouldReduceMotion
-						? {}
-						: {
-								y: [0, -20, 0],
-								rotate: [0, 180, 360],
-							}
-				}
-				transition={{
-					duration: 8,
-					repeat: Infinity,
-					ease: 'easeInOut',
-				}}
-			/>
-			<motion.div
-				aria-hidden="true"
-				className="absolute bottom-32 right-20 w-16 h-16 border border-accent/20 rounded-lg"
-				animate={
-					shouldReduceMotion
-						? {}
-						: {
-								y: [0, 20, 0],
-								rotate: [0, -180, -360],
-							}
-				}
-				transition={{
-					duration: 10,
-					repeat: Infinity,
-					ease: 'easeInOut',
-				}}
-			/>
-			<motion.div
-				aria-hidden="true"
-				className="absolute top-1/3 right-10 w-12 h-12 bg-primary/10 rounded-full"
-				animate={
-					shouldReduceMotion
-						? {}
-						: {
-								scale: [1, 1.2, 1],
-								opacity: [0.5, 0.8, 0.5],
-							}
-				}
-				transition={{
-					duration: 4,
-					repeat: Infinity,
-					ease: 'easeInOut',
-				}}
-			/>
+			<div className="grid w-full items-center gap-14 lg:grid-cols-[1.25fr_0.75fr]">
+				<motion.div
+					initial={{ opacity: 0, y: 18 }}
+					animate={{ opacity: 1, y: 0 }}
+					transition={{ duration: shouldReduceMotion ? 0 : 0.28 }}
+					className="max-w-3xl"
+				>
+					<p className="section-label mb-5">{tHero('eyebrow')}</p>
+					<h1 className="premium-heading max-w-4xl text-5xl text-foreground sm:text-6xl lg:text-7xl">
+						{tHero('headline')}
+					</h1>
+					<p className="mt-6 max-w-2xl text-lg leading-8 text-muted-foreground sm:text-xl">
+						{tHero('summary')}
+					</p>
 
-			{/* Avatar with glow */}
-			<motion.div
-				initial={{ opacity: 0, scale: 0.8 }}
-				animate={{ opacity: 1, scale: 1 }}
-				transition={{ duration: 0.6 }}
-				className="relative mb-8"
-			>
-				{/* Refined Glow effect */}
-				<div
-					aria-hidden="true"
-					className="absolute -inset-8 bg-gradient-to-tr from-primary/30 via-accent/20 to-primary/30 rounded-full blur-3xl opacity-50 animate-pulse"
-					style={{ animationDuration: '4s' }}
-				/>
-				<div className="relative group p-4">
-					<Magnetic strength={0.15}>
-						<div className="relative">
+					<div className="mt-8 flex flex-wrap items-center gap-3">
+						{capabilityKeys.map((key) => (
+							<span
+								key={key}
+								className="rounded-full border border-border bg-card px-4 py-2 text-sm font-medium text-foreground/85 shadow-sm"
+							>
+								{tHero(`capabilities.${key}`)}
+							</span>
+						))}
+					</div>
+
+					<div className="mt-10 flex flex-wrap gap-4">
+						<Magnetic strength={0.25}>
+							<Button
+								size="lg"
+								className="h-12 rounded-full px-7 text-sm font-semibold shadow-md transition-transform duration-200 hover:-translate-y-0.5"
+								onClick={() => handleNavClick('#projects')}
+							>
+								{tHero('primaryCta')}
+								<ArrowRight className="ml-2 h-4 w-4" aria-hidden="true" />
+							</Button>
+						</Magnetic>
+
+						<Magnetic strength={0.2}>
+							<Button
+								size="lg"
+								variant="outline"
+								className="h-12 rounded-full border-border bg-card px-7 text-sm font-semibold shadow-sm transition-transform duration-200 hover:-translate-y-0.5"
+								asChild
+							>
+								<a href="/files/MyCV.pdf" download="CV_BE_ThaiThanhNam.pdf">
+									<Download className="mr-2 h-4 w-4" aria-hidden="true" />
+									{tHero('secondaryCta')}
+								</a>
+							</Button>
+						</Magnetic>
+
+						<Magnetic strength={0.2}>
+							<Button
+								size="lg"
+								variant="ghost"
+								className="h-12 rounded-full px-5 text-sm font-semibold text-muted-foreground transition-colors hover:bg-foreground/[0.04] hover:text-foreground"
+								onClick={() => handleNavClick('#contact')}
+							>
+								{tHero('tertiaryCta')}
+							</Button>
+						</Magnetic>
+					</div>
+				</motion.div>
+
+				<motion.div
+					initial={{ opacity: 0, y: 18 }}
+					animate={{ opacity: 1, y: 0 }}
+					transition={{ duration: shouldReduceMotion ? 0 : 0.28, delay: shouldReduceMotion ? 0 : 0.08 }}
+					className="editorial-surface relative overflow-hidden p-6 sm:p-8"
+				>
+					<div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-primary/40 to-transparent" />
+
+					<div className="flex items-center gap-5 border-b border-border pb-6">
+						<div className="relative h-20 w-20 overflow-hidden rounded-3xl border border-border bg-muted">
 							<Image
 								src="/images/avatar.png"
 								alt={tProfile('name')}
-								width={180}
-								height={180}
+								fill
 								priority
-								className="rounded-full border-[6px] border-background/50 shadow-premium relative z-10 backdrop-blur-sm transition-transform duration-500 group-hover:scale-105 cursor-pointer"
+								className="object-cover"
+								sizes="80px"
 							/>
-							{/* Animated Rings */}
-							{!shouldReduceMotion && (
-								<>
-									<div
-										aria-hidden="true"
-										className="absolute inset-0 rounded-full border-2 border-primary/60 animate-ping opacity-60 z-0"
-										style={{ animationDuration: '2.5s' }}
-									/>
-									<div
-										aria-hidden="true"
-										className="absolute inset-[-20px] rounded-full border-2 border-accent/40 animate-ping opacity-30 z-0"
-										style={{ animationDuration: '4s', animationDelay: '0.8s' }}
-									/>
-									<div
-										aria-hidden="true"
-										className="absolute inset-[-40px] rounded-full border border-primary/20 animate-ping opacity-10 z-0"
-										style={{ animationDuration: '6s', animationDelay: '1.5s' }}
-									/>
-								</>
-							)}
 						</div>
-					</Magnetic>
-				</div>
-			</motion.div>
+						<div>
+							<p className="text-xl font-semibold tracking-tight">{tProfile('name')}</p>
+							<p className="mt-1 text-sm text-muted-foreground">{tProfile('title')}</p>
+							<p className="mt-2 text-sm text-foreground/80">{tProfile('location')}</p>
+						</div>
+					</div>
 
-			{/* Name + Title */}
-			<motion.h1
-				initial={{ opacity: 0, y: 20 }}
-				animate={{ opacity: 1, y: 0 }}
-				transition={{ delay: 0.3, duration: 0.5 }}
-				className="text-5xl sm:text-6xl md:text-7xl mb-4 premium-heading bg-gradient-to-r from-foreground via-foreground to-primary bg-clip-text"
-			>
-				{tHero('im')} <span className="text-primary">{tProfile('name')}</span>
-			</motion.h1>
+					<div className="pt-6">
+						<p className="section-label mb-4">{tHero('proofTitle')}</p>
+						<div className="grid gap-3 sm:grid-cols-2">
+							{proofKeys.map((key) => (
+								<div key={key} className="rounded-2xl border border-border bg-background/70 p-4">
+									<p className="text-sm leading-6 text-foreground/88">{tHero(`proofItems.${key}`)}</p>
+								</div>
+							))}
+						</div>
+					</div>
 
-			<motion.p
-				initial={{ opacity: 0, y: 10 }}
-				animate={{ opacity: 1, y: 0 }}
-				transition={{ delay: 0.4, duration: 0.4 }}
-				className="text-xl sm:text-2xl font-semibold tracking-tight text-muted-foreground mb-4"
-			>
-				{tProfile('title')}
-			</motion.p>
-
-			{/* Tagline */}
-			<motion.p
-				initial={{ opacity: 0, y: 10 }}
-				animate={{ opacity: 1, y: 0 }}
-				transition={{ delay: 0.5, duration: 0.4 }}
-				className="text-muted-foreground max-w-2xl text-lg sm:text-xl mb-12 leading-relaxed"
-			>
-				{tProfile('tagLine')}
-			</motion.p>
-
-			{/* CTA Buttons */}
-			<motion.div
-				className="flex flex-wrap justify-center gap-4"
-				initial="hidden"
-				animate="show"
-				variants={{
-					hidden: {},
-					show: {
-						transition: {
-							staggerChildren: shouldReduceMotion ? 0 : 0.15,
-							delayChildren: shouldReduceMotion ? 0 : 0.6,
-						},
-					},
-				}}
-			>
-				<motion.div
-					variants={{
-						hidden: { opacity: 0, y: shouldReduceMotion ? 0 : 20 },
-						show: { opacity: 1, y: 0 },
-					}}
-				>
-					<Magnetic strength={0.3}>
-						<Button
-							size="lg"
-							className="h-12 px-8 rounded-full gap-2 shadow-lg shadow-primary/20 hover:shadow-xl hover:shadow-primary/30 hover:-translate-y-0.5 transition-all duration-300 font-semibold"
-							onClick={() => handleNavClick('#projects')}
-							aria-label="Scroll to Projects section"
-						>
-							{tHero('viewProjects')}
-							<ArrowRight className="h-4 w-4" aria-hidden="true" />
-						</Button>
-					</Magnetic>
+					<div className="mt-6 rounded-2xl border border-border bg-primary/[0.05] p-4">
+						<p className="section-label mb-2">{tHero('trustLabel')}</p>
+						<p className="text-sm leading-6 text-muted-foreground">{tProfile('tagLine')}</p>
+					</div>
 				</motion.div>
-
-				<motion.div
-					variants={{
-						hidden: { opacity: 0, y: shouldReduceMotion ? 0 : 20 },
-						show: { opacity: 1, y: 0 },
-					}}
-				>
-					<Magnetic strength={0.3}>
-						<Button
-							size="lg"
-							variant="outline"
-							className="h-12 px-8 rounded-full gap-2 glass border-primary/20 hover:bg-primary/10 hover:border-primary/40 hover:-translate-y-0.5 transition-all duration-300 font-semibold"
-							onClick={() => handleNavClick('#contact')}
-							aria-label="Scroll to Contact section"
-						>
-							{tHero('contactMe')}
-						</Button>
-					</Magnetic>
-				</motion.div>
-
-				<motion.div
-					variants={{
-						hidden: { opacity: 0, y: shouldReduceMotion ? 0 : 20 },
-						show: { opacity: 1, y: 0 },
-					}}
-				>
-					<Magnetic strength={0.3}>
-						<Button
-							size="lg"
-							variant="ghost"
-							className="h-12 px-8 rounded-full gap-2 hover:bg-accent/5 hover:-translate-y-0.5 transition-all duration-300"
-							asChild
-							aria-label="Download Thai Thanh Nam's CV"
-						>
-							<a href="/files/MyCV.pdf" download="CV_BE_ThaiThanhNam.pdf">
-								<ArrowRight className="h-4 w-4" aria-hidden="true" />
-								{tHero('downloadCv')}
-							</a>
-						</Button>
-					</Magnetic>
-				</motion.div>
-			</motion.div>
-
-			{/* Scroll indicator */}
-			<motion.div
-				aria-hidden="true"
-				className="absolute bottom-8 left-1/2 -translate-x-1/2"
-				initial={{ opacity: 0 }}
-				animate={{ opacity: 1 }}
-				transition={{ delay: 1.5 }}
-			>
-				<motion.div
-					className="w-6 h-10 border-2 border-muted-foreground/30 rounded-full flex justify-center"
-					animate={shouldReduceMotion ? {} : { y: [0, 5, 0] }}
-					transition={{ duration: 2, repeat: Infinity }}
-				>
-					<motion.div
-						className="w-1.5 h-3 bg-primary rounded-full mt-2"
-						animate={shouldReduceMotion ? {} : { opacity: [1, 0.5, 1], y: [0, 4, 0] }}
-						transition={{ duration: 2, repeat: Infinity }}
-					/>
-				</motion.div>
-			</motion.div>
+			</div>
 		</section>
 	);
 }

@@ -9,9 +9,10 @@ import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { getContactInfo } from '@/app/_data/contact';
 import { toast } from 'sonner';
-import Magnetic from '@/components/Magnetic';
-import { Github, Linkedin, Mail, MapPin, Phone, ExternalLink, type LucideIcon } from 'lucide-react';
+import { Github, Linkedin, Mail, Phone, MapPin, ExternalLink, type LucideIcon } from 'lucide-react';
 import { type ContactIconType } from '@/app/_data/contact';
+import { useTranslations } from 'next-intl';
+import { usePrefersReducedMotion } from '@/hooks/use-prefers-reduced-motion';
 
 const iconMap: Record<ContactIconType, LucideIcon> = {
 	github: Github,
@@ -22,11 +23,10 @@ const iconMap: Record<ContactIconType, LucideIcon> = {
 	'external-link': ExternalLink,
 };
 
-import { useTranslations } from 'next-intl';
-
 export default function Contact() {
 	const tContact = useTranslations('Contact');
 	const tProfile = useTranslations('Profile');
+	const shouldReduceMotion = usePrefersReducedMotion();
 
 	const [formData, setFormData] = useState({
 		name: '',
@@ -71,7 +71,6 @@ export default function Contact() {
 
 	const contactInfo = getContactInfo();
 
-	// Mapping titles to translation keys
 	const contactTitleKeys: Record<string, string> = {
 		Email: 'email',
 		LinkedIn: 'linkedin',
@@ -79,39 +78,94 @@ export default function Contact() {
 	};
 
 	return (
-		<section id="contact" className="w-full max-w-6xl mx-auto py-24 px-4 sm:px-6 lg:px-8">
-			<motion.h2
-				initial={{ opacity: 0, y: 20 }}
+		<section id="contact" className="section-shell py-24 sm:py-28">
+			<motion.div
+				initial={{ opacity: 0, y: 18 }}
 				whileInView={{ opacity: 1, y: 0 }}
-				transition={{ duration: 0.5 }}
-				viewport={{ once: true }}
-				className="text-4xl sm:text-5xl premium-heading mb-16 text-center"
+				transition={{ duration: shouldReduceMotion ? 0 : 0.28 }}
+				viewport={{ once: true, amount: 0.2 }}
+				className="max-w-3xl"
 			>
-				{tContact('title')}
-			</motion.h2>
+				<p className="section-label mb-4">{tContact('eyebrow')}</p>
+				<h2 className="premium-heading text-4xl sm:text-5xl">{tContact('title')}</h2>
+			</motion.div>
 
-			<div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-				{/* Contact Form */}
+			<div className="mt-12 grid gap-6 lg:grid-cols-[0.9fr_1.1fr]">
 				<motion.div
-					initial={{ opacity: 0, x: -20 }}
-					whileInView={{ opacity: 1, x: 0 }}
-					transition={{ duration: 0.5 }}
-					viewport={{ once: true }}
+					initial={{ opacity: 0, y: 18 }}
+					whileInView={{ opacity: 1, y: 0 }}
+					transition={{ duration: shouldReduceMotion ? 0 : 0.28, delay: shouldReduceMotion ? 0 : 0.04 }}
+					viewport={{ once: true, amount: 0.16 }}
+					className="editorial-surface p-7 sm:p-8"
 				>
-					<Card className="glass-panel border-white/10 shadow-premium rounded-2xl overflow-hidden">
+					<h3 className="text-2xl font-semibold tracking-tight">{tContact('leadTitle')}</h3>
+					<p className="mt-4 text-base leading-8 text-muted-foreground">{tContact('lead')}</p>
+
+					<div className="mt-8 rounded-3xl border border-border bg-background/70 p-5">
+						<p className="section-label mb-3">{tContact('directTitle')}</p>
+						<p className="text-sm leading-7 text-muted-foreground">{tContact('directDescription')}</p>
+					</div>
+
+					<div className="mt-6 grid gap-3">
+						{contactInfo.map((info) => {
+							const Icon = iconMap[info.icon] ?? ExternalLink;
+							const titleKey = contactTitleKeys[info.title] || 'email';
+
+							return (
+								<a
+									key={info.title}
+									href={info.href}
+									target={info.href.startsWith('http') ? '_blank' : undefined}
+									rel={info.href.startsWith('http') ? 'noopener noreferrer' : undefined}
+									className="flex items-center gap-4 rounded-3xl border border-border bg-background/70 px-5 py-4 transition-colors hover:border-primary/40"
+								>
+									<div className="rounded-2xl border border-border bg-card p-3 text-primary">
+										<Icon className="h-5 w-5" aria-hidden="true" />
+									</div>
+									<div>
+										<p className="section-label mb-1">{tContact(`Titles.${titleKey}`)}</p>
+										<p className="text-sm font-medium text-foreground/88">{info.value}</p>
+									</div>
+								</a>
+							);
+						})}
+					</div>
+
+					<div className="mt-6 grid gap-3 sm:grid-cols-2">
+						<div className="rounded-3xl border border-border bg-background/70 p-5">
+							<p className="section-label mb-2">{tContact('availability')}</p>
+							<p className="text-sm leading-7 text-muted-foreground">{tContact('availabilityValue')}</p>
+						</div>
+						<div className="rounded-3xl border border-border bg-background/70 p-5">
+							<p className="section-label mb-2">{tContact('responseTime')}</p>
+							<p className="text-sm leading-7 text-muted-foreground">{tContact('responseTimeValue')}</p>
+						</div>
+					</div>
+
+					<p className="mt-6 text-sm leading-7 text-muted-foreground">{tProfile('contactDescription')}</p>
+				</motion.div>
+
+				<motion.div
+					initial={{ opacity: 0, y: 18 }}
+					whileInView={{ opacity: 1, y: 0 }}
+					transition={{ duration: shouldReduceMotion ? 0 : 0.28, delay: shouldReduceMotion ? 0 : 0.08 }}
+					viewport={{ once: true, amount: 0.16 }}
+				>
+					<Card className="editorial-surface border-none shadow-none">
 						<CardHeader>
-							<CardTitle>{tContact('formTitle')}</CardTitle>
-							<CardDescription>{tContact('formDescription')}</CardDescription>
+							<CardTitle className="text-2xl font-semibold tracking-tight">
+								{tContact('formTitle')}
+							</CardTitle>
+							<CardDescription className="text-sm leading-7 text-muted-foreground">
+								{tContact('formDescription')}
+							</CardDescription>
 						</CardHeader>
 						<CardContent>
-							<form onSubmit={handleSubmit} className="space-y-4">
+							<form onSubmit={handleSubmit} className="space-y-5">
 								<input type="hidden" name="_gotcha" style={{ display: 'none !important' }} />
 								<div>
-									<Label htmlFor="name" className="block text-sm font-medium mb-2">
-										{tContact('name')}{' '}
-										<span aria-hidden="true" className="text-destructive">
-											*
-										</span>
+									<Label htmlFor="name" className="mb-2 block text-sm font-medium">
+										{tContact('name')}
 									</Label>
 									<Input
 										type="text"
@@ -122,14 +176,12 @@ export default function Contact() {
 										required
 										autoComplete="name"
 										placeholder={tContact('name')}
+										className="h-12 rounded-2xl border-border bg-background"
 									/>
 								</div>
 								<div>
-									<Label htmlFor="email" className="block text-sm font-medium mb-2">
-										{tContact('email')}{' '}
-										<span aria-hidden="true" className="text-destructive">
-											*
-										</span>
+									<Label htmlFor="email" className="mb-2 block text-sm font-medium">
+										{tContact('email')}
 									</Label>
 									<Input
 										type="email"
@@ -140,14 +192,12 @@ export default function Contact() {
 										required
 										autoComplete="email"
 										placeholder="your.email@example.com"
+										className="h-12 rounded-2xl border-border bg-background"
 									/>
 								</div>
 								<div>
-									<Label htmlFor="message" className="block text-sm font-medium mb-2">
-										{tContact('message')}{' '}
-										<span aria-hidden="true" className="text-destructive">
-											*
-										</span>
+									<Label htmlFor="message" className="mb-2 block text-sm font-medium">
+										{tContact('message')}
 									</Label>
 									<Textarea
 										id="message"
@@ -155,83 +205,21 @@ export default function Contact() {
 										value={formData.message}
 										onChange={handleChange}
 										required
-										rows={5}
+										rows={6}
 										placeholder="..."
+										className="rounded-3xl border-border bg-background"
 									/>
 								</div>
-								<Magnetic strength={0.2} className="w-full">
-									<Button
-										type="submit"
-										disabled={isSubmitting}
-										className="w-full h-12 rounded-full font-bold shadow-lg shadow-primary/20 hover:shadow-xl hover:shadow-primary/30 transition-all duration-300"
-									>
-										{isSubmitting ? tContact('sending') : tContact('send')}
-									</Button>
-								</Magnetic>
+								<Button
+									type="submit"
+									disabled={isSubmitting}
+									className="h-12 w-full rounded-full text-sm font-semibold shadow-md transition-transform duration-200 hover:-translate-y-0.5"
+								>
+									{isSubmitting ? tContact('sending') : tContact('send')}
+								</Button>
 							</form>
 						</CardContent>
 					</Card>
-				</motion.div>
-
-				{/* Contact Information */}
-				<motion.div
-					initial={{ opacity: 0, x: 20 }}
-					whileInView={{ opacity: 1, x: 0 }}
-					transition={{ duration: 0.5 }}
-					viewport={{ once: true }}
-					className="space-y-8"
-				>
-					<div>
-						<h3 className="section-label mb-6">{tContact('workTogether')}</h3>
-						<p className="text-muted-foreground text-lg mb-8 leading-relaxed italic border-l-2 border-primary/20 pl-6">
-							{tProfile('contactDescription')}
-						</p>
-					</div>
-
-					<div className="grid grid-cols-1 gap-4">
-						{contactInfo.map((info, index) => {
-							const Icon = iconMap[info.icon] ?? ExternalLink;
-							const titleKey = contactTitleKeys[info.title] || 'email';
-
-							return (
-								<motion.div
-									key={info.title}
-									initial={{ opacity: 0, y: 10 }}
-									whileInView={{ opacity: 1, y: 0 }}
-									transition={{ duration: 0.3, delay: index * 0.1 }}
-									viewport={{ once: true }}
-								>
-									<Magnetic strength={0.15} className="w-full">
-										<a
-											href={info.href}
-											target={info.href.startsWith('http') ? '_blank' : undefined}
-											rel={info.href.startsWith('http') ? 'noopener noreferrer' : undefined}
-											className="flex items-center gap-5 p-5 rounded-2xl glass-card border-white/10 shadow-sm hover:shadow-premium hover:border-primary/30 transition-all duration-300"
-										>
-											<div className="p-3.5 rounded-xl bg-primary/10 text-primary group-hover:bg-primary group-hover:text-primary-foreground transition-all duration-300">
-												<Icon className="w-6 h-6" aria-hidden="true" />
-											</div>
-											<div className="flex-1">
-												<div className="text-xs font-bold uppercase tracking-wider text-primary mb-1">
-													{tContact(`Titles.${titleKey}`)}
-												</div>
-												<div className="text-base font-semibold text-foreground/90">
-													{info.value}
-												</div>
-											</div>
-										</a>
-									</Magnetic>
-								</motion.div>
-							);
-						})}
-					</div>
-
-					<div className="pt-4">
-						<h4 className="section-label mb-4">{tContact('availability')}</h4>
-						<p className="text-muted-foreground bg-primary/5 px-6 py-4 rounded-2xl border border-primary/10 inline-block font-medium">
-							{tProfile('availability')}
-						</p>
-					</div>
 				</motion.div>
 			</div>
 		</section>

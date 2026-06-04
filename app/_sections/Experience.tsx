@@ -2,23 +2,23 @@
 
 import { motion } from 'framer-motion';
 import { Badge } from '@/components/ui/badge';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { experienceData } from '@/app/_data/experience';
 import { useTranslations, useFormatter } from 'next-intl';
+import { usePrefersReducedMotion } from '@/hooks/use-prefers-reduced-motion';
 
 export default function Experience() {
 	const tExperience = useTranslations('Experience');
 	const tWorks = useTranslations('Works');
 	const format = useFormatter();
+	const shouldReduceMotion = usePrefersReducedMotion();
 
-	// Mapping company names to translation keys
 	const companyKeys: Record<string, string> = {
 		ONKY: 'onky',
 	};
 
 	const formatDate = (dateString: unknown) => {
 		if (typeof dateString !== 'string') return tExperience('present');
-		const dateElement = new Date(dateString as string);
+		const dateElement = new Date(dateString);
 		if (isNaN(dateElement.getTime())) return tExperience('present');
 
 		return format.dateTime(dateElement, {
@@ -28,116 +28,126 @@ export default function Experience() {
 	};
 
 	return (
-		<section id="experience" className="w-full max-w-6xl mx-auto py-24 px-4 sm:px-6 lg:px-8">
-			<motion.h2
-				initial={{ opacity: 0, y: 20 }}
+		<section id="experience" className="section-shell py-24 sm:py-28">
+			<motion.div
+				initial={{ opacity: 0, y: 18 }}
 				whileInView={{ opacity: 1, y: 0 }}
-				transition={{ duration: 0.5 }}
-				viewport={{ once: true }}
-				className="text-4xl sm:text-5xl premium-heading mb-12 text-center"
+				transition={{ duration: shouldReduceMotion ? 0 : 0.28 }}
+				viewport={{ once: true, amount: 0.2 }}
+				className="max-w-3xl"
 			>
-				{tExperience('title')}
-			</motion.h2>
+				<p className="section-label mb-4">{tExperience('eyebrow')}</p>
+				<h2 className="premium-heading text-4xl sm:text-5xl">{tExperience('title')}</h2>
+				<p className="mt-5 text-base leading-8 text-muted-foreground sm:text-lg">{tExperience('intro')}</p>
+			</motion.div>
 
-			<div className="space-y-8">
+			<div className="mt-12 space-y-8">
 				{experienceData.map((experience, index) => {
 					const workKey = companyKeys[experience.company] || 'onky';
-					const startDate = tWorks.raw(`${workKey}.startDate`);
-					const endDate = tWorks.raw(`${workKey}.endDate`);
 
 					return (
-						<motion.div
-							key={index}
-							initial={{ opacity: 0, y: 20 }}
+						<motion.article
+							key={experience.company}
+							initial={{ opacity: 0, y: 18 }}
 							whileInView={{ opacity: 1, y: 0 }}
-							transition={{ duration: 0.5, delay: index * 0.1 }}
-							viewport={{ once: true }}
-							whileHover={{ y: -5 }}
+							transition={{
+								duration: shouldReduceMotion ? 0 : 0.28,
+								delay: shouldReduceMotion ? 0 : index * 0.04,
+							}}
+							viewport={{ once: true, amount: 0.16 }}
+							className="editorial-surface overflow-hidden p-8 sm:p-10"
 						>
-							<Card className="glass-panel border-white/10 shadow-2xl hover:border-primary/30 transition-all duration-500 rounded-3xl overflow-hidden relative group">
-								{/* Subtle Left Indicator */}
-								<div className="absolute left-0 top-0 bottom-0 w-1 bg-primary/20 group-hover:bg-primary transition-colors duration-500" />
-
-								<CardHeader className="pb-2">
-									<div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-										<div>
-											<CardTitle className="text-2xl font-bold tracking-tight">
-												{tWorks(`${workKey}.title`)}
-											</CardTitle>
-											<CardDescription className="text-lg font-semibold text-primary/80 mt-1">
-												{experience.company}
-											</CardDescription>
-										</div>
-										<div
-											className="flex flex-col md:items-end text-sm text-muted-foreground bg-primary/5 px-4 py-2 rounded-2xl border border-primary/10"
-											aria-label={`Period: ${formatDate(startDate)} - ${formatDate(endDate)}, Location: ${tWorks(`${workKey}.location`)}`}
-										>
-											<div className="font-bold text-foreground/80 lowercase">
-												<span className="capitalize">{formatDate(startDate)}</span> -{' '}
-												<span className="capitalize">{formatDate(endDate)}</span>
-											</div>
-											<div className="flex items-center gap-1 mt-1">
-												<span
-													className="w-1.5 h-1.5 rounded-full bg-primary/40"
-													aria-hidden="true"
-												/>
-												{tWorks(`${workKey}.location`)}
-											</div>
-										</div>
-									</div>
-								</CardHeader>
-								<CardContent className="space-y-6 pt-4">
-									<p className="text-muted-foreground leading-relaxed italic border-l-2 border-primary/10 pl-4">
+							<div className="flex flex-col gap-6 border-b border-border pb-8 lg:flex-row lg:items-end lg:justify-between">
+								<div>
+									<p className="section-label mb-3">{experience.company}</p>
+									<h3 className="text-3xl font-semibold tracking-tight text-foreground">
+										{tWorks(`${workKey}.title`)}
+									</h3>
+									<p className="mt-3 max-w-3xl text-base leading-7 text-muted-foreground">
 										{tWorks(`${workKey}.description`)}
 									</p>
+								</div>
 
-									<div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-										<div>
-											<h4 className="section-label mb-4 flex items-center gap-2">
-												<span className="w-4 h-px bg-primary/40" aria-hidden="true" />
-												{tExperience('achievements')}
-											</h4>
-											<ul className="space-y-3">
-												{(tWorks.raw(`${workKey}.achievements`) as string[]).map(
-													(achievement, achievementIndex) => (
-														<li
-															key={achievementIndex}
-															className="text-sm text-muted-foreground flex items-start group/item"
-														>
-															<span
-																className="text-primary mr-3 mt-1.5 w-1.5 h-1.5 rounded-full bg-primary/20 group-hover/item:bg-primary transition-colors"
-																aria-hidden="true"
-															/>
-															<span className="group-hover/item:text-foreground transition-colors">
-																{achievement}
-															</span>
-														</li>
-													),
-												)}
-											</ul>
-										</div>
+								<div className="rounded-3xl border border-border bg-background/80 px-5 py-4 text-sm text-muted-foreground">
+									<p className="font-medium text-foreground">
+										<span className="capitalize">{formatDate(experience.startDate)}</span> -{' '}
+										<span className="capitalize">{formatDate(experience.endDate)}</span>
+									</p>
+									<p className="mt-1">{tWorks(`${workKey}.location`)}</p>
+								</div>
+							</div>
 
-										<div>
-											<h4 className="section-label mb-4 flex items-center gap-2">
-												<span className="w-4 h-px bg-primary/40" aria-hidden="true" />
-												{tExperience('technologies')}
-											</h4>
-											<div className="flex flex-wrap gap-2">
-												{experience.technologies.map((tech) => (
-													<Badge
-														key={tech}
-														variant="secondary"
-														className="px-3 py-1 text-xs font-medium bg-primary/5 text-primary border-primary/10 hover:bg-primary/20 hover:border-primary/30 transition-all"
+							<div className="grid gap-8 pt-8 lg:grid-cols-[1.05fr_0.95fr]">
+								<div className="space-y-8">
+									<div>
+										<p className="section-label mb-3">{tExperience('scope')}</p>
+										<p className="text-base leading-7 text-muted-foreground">
+											{tWorks(`${workKey}.scope`)}
+										</p>
+									</div>
+
+									<div>
+										<p className="section-label mb-3">{tExperience('impact')}</p>
+										<p className="text-base leading-7 text-muted-foreground">
+											{tWorks(`${workKey}.impact`)}
+										</p>
+									</div>
+
+									<div>
+										<p className="section-label mb-3">{tExperience('achievements')}</p>
+										<ul className="space-y-3">
+											{(tWorks.raw(`${workKey}.achievements`) as string[]).map(
+												(achievement, achievementIndex) => (
+													<li
+														key={achievementIndex}
+														className="flex gap-3 text-sm leading-7 text-muted-foreground"
 													>
-														{tech}
-													</Badge>
-												))}
-											</div>
+														<span
+															className="mt-3 h-1.5 w-1.5 rounded-full bg-primary/70"
+															aria-hidden="true"
+														/>
+														<span>{achievement}</span>
+													</li>
+												),
+											)}
+										</ul>
+									</div>
+								</div>
+
+								<div className="space-y-8">
+									<div>
+										<p className="section-label mb-3">{tExperience('systems')}</p>
+										<ul className="space-y-3">
+											{(tWorks.raw(`${workKey}.systems`) as string[]).map(
+												(system, systemIndex) => (
+													<li
+														key={systemIndex}
+														className="rounded-2xl border border-border bg-background/70 px-4 py-3 text-sm leading-6 text-foreground/84"
+													>
+														{system}
+													</li>
+												),
+											)}
+										</ul>
+									</div>
+
+									<div>
+										<p className="section-label mb-3">{tExperience('technologies')}</p>
+										<div className="flex flex-wrap gap-2.5">
+											{experience.technologies.map((tech) => (
+												<Badge
+													key={tech}
+													variant="secondary"
+													className="rounded-full border border-border bg-background px-3.5 py-1.5 text-sm font-medium text-foreground/82 shadow-none"
+												>
+													{tech}
+												</Badge>
+											))}
 										</div>
 									</div>
-								</CardContent>
-							</Card>
-						</motion.div>
+								</div>
+							</div>
+						</motion.article>
 					);
 				})}
 			</div>

@@ -18,41 +18,91 @@
 		"siteName": "Nam's Portfolio"
 	},
 	"Hero": {
-		"im": "Tôi là",
+		"eyebrow": "Backend engineer cho sản phẩm real-time",
+		"headline": "Tôi thiết kế backend đủ nhanh và đủ ổn định cho các hệ thống multiplayer, real-time và tải đồng thời cao.",
+		"summary": "Tôi tập trung vào game server architecture, low-latency communication và những data path chịu tải tốt trong production.",
+		"primaryCta": "Xem dự án",
+		"secondaryCta": "Tải CV",
+		"tertiaryCta": "Liên hệ",
+		"trustLabel": "Trọng tâm chuyên môn",
+		"proofTitle": "Những gì tôi mang lại",
+		"proofItems": {
+			"experience": "Hơn 2 năm xây game server systems",
+			"domain": "Backend real-time và hạ tầng multiplayer",
+			"scale": "Triển khai hệ thống phục vụ hàng nghìn người chơi cùng lúc",
+			"availability": "Mở cho freelance và consulting"
+		},
+		"capabilities": {
+			"gameServer": "Game Server",
+			"realtime": "Real-time Systems",
+			"websocket": "WebSocket",
+			"scalableBackend": "Scalable Backend"
+		},
 		"viewProjects": "Xem dự án",
 		"contactMe": "Liên hệ với tôi",
 		"downloadCv": "Tải CV"
 	},
 	"About": {
-		"title": "Về tôi",
-		"highlights": "Điểm nổi bật"
+		"title": "Tổng quan",
+		"eyebrow": "Hồ sơ",
+		"summaryTitle": "Backend engineer với tư duy systems-first",
+		"summary": "Tôi làm việc với các hệ thống backend nơi latency, throughput và observability ảnh hưởng trực tiếp đến trải nghiệm người dùng. Điểm mạnh của tôi là biến yêu cầu sản phẩm thành runtime behavior ổn định, observability rõ ràng và hạ tầng vẫn dễ hiểu khi scale lên.",
+		"highlights": "Năng lực cốt lõi",
+		"positioningLabel": "Phù hợp nhất",
+		"positioning": "Phù hợp với các team đang build multiplayer products, event-driven backend hoặc những hệ thống nhạy cảm về performance."
 	},
 	"Skills": {
-		"title": "Kỹ năng & Công nghệ",
+		"title": "Năng lực thực thi",
+		"eyebrow": "Execution stack",
+		"intro": "Tech stack chỉ là bề mặt. Giá trị thật nằm ở cách từng lớp giúp hệ thống chạy nhanh, ổn định và dễ vận hành hơn.",
 		"Categories": {
 			"backend": "Backend & Runtime",
 			"realtime": "Real-time & Networking",
-			"database": "Cơ sở dữ liệu & Caching",
-			"frontend": "Frontend",
-			"devops": "DevOps & Công cụ"
+			"database": "Data & Performance",
+			"frontend": "Delivery Surface",
+			"devops": "Operations & Tooling"
+		},
+		"Descriptions": {
+			"backend": "Thiết kế API, runtime structure và service boundaries đủ rõ để hệ thống vẫn dễ maintain khi sản phẩm mở rộng.",
+			"realtime": "Xử lý connections, event flow và low-latency messaging cho các hệ thống có tính tương tác cao.",
+			"database": "Tối ưu query, cache strategy và data access pattern theo throughput và response time thực tế.",
+			"frontend": "Đủ chắc phần frontend để tự ship product surface, internal tools hoặc technical demos mà không tạo ma sát khi handoff.",
+			"devops": "Workflow, deployment hygiene và operational tooling giúp việc delivery và debug gọn gàng hơn."
 		}
 	},
 	"Experience": {
-		"title": "Kinh nghiệm làm việc",
-		"achievements": "Thành tựu chính",
-		"technologies": "Công nghệ",
+		"title": "Kinh nghiệm",
+		"eyebrow": "Proof of work",
+		"intro": "Tín hiệu mạnh nhất trong portfolio này là backend work đã chạy trong điều kiện production thực tế.",
+		"scope": "Phạm vi phụ trách",
+		"impact": "Tác động",
+		"systems": "Hệ thống đã xử lý",
+		"achievements": "Kết quả tiêu biểu",
+		"technologies": "Công nghệ cốt lõi",
 		"present": "Hiện tại"
 	},
 	"Projects": {
-		"title": "Dự án tiêu biểu",
+		"title": "Dự án chọn lọc",
+		"eyebrow": "Case studies",
+		"intro": "Một vài dự án được chọn để thể hiện cách tôi ra quyết định về architecture, ownership trong delivery và technical judgment.",
+		"problem": "Bài toán",
+		"role": "Vai trò",
+		"impact": "Tác động",
+		"stack": "Công nghệ",
 		"viewProject": "Xem dự án",
 		"privateProject": "Dự án nội bộ",
-		"github": "Mã nguồn"
+		"github": "Mã nguồn",
+		"viewSource": "Xem source"
 	},
 	"Contact": {
 		"title": "Liên hệ",
-		"formTitle": "Gửi tin nhắn cho tôi",
-		"formDescription": "Tôi luôn hứng thú với những cơ hội và sự hợp tác mới.",
+		"eyebrow": "Sẵn sàng cho những cuộc trao đổi phù hợp",
+		"leadTitle": "Recruiting, freelance hoặc backend consulting",
+		"lead": "Nếu bạn đang tuyển backend engineer, cần hạ tầng real-time hoặc cần người tối ưu hiệu năng hệ thống, tôi sẵn sàng trao đổi ngắn gọn và đi thẳng vào vấn đề.",
+		"directTitle": "Liên hệ trực tiếp",
+		"directDescription": "Email hoặc LinkedIn là cách nhanh nhất. Form vẫn có sẵn nếu bạn muốn gửi brief chi tiết.",
+		"formTitle": "Gửi tin nhắn",
+		"formDescription": "Phù hợp cho project brief, đề nghị hợp tác hoặc những trao đổi cần nhiều bối cảnh hơn.",
 		"name": "Họ và tên",
 		"email": "Email",
 		"subject": "Tiêu đề",
@@ -61,9 +111,12 @@
 		"sending": "Đang gửi...",
 		"success": "Đã gửi tin nhắn! Tôi sẽ phản hồi sớm nhất có thể.",
 		"error": "Đã có lỗi xảy ra. Vui lòng thử lại.",
-		"workTogether": "Hãy cùng làm việc",
+		"workTogether": "Phù hợp để trao đổi",
 		"contactInfo": "Thông tin liên hệ",
 		"availability": "Trạng thái",
+		"availabilityValue": "Mở cho một số cơ hội freelance, consulting và trao đổi với recruiter phù hợp.",
+		"responseTime": "Thời gian phản hồi",
+		"responseTimeValue": "Thường trong vòng 24-48 giờ.",
 		"Titles": {
 			"email": "Email",
 			"linkedin": "LinkedIn",
@@ -73,15 +126,15 @@
 	"Profile": {
 		"name": "Nam",
 		"title": "Lập trình viên Backend",
-		"tagLine": "Chuyên gia về kiến trúc game server hiệu năng cao & hệ thống thời gian thực.",
+		"tagLine": "Chuyên về game server architecture, real-time systems và backend engineering chịu tải cao.",
 		"location": "Thành phố Hồ Chí Minh, Việt Nam",
-		"availability": "Sẵn sàng cho các dự án freelance và tư vấn.",
-		"description": "Lập trình viên Backend với hơn 2 năm kinh nghiệm thiết kế và tối ưu hóa hạ tầng game server. Tôi chuyên thiết kế các hệ thống thời gian thực có khả năng mở rộng, độ trễ thấp, xử lý hàng nghìn kết nối đồng thời. Chuyên môn của tôi bao gồm lập trình socket, hệ thống phân tán và tối ưu hóa cơ sở dữ liệu cho các tác vụ game có lưu lượng truy cập lớn.",
-		"contactDescription": "Bạn muốn thảo luận về kiến trúc game server, hệ thống thời gian thực hoặc tối ưu hóa backend? Dù bạn đang xây dựng một game multiplayer, cần tư vấn hạ tầng server, hay muốn tìm kiếm cơ hội hợp tác—hãy kết nối với tôi.",
+		"availability": "Mở cho các dự án freelance và consulting phù hợp.",
+		"description": "Lập trình viên Backend với hơn 2 năm kinh nghiệm thiết kế và tối ưu hạ tầng game server. Tôi build những hệ thống có thể scale, độ trễ thấp và đủ ổn định cho các sản phẩm mà concurrency, uptime và response time là yêu cầu bắt buộc.",
+		"contactDescription": "Phù hợp với các team đang build multiplayer products, event-driven backend hoặc những hệ thống cần cải thiện runtime performance và observability.",
 		"highlights": [
-			"Hơn 2 năm chuyên sâu về kiến trúc game server",
-			"Thành thạo Node.js, TypeScript, WebSocket, giao thức TCP/UDP",
-			"Kinh nghiệm làm việc với MSSQL, MySQL, Redis cho các lớp dữ liệu hiệu năng cao"
+			"Thiết kế backend flow vẫn rõ ràng ngay cả khi độ phức tạp production tăng lên.",
+			"Tối ưu event, socket và data paths để giảm latency và giảm ma sát khi vận hành.",
+			"Kết nối implementation với debug tốt hơn nhờ logging, monitoring và runtime visibility."
 		]
 	},
 	"Works": {
@@ -90,30 +143,45 @@
 			"startDate": "2023-05-01",
 			"endDate": null,
 			"location": "Thành phố Hồ Chí Minh, Việt Nam",
-			"description": "Thiết kế và duy trì hạ tầng game server hiệu năng cao cho nhiều sản phẩm game online. Chịu trách nhiệm tối ưu hóa hệ thống thời gian thực, điều chỉnh hiệu năng cơ sở dữ liệu và triển khai các giải pháp backend có khả năng mở rộng.",
+			"description": "Phụ trách backend architecture và runtime stability cho nhiều sản phẩm game online, bao gồm cấu trúc server, xử lý event real-time, hiệu năng dữ liệu và observability trong production.",
+			"scope": "Thiết kế, vận hành và tối ưu hạ tầng game server, đồng thời hỗ trợ feature delivery trong bối cảnh multiplayer và các ràng buộc vận hành thực tế.",
+			"impact": "Cải thiện throughput, tốc độ debug và mức độ quan sát hệ thống trong khi vẫn phục vụ hàng nghìn người chơi cùng lúc trên production.",
 			"achievements": [
-				"Thiết kế và triển khai hơn 20 instance game server xử lý hàng nghìn người chơi đồng thời",
-				"Thiết kế và triển khai hệ thống sự kiện game tùy chỉnh tích hợp vào kiến trúc server cốt lõi",
-				"Xây dựng hệ thống giám sát S.O.S để cảnh báo thời gian thực, tổng hợp log và báo cáo tự động qua Telegram, Discord và Slack",
-				"Tối ưu hóa các thuật toán phân phối ngẫu nhiên, giảm 40% truy vấn cơ sở dữ liệu và cải thiện độ trễ phản hồi",
-				"Refactor hạ tầng logging cốt lõi cho phép gỡ lỗi chi tiết và giải quyết vấn đề nhanh hơn"
+				"Triển khai hơn 20 game server instances phục vụ hàng nghìn người chơi cùng lúc trên các sản phẩm đang vận hành.",
+				"Xây dựng custom event system tích hợp vào kiến trúc server core để phục vụ gameplay logic riêng theo từng sản phẩm.",
+				"Tạo pipeline S.O.S monitoring cho real-time alerting, log aggregation và automated reporting qua Telegram, Discord và Slack.",
+				"Giảm 40% số lượng database queries bằng cách tối ưu thuật toán phân phối ngẫu nhiên, từ đó cải thiện latency ở các luồng quan trọng.",
+				"Refactor logging layer để debug chi tiết hơn và khoanh vùng sự cố production nhanh hơn."
+			],
+			"systems": [
+				"Gameplay events real-time và socket communication",
+				"Game server deployment và runtime orchestration",
+				"Logging, monitoring và alerting workflows",
+				"Database tuning cho high-traffic workloads"
 			]
 		}
 	},
 	"ProjectItems": {
 		"vmu": {
 			"title": "VMU Test Exam",
-			"description": "Nền tảng thi trắc nghiệm online cho sinh viên y khoa với ngân hàng câu hỏi toàn diện thuộc nhiều chuyên khoa. Bao gồm bảng điều khiển quản trị với quản lý phiên người dùng thời gian thực qua WebSocket để giám sát và phân tích hiệu suất chuẩn bị thi."
+			"description": "Nền tảng thi online cho sinh viên y khoa với khả năng theo dõi session real-time, quản lý question bank và hỗ trợ vận hành kỳ thi.",
+			"problem": "Sản phẩm cần một flow làm bài ổn định cho sinh viên, đồng thời có lớp moderation để admin theo dõi các sessions đang diễn ra.",
+			"role": "Phụ trách các luồng thiên về backend và real-time session management giữa hoạt động người dùng và công cụ admin.",
+			"impact": "Hoàn thiện một nền tảng học tập production-ready với khả năng moderation real-time và observability tốt hơn trong quá trình thi."
 		},
 		"tinylink": {
 			"title": "TinyLink",
-			"description": "Dịch vụ rút gọn URL tinh gọn tập trung vào hiệu năng cao, độ tin cậy và khả năng quan sát, được thiết kế riêng cho các môi trường Free-tier."
+			"description": "Dịch vụ rút gọn URL được build như một bài toán systems engineering xoay quanh performance, reliability và observability trên hạ tầng hạn chế.",
+			"problem": "Phần lớn URL shorteners chỉ cho thấy tính năng. Dự án này được làm ra để đào sâu các trade-off kỹ thuật của một service nhỏ nhưng phải phản hồi nhanh và ổn định.",
+			"role": "Thiết kế và triển khai service architecture, persistence layer, cache strategy và deployment path.",
+			"impact": "Thể hiện technical judgment về fast redirects, service reliability và observability trong môi trường tối ưu chi phí."
 		}
 	},
 	"Footer": {
-		"quickLinks": "Liên kết nhanh",
-		"connect": "Kết nối",
-		"madeWith": "Được thực hiện với",
-		"using": "bằng"
+		"quickLinks": "Các phần",
+		"connect": "Liên kết trực tiếp",
+		"madeWith": "Xây dựng với",
+		"using": "bằng",
+		"tagline": "Backend developer tập trung vào real-time systems và hạ tầng có khả năng scale."
 	}
 }
