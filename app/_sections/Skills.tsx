@@ -22,7 +22,7 @@ export default function Skills() {
 	const shouldReduceMotion = usePrefersReducedMotion();
 
 	return (
-		<section id="skills" className="section-shell py-24 sm:py-28">
+		<section id="skills" data-snap="true" className="section-shell py-24 sm:py-28">
 			<motion.div
 				initial={{ opacity: 0, y: 18 }}
 				whileInView={{ opacity: 1, y: 0 }}

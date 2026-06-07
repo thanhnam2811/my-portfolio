@@ -10,7 +10,7 @@ export default function AboutMe() {
 	const shouldReduceMotion = usePrefersReducedMotion();
 
 	return (
-		<section id="about" className="section-shell py-24 sm:py-28">
+		<section id="about" data-snap="true" className="section-shell py-24 sm:py-28">
 			<div className="grid gap-10 lg:grid-cols-[0.8fr_1.2fr]">
 				<motion.div
 					initial={{ opacity: 0, y: 16 }}

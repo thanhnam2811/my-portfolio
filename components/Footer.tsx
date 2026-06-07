@@ -4,6 +4,7 @@ import { motion } from 'framer-motion';
 import { Github, Linkedin, Mail } from 'lucide-react';
 import { contactData } from '@/app/_data/contact';
 import { useTranslations } from 'next-intl';
+import { scrollToAnchor } from '@/lib/scroll';
 
 const navLinks = [
 	{ key: 'experience', href: '#experience' },
@@ -20,10 +21,7 @@ export default function Footer() {
 	const currentYear = new Date().getFullYear();
 
 	const handleNavClick = (href: string) => {
-		const element = document.querySelector(href);
-		if (element) {
-			element.scrollIntoView({ behavior: 'smooth' });
-		}
+		scrollToAnchor(href);
 	};
 
 	const socialLinks = [
@@ -53,7 +51,7 @@ export default function Footer() {
 							href="#"
 							onClick={(e) => {
 								e.preventDefault();
-								window.scrollTo({ top: 0, behavior: 'smooth' });
+								scrollToAnchor('#top');
 							}}
 							className="inline-block text-lg font-semibold tracking-tight hover:text-primary transition-colors"
 							whileHover={{ y: -1 }}

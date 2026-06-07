@@ -77,7 +77,7 @@ export default function Contact() {
 	};
 
 	return (
-		<section id="contact" className="section-shell py-24 sm:py-28">
+		<section id="contact" data-snap="true" className="section-shell py-24 sm:py-28">
 			<motion.div
 				initial={{ opacity: 0, y: 18 }}
 				whileInView={{ opacity: 1, y: 0 }}
