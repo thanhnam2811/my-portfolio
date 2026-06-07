@@ -3,7 +3,7 @@
 ## Phase 1: Foundation
 
 - [x] Initialize Next.js project with TypeScript
-- [x] Configure TailwindCSS, ESLint, Prettier, Husky
+- [x] Configure TailwindCSS, Oxlint, Oxfmt, Husky
 - [x] Build Hero Section
 - [x] Build About Me Section
 - [x] Build Skills Section

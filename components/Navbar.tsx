@@ -118,6 +118,7 @@ export default function Navbar() {
 						<div className="hidden md:flex items-center gap-1.5">
 							{navLinks.map((link) => {
 								const isActive = activeSection === link.href.slice(1);
+								const activeProps = isActive ? { 'aria-current': 'true' as const } : {};
 								return (
 									<Magnetic key={link.href} strength={0.3}>
 										<motion.button
@@ -129,7 +130,7 @@ export default function Navbar() {
 											}`}
 											whileHover={{ y: -1 }}
 											whileTap={{ scale: 0.98 }}
-											aria-current={isActive ? 'true' : undefined}
+											{...activeProps}
 										>
 											{tNav(link.key)}
 										</motion.button>
@@ -178,6 +179,7 @@ export default function Navbar() {
 							<div className="flex flex-col gap-2">
 								{navLinks.map((link) => {
 									const isActive = activeSection === link.href.slice(1);
+									const activeProps = isActive ? { 'aria-current': 'true' as const } : {};
 									return (
 										<motion.button
 											key={link.href}
@@ -188,7 +190,7 @@ export default function Navbar() {
 													: 'text-muted-foreground hover:text-foreground hover:bg-foreground/[0.04]'
 											}`}
 											whileTap={{ scale: 0.98 }}
-											aria-current={isActive ? 'true' : undefined}
+											{...activeProps}
 										>
 											{tNav(link.key)}
 										</motion.button>

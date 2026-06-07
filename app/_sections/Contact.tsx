@@ -54,8 +54,7 @@ export default function Contact() {
 			} else {
 				throw new Error('Failed to send message');
 			}
-		} catch (error) {
-			console.error('Error sending message:', error);
+		} catch {
 			toast.error(tContact('error'));
 		} finally {
 			setIsSubmitting(false);
@@ -110,14 +109,16 @@ export default function Contact() {
 						{contactInfo.map((info) => {
 							const Icon = iconMap[info.icon] ?? ExternalLink;
 							const titleKey = contactTitleKeys[info.title] || 'email';
+							const externalLinkProps = info.href.startsWith('http')
+								? { target: '_blank', rel: 'noopener noreferrer' }
+								: {};
 
 							return (
 								<a
 									key={info.title}
 									href={info.href}
-									target={info.href.startsWith('http') ? '_blank' : undefined}
-									rel={info.href.startsWith('http') ? 'noopener noreferrer' : undefined}
 									className="flex items-center gap-4 rounded-3xl border border-border bg-background/70 px-5 py-4 transition-colors hover:border-primary/40"
+									{...externalLinkProps}
 								>
 									<div className="rounded-2xl border border-border bg-card p-3 text-primary">
 										<Icon className="h-5 w-5" aria-hidden="true" />

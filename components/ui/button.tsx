@@ -36,8 +36,7 @@ const buttonVariants = cva(
 );
 
 export interface ButtonProps
-	extends React.ButtonHTMLAttributes<HTMLButtonElement>,
-		VariantProps<typeof buttonVariants> {
+	extends React.ButtonHTMLAttributes<HTMLButtonElement>, VariantProps<typeof buttonVariants> {
 	asChild?: boolean;
 }
 
@@ -59,8 +58,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
 				data-slot="button"
 				className={cn(buttonVariants({ variant, size, className }))}
 				whileTap={{ scale: 0.97, boxShadow: 'var(--shadow-neu-inset)' }}
-				// eslint-disable-next-line @typescript-eslint/no-explicit-any
-				ref={ref as any}
+				ref={ref as React.Ref<HTMLButtonElement>}
 				{...(props as HTMLMotionProps<'button'>)}
 			/>
 		);
