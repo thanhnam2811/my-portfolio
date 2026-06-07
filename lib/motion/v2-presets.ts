@@ -1,8 +1,8 @@
 export const v2Motion = {
 	pageEnter: 0.55,
-	heroEnter: 0.8,
-	reveal: 0.6,
-	stagger: 0.08,
+	heroEnter: 0.52,
+	reveal: 0.52,
+	stagger: 0.05,
 	ease: 'power3.out',
-	y: 26,
+	y: 18,
 } as const;

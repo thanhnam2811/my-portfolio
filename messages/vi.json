@@ -230,8 +230,8 @@
 	},
 	"V2Nav": {
 		"hero": "Tổng quan",
-		"proof": "Proof",
-		"work": "Work",
+		"proof": "Dấu mốc",
+		"work": "Dự án",
 		"capabilities": "Năng lực",
 		"experience": "Kinh nghiệm",
 		"contact": "Liên hệ"
@@ -240,16 +240,16 @@
 		"eyebrow": "Backend systems cho sản phẩm real-time",
 		"headline": "Tôi build backend systems đủ rõ ràng, đủ nhanh và đủ ổn định khi concurrency bắt đầu trở thành bài toán thật.",
 		"summary": "Lập trình viên Backend với hơn 2 năm kinh nghiệm thực chiến trong game servers, real-time communication, monitoring pipelines và production backend flows. Tôi tập trung vào runtime behavior vẫn dễ hiểu kể cả khi hệ thống chịu tải.",
-		"ctaPrimary": "Xem selected work",
+		"ctaPrimary": "Xem dự án chọn lọc",
 		"ctaSecondary": "Liên hệ",
 		"ctaDownload": "Tải CV",
-		"panelEyebrow": "Runtime snapshot",
+		"panelEyebrow": "Góc nhìn vận hành",
 		"panelTitle": "Backend operator với tư duy production",
 		"panelState": "Mở cho cơ hội phù hợp",
-		"signalsEyebrow": "Operational posture",
+		"signalsEyebrow": "Tư thế vận hành",
 		"signals": {
 			"runtime": {
-				"title": "Runtime first",
+				"title": "Ưu tiên runtime",
 				"description": "Tôi quan tâm đến connection flow, concurrency và service behavior ở những nơi tải real-time sẽ bộc lộ kiến trúc yếu rất nhanh."
 			},
 			"observability": {
@@ -285,7 +285,7 @@
 		}
 	},
 	"V2Projects": {
-		"eyebrow": "Selected work",
+		"eyebrow": "Dự án chọn lọc",
 		"title": "Các case studies cho thấy systems thinking chứ không chỉ là feature delivery.",
 		"intro": "Trang này kết hợp production game server work, product delivery và systems exercises để thể hiện cách tôi nghĩ về architecture, runtime stability và operational clarity.",
 		"viewProject": "Mở dự án",
@@ -324,7 +324,7 @@
 		}
 	},
 	"V2Capabilities": {
-		"eyebrow": "Capability architecture",
+		"eyebrow": "Kiến trúc năng lực",
 		"title": "Tech stack quan trọng, nhưng giá trị thật nằm ở việc mỗi lớp giúp tôi ship hệ thống tự tin hơn như thế nào.",
 		"intro": "Tôi thích nhóm kỹ năng theo năng lực hệ thống thay vì checklist công nghệ. Cách đó phản ánh đúng hơn cách backend work được giao và được đánh giá trong thực tế.",
 		"items": {
@@ -433,7 +433,7 @@
 		}
 	},
 	"V2Principles": {
-		"eyebrow": "Working style",
+		"eyebrow": "Cách làm việc",
 		"title": "Cách tôi cố gắng build backend systems đủ khỏe để chịu được production reality.",
 		"intro": "Tôi ít quan tâm đến việc trông có vẻ clever, và quan tâm nhiều hơn đến việc hệ thống có còn reliable, observable và understandable khi traffic, incidents và feature pressure thực sự xuất hiện hay không.",
 		"items": {
@@ -461,11 +461,11 @@
 	},
 	"V2Contact": {
 		"eyebrow": "Mở cho những cuộc trao đổi phù hợp",
-		"title": "Nếu bạn cần backend ownership cho real-time systems, runtime clarity hoặc production stability, hãy trao đổi với tôi.",
+		"title": "Nếu bạn cần người phụ trách backend cho real-time systems, runtime clarity hoặc production stability, hãy trao đổi với tôi.",
 		"intro": "Phù hợp nhất với các team đang build multiplayer products, internal operational tooling, event-driven backends hoặc các hệ thống nơi observability và reliability là một phần của sản phẩm.",
 		"download": "Tải CV",
 		"mail": "Gửi email",
-		"availabilityLabel": "Availability",
+		"availabilityLabel": "Trạng thái hiện tại",
 		"availabilityValue": "Mở cho một số cơ hội freelance, consulting và trao đổi với recruiter có góc nhìn mạnh về backend hoặc systems.",
 		"educationLabel": "Học vấn",
 		"educationValue": "Bachelor of Engineering in Computer Science (Information Technology), Ho Chi Minh City University of Technology and Education.",
