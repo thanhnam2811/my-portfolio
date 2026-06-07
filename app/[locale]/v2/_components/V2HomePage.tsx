@@ -127,52 +127,232 @@ export default function V2HomePage() {
 
 		ensureV2Gsap();
 		const ctx = gsap.context(() => {
-			const intro = gsap.utils.toArray<HTMLElement>('[data-v2-hero]');
 			const sections = gsap.utils.toArray<HTMLElement>('[data-v2-reveal]');
+			const parallaxItems = gsap.utils.toArray<HTMLElement>('[data-v2-parallax]');
+			const mm = gsap.matchMedia();
 
-			gsap.fromTo(
-				intro,
-				{ opacity: 0, y: v2Motion.y },
-				{
-					opacity: 1,
-					y: 0,
-					duration: v2Motion.heroEnter,
-					ease: v2Motion.ease,
-					stagger: v2Motion.stagger,
-					clearProps: 'opacity,transform',
-				},
-			);
+			const bindActiveSections = () => {
+				v2NavSections.forEach((section) => {
+					const element = document.getElementById(section.id);
+					if (!element) return;
+					ScrollTrigger.create({
+						trigger: element,
+						start: 'top center',
+						end: 'bottom center',
+						onEnter: () => setActiveSection(section.id),
+						onEnterBack: () => setActiveSection(section.id),
+					});
+				});
+			};
 
-			sections.forEach((section) => {
-				gsap.fromTo(
-					section,
-					{ opacity: 0, y: v2Motion.y },
-					{
-						opacity: 1,
-						y: 0,
-						duration: v2Motion.reveal,
-						ease: v2Motion.ease,
-						clearProps: 'opacity,transform',
+			mm.add('(prefers-reduced-motion: reduce)', () => {
+				bindActiveSections();
+			});
+
+			mm.add('(prefers-reduced-motion: no-preference)', () => {
+				bindActiveSections();
+
+				gsap.set('[data-v2-line-y]', { scaleY: 0, transformOrigin: 'top center' });
+				gsap.set('[data-v2-mask] > *', { yPercent: 110 });
+
+				const heroTimeline = gsap.timeline({ defaults: { ease: v2Motion.ease } });
+				heroTimeline
+					.from('[data-v2-header-brand]', {
+						opacity: 0,
+						y: 12,
+						duration: 0.4,
+					})
+					.from(
+						'[data-v2-header-nav] button',
+						{
+							opacity: 0,
+							y: 10,
+							duration: 0.28,
+							stagger: 0.04,
+						},
+						'-=0.18',
+					)
+					.from(
+						'[data-v2-header-cta] > *',
+						{
+							opacity: 0,
+							y: 10,
+							duration: 0.28,
+							stagger: 0.06,
+						},
+						'-=0.14',
+					)
+					.to(
+						'[data-v2-line-y]',
+						{
+							scaleY: 1,
+							duration: 0.75,
+						},
+						'-=0.08',
+					)
+					.from(
+						'[data-v2-hero-label]',
+						{
+							opacity: 0,
+							y: 12,
+							duration: 0.34,
+							stagger: 0.08,
+						},
+						'-=0.54',
+					)
+					.to(
+						'[data-v2-mask] > *',
+						{
+							yPercent: 0,
+							duration: 0.82,
+							stagger: 0.08,
+						},
+						'-=0.18',
+					)
+					.from(
+						'[data-v2-summary]',
+						{
+							opacity: 0,
+							y: 18,
+							duration: 0.48,
+						},
+						'-=0.48',
+					)
+					.from(
+						'[data-v2-cta-row] > *',
+						{
+							opacity: 0,
+							y: 14,
+							duration: 0.34,
+							stagger: 0.06,
+						},
+						'-=0.34',
+					)
+					.from(
+						'[data-v2-metric-rail] > *',
+						{
+							opacity: 0,
+							y: 18,
+							duration: 0.34,
+							stagger: 0.05,
+						},
+						'-=0.22',
+					)
+					.from(
+						'[data-v2-dossier]',
+						{
+							opacity: 0,
+							x: 28,
+							duration: 0.72,
+						},
+						'-=0.86',
+					)
+					.from(
+						'[data-v2-dossier] [data-v2-row]',
+						{
+							opacity: 0,
+							y: 12,
+							duration: 0.34,
+							stagger: 0.05,
+						},
+						'-=0.38',
+					);
+
+				gsap.to('[data-v2-scanline]', {
+					xPercent: 115,
+					duration: 5.6,
+					ease: 'none',
+					repeat: -1,
+					repeatDelay: 1.2,
+				});
+
+				sections.forEach((section) => {
+					const lineX = section.querySelectorAll<HTMLElement>('[data-v2-section-line-x]');
+					const lineY = section.querySelectorAll<HTMLElement>('[data-v2-section-line-y]');
+					const labels = section.querySelectorAll<HTMLElement>('[data-v2-section-label]');
+					const blocks = section.querySelectorAll<HTMLElement>('[data-v2-block]');
+
+					const sectionTimeline = gsap.timeline({
+						defaults: { ease: v2Motion.ease },
 						scrollTrigger: {
 							trigger: section,
-							start: 'top 82%',
+							start: 'top 80%',
 							once: true,
 						},
-					},
-				);
-			});
+					});
 
-			v2NavSections.forEach((section) => {
-				const element = document.getElementById(section.id);
-				if (!element) return;
-				ScrollTrigger.create({
-					trigger: element,
-					start: 'top center',
-					end: 'bottom center',
-					onEnter: () => setActiveSection(section.id),
-					onEnterBack: () => setActiveSection(section.id),
+					if (lineY.length) {
+						gsap.set(lineY, { scaleY: 0, transformOrigin: 'top center' });
+						sectionTimeline.to(
+							lineY,
+							{
+								scaleY: 1,
+								duration: 0.7,
+								stagger: 0.08,
+							},
+							0,
+						);
+					}
+
+					if (lineX.length) {
+						gsap.set(lineX, { scaleX: 0, transformOrigin: 'left center' });
+						sectionTimeline.to(
+							lineX,
+							{
+								scaleX: 1,
+								duration: 0.7,
+								stagger: 0.08,
+							},
+							0.04,
+						);
+					}
+
+					if (labels.length) {
+						sectionTimeline.from(
+							labels,
+							{
+								opacity: 0,
+								y: 16,
+								duration: 0.3,
+								stagger: 0.05,
+							},
+							0.08,
+						);
+					}
+
+					if (blocks.length) {
+						sectionTimeline.from(
+							blocks,
+							{
+								opacity: 0,
+								y: 22,
+								duration: v2Motion.reveal,
+								stagger: 0.06,
+							},
+							0.12,
+						);
+					}
+				});
+
+				parallaxItems.forEach((item) => {
+					gsap.fromTo(
+						item,
+						{ yPercent: -5 },
+						{
+							yPercent: 5,
+							ease: 'none',
+							scrollTrigger: {
+								trigger: item,
+								start: 'top bottom',
+								end: 'bottom top',
+								scrub: 0.9,
+							},
+						},
+					);
 				});
 			});
+
+			return () => mm.revert();
 		}, rootRef);
 
 		return () => ctx.revert();
@@ -187,6 +367,7 @@ export default function V2HomePage() {
 			<header className="sticky top-0 z-50 border-b border-white/8 bg-[#07101d]/82 backdrop-blur-xl">
 				<div className="mx-auto flex max-w-[1380px] items-center justify-between gap-6 px-4 py-4 sm:px-6 lg:px-10">
 					<button
+						data-v2-header-brand
 						type="button"
 						onClick={() => scrollToSection('hero')}
 						className="flex items-center gap-4 text-left"
@@ -198,7 +379,7 @@ export default function V2HomePage() {
 						</div>
 					</button>
 
-					<nav className="hidden items-center gap-5 xl:flex">
+					<nav data-v2-header-nav className="hidden items-center gap-5 xl:flex">
 						{v2NavSections.map((section, index) => {
 							const active = activeSection === section.id;
 							return (
@@ -221,7 +402,7 @@ export default function V2HomePage() {
 						})}
 					</nav>
 
-					<div className="flex items-center gap-3">
+					<div data-v2-header-cta className="flex items-center gap-3">
 						<Button
 							type="button"
 							variant="outline"
@@ -249,13 +430,21 @@ export default function V2HomePage() {
 					<div className="grid gap-10 xl:grid-cols-[120px_minmax(0,1fr)_430px]">
 						<div data-v2-hero className="hidden xl:flex xl:flex-col xl:justify-between">
 							<div>
-								<p className="text-[11px] tracking-[0.28em] text-slate-500 uppercase">
+								<p
+									data-v2-hero-label
+									className="text-[11px] tracking-[0.28em] text-slate-500 uppercase"
+								>
 									{chrome.navIndex}
 								</p>
-								<p className="mt-3 text-2xl font-semibold text-white">{chrome.heroSection}</p>
+								<p data-v2-hero-label className="mt-3 text-2xl font-semibold text-white">
+									{chrome.heroSection}
+								</p>
 							</div>
 							<div className="space-y-4 pb-6">
-								<div className="h-24 w-px bg-gradient-to-b from-cyan-300/70 via-white/20 to-transparent" />
+								<div
+									data-v2-line-y
+									className="h-24 w-px bg-gradient-to-b from-cyan-300/70 via-white/20 to-transparent"
+								/>
 								<p className="max-w-[8rem] text-xs leading-6 text-slate-400">{chrome.scrollLabel}</p>
 							</div>
 						</div>
@@ -264,49 +453,56 @@ export default function V2HomePage() {
 							<div className="max-w-4xl">
 								<p
 									data-v2-hero
+									data-v2-hero-label
 									className="font-mono text-[12px] tracking-[0.26em] text-cyan-200/70 uppercase"
 								>
 									{chrome.heroLabel}
 								</p>
-								<h1
-									data-v2-hero
-									className="mt-8 max-w-5xl text-5xl font-semibold tracking-[-0.065em] text-white sm:text-6xl lg:text-[6.2rem] lg:leading-[0.92]"
-								>
-									{tHero('headline')}
-								</h1>
+								<div data-v2-mask className="mt-8 overflow-hidden">
+									<h1
+										data-v2-hero
+										className="max-w-5xl text-5xl font-semibold tracking-[-0.065em] text-white sm:text-6xl lg:text-[6.2rem] lg:leading-[0.92]"
+									>
+										{tHero('headline')}
+									</h1>
+								</div>
 								<p
 									data-v2-hero
+									data-v2-summary
 									className="mt-10 max-w-3xl text-xl leading-10 text-slate-300 sm:text-[1.45rem]"
 								>
 									{tHero('summary')}
 								</p>
 							</div>
 
-							<div
-								data-v2-hero
-								className="mt-10 flex flex-wrap items-center gap-4 border-t border-white/10 pt-8"
-							>
-								<Button
-									type="button"
-									className="rounded-none bg-cyan-300 px-8 text-slate-950 hover:bg-cyan-200"
-									onClick={() => scrollToSection('work')}
-								>
-									{tHero('ctaPrimary')}
-									<ArrowRight className="ml-2 h-4 w-4" />
-								</Button>
-								<Button
-									asChild
-									variant="outline"
-									className="rounded-none border-white/15 bg-transparent px-8 text-white hover:bg-white/5"
-								>
-									<a href="/files/MyCV.pdf" download="CV_BE_ThaiThanhNam.pdf">
-										<Download className="mr-2 h-4 w-4" />
-										{tHero('ctaDownload')}
-									</a>
-								</Button>
+							<div data-v2-hero className="mt-10 border-t border-white/10 pt-8">
+								<div data-v2-cta-row className="flex flex-wrap items-center gap-4">
+									<Button
+										type="button"
+										className="rounded-none bg-cyan-300 px-8 text-slate-950 hover:bg-cyan-200"
+										onClick={() => scrollToSection('work')}
+									>
+										{tHero('ctaPrimary')}
+										<ArrowRight className="ml-2 h-4 w-4" />
+									</Button>
+									<Button
+										asChild
+										variant="outline"
+										className="rounded-none border-white/15 bg-transparent px-8 text-white hover:bg-white/5"
+									>
+										<a href="/files/MyCV.pdf" download="CV_BE_ThaiThanhNam.pdf">
+											<Download className="mr-2 h-4 w-4" />
+											{tHero('ctaDownload')}
+										</a>
+									</Button>
+								</div>
 							</div>
 
-							<div data-v2-hero className="mt-9 grid gap-4 border-t border-white/10 pt-8 sm:grid-cols-4">
+							<div
+								data-v2-hero
+								data-v2-metric-rail
+								className="mt-9 grid gap-4 border-t border-white/10 pt-8 sm:grid-cols-4"
+							>
 								{v2ProofItems.slice(0, 4).map((key) => (
 									<div key={key} className="border-l border-white/12 pl-4">
 										<p className="text-[11px] tracking-[0.26em] text-slate-500 uppercase">
@@ -322,9 +518,19 @@ export default function V2HomePage() {
 
 						<aside
 							data-v2-hero
-							className="border border-white/10 bg-[linear-gradient(180deg,rgba(20,36,66,0.84),rgba(9,16,28,0.78))] p-7 shadow-[0_24px_90px_rgba(6,10,20,0.45)]"
+							data-v2-dossier
+							className="relative border border-white/10 bg-[linear-gradient(180deg,rgba(20,36,66,0.84),rgba(9,16,28,0.78))] p-7 shadow-[0_24px_90px_rgba(6,10,20,0.45)]"
 						>
-							<div className="flex items-start justify-between gap-6 border-b border-white/10 pb-6">
+							<div className="pointer-events-none absolute inset-x-0 top-0 overflow-hidden">
+								<div
+									data-v2-scanline
+									className="h-px w-1/3 -translate-x-full bg-gradient-to-r from-transparent via-cyan-200/70 to-transparent"
+								/>
+							</div>
+							<div
+								data-v2-row
+								className="flex items-start justify-between gap-6 border-b border-white/10 pb-6"
+							>
 								<div>
 									<p className="font-mono text-[12px] tracking-[0.28em] text-cyan-200/75 uppercase">
 										{chrome.heroSideLabel}
@@ -338,7 +544,7 @@ export default function V2HomePage() {
 								</div>
 							</div>
 
-							<div className="flex gap-4 border-b border-white/10 py-6">
+							<div data-v2-row className="flex gap-4 border-b border-white/10 py-6">
 								<div className="relative h-20 w-20 overflow-hidden border border-white/12">
 									<Image
 										src="/images/avatar.png"
@@ -356,19 +562,25 @@ export default function V2HomePage() {
 							</div>
 
 							<div className="grid gap-0 border-b border-white/10 py-6">
-								<div className="grid gap-3 border-b border-white/8 pb-5 md:grid-cols-[132px_minmax(0,1fr)]">
+								<div
+									data-v2-row
+									className="grid gap-3 border-b border-white/8 pb-5 md:grid-cols-[132px_minmax(0,1fr)]"
+								>
 									<p className="font-mono text-[11px] tracking-[0.24em] text-slate-500 uppercase">
 										{chrome.currentFocus}
 									</p>
 									<p className="text-sm leading-7 text-slate-200">{chrome.currentFocusValue}</p>
 								</div>
-								<div className="grid gap-3 border-b border-white/8 py-5 md:grid-cols-[132px_minmax(0,1fr)]">
+								<div
+									data-v2-row
+									className="grid gap-3 border-b border-white/8 py-5 md:grid-cols-[132px_minmax(0,1fr)]"
+								>
 									<p className="font-mono text-[11px] tracking-[0.24em] text-slate-500 uppercase">
 										{chrome.statusLabel}
 									</p>
 									<p className="text-sm leading-7 text-slate-200">{chrome.statusValue}</p>
 								</div>
-								<div className="grid gap-3 pt-5 md:grid-cols-[132px_minmax(0,1fr)]">
+								<div data-v2-row className="grid gap-3 pt-5 md:grid-cols-[132px_minmax(0,1fr)]">
 									<p className="font-mono text-[11px] tracking-[0.24em] text-slate-500 uppercase">
 										{chrome.stackLabel}
 									</p>
@@ -377,7 +589,10 @@ export default function V2HomePage() {
 							</div>
 
 							<div className="grid gap-0 pt-6">
-								<p className="mb-5 font-mono text-[11px] tracking-[0.24em] text-cyan-200/75 uppercase">
+								<p
+									data-v2-row
+									className="mb-5 font-mono text-[11px] tracking-[0.24em] text-cyan-200/75 uppercase"
+								>
 									{chrome.dossierLabel}
 								</p>
 								{['runtime', 'observability', 'delivery'].map((signal) => (
@@ -403,7 +618,7 @@ export default function V2HomePage() {
 
 				<section id="proof" data-v2-reveal className="border-y border-white/8">
 					<div className="mx-auto grid max-w-[1380px] gap-0 px-4 sm:px-6 lg:grid-cols-[220px_repeat(5,minmax(0,1fr))] lg:px-10">
-						<div className="border-b border-white/8 py-8 lg:border-r lg:border-b-0 lg:py-10">
+						<div data-v2-block className="border-b border-white/8 py-8 lg:border-r lg:border-b-0 lg:py-10">
 							<p className="font-mono text-[11px] tracking-[0.28em] text-cyan-200/70 uppercase">
 								{chrome.workLedger}
 							</p>
@@ -414,6 +629,7 @@ export default function V2HomePage() {
 						{v2ProofItems.map((key) => (
 							<div
 								key={key}
+								data-v2-block
 								className="border-b border-white/8 px-0 py-8 lg:border-r lg:border-b-0 lg:px-5 lg:py-10"
 							>
 								<p className="text-3xl font-semibold tracking-[-0.04em] text-white">
@@ -432,27 +648,42 @@ export default function V2HomePage() {
 				>
 					<div className="grid gap-12 xl:grid-cols-[180px_minmax(0,1fr)]">
 						<div className="hidden xl:block">
-							<p className="font-mono text-[11px] tracking-[0.28em] text-slate-500 uppercase">
+							<p
+								data-v2-section-label
+								className="font-mono text-[11px] tracking-[0.28em] text-slate-500 uppercase"
+							>
 								{chrome.workIndexLabel}
 							</p>
-							<p className="mt-4 text-2xl font-semibold text-white">{chrome.workSection}</p>
+							<p data-v2-block className="mt-4 text-2xl font-semibold text-white">
+								{chrome.workSection}
+							</p>
 						</div>
 
 						<div>
 							<div className="max-w-4xl border-b border-white/10 pb-10">
-								<p className="font-mono text-[11px] tracking-[0.28em] text-cyan-200/70 uppercase">
+								<p
+									data-v2-section-label
+									className="font-mono text-[11px] tracking-[0.28em] text-cyan-200/70 uppercase"
+								>
 									{tWork('eyebrow')}
 								</p>
-								<h2 className="mt-6 max-w-5xl text-4xl font-semibold tracking-[-0.05em] text-white sm:text-5xl lg:text-6xl">
+								<div data-v2-section-line-x className="mt-4 h-px w-28 bg-cyan-300/45" />
+								<h2
+									data-v2-block
+									className="mt-6 max-w-5xl text-4xl font-semibold tracking-[-0.05em] text-white sm:text-5xl lg:text-6xl"
+								>
 									{tWork('title')}
 								</h2>
-								<p className="mt-6 max-w-3xl text-lg leading-8 text-slate-300">{tWork('intro')}</p>
+								<p data-v2-block className="mt-6 max-w-3xl text-lg leading-8 text-slate-300">
+									{tWork('intro')}
+								</p>
 							</div>
 
 							<div className="divide-y divide-white/10">
 								{v2FeaturedWork.map((item, index) => (
 									<article
 										key={item.id}
+										data-v2-block
 										className="grid gap-10 py-12 lg:grid-cols-[260px_minmax(0,1fr)]"
 									>
 										<div className="space-y-6">
@@ -498,7 +729,10 @@ export default function V2HomePage() {
 
 										<div className="space-y-8">
 											{item.image && (
-												<div className="relative aspect-[16/9] overflow-hidden border border-white/10 bg-slate-900/40">
+												<div
+													data-v2-parallax
+													className="relative aspect-[16/9] overflow-hidden border border-white/10 bg-slate-900/40"
+												>
 													<Image
 														src={item.image}
 														alt={tWork(`items.${item.id}.title`)}
@@ -543,28 +777,44 @@ export default function V2HomePage() {
 				<section id="capabilities" data-v2-reveal className="border-y border-white/8 bg-black/12">
 					<div className="mx-auto grid max-w-[1380px] gap-12 px-4 py-24 sm:px-6 lg:grid-cols-[180px_minmax(0,1fr)] lg:px-10">
 						<div className="hidden xl:block">
-							<p className="font-mono text-[11px] tracking-[0.28em] text-slate-500 uppercase">
+							<p
+								data-v2-section-label
+								className="font-mono text-[11px] tracking-[0.28em] text-slate-500 uppercase"
+							>
 								{chrome.capabilityLabel}
 							</p>
-							<p className="mt-4 text-2xl font-semibold text-white">{chrome.capabilitySection}</p>
+							<p data-v2-block className="mt-4 text-2xl font-semibold text-white">
+								{chrome.capabilitySection}
+							</p>
 						</div>
 
 						<div>
-							<p className="font-mono text-[11px] tracking-[0.28em] text-cyan-200/70 uppercase">
+							<p
+								data-v2-section-label
+								className="font-mono text-[11px] tracking-[0.28em] text-cyan-200/70 uppercase"
+							>
 								{tCapabilities('eyebrow')}
 							</p>
 							<div className="mt-6 grid gap-8 lg:grid-cols-[0.82fr_1.18fr]">
 								<div>
-									<h2 className="text-4xl font-semibold tracking-[-0.05em] text-white sm:text-5xl">
+									<div data-v2-section-line-x className="mb-4 h-px w-28 bg-cyan-300/45" />
+									<h2
+										data-v2-block
+										className="text-4xl font-semibold tracking-[-0.05em] text-white sm:text-5xl"
+									>
 										{tCapabilities('title')}
 									</h2>
-									<p className="mt-6 max-w-2xl text-lg leading-8 text-slate-300">
+									<p data-v2-block className="mt-6 max-w-2xl text-lg leading-8 text-slate-300">
 										{tCapabilities('intro')}
 									</p>
 								</div>
 								<div className="divide-y divide-white/10 border-t border-white/10">
 									{v2CapabilityGroups.map((group, index) => (
-										<div key={group} className="grid gap-5 py-6 md:grid-cols-[90px_minmax(0,1fr)]">
+										<div
+											key={group}
+											data-v2-block
+											className="grid gap-5 py-6 md:grid-cols-[90px_minmax(0,1fr)]"
+										>
 											<div className="font-mono text-[11px] tracking-[0.28em] text-slate-500 uppercase">
 												{String(index + 1).padStart(2, '0')}
 											</div>
@@ -602,28 +852,44 @@ export default function V2HomePage() {
 				<section id="experience" data-v2-reveal className="mx-auto max-w-[1380px] px-4 py-24 sm:px-6 lg:px-10">
 					<div className="grid gap-12 xl:grid-cols-[180px_minmax(0,1fr)]">
 						<div className="hidden xl:block">
-							<p className="font-mono text-[11px] tracking-[0.28em] text-slate-500 uppercase">
+							<p
+								data-v2-section-label
+								className="font-mono text-[11px] tracking-[0.28em] text-slate-500 uppercase"
+							>
 								{chrome.experienceLabel}
 							</p>
-							<p className="mt-4 text-2xl font-semibold text-white">{chrome.experienceSection}</p>
+							<p data-v2-block className="mt-4 text-2xl font-semibold text-white">
+								{chrome.experienceSection}
+							</p>
 						</div>
 
 						<div>
 							<div className="max-w-4xl border-b border-white/10 pb-10">
-								<p className="font-mono text-[11px] tracking-[0.28em] text-cyan-200/70 uppercase">
+								<p
+									data-v2-section-label
+									className="font-mono text-[11px] tracking-[0.28em] text-cyan-200/70 uppercase"
+								>
 									{tExperience('eyebrow')}
 								</p>
-								<h2 className="mt-6 text-4xl font-semibold tracking-[-0.05em] text-white sm:text-5xl lg:text-6xl">
+								<div data-v2-section-line-x className="mt-4 h-px w-28 bg-cyan-300/45" />
+								<h2
+									data-v2-block
+									className="mt-6 text-4xl font-semibold tracking-[-0.05em] text-white sm:text-5xl lg:text-6xl"
+								>
 									{tExperience('title')}
 								</h2>
-								<p className="mt-6 max-w-3xl text-lg leading-8 text-slate-300">
+								<p data-v2-block className="mt-6 max-w-3xl text-lg leading-8 text-slate-300">
 									{tExperience('intro')}
 								</p>
 							</div>
 
 							<div className="divide-y divide-white/10">
 								{v2ExperienceEntries.map((entry, index) => (
-									<div key={entry} className="grid gap-8 py-10 lg:grid-cols-[220px_minmax(0,1fr)]">
+									<div
+										key={entry}
+										data-v2-block
+										className="grid gap-8 py-10 lg:grid-cols-[220px_minmax(0,1fr)]"
+									>
 										<div>
 											<p className="font-mono text-[11px] tracking-[0.28em] text-slate-500 uppercase">
 												{String(index + 1).padStart(2, '0')}
@@ -669,28 +935,44 @@ export default function V2HomePage() {
 				<section id="principles" data-v2-reveal className="border-y border-white/8 bg-black/16">
 					<div className="mx-auto grid max-w-[1380px] gap-12 px-4 py-24 sm:px-6 lg:grid-cols-[180px_minmax(0,1fr)] lg:px-10">
 						<div className="hidden xl:block">
-							<p className="font-mono text-[11px] tracking-[0.28em] text-slate-500 uppercase">
+							<p
+								data-v2-section-label
+								className="font-mono text-[11px] tracking-[0.28em] text-slate-500 uppercase"
+							>
 								{chrome.principlesLabel}
 							</p>
-							<p className="mt-4 text-2xl font-semibold text-white">{chrome.principlesSection}</p>
+							<p data-v2-block className="mt-4 text-2xl font-semibold text-white">
+								{chrome.principlesSection}
+							</p>
 						</div>
 
 						<div className="grid gap-10 lg:grid-cols-[0.78fr_1.22fr]">
 							<div>
-								<p className="font-mono text-[11px] tracking-[0.28em] text-cyan-200/70 uppercase">
+								<p
+									data-v2-section-label
+									className="font-mono text-[11px] tracking-[0.28em] text-cyan-200/70 uppercase"
+								>
 									{tPrinciples('eyebrow')}
 								</p>
-								<h2 className="mt-6 text-4xl font-semibold tracking-[-0.05em] text-white sm:text-5xl lg:text-6xl">
+								<div data-v2-section-line-x className="mt-4 h-px w-28 bg-cyan-300/45" />
+								<h2
+									data-v2-block
+									className="mt-6 text-4xl font-semibold tracking-[-0.05em] text-white sm:text-5xl lg:text-6xl"
+								>
 									{tPrinciples('title')}
 								</h2>
-								<p className="mt-6 max-w-2xl text-lg leading-9 text-slate-300">
+								<p data-v2-block className="mt-6 max-w-2xl text-lg leading-9 text-slate-300">
 									{tPrinciples('intro')}
 								</p>
 							</div>
 
 							<div className="divide-y divide-white/10 border-t border-white/10">
 								{v2Principles.map((item, index) => (
-									<div key={item} className="grid gap-5 py-6 md:grid-cols-[90px_minmax(0,1fr)]">
+									<div
+										key={item}
+										data-v2-block
+										className="grid gap-5 py-6 md:grid-cols-[90px_minmax(0,1fr)]"
+									>
 										<div className="font-mono text-[11px] tracking-[0.28em] text-slate-500 uppercase">
 											{String(index + 1).padStart(2, '0')}
 										</div>
@@ -719,23 +1001,37 @@ export default function V2HomePage() {
 				>
 					<div className="grid gap-12 border-y border-white/10 py-12 lg:grid-cols-[180px_minmax(0,1fr)]">
 						<div className="hidden xl:block">
-							<p className="font-mono text-[11px] tracking-[0.28em] text-slate-500 uppercase">
+							<p
+								data-v2-section-label
+								className="font-mono text-[11px] tracking-[0.28em] text-slate-500 uppercase"
+							>
 								{chrome.contactLabel}
 							</p>
-							<p className="mt-4 text-2xl font-semibold text-white">{chrome.contactSection}</p>
+							<p data-v2-block className="mt-4 text-2xl font-semibold text-white">
+								{chrome.contactSection}
+							</p>
 						</div>
 
 						<div className="grid gap-10 lg:grid-cols-[0.88fr_1.12fr]">
 							<div>
-								<p className="font-mono text-[11px] tracking-[0.28em] text-cyan-200/70 uppercase">
+								<p
+									data-v2-section-label
+									className="font-mono text-[11px] tracking-[0.28em] text-cyan-200/70 uppercase"
+								>
 									{tContact('eyebrow')}
 								</p>
-								<h2 className="mt-6 max-w-4xl text-4xl font-semibold tracking-[-0.05em] text-white sm:text-5xl lg:text-6xl">
+								<div data-v2-section-line-x className="mt-4 h-px w-28 bg-cyan-300/45" />
+								<h2
+									data-v2-block
+									className="mt-6 max-w-4xl text-4xl font-semibold tracking-[-0.05em] text-white sm:text-5xl lg:text-6xl"
+								>
 									{tContact('title')}
 								</h2>
-								<p className="mt-6 max-w-3xl text-lg leading-8 text-slate-300">{tContact('intro')}</p>
+								<p data-v2-block className="mt-6 max-w-3xl text-lg leading-8 text-slate-300">
+									{tContact('intro')}
+								</p>
 
-								<div className="mt-10 flex flex-wrap gap-4">
+								<div data-v2-block className="mt-10 flex flex-wrap gap-4">
 									<Button
 										asChild
 										className="rounded-none bg-cyan-300 text-slate-950 hover:bg-cyan-200"
