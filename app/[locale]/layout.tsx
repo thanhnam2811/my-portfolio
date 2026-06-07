@@ -6,11 +6,8 @@ import { routing } from '@/i18n/routing';
 import type { Metadata } from 'next';
 import { Geist, Geist_Mono } from 'next/font/google';
 import '../globals.css';
-import Navbar from '@/components/Navbar';
-import Footer from '@/components/Footer';
 import { ThemeProvider } from '@/components/ThemeProvider';
-import MeshBackground from '@/components/MeshBackground';
-import SectionSnap from '@/components/SectionSnap';
+import LocaleShell from '@/components/LocaleShell';
 
 const geistSans = Geist({
 	variable: '--font-geist-sans',
@@ -157,18 +154,8 @@ export default async function RootLayout({
 						</svg>
 					</div>
 
-					{/* Global Mesh Background */}
-					<MeshBackground />
-
 					<ThemeProvider>
-						<SectionSnap />
-						<div className="relative z-0">
-							<Navbar />
-							<main id="main-content" className="flex-grow">
-								{children}
-							</main>
-							<Footer />
-						</div>
+						<LocaleShell>{children}</LocaleShell>
 					</ThemeProvider>
 				</NextIntlClientProvider>
 			</body>

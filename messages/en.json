@@ -220,5 +220,260 @@
 		"madeWith": "Built with",
 		"using": "using",
 		"tagline": "Backend developer focused on real-time systems and scalable infrastructure."
+	},
+	"V2Meta": {
+		"title": "Thai Thanh Nam | Backend Systems for Real-Time Products",
+		"description": "Backend developer focused on real-time systems, production reliability, and scalable server-side architecture for multiplayer and operationally sensitive products.",
+		"siteName": "Thai Thanh Nam",
+		"role": "Backend Developer",
+		"location": "Ho Chi Minh City, Vietnam"
+	},
+	"V2Nav": {
+		"hero": "Overview",
+		"proof": "Proof",
+		"work": "Work",
+		"capabilities": "Capabilities",
+		"experience": "Experience",
+		"contact": "Contact"
+	},
+	"V2Hero": {
+		"eyebrow": "Backend systems for real-time products",
+		"headline": "I build backend systems that stay clear, fast, and reliable when concurrency starts to matter.",
+		"summary": "Backend Developer with 2+ years of hands-on work across multiplayer game servers, real-time communication, monitoring pipelines, and production backend flows. My focus is on runtime behavior that remains understandable under load.",
+		"ctaPrimary": "See selected work",
+		"ctaSecondary": "Contact",
+		"ctaDownload": "Download CV",
+		"panelEyebrow": "Runtime snapshot",
+		"panelTitle": "Production-minded backend operator",
+		"panelState": "Available for the right work",
+		"signalsEyebrow": "Operational posture",
+		"signals": {
+			"runtime": {
+				"title": "Runtime first",
+				"description": "I care about connection flow, concurrency, and service behavior where real-time pressure exposes weak architecture quickly."
+			},
+			"observability": {
+				"title": "Observability included",
+				"description": "Monitoring, alerts, logs, and incident visibility are treated as part of the product, not a cleanup step after shipping."
+			},
+			"delivery": {
+				"title": "Delivery with constraints",
+				"description": "I aim for maintainable backend delivery that still moves fast under operational limits, legacy constraints, and live product pressure."
+			}
+		}
+	},
+	"V2Proof": {
+		"experience": {
+			"value": "2+ years",
+			"label": "Designing and maintaining backend systems in production."
+		},
+		"servers": {
+			"value": "20+ servers",
+			"label": "Real-time multiplayer game server instances delivered with Node.js and WebSocket."
+		},
+		"concurrency": {
+			"value": "High concurrency",
+			"label": "Systems built to support thousands of concurrent users and operationally sensitive workloads."
+		},
+		"incidents": {
+			"value": "-40%",
+			"label": "Average incident response time improved through internal monitoring and reporting tooling."
+		},
+		"stack": {
+			"value": "SQL + Redis + APIs",
+			"label": "Practical experience across SQL Server, MySQL, Redis, MongoDB, REST APIs, and real-time messaging."
+		}
+	},
+	"V2Projects": {
+		"eyebrow": "Selected work",
+		"title": "Case studies that show systems thinking, not just feature delivery.",
+		"intro": "This mix combines production game server work, product delivery, and systems exercises to show how I think about architecture, runtime stability, and operational clarity.",
+		"viewProject": "Open project",
+		"viewSource": "View source",
+		"labels": {
+			"context": "Context",
+			"build": "What I built",
+			"systems": "Systems involved",
+			"impact": "Impact"
+		},
+		"items": {
+			"onky": {
+				"title": "ONKY Game Server Systems",
+				"summary": "Production backend ownership across multiple online game products, including game server architecture, monitoring, live operations, and backend flow optimization.",
+				"context": "At ONKY, the work involved real-time multiplayer products where service behavior, runtime clarity, and backend stability directly affected live player experience.",
+				"build": "Built and extended multiplayer game servers with Node.js and WebSocket, added custom game logic on top of a shared framework, designed APIs for internal tools and lobby flows, and shipped internal SOS monitoring and process-management utilities.",
+				"systems": "Real-time socket communication, master-worker monitoring architecture, Redis-backed message flow, SQL-backed event logic, incident tooling, and operations support for game instances.",
+				"impact": "Delivered 20+ game server instances, improved average incident response time by 40%, reduced redundant SQL load, and made debugging and rollout operations more predictable in production."
+			},
+			"vmu": {
+				"title": "VMU Test Exam",
+				"summary": "An online exam platform for medical students with real-time admin visibility, question bank workflows, and backend support for controlled exam sessions.",
+				"context": "The product needed a stable testing flow for students while giving administrators enough visibility to monitor sessions and manage learning operations.",
+				"build": "Worked on backend-heavy product flows and session support between student activity and admin tooling, helping shape the platform into a usable production-ready learning system.",
+				"systems": "Node.js services, Socket.IO-based real-time session visibility, MongoDB persistence, React-based product surface, and operational flows for exam support.",
+				"impact": "Turned the system into a more production-ready learning platform with stronger moderation visibility and clearer session handling during live exam activity."
+			},
+			"tinylink": {
+				"title": "TinyLink",
+				"summary": "A compact URL shortener built as a systems exercise around performance, observability, and reliability on a constrained stack.",
+				"context": "This project explores the tradeoffs behind a small service that still needs fast redirects, sane data paths, and clean operational behavior.",
+				"build": "Designed the backend architecture, persistence layer, cache strategy, and deployment path with a focus on practical runtime choices rather than abstract scale claims.",
+				"systems": "Fastify runtime, PostgreSQL persistence, Redis caching, Dockerized delivery path, and lightweight observability patterns suitable for a lean service.",
+				"impact": "Shows backend judgment around fast redirects, reliability, and maintainability while keeping the service compact and cost-aware."
+			}
+		}
+	},
+	"V2Capabilities": {
+		"eyebrow": "Capability architecture",
+		"title": "The stack matters, but the real value is what each layer lets me ship confidently.",
+		"intro": "I prefer grouping skills by system capability instead of technology checklists. That maps much better to how backend work is actually delivered.",
+		"items": {
+			"realtime": {
+				"eyebrow": "Real-time systems",
+				"title": "Event flow, sockets, and interactive runtime behavior",
+				"description": "I work well in backend environments where connection handling, messaging timing, event routing, and runtime predictability affect the end-user experience directly.",
+				"stack": ["WebSocket", "Socket.IO", "Node.js", "Event-driven architecture"]
+			},
+			"backend": {
+				"eyebrow": "Backend runtime",
+				"title": "API design and server-side product logic",
+				"description": "My backend work includes service logic, REST APIs, authentication flows, internal tools, and runtime structures that stay understandable as product scope grows.",
+				"stack": ["Node.js", "Express.js", "REST APIs", "JWT", "TypeScript"]
+			},
+			"data": {
+				"eyebrow": "Data and performance",
+				"title": "SQL, Redis, and throughput-focused backend decisions",
+				"description": "I optimize data paths where query volume, concurrency, and latency matter. That includes SQL tuning, cache usage, and reducing redundant backend work under load.",
+				"stack": ["SQL Server", "MySQL", "Redis", "MongoDB", "Query optimization"]
+			},
+			"observability": {
+				"eyebrow": "Operational tooling",
+				"title": "Monitoring, incident response, and runtime visibility",
+				"description": "I have hands-on experience building internal monitoring and operational tools that improve alerting, reporting, incident response, and server management in production.",
+				"stack": ["Monitoring tools", "Telegram API", "Slack API", "Process management"]
+			},
+			"delivery": {
+				"eyebrow": "Delivery surface",
+				"title": "Enough product breadth to ship complete outcomes",
+				"description": "Beyond backend-heavy work, I can also contribute across product delivery surfaces when needed, especially for internal tools, admin systems, and full-stack product flows.",
+				"stack": ["React", "Next.js", "Frontend delivery", "Admin tooling"]
+			}
+		}
+	},
+	"V2Experience": {
+		"eyebrow": "Experience",
+		"title": "A progression through production backend work, full-stack delivery, and real-time systems.",
+		"intro": "The route here matters: internships, product work, freelance delivery, and then live game server systems under real-time constraints.",
+		"items": {
+			"onky": {
+				"company": "ONKY",
+				"title": "Game Server Developer",
+				"period": "Jul 2023 - Present",
+				"location": "Ho Chi Minh City, Vietnam",
+				"summary": "Owned backend architecture and runtime stability for multiple online game products, covering server behavior, APIs, data performance, monitoring, and operational tooling.",
+				"highlights": [
+					"Built 20+ real-time multiplayer game servers with Node.js and WebSocket.",
+					"Designed internal APIs and backend flows for lobby systems and operational tooling.",
+					"Built SOS monitoring infrastructure with Telegram and Slack integrations.",
+					"Optimized concurrency and reduced redundant SQL work under load."
+				]
+			},
+			"onkyIntern": {
+				"company": "ONKY",
+				"title": "Game Server Developer Intern",
+				"period": "May 2023 - Jul 2023",
+				"location": "Ho Chi Minh City, Vietnam",
+				"summary": "Started with low-level real-time backend work and system analysis, proving backend fundamentals through implementation clarity rather than framework abstraction.",
+				"highlights": [
+					"Built a 1v1 Caro game server from scratch using pure Node.js and WebSocket.",
+					"Analyzed and documented an existing production game server codebase.",
+					"Implemented a new multiplayer game server from company requirements.",
+					"Completed internship tasks covering real-time backend and database handling."
+				]
+			},
+			"freelancer": {
+				"company": "Freelancer",
+				"title": "Web Developer",
+				"period": "Mar 2023 - Jul 2024",
+				"location": "Remote / Client delivery",
+				"summary": "Delivered a full-stack learning and testing platform with role-aware access control, course material flows, scoring, and progress tracking.",
+				"highlights": [
+					"Designed and built a full-stack application with React, Express, Node.js, and MongoDB.",
+					"Implemented JWT-based authentication and authorization.",
+					"Delivered quiz, scoring, progress tracking, and user management features.",
+					"Built a separate admin dashboard for users, lessons, and courses."
+				]
+			},
+			"fostech": {
+				"company": "FosTECH",
+				"title": "Web Developer",
+				"period": "Aug 2022 - Apr 2023",
+				"location": "Vietnam",
+				"summary": "Worked on frontend product delivery and integrations, contributing to product management surfaces, reporting flows, and build performance improvements.",
+				"highlights": [
+					"Built UI components and product-management screens for Proshop.",
+					"Optimized Webpack configuration to improve load and build performance.",
+					"Implemented API integration for dynamic reporting in WLIN CRM.",
+					"Supported customer-relationship workflows through React-based interfaces."
+				]
+			},
+			"fostechIntern": {
+				"company": "FosTECH",
+				"title": "Web Developer Intern",
+				"period": "Jun 2022 - Aug 2022",
+				"location": "Vietnam",
+				"summary": "Early product engineering work focused on third-party integration, payment flow correctness, and secure transaction behavior inside an existing React application.",
+				"highlights": [
+					"Integrated the Megapay payment solution into an existing React application.",
+					"Implemented authentication and transaction flows from API specifications.",
+					"Enabled secure in-app payments for end users.",
+					"Completed integration work with production-minded correctness."
+				]
+			}
+		}
+	},
+	"V2Principles": {
+		"eyebrow": "Working style",
+		"title": "How I try to build backend systems that survive production reality.",
+		"intro": "I care less about appearing clever and more about whether the system remains reliable, observable, and understandable once real traffic, incidents, and feature pressure arrive.",
+		"items": {
+			"reliability": {
+				"eyebrow": "Reliability",
+				"title": "Optimize for behavior under pressure",
+				"description": "Good backend work should still make sense when concurrency rises, incidents happen, or a live product starts exposing weak assumptions."
+			},
+			"clarity": {
+				"eyebrow": "Clarity",
+				"title": "Keep runtime and code paths understandable",
+				"description": "I value systems that are easier to inspect, debug, and extend instead of architectures that only look impressive on paper."
+			},
+			"concurrency": {
+				"eyebrow": "Concurrency",
+				"title": "Design with load and timing in mind",
+				"description": "Connection handling, event flow, redundant queries, and race conditions are not edge cases in real-time products. They are the product."
+			},
+			"visibility": {
+				"eyebrow": "Visibility",
+				"title": "Observability is part of delivery",
+				"description": "Monitoring, alerts, logs, and reporting should reduce operational stress and shorten incident response time, not just decorate the stack."
+			}
+		}
+	},
+	"V2Contact": {
+		"eyebrow": "Open to the right conversations",
+		"title": "If you need backend ownership around real-time systems, runtime clarity, or production stability, let's talk.",
+		"intro": "Best fit for teams building multiplayer products, internal operational tooling, event-driven backends, or systems where observability and reliability are part of the product.",
+		"download": "Download CV",
+		"mail": "Send email",
+		"availabilityLabel": "Availability",
+		"availabilityValue": "Open to selected freelance, consulting, and recruiter conversations with a strong backend or systems angle.",
+		"educationLabel": "Education",
+		"educationValue": "Bachelor of Engineering in Computer Science (Information Technology), Ho Chi Minh City University of Technology and Education.",
+		"educationMeta": "Graduated 2019 - 2024 · GPA 8.61 / 10",
+		"links": {
+			"email": "thanhnam.thai01@gmail.com",
+			"linkedin": "linkedin.com/in/thanhnam2811",
+			"github": "github.com/thanhnam2811"
+		}
 	}
 }
