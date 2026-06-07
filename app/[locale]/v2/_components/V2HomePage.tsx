@@ -4,7 +4,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useLayoutEffect, useMemo, useRef, useState } from 'react';
 import { ArrowRight, Download, ExternalLink, Github, Linkedin, Mail } from 'lucide-react';
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 import { Button } from '@/components/ui/button';
 import { ensureV2Gsap, gsap, ScrollTrigger } from '@/lib/motion/v2-gsap';
 import { v2Motion } from '@/lib/motion/v2-presets';
@@ -26,7 +26,69 @@ function scrollToSection(id: string) {
 	window.scrollTo({ top, behavior: 'smooth' });
 }
 
+function getChromeCopy(locale: string) {
+	if (locale === 'vi') {
+		return {
+			navIndex: 'Muc',
+			heroSection: 'Chuong 01',
+			heroLabel: '// backend systems for real-time products',
+			heroSideLabel: 'Ho so van hanh',
+			currentFocus: 'Tap trung hien tai',
+			currentFocusValue: 'Real-time backend, observability va product delivery thuc te.',
+			statusLabel: 'Trang thai',
+			statusValue: 'San sang cho co hoi phu hop',
+			stackLabel: 'Core stack',
+			stackValue: 'Node.js, TypeScript, WebSocket, SQL, Redis, internal tooling.',
+			workSection: 'Chuong 02',
+			workIndexLabel: 'Case study',
+			workLedger: 'Operational ledger',
+			capabilitySection: 'Chuong 03',
+			capabilityLabel: 'He nang luc',
+			experienceSection: 'Chuong 04',
+			experienceLabel: 'Lo trinh',
+			principlesSection: 'Chuong 05',
+			principlesLabel: 'Manifesto',
+			contactSection: 'Chuong 06',
+			contactLabel: 'Lien he truc tiep',
+			scrollLabel: 'Keo xuong de xem he thong',
+			dossierLabel: 'Ban do van hanh',
+			metricsLabel: 'Tin hieu chinh',
+			narrativeLabel: 'Doc theo chapter',
+		};
+	}
+
+	return {
+		navIndex: 'Section',
+		heroSection: 'Chapter 01',
+		heroLabel: '// backend systems for real-time products',
+		heroSideLabel: 'Operator dossier',
+		currentFocus: 'Current focus',
+		currentFocusValue: 'Real-time backend, observability, and production-minded product delivery.',
+		statusLabel: 'Status',
+		statusValue: 'Open to the right opportunities',
+		stackLabel: 'Core stack',
+		stackValue: 'Node.js, TypeScript, WebSocket, SQL, Redis, internal tooling.',
+		workSection: 'Chapter 02',
+		workIndexLabel: 'Case study',
+		workLedger: 'Operational ledger',
+		capabilitySection: 'Chapter 03',
+		capabilityLabel: 'Capability map',
+		experienceSection: 'Chapter 04',
+		experienceLabel: 'Journey',
+		principlesSection: 'Chapter 05',
+		principlesLabel: 'Manifesto',
+		contactSection: 'Chapter 06',
+		contactLabel: 'Direct line',
+		scrollLabel: 'Scroll to inspect the system',
+		dossierLabel: 'Operating map',
+		metricsLabel: 'Signal set',
+		narrativeLabel: 'Read as chapters',
+	};
+}
+
 export default function V2HomePage() {
+	const locale = useLocale();
+	const chrome = useMemo(() => getChromeCopy(locale), [locale]);
 	const tNav = useTranslations('V2Nav');
 	const tMeta = useTranslations('V2Meta');
 	const tHero = useTranslations('V2Hero');
@@ -93,7 +155,7 @@ export default function V2HomePage() {
 						clearProps: 'opacity,transform',
 						scrollTrigger: {
 							trigger: section,
-							start: 'top 78%',
+							start: 'top 82%',
 							once: true,
 						},
 					},
@@ -117,38 +179,43 @@ export default function V2HomePage() {
 	}, []);
 
 	return (
-		<div
-			ref={rootRef}
-			className="v2-shell relative min-h-screen overflow-x-hidden bg-[radial-gradient(circle_at_top,rgba(70,120,255,0.18),transparent_28%),linear-gradient(180deg,rgba(10,16,27,0.98),rgba(10,12,20,1))] text-white"
-		>
-			<div className="pointer-events-none absolute inset-0 opacity-40 [background-image:linear-gradient(rgba(255,255,255,0.04)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.04)_1px,transparent_1px)] [background-size:72px_72px]" />
-			<div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_20%_12%,rgba(110,180,255,0.14),transparent_24%),radial-gradient(circle_at_80%_20%,rgba(84,134,255,0.16),transparent_28%)]" />
+		<div ref={rootRef} className="relative min-h-screen overflow-x-hidden bg-[#07111f] text-white">
+			<div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_20%_0%,rgba(53,88,166,0.34),transparent_28%),radial-gradient(circle_at_88%_18%,rgba(39,146,175,0.15),transparent_24%),linear-gradient(180deg,#0a1528_0%,#09111d_38%,#050a13_100%)]" />
+			<div className="pointer-events-none absolute inset-0 opacity-50 [background-image:linear-gradient(rgba(153,190,255,0.065)_1px,transparent_1px),linear-gradient(90deg,rgba(153,190,255,0.04)_1px,transparent_1px)] [background-size:96px_96px]" />
+			<div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-cyan-200/40 to-transparent" />
 
-			<header className="sticky top-0 z-50 border-b border-white/10 bg-slate-950/78 backdrop-blur-md">
-				<div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 sm:px-6 lg:px-8">
-					<div className="flex items-center gap-3">
-						<div className="h-2.5 w-2.5 rounded-full bg-cyan-400" />
+			<header className="sticky top-0 z-50 border-b border-white/8 bg-[#07101d]/82 backdrop-blur-xl">
+				<div className="mx-auto flex max-w-[1380px] items-center justify-between gap-6 px-4 py-4 sm:px-6 lg:px-10">
+					<button
+						type="button"
+						onClick={() => scrollToSection('hero')}
+						className="flex items-center gap-4 text-left"
+					>
+						<span className="h-2.5 w-2.5 rounded-full bg-cyan-300 shadow-[0_0_18px_rgba(103,232,249,0.5)]" />
 						<div>
-							<p className="text-sm font-semibold tracking-[0.22em] text-cyan-200/80 uppercase">Nam</p>
+							<p className="text-sm font-semibold tracking-[0.26em] text-cyan-100 uppercase">Nam</p>
 							<p className="text-xs text-slate-400">{tMeta('role')}</p>
 						</div>
-					</div>
+					</button>
 
-					<nav className="hidden items-center gap-1 md:flex">
-						{v2NavSections.map((section) => {
+					<nav className="hidden items-center gap-5 xl:flex">
+						{v2NavSections.map((section, index) => {
 							const active = activeSection === section.id;
 							return (
 								<button
 									key={section.id}
 									type="button"
 									onClick={() => scrollToSection(section.id)}
-									className={`rounded-full px-3 py-2 text-sm transition-all duration-200 ${
+									className={`group flex items-center gap-3 border-b pb-2 text-sm transition-colors duration-200 ${
 										active
-											? 'bg-white/10 text-white'
-											: 'text-slate-300 hover:bg-white/5 hover:text-white'
+											? 'border-cyan-300 text-white'
+											: 'border-transparent text-slate-400 hover:text-slate-100'
 									}`}
 								>
-									{tNav(section.labelKey)}
+									<span className="text-[10px] tracking-[0.28em] text-slate-500 uppercase">
+										{String(index + 1).padStart(2, '0')}
+									</span>
+									<span>{tNav(section.labelKey)}</span>
 								</button>
 							);
 						})}
@@ -158,14 +225,14 @@ export default function V2HomePage() {
 						<Button
 							type="button"
 							variant="outline"
-							className="hidden rounded-full border-white/20 bg-white/5 text-white hover:bg-white/10 md:inline-flex"
+							className="hidden rounded-none border-white/15 bg-transparent px-5 text-white hover:bg-white/5 md:inline-flex"
 							onClick={() => scrollToSection('contact')}
 						>
 							{tHero('ctaSecondary')}
 						</Button>
 						<Button
 							type="button"
-							className="rounded-full bg-cyan-400 text-slate-950 hover:bg-cyan-300"
+							className="rounded-none bg-cyan-300 px-5 text-slate-950 hover:bg-cyan-200"
 							onClick={() => scrollToSection('work')}
 						>
 							{tHero('ctaPrimary')}
@@ -175,40 +242,53 @@ export default function V2HomePage() {
 			</header>
 
 			<main id="main-content" className="relative">
-				<section id="hero" className="mx-auto max-w-7xl px-4 pt-16 pb-24 sm:px-6 lg:px-8 lg:pt-24 lg:pb-32">
-					<div className="grid gap-12 lg:grid-cols-[1.05fr_0.95fr] lg:items-center">
-						<div>
-							<p
-								data-v2-hero
-								className="mb-5 text-[11px] font-bold uppercase tracking-[0.28em] text-cyan-200/80"
-							>
-								{tHero('eyebrow')}
-							</p>
-							<h1
-								data-v2-hero
-								className="max-w-5xl text-5xl font-semibold tracking-[-0.05em] text-white sm:text-6xl lg:text-7xl"
-							>
-								{tHero('headline')}
-							</h1>
-							<p data-v2-hero className="mt-6 max-w-2xl text-lg leading-8 text-slate-300 sm:text-xl">
-								{tHero('summary')}
-							</p>
+				<section
+					id="hero"
+					className="mx-auto max-w-[1380px] px-4 pt-12 pb-18 sm:px-6 lg:px-10 lg:pt-16 lg:pb-24"
+				>
+					<div className="grid gap-10 xl:grid-cols-[120px_minmax(0,1fr)_430px]">
+						<div data-v2-hero className="hidden xl:flex xl:flex-col xl:justify-between">
+							<div>
+								<p className="text-[11px] tracking-[0.28em] text-slate-500 uppercase">
+									{chrome.navIndex}
+								</p>
+								<p className="mt-3 text-2xl font-semibold text-white">{chrome.heroSection}</p>
+							</div>
+							<div className="space-y-4 pb-6">
+								<div className="h-24 w-px bg-gradient-to-b from-cyan-300/70 via-white/20 to-transparent" />
+								<p className="max-w-[8rem] text-xs leading-6 text-slate-400">{chrome.scrollLabel}</p>
+							</div>
+						</div>
 
-							<div data-v2-hero className="mt-8 flex flex-wrap gap-3">
-								{v2ProofItems.slice(0, 4).map((key) => (
-									<span
-										key={key}
-										className="rounded-full border border-white/12 bg-white/6 px-4 py-2 text-sm text-slate-100"
-									>
-										{tProof(`${key}.value`)}
-									</span>
-								))}
+						<div className="min-w-0">
+							<div className="max-w-4xl">
+								<p
+									data-v2-hero
+									className="font-mono text-[12px] tracking-[0.26em] text-cyan-200/70 uppercase"
+								>
+									{chrome.heroLabel}
+								</p>
+								<h1
+									data-v2-hero
+									className="mt-8 max-w-5xl text-5xl font-semibold tracking-[-0.065em] text-white sm:text-6xl lg:text-[6.2rem] lg:leading-[0.92]"
+								>
+									{tHero('headline')}
+								</h1>
+								<p
+									data-v2-hero
+									className="mt-10 max-w-3xl text-xl leading-10 text-slate-300 sm:text-[1.45rem]"
+								>
+									{tHero('summary')}
+								</p>
 							</div>
 
-							<div data-v2-hero className="mt-10 flex flex-wrap gap-4">
+							<div
+								data-v2-hero
+								className="mt-10 flex flex-wrap items-center gap-4 border-t border-white/10 pt-8"
+							>
 								<Button
 									type="button"
-									className="rounded-full bg-cyan-400 px-7 text-slate-950 hover:bg-cyan-300"
+									className="rounded-none bg-cyan-300 px-8 text-slate-950 hover:bg-cyan-200"
 									onClick={() => scrollToSection('work')}
 								>
 									{tHero('ctaPrimary')}
@@ -217,7 +297,7 @@ export default function V2HomePage() {
 								<Button
 									asChild
 									variant="outline"
-									className="rounded-full border-white/15 bg-white/5 px-7 text-white hover:bg-white/10"
+									className="rounded-none border-white/15 bg-transparent px-8 text-white hover:bg-white/5"
 								>
 									<a href="/files/MyCV.pdf" download="CV_BE_ThaiThanhNam.pdf">
 										<Download className="mr-2 h-4 w-4" />
@@ -225,26 +305,41 @@ export default function V2HomePage() {
 									</a>
 								</Button>
 							</div>
+
+							<div data-v2-hero className="mt-9 grid gap-4 border-t border-white/10 pt-8 sm:grid-cols-4">
+								{v2ProofItems.slice(0, 4).map((key) => (
+									<div key={key} className="border-l border-white/12 pl-4">
+										<p className="text-[11px] tracking-[0.26em] text-slate-500 uppercase">
+											{chrome.metricsLabel}
+										</p>
+										<p className="mt-4 text-2xl font-semibold text-white">
+											{tProof(`${key}.value`)}
+										</p>
+									</div>
+								))}
+							</div>
 						</div>
 
-						<div
+						<aside
 							data-v2-hero
-							className="rounded-[2rem] border border-white/10 bg-white/6 p-6 shadow-2xl shadow-cyan-950/20 backdrop-blur-md sm:p-8"
+							className="border border-white/10 bg-[linear-gradient(180deg,rgba(20,36,66,0.84),rgba(9,16,28,0.78))] p-7 shadow-[0_24px_90px_rgba(6,10,20,0.45)]"
 						>
-							<div className="mb-6 flex items-center justify-between">
+							<div className="flex items-start justify-between gap-6 border-b border-white/10 pb-6">
 								<div>
-									<p className="text-[11px] font-bold uppercase tracking-[0.28em] text-cyan-200/80">
-										{tHero('panelEyebrow')}
+									<p className="font-mono text-[12px] tracking-[0.28em] text-cyan-200/75 uppercase">
+										{chrome.heroSideLabel}
 									</p>
-									<h2 className="mt-2 text-xl font-semibold">{tHero('panelTitle')}</h2>
+									<h2 className="mt-4 max-w-xs text-4xl font-semibold leading-tight text-white">
+										{tHero('panelTitle')}
+									</h2>
 								</div>
-								<div className="rounded-full border border-emerald-400/30 bg-emerald-400/10 px-3 py-1 text-xs font-semibold text-emerald-300">
+								<div className="border border-emerald-300/30 px-3 py-2 text-[11px] tracking-[0.18em] text-emerald-200 uppercase">
 									{tHero('panelState')}
 								</div>
 							</div>
 
-							<div className="mb-6 flex items-center gap-4 border-b border-white/10 pb-6">
-								<div className="relative h-18 w-18 overflow-hidden rounded-3xl border border-white/10 bg-white/10 sm:h-20 sm:w-20">
+							<div className="flex gap-4 border-b border-white/10 py-6">
+								<div className="relative h-20 w-20 overflow-hidden border border-white/12">
 									<Image
 										src="/images/avatar.png"
 										alt="Nam"
@@ -253,132 +348,138 @@ export default function V2HomePage() {
 										sizes="80px"
 									/>
 								</div>
-								<div>
-									<p className="text-xl font-semibold">Thai Thanh Nam</p>
-									<p className="mt-1 text-sm text-slate-300">{tMeta('role')}</p>
-									<p className="mt-2 text-sm text-slate-400">{tMeta('location')}</p>
+								<div className="min-w-0">
+									<p className="text-3xl font-semibold text-white">Thai Thanh Nam</p>
+									<p className="mt-2 text-base text-slate-300">{tMeta('role')}</p>
+									<p className="mt-3 text-sm text-slate-400">{tMeta('location')}</p>
 								</div>
 							</div>
 
-							<div className="grid gap-3 sm:grid-cols-2">
-								{['servers', 'concurrency', 'incidents', 'stack'].map((key) => (
-									<div key={key} className="rounded-3xl border border-white/10 bg-slate-950/45 p-4">
-										<p className="text-2xl font-semibold text-white">{tProof(`${key}.value`)}</p>
-										<p className="mt-1 text-xs uppercase tracking-[0.22em] text-slate-400">
-											{tProof(`${key}.label`)}
-										</p>
+							<div className="grid gap-0 border-b border-white/10 py-6">
+								<div className="grid gap-3 border-b border-white/8 pb-5 md:grid-cols-[132px_minmax(0,1fr)]">
+									<p className="font-mono text-[11px] tracking-[0.24em] text-slate-500 uppercase">
+										{chrome.currentFocus}
+									</p>
+									<p className="text-sm leading-7 text-slate-200">{chrome.currentFocusValue}</p>
+								</div>
+								<div className="grid gap-3 border-b border-white/8 py-5 md:grid-cols-[132px_minmax(0,1fr)]">
+									<p className="font-mono text-[11px] tracking-[0.24em] text-slate-500 uppercase">
+										{chrome.statusLabel}
+									</p>
+									<p className="text-sm leading-7 text-slate-200">{chrome.statusValue}</p>
+								</div>
+								<div className="grid gap-3 pt-5 md:grid-cols-[132px_minmax(0,1fr)]">
+									<p className="font-mono text-[11px] tracking-[0.24em] text-slate-500 uppercase">
+										{chrome.stackLabel}
+									</p>
+									<p className="text-sm leading-7 text-slate-200">{chrome.stackValue}</p>
+								</div>
+							</div>
+
+							<div className="grid gap-0 pt-6">
+								<p className="mb-5 font-mono text-[11px] tracking-[0.24em] text-cyan-200/75 uppercase">
+									{chrome.dossierLabel}
+								</p>
+								{['runtime', 'observability', 'delivery'].map((signal) => (
+									<div
+										key={signal}
+										className="grid gap-3 border-t border-white/8 py-4 md:grid-cols-[18px_minmax(0,1fr)]"
+									>
+										<span className="mt-2 h-2 w-2 rounded-full bg-cyan-300" />
+										<div>
+											<p className="text-lg font-semibold text-white">
+												{tHero(`signals.${signal}.title`)}
+											</p>
+											<p className="mt-2 text-sm leading-7 text-slate-300">
+												{tHero(`signals.${signal}.description`)}
+											</p>
+										</div>
 									</div>
 								))}
 							</div>
-
-							<div className="mt-6 rounded-[1.75rem] border border-white/10 bg-slate-950/45 p-5">
-								<p className="mb-4 text-[11px] font-bold uppercase tracking-[0.28em] text-cyan-200/80">
-									{tHero('signalsEyebrow')}
-								</p>
-								<div className="space-y-3">
-									{['runtime', 'observability', 'delivery'].map((signal) => (
-										<div
-											key={signal}
-											className="flex gap-3 rounded-2xl border border-white/8 bg-white/4 px-4 py-3"
-										>
-											<span className="mt-2 h-2 w-2 rounded-full bg-cyan-300" />
-											<div>
-												<p className="text-sm font-semibold text-white">
-													{tHero(`signals.${signal}.title`)}
-												</p>
-												<p className="mt-1 text-sm leading-6 text-slate-300">
-													{tHero(`signals.${signal}.description`)}
-												</p>
-											</div>
-										</div>
-									))}
-								</div>
-							</div>
-						</div>
+						</aside>
 					</div>
 				</section>
 
-				<section id="proof" data-v2-reveal className="mx-auto max-w-7xl px-4 pb-24 sm:px-6 lg:px-8">
-					<div className="grid gap-4 md:grid-cols-2 xl:grid-cols-5">
+				<section id="proof" data-v2-reveal className="border-y border-white/8">
+					<div className="mx-auto grid max-w-[1380px] gap-0 px-4 sm:px-6 lg:grid-cols-[220px_repeat(5,minmax(0,1fr))] lg:px-10">
+						<div className="border-b border-white/8 py-8 lg:border-r lg:border-b-0 lg:py-10">
+							<p className="font-mono text-[11px] tracking-[0.28em] text-cyan-200/70 uppercase">
+								{chrome.workLedger}
+							</p>
+							<p className="mt-4 max-w-[10rem] text-sm leading-7 text-slate-400">
+								{chrome.narrativeLabel}
+							</p>
+						</div>
 						{v2ProofItems.map((key) => (
 							<div
 								key={key}
-								className="rounded-[1.75rem] border border-white/10 bg-white/[0.045] p-5 backdrop-blur-sm"
+								className="border-b border-white/8 px-0 py-8 lg:border-r lg:border-b-0 lg:px-5 lg:py-10"
 							>
-								<p className="text-3xl font-semibold tracking-tight text-white">
+								<p className="text-3xl font-semibold tracking-[-0.04em] text-white">
 									{tProof(`${key}.value`)}
 								</p>
-								<p className="mt-3 text-sm leading-6 text-slate-300">{tProof(`${key}.label`)}</p>
+								<p className="mt-5 text-sm leading-7 text-slate-300">{tProof(`${key}.label`)}</p>
 							</div>
 						))}
 					</div>
 				</section>
 
-				<section id="work" data-v2-reveal className="mx-auto max-w-7xl px-4 py-24 sm:px-6 lg:px-8">
-					<div className="mb-12 max-w-3xl">
-						<p className="mb-4 text-[11px] font-bold uppercase tracking-[0.28em] text-cyan-200/80">
-							{tWork('eyebrow')}
-						</p>
-						<h2 className="text-4xl font-semibold tracking-[-0.04em] text-white sm:text-5xl">
-							{tWork('title')}
-						</h2>
-						<p className="mt-5 text-lg leading-8 text-slate-300">{tWork('intro')}</p>
-					</div>
+				<section
+					id="work"
+					data-v2-reveal
+					className="mx-auto max-w-[1380px] px-4 py-24 sm:px-6 lg:px-10 lg:py-30"
+				>
+					<div className="grid gap-12 xl:grid-cols-[180px_minmax(0,1fr)]">
+						<div className="hidden xl:block">
+							<p className="font-mono text-[11px] tracking-[0.28em] text-slate-500 uppercase">
+								{chrome.workIndexLabel}
+							</p>
+							<p className="mt-4 text-2xl font-semibold text-white">{chrome.workSection}</p>
+						</div>
 
-					<div className="space-y-8">
-						{v2FeaturedWork.map((item) => (
-							<article
-								key={item.id}
-								className="overflow-hidden rounded-[2rem] border border-white/10 bg-white/[0.045] backdrop-blur-sm"
-							>
-								<div className="grid lg:grid-cols-[0.42fr_0.58fr]">
-									<div className="relative min-h-72 border-b border-white/10 bg-slate-900/70 lg:border-r lg:border-b-0">
-										{item.image ? (
-											<Image
-												src={item.image}
-												alt={tWork(`items.${item.id}.title`)}
-												fill
-												className="object-cover"
-												sizes="(min-width: 1024px) 36vw, 100vw"
-											/>
-										) : (
-											<div className="flex h-full flex-col justify-between p-7">
-												<div>
-													<p className="text-[11px] font-bold uppercase tracking-[0.28em] text-cyan-200/80">
-														{item.accent}
-													</p>
-													<h3 className="mt-4 text-3xl font-semibold text-white">
-														{tWork(`items.${item.id}.title`)}
-													</h3>
-												</div>
-												<p className="max-w-md text-sm leading-7 text-slate-300">
-													{tWork(`items.${item.id}.summary`)}
-												</p>
-											</div>
-										)}
-									</div>
+						<div>
+							<div className="max-w-4xl border-b border-white/10 pb-10">
+								<p className="font-mono text-[11px] tracking-[0.28em] text-cyan-200/70 uppercase">
+									{tWork('eyebrow')}
+								</p>
+								<h2 className="mt-6 max-w-5xl text-4xl font-semibold tracking-[-0.05em] text-white sm:text-5xl lg:text-6xl">
+									{tWork('title')}
+								</h2>
+								<p className="mt-6 max-w-3xl text-lg leading-8 text-slate-300">{tWork('intro')}</p>
+							</div>
 
-									<div className="p-7 sm:p-8 lg:p-10">
-										<div className="flex flex-wrap items-start justify-between gap-4">
+							<div className="divide-y divide-white/10">
+								{v2FeaturedWork.map((item, index) => (
+									<article
+										key={item.id}
+										className="grid gap-10 py-12 lg:grid-cols-[260px_minmax(0,1fr)]"
+									>
+										<div className="space-y-6">
 											<div>
-												<p className="mb-3 text-[11px] font-bold uppercase tracking-[0.28em] text-cyan-200/80">
+												<p className="font-mono text-[11px] tracking-[0.28em] text-slate-500 uppercase">
+													{String(index + 1).padStart(2, '0')}
+												</p>
+												<p className="mt-2 text-sm tracking-[0.18em] text-cyan-200/70 uppercase">
 													{item.accent}
 												</p>
-												<h3 className="text-3xl font-semibold tracking-tight text-white">
-													{tWork(`items.${item.id}.title`)}
-												</h3>
 											</div>
-
-											<div className="flex flex-wrap gap-2">
+											<h3 className="max-w-[14rem] text-3xl font-semibold tracking-[-0.04em] text-white">
+												{tWork(`items.${item.id}.title`)}
+											</h3>
+											<p className="max-w-[16rem] text-sm leading-7 text-slate-400">
+												{tWork(`items.${item.id}.summary`)}
+											</p>
+											<div className="flex flex-wrap gap-3">
 												{item.link && (
 													<Link
 														href={item.link}
 														target="_blank"
 														rel="noopener noreferrer"
-														className="inline-flex h-10 items-center rounded-full bg-cyan-400 px-4 text-sm font-semibold text-slate-950 transition-transform duration-200 hover:-translate-y-0.5 hover:bg-cyan-300"
+														className="inline-flex items-center gap-2 border border-white/12 px-4 py-2 text-sm text-white transition-colors duration-200 hover:border-cyan-300/60 hover:text-cyan-100"
 													>
 														{tWork('viewProject')}
-														<ExternalLink className="ml-2 h-4 w-4" />
+														<ExternalLink className="h-4 w-4" />
 													</Link>
 												)}
 												{item.github && (
@@ -386,189 +487,258 @@ export default function V2HomePage() {
 														href={item.github}
 														target="_blank"
 														rel="noopener noreferrer"
-														className="inline-flex h-10 items-center rounded-full border border-white/12 bg-white/5 px-4 text-sm font-semibold text-white transition-transform duration-200 hover:-translate-y-0.5 hover:bg-white/10"
+														className="inline-flex items-center gap-2 border border-white/12 px-4 py-2 text-sm text-white transition-colors duration-200 hover:border-cyan-300/60 hover:text-cyan-100"
 													>
-														<Github className="mr-2 h-4 w-4" />
+														<Github className="h-4 w-4" />
 														{tWork('viewSource')}
 													</Link>
 												)}
 											</div>
 										</div>
 
-										<p className="mt-5 text-base leading-8 text-slate-300">
-											{tWork(`items.${item.id}.summary`)}
-										</p>
-
-										<div className="mt-8 grid gap-6">
-											{['context', 'build', 'systems', 'impact'].map((block) => (
-												<div key={block}>
-													<p className="mb-2 text-[11px] font-bold uppercase tracking-[0.24em] text-cyan-200/80">
-														{tWork(`labels.${block}`)}
-													</p>
-													<p className="text-sm leading-7 text-slate-300">
-														{tWork(`items.${item.id}.${block}`)}
-													</p>
+										<div className="space-y-8">
+											{item.image && (
+												<div className="relative aspect-[16/9] overflow-hidden border border-white/10 bg-slate-900/40">
+													<Image
+														src={item.image}
+														alt={tWork(`items.${item.id}.title`)}
+														fill
+														className="object-cover"
+														sizes="(min-width: 1024px) 56vw, 100vw"
+													/>
 												</div>
-											))}
-										</div>
+											)}
 
-										<div className="mt-8 flex flex-wrap gap-2.5">
-											{item.stack.map((tech) => (
-												<span
-													key={`${item.id}-${tech}`}
-													className="rounded-full border border-white/10 bg-slate-950/55 px-3.5 py-1.5 text-sm text-slate-100"
-												>
-													{tech}
-												</span>
-											))}
+											<div className="grid gap-x-8 gap-y-7 md:grid-cols-2">
+												{['context', 'build', 'systems', 'impact'].map((block) => (
+													<div key={block} className="border-t border-white/10 pt-5">
+														<p className="font-mono text-[11px] tracking-[0.24em] text-slate-500 uppercase">
+															{tWork(`labels.${block}`)}
+														</p>
+														<p className="mt-4 text-base leading-8 text-slate-200">
+															{tWork(`items.${item.id}.${block}`)}
+														</p>
+													</div>
+												))}
+											</div>
+
+											<div className="flex flex-wrap gap-2 border-t border-white/10 pt-6">
+												{item.stack.map((tech) => (
+													<span
+														key={`${item.id}-${tech}`}
+														className="border border-white/10 px-3 py-1.5 text-sm text-slate-100"
+													>
+														{tech}
+													</span>
+												))}
+											</div>
 										</div>
-									</div>
-								</div>
-							</article>
-						))}
+									</article>
+								))}
+							</div>
+						</div>
 					</div>
 				</section>
 
-				<section id="capabilities" data-v2-reveal className="mx-auto max-w-7xl px-4 py-24 sm:px-6 lg:px-8">
-					<div className="grid gap-10 lg:grid-cols-[0.7fr_1.3fr]">
+				<section id="capabilities" data-v2-reveal className="border-y border-white/8 bg-black/12">
+					<div className="mx-auto grid max-w-[1380px] gap-12 px-4 py-24 sm:px-6 lg:grid-cols-[180px_minmax(0,1fr)] lg:px-10">
+						<div className="hidden xl:block">
+							<p className="font-mono text-[11px] tracking-[0.28em] text-slate-500 uppercase">
+								{chrome.capabilityLabel}
+							</p>
+							<p className="mt-4 text-2xl font-semibold text-white">{chrome.capabilitySection}</p>
+						</div>
+
 						<div>
-							<p className="mb-4 text-[11px] font-bold uppercase tracking-[0.28em] text-cyan-200/80">
+							<p className="font-mono text-[11px] tracking-[0.28em] text-cyan-200/70 uppercase">
 								{tCapabilities('eyebrow')}
 							</p>
-							<h2 className="text-4xl font-semibold tracking-[-0.04em] text-white sm:text-5xl">
-								{tCapabilities('title')}
-							</h2>
-							<p className="mt-5 text-lg leading-8 text-slate-300">{tCapabilities('intro')}</p>
-						</div>
-
-						<div className="grid gap-5 md:grid-cols-2">
-							{v2CapabilityGroups.map((group) => (
-								<div
-									key={group}
-									className="rounded-[1.85rem] border border-white/10 bg-white/[0.045] p-6 backdrop-blur-sm"
-								>
-									<p className="mb-3 text-[11px] font-bold uppercase tracking-[0.24em] text-cyan-200/80">
-										{tCapabilities(`items.${group}.eyebrow`)}
+							<div className="mt-6 grid gap-8 lg:grid-cols-[0.82fr_1.18fr]">
+								<div>
+									<h2 className="text-4xl font-semibold tracking-[-0.05em] text-white sm:text-5xl">
+										{tCapabilities('title')}
+									</h2>
+									<p className="mt-6 max-w-2xl text-lg leading-8 text-slate-300">
+										{tCapabilities('intro')}
 									</p>
-									<h3 className="text-2xl font-semibold text-white">
-										{tCapabilities(`items.${group}.title`)}
-									</h3>
-									<p className="mt-4 text-sm leading-7 text-slate-300">
-										{tCapabilities(`items.${group}.description`)}
-									</p>
-									<div className="mt-6 flex flex-wrap gap-2.5">
-										{(tCapabilities.raw(`items.${group}.stack`) as string[]).map((tech) => (
-											<span
-												key={`${group}-${tech}`}
-												className="rounded-full border border-white/8 bg-slate-950/50 px-3 py-1.5 text-sm text-slate-100"
-											>
-												{tech}
-											</span>
-										))}
-									</div>
 								</div>
-							))}
-						</div>
-					</div>
-				</section>
-
-				<section id="experience" data-v2-reveal className="mx-auto max-w-7xl px-4 py-24 sm:px-6 lg:px-8">
-					<div className="mb-12 max-w-3xl">
-						<p className="mb-4 text-[11px] font-bold uppercase tracking-[0.28em] text-cyan-200/80">
-							{tExperience('eyebrow')}
-						</p>
-						<h2 className="text-4xl font-semibold tracking-[-0.04em] text-white sm:text-5xl">
-							{tExperience('title')}
-						</h2>
-						<p className="mt-5 text-lg leading-8 text-slate-300">{tExperience('intro')}</p>
-					</div>
-
-					<div className="space-y-5">
-						{v2ExperienceEntries.map((entry) => (
-							<div
-								key={entry}
-								className="rounded-[1.85rem] border border-white/10 bg-white/[0.045] p-6 backdrop-blur-sm sm:p-7"
-							>
-								<div className="flex flex-col gap-4 border-b border-white/10 pb-5 lg:flex-row lg:items-end lg:justify-between">
-									<div>
-										<p className="text-[11px] font-bold uppercase tracking-[0.24em] text-cyan-200/80">
-											{tExperience(`items.${entry}.company`)}
-										</p>
-										<h3 className="mt-3 text-2xl font-semibold text-white">
-											{tExperience(`items.${entry}.title`)}
-										</h3>
-									</div>
-									<div className="text-sm text-slate-400">
-										<p>{tExperience(`items.${entry}.period`)}</p>
-										<p className="mt-1">{tExperience(`items.${entry}.location`)}</p>
-									</div>
-								</div>
-								<p className="mt-5 max-w-4xl text-sm leading-7 text-slate-300">
-									{tExperience(`items.${entry}.summary`)}
-								</p>
-								<ul className="mt-5 grid gap-3 lg:grid-cols-2">
-									{(tExperience.raw(`items.${entry}.highlights`) as string[]).map((item, index) => (
-										<li
-											key={`${entry}-${index}`}
-											className="flex gap-3 rounded-2xl border border-white/8 bg-slate-950/45 px-4 py-3 text-sm leading-7 text-slate-200"
-										>
-											<span className="mt-3 h-1.5 w-1.5 rounded-full bg-cyan-300" />
-											<span>{item}</span>
-										</li>
+								<div className="divide-y divide-white/10 border-t border-white/10">
+									{v2CapabilityGroups.map((group, index) => (
+										<div key={group} className="grid gap-5 py-6 md:grid-cols-[90px_minmax(0,1fr)]">
+											<div className="font-mono text-[11px] tracking-[0.28em] text-slate-500 uppercase">
+												{String(index + 1).padStart(2, '0')}
+											</div>
+											<div>
+												<p className="text-[11px] tracking-[0.24em] text-cyan-200/70 uppercase">
+													{tCapabilities(`items.${group}.eyebrow`)}
+												</p>
+												<h3 className="mt-3 text-2xl font-semibold text-white">
+													{tCapabilities(`items.${group}.title`)}
+												</h3>
+												<p className="mt-4 text-base leading-8 text-slate-300">
+													{tCapabilities(`items.${group}.description`)}
+												</p>
+												<div className="mt-5 flex flex-wrap gap-2">
+													{(tCapabilities.raw(`items.${group}.stack`) as string[]).map(
+														(tech) => (
+															<span
+																key={`${group}-${tech}`}
+																className="border border-white/10 px-3 py-1.5 text-sm text-slate-100"
+															>
+																{tech}
+															</span>
+														),
+													)}
+												</div>
+											</div>
+										</div>
 									))}
-								</ul>
-							</div>
-						))}
-					</div>
-				</section>
-
-				<section id="principles" data-v2-reveal className="mx-auto max-w-7xl px-4 py-24 sm:px-6 lg:px-8">
-					<div className="grid gap-10 lg:grid-cols-[0.78fr_1.22fr]">
-						<div>
-							<p className="mb-4 text-[11px] font-bold uppercase tracking-[0.28em] text-cyan-200/80">
-								{tPrinciples('eyebrow')}
-							</p>
-							<h2 className="text-4xl font-semibold tracking-[-0.04em] text-white sm:text-5xl">
-								{tPrinciples('title')}
-							</h2>
-							<p className="mt-5 text-lg leading-8 text-slate-300">{tPrinciples('intro')}</p>
-						</div>
-						<div className="grid gap-4">
-							{v2Principles.map((item) => (
-								<div
-									key={item}
-									className="rounded-[1.8rem] border border-white/10 bg-white/[0.045] p-6 backdrop-blur-sm"
-								>
-									<p className="text-[11px] font-bold uppercase tracking-[0.24em] text-cyan-200/80">
-										{tPrinciples(`items.${item}.eyebrow`)}
-									</p>
-									<h3 className="mt-3 text-2xl font-semibold text-white">
-										{tPrinciples(`items.${item}.title`)}
-									</h3>
-									<p className="mt-4 text-sm leading-7 text-slate-300">
-										{tPrinciples(`items.${item}.description`)}
-									</p>
 								</div>
-							))}
+							</div>
 						</div>
 					</div>
 				</section>
 
-				<section id="contact" data-v2-reveal className="mx-auto max-w-7xl px-4 pt-24 pb-28 sm:px-6 lg:px-8">
-					<div className="rounded-[2.2rem] border border-cyan-400/20 bg-[linear-gradient(135deg,rgba(12,18,31,0.96),rgba(20,45,72,0.86))] p-8 shadow-2xl shadow-cyan-950/30 sm:p-10 lg:p-12">
-						<div className="grid gap-10 lg:grid-cols-[0.9fr_1.1fr]">
+				<section id="experience" data-v2-reveal className="mx-auto max-w-[1380px] px-4 py-24 sm:px-6 lg:px-10">
+					<div className="grid gap-12 xl:grid-cols-[180px_minmax(0,1fr)]">
+						<div className="hidden xl:block">
+							<p className="font-mono text-[11px] tracking-[0.28em] text-slate-500 uppercase">
+								{chrome.experienceLabel}
+							</p>
+							<p className="mt-4 text-2xl font-semibold text-white">{chrome.experienceSection}</p>
+						</div>
+
+						<div>
+							<div className="max-w-4xl border-b border-white/10 pb-10">
+								<p className="font-mono text-[11px] tracking-[0.28em] text-cyan-200/70 uppercase">
+									{tExperience('eyebrow')}
+								</p>
+								<h2 className="mt-6 text-4xl font-semibold tracking-[-0.05em] text-white sm:text-5xl lg:text-6xl">
+									{tExperience('title')}
+								</h2>
+								<p className="mt-6 max-w-3xl text-lg leading-8 text-slate-300">
+									{tExperience('intro')}
+								</p>
+							</div>
+
+							<div className="divide-y divide-white/10">
+								{v2ExperienceEntries.map((entry, index) => (
+									<div key={entry} className="grid gap-8 py-10 lg:grid-cols-[220px_minmax(0,1fr)]">
+										<div>
+											<p className="font-mono text-[11px] tracking-[0.28em] text-slate-500 uppercase">
+												{String(index + 1).padStart(2, '0')}
+											</p>
+											<p className="mt-3 text-sm tracking-[0.2em] text-cyan-200/70 uppercase">
+												{tExperience(`items.${entry}.company`)}
+											</p>
+											<p className="mt-5 text-base leading-7 text-slate-400">
+												{tExperience(`items.${entry}.period`)}
+											</p>
+											<p className="mt-2 text-sm leading-7 text-slate-500">
+												{tExperience(`items.${entry}.location`)}
+											</p>
+										</div>
+
+										<div>
+											<h3 className="text-3xl font-semibold tracking-[-0.04em] text-white">
+												{tExperience(`items.${entry}.title`)}
+											</h3>
+											<p className="mt-5 max-w-4xl text-base leading-8 text-slate-300">
+												{tExperience(`items.${entry}.summary`)}
+											</p>
+											<ul className="mt-8 grid gap-3 md:grid-cols-2">
+												{(tExperience.raw(`items.${entry}.highlights`) as string[]).map(
+													(item, itemIndex) => (
+														<li
+															key={`${entry}-${itemIndex}`}
+															className="border-t border-white/10 pt-4 text-sm leading-7 text-slate-200"
+														>
+															{item}
+														</li>
+													),
+												)}
+											</ul>
+										</div>
+									</div>
+								))}
+							</div>
+						</div>
+					</div>
+				</section>
+
+				<section id="principles" data-v2-reveal className="border-y border-white/8 bg-black/16">
+					<div className="mx-auto grid max-w-[1380px] gap-12 px-4 py-24 sm:px-6 lg:grid-cols-[180px_minmax(0,1fr)] lg:px-10">
+						<div className="hidden xl:block">
+							<p className="font-mono text-[11px] tracking-[0.28em] text-slate-500 uppercase">
+								{chrome.principlesLabel}
+							</p>
+							<p className="mt-4 text-2xl font-semibold text-white">{chrome.principlesSection}</p>
+						</div>
+
+						<div className="grid gap-10 lg:grid-cols-[0.78fr_1.22fr]">
 							<div>
-								<p className="mb-4 text-[11px] font-bold uppercase tracking-[0.28em] text-cyan-200/80">
+								<p className="font-mono text-[11px] tracking-[0.28em] text-cyan-200/70 uppercase">
+									{tPrinciples('eyebrow')}
+								</p>
+								<h2 className="mt-6 text-4xl font-semibold tracking-[-0.05em] text-white sm:text-5xl lg:text-6xl">
+									{tPrinciples('title')}
+								</h2>
+								<p className="mt-6 max-w-2xl text-lg leading-9 text-slate-300">
+									{tPrinciples('intro')}
+								</p>
+							</div>
+
+							<div className="divide-y divide-white/10 border-t border-white/10">
+								{v2Principles.map((item, index) => (
+									<div key={item} className="grid gap-5 py-6 md:grid-cols-[90px_minmax(0,1fr)]">
+										<div className="font-mono text-[11px] tracking-[0.28em] text-slate-500 uppercase">
+											{String(index + 1).padStart(2, '0')}
+										</div>
+										<div>
+											<p className="text-[11px] tracking-[0.24em] text-cyan-200/70 uppercase">
+												{tPrinciples(`items.${item}.eyebrow`)}
+											</p>
+											<h3 className="mt-3 text-2xl font-semibold text-white">
+												{tPrinciples(`items.${item}.title`)}
+											</h3>
+											<p className="mt-4 text-base leading-8 text-slate-300">
+												{tPrinciples(`items.${item}.description`)}
+											</p>
+										</div>
+									</div>
+								))}
+							</div>
+						</div>
+					</div>
+				</section>
+
+				<section
+					id="contact"
+					data-v2-reveal
+					className="mx-auto max-w-[1380px] px-4 py-24 sm:px-6 lg:px-10 lg:py-28"
+				>
+					<div className="grid gap-12 border-y border-white/10 py-12 lg:grid-cols-[180px_minmax(0,1fr)]">
+						<div className="hidden xl:block">
+							<p className="font-mono text-[11px] tracking-[0.28em] text-slate-500 uppercase">
+								{chrome.contactLabel}
+							</p>
+							<p className="mt-4 text-2xl font-semibold text-white">{chrome.contactSection}</p>
+						</div>
+
+						<div className="grid gap-10 lg:grid-cols-[0.88fr_1.12fr]">
+							<div>
+								<p className="font-mono text-[11px] tracking-[0.28em] text-cyan-200/70 uppercase">
 									{tContact('eyebrow')}
 								</p>
-								<h2 className="text-4xl font-semibold tracking-[-0.04em] text-white sm:text-5xl">
+								<h2 className="mt-6 max-w-4xl text-4xl font-semibold tracking-[-0.05em] text-white sm:text-5xl lg:text-6xl">
 									{tContact('title')}
 								</h2>
-								<p className="mt-5 max-w-2xl text-lg leading-8 text-slate-300">{tContact('intro')}</p>
-								<div className="mt-8 flex flex-wrap gap-4">
+								<p className="mt-6 max-w-3xl text-lg leading-8 text-slate-300">{tContact('intro')}</p>
+
+								<div className="mt-10 flex flex-wrap gap-4">
 									<Button
 										asChild
-										className="rounded-full bg-cyan-400 text-slate-950 hover:bg-cyan-300"
+										className="rounded-none bg-cyan-300 text-slate-950 hover:bg-cyan-200"
 									>
 										<a href="/files/MyCV.pdf" download="CV_BE_ThaiThanhNam.pdf">
 											<Download className="mr-2 h-4 w-4" />
@@ -578,23 +748,23 @@ export default function V2HomePage() {
 									<Button
 										asChild
 										variant="outline"
-										className="rounded-full border-white/15 bg-white/5 text-white hover:bg-white/10"
+										className="rounded-none border-white/15 bg-transparent text-white hover:bg-white/5"
 									>
 										<a href="mailto:thanhnam.thai01@gmail.com">{tContact('mail')}</a>
 									</Button>
 								</div>
 							</div>
 
-							<div className="space-y-4">
-								<div className="rounded-[1.75rem] border border-white/10 bg-slate-950/45 p-5">
-									<p className="text-[11px] font-bold uppercase tracking-[0.24em] text-cyan-200/80">
+							<div className="divide-y divide-white/10 border-t border-white/10">
+								<div className="grid gap-5 py-5 md:grid-cols-[160px_minmax(0,1fr)]">
+									<p className="font-mono text-[11px] tracking-[0.24em] text-slate-500 uppercase">
 										{tContact('availabilityLabel')}
 									</p>
-									<p className="mt-3 text-base leading-7 text-slate-200">
+									<p className="text-base leading-8 text-slate-200">
 										{tContact('availabilityValue')}
 									</p>
 								</div>
-								<div className="grid gap-3 sm:grid-cols-3">
+								<div className="grid gap-4 py-5 md:grid-cols-3">
 									{socialLinks.map((item) => {
 										const externalProps = item.href.startsWith('http')
 											? { target: '_blank', rel: 'noopener noreferrer' }
@@ -605,7 +775,7 @@ export default function V2HomePage() {
 												key={item.label}
 												href={item.href}
 												{...externalProps}
-												className="rounded-[1.6rem] border border-white/10 bg-white/[0.045] p-5 transition-all duration-200 hover:-translate-y-0.5 hover:border-cyan-400/35 hover:bg-white/[0.07]"
+												className="border border-white/10 p-4 transition-colors duration-200 hover:border-cyan-300/50 hover:text-cyan-100"
 											>
 												<item.icon className="h-5 w-5 text-cyan-200" />
 												<p className="mt-4 text-sm font-semibold text-white">{item.label}</p>
@@ -616,14 +786,16 @@ export default function V2HomePage() {
 										);
 									})}
 								</div>
-								<div className="rounded-[1.75rem] border border-white/10 bg-white/[0.045] p-5">
-									<p className="text-[11px] font-bold uppercase tracking-[0.24em] text-cyan-200/80">
+								<div className="grid gap-5 py-5 md:grid-cols-[160px_minmax(0,1fr)]">
+									<p className="font-mono text-[11px] tracking-[0.24em] text-slate-500 uppercase">
 										{tContact('educationLabel')}
 									</p>
-									<p className="mt-3 text-base leading-7 text-slate-200">
-										{tContact('educationValue')}
-									</p>
-									<p className="mt-2 text-sm text-slate-400">{tContact('educationMeta')}</p>
+									<div>
+										<p className="text-base leading-8 text-slate-200">
+											{tContact('educationValue')}
+										</p>
+										<p className="mt-3 text-sm text-slate-400">{tContact('educationMeta')}</p>
+									</div>
 								</div>
 							</div>
 						</div>
