@@ -18,16 +18,6 @@ export default function AnimatedLogo() {
 						initial: { scale: 1 },
 						hover: { scale: 1.2 },
 					}}
-					animate={{
-						opacity: [0.6, 1, 0.6],
-					}}
-					transition={{
-						opacity: {
-							duration: 2,
-							repeat: Infinity,
-							ease: 'easeInOut',
-						},
-					}}
 				/>
 
 				{/* Name */}

@@ -9,9 +9,8 @@ import '../globals.css';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import { ThemeProvider } from '@/components/ThemeProvider';
-import SmoothScroll from '@/components/SmoothScroll';
-import CustomCursor from '@/components/CustomCursor';
 import MeshBackground from '@/components/MeshBackground';
+import SectionSnap from '@/components/SectionSnap';
 
 const geistSans = Geist({
 	variable: '--font-geist-sans',
@@ -162,16 +161,14 @@ export default async function RootLayout({
 					<MeshBackground />
 
 					<ThemeProvider>
-						<SmoothScroll>
-							<CustomCursor />
-							<div className="relative z-0">
-								<Navbar />
-								<main id="main-content" className="flex-grow">
-									{children}
-								</main>
-								<Footer />
-							</div>
-						</SmoothScroll>
+						<SectionSnap />
+						<div className="relative z-0">
+							<Navbar />
+							<main id="main-content" className="flex-grow">
+								{children}
+							</main>
+							<Footer />
+						</div>
 					</ThemeProvider>
 				</NextIntlClientProvider>
 			</body>

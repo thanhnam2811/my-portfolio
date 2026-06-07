@@ -17,7 +17,7 @@ export default function Projects() {
 	const shouldReduceMotion = usePrefersReducedMotion();
 
 	return (
-		<section id="projects" className="section-shell py-24 sm:py-28">
+		<section id="projects" data-snap="true" className="section-shell py-24 sm:py-28">
 			<motion.div
 				initial={{ opacity: 0, y: 18 }}
 				whileInView={{ opacity: 1, y: 0 }}

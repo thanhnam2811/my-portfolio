@@ -26,11 +26,48 @@
 		"tertiaryCta": "Liên hệ",
 		"trustLabel": "Trọng tâm chuyên môn",
 		"proofTitle": "Những gì tôi mang lại",
+		"runtimeEyebrow": "Runtime snapshot",
+		"runtimeTitle": "Backend operator với tư duy production",
+		"runtimeState": "Mindset cho live systems",
+		"signalTitle": "Operational signals",
+		"signalWindow": "Trạng thái hiện tại",
 		"proofItems": {
 			"experience": "Hơn 2 năm xây game server systems",
 			"domain": "Backend real-time và hạ tầng multiplayer",
 			"scale": "Triển khai hệ thống phục vụ hàng nghìn người chơi cùng lúc",
 			"availability": "Mở cho freelance và consulting"
+		},
+		"metrics": {
+			"instances": {
+				"value": "20+",
+				"label": "server instances"
+			},
+			"players": {
+				"value": "1k+",
+				"label": "người chơi đồng thời"
+			},
+			"queries": {
+				"value": "-40%",
+				"label": "database queries ở flow chính"
+			},
+			"alerts": {
+				"value": "24/7",
+				"label": "mức phủ alerting"
+			}
+		},
+		"signals": {
+			"runtime": {
+				"title": "Ưu tiên runtime stability",
+				"description": "Thiết kế event flow và service behavior để hệ thống vẫn dễ đoán khi tải real-time tăng cao."
+			},
+			"observability": {
+				"title": "Observability được thiết kế sẵn",
+				"description": "Logging, alerting và các tín hiệu vận hành được xem là một phần của sản phẩm, không phải phần thêm sau."
+			},
+			"delivery": {
+				"title": "Delivery trong điều kiện ràng buộc thực tế",
+				"description": "Ship feature nhưng vẫn bảo vệ throughput, tốc độ debug và độ rõ ràng của hệ thống."
+			}
 		},
 		"capabilities": {
 			"gameServer": "Game Server",

@@ -25,8 +25,8 @@ export default function LanguageSwitcher() {
 			<motion.button
 				onClick={toggleLocale}
 				disabled={isPending}
-				className="relative flex items-center gap-2 px-3 py-1.5 rounded-full glass border border-white/10 hover:border-primary/30 transition-all duration-300 disabled:opacity-50 overflow-hidden"
-				whileHover={{ scale: 1.05 }}
+				className="relative flex items-center gap-2 overflow-hidden rounded-full border border-border bg-card/92 px-3 py-1.5 transition-colors duration-200 hover:border-primary/30 disabled:opacity-50"
+				whileHover={{ y: -1 }}
 				whileTap={{ scale: 0.95 }}
 				aria-label={`Switch to ${locale === 'en' ? 'Vietnamese' : 'English'}`}
 			>
@@ -59,7 +59,7 @@ export default function LanguageSwitcher() {
 				{/* Loading Indicator */}
 				{isPending && (
 					<motion.div
-						className="absolute inset-0 bg-background/40 backdrop-blur-[1px] flex items-center justify-center"
+						className="absolute inset-0 flex items-center justify-center bg-background/55"
 						initial={{ opacity: 0 }}
 						animate={{ opacity: 1 }}
 					>

@@ -26,11 +26,48 @@
 		"tertiaryCta": "Contact",
 		"trustLabel": "Core focus",
 		"proofTitle": "What I bring",
+		"runtimeEyebrow": "Runtime snapshot",
+		"runtimeTitle": "Production-minded backend operator",
+		"runtimeState": "Live systems mindset",
+		"signalTitle": "Operational signals",
+		"signalWindow": "Current posture",
 		"proofItems": {
 			"experience": "2+ years shipping game server systems",
 			"domain": "Real-time backend and multiplayer infrastructure",
 			"scale": "Systems built for thousands of concurrent players",
 			"availability": "Available for freelance and consulting work"
+		},
+		"metrics": {
+			"instances": {
+				"value": "20+",
+				"label": "server instances"
+			},
+			"players": {
+				"value": "1k+",
+				"label": "concurrent players"
+			},
+			"queries": {
+				"value": "-40%",
+				"label": "query volume on key flows"
+			},
+			"alerts": {
+				"value": "24/7",
+				"label": "alerting coverage"
+			}
+		},
+		"signals": {
+			"runtime": {
+				"title": "Runtime stability first",
+				"description": "Designing event flow and service behavior to stay predictable under real-time pressure."
+			},
+			"observability": {
+				"title": "Observability built in",
+				"description": "Logging, alerting, and operational signals are treated as part of the product, not afterthoughts."
+			},
+			"delivery": {
+				"title": "Delivery under constraints",
+				"description": "Shipping features while protecting throughput, debugging speed, and system clarity."
+			}
 		},
 		"capabilities": {
 			"gameServer": "Game Server",

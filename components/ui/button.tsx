@@ -57,7 +57,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
 			<motion.button
 				data-slot="button"
 				className={cn(buttonVariants({ variant, size, className }))}
-				whileTap={{ scale: 0.97, boxShadow: 'var(--shadow-neu-inset)' }}
+				whileTap={{ scale: 0.98 }}
 				ref={ref as React.Ref<HTMLButtonElement>}
 				{...(props as HTMLMotionProps<'button'>)}
 			/>

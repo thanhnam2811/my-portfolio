@@ -52,6 +52,7 @@
 
 :root {
 	--radius: 1rem;
+	--header-offset: 5.5rem;
 	--background: oklch(0.985 0.004 240);
 	--foreground: oklch(0.2 0.02 255);
 	--card: oklch(0.995 0.002 240 / 0.92);
@@ -133,7 +134,7 @@
 	}
 	html {
 		scroll-behavior: smooth;
-		scroll-padding-top: 5rem;
+		scroll-padding-top: var(--header-offset);
 	}
 	body {
 		@apply bg-background text-foreground antialiased;
@@ -180,4 +181,14 @@ aside {
 
 @utility editorial-surface {
 	@apply rounded-[2rem] border border-border bg-card/95 shadow-premium;
+}
+
+main section[data-snap='true'] {
+	scroll-margin-top: calc(var(--header-offset) + 0.75rem);
+}
+
+@media (min-width: 1024px) and (hover: hover) and (pointer: fine) {
+	html[data-section-snap='true'] main section[data-snap='true'] {
+		min-height: 100svh;
+	}
 }
