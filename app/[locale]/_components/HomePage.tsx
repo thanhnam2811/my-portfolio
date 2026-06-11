@@ -3,7 +3,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { useLayoutEffect, useMemo, useRef, useState } from 'react';
-import { ArrowRight, Download, ExternalLink, Github, Linkedin, Mail } from 'lucide-react';
+import { ArrowRight, Download, ExternalLink, Github, Linkedin, Mail, Menu, X } from 'lucide-react';
 import { useLocale, useTranslations } from 'next-intl';
 import { Button } from '@/components/ui/button';
 import { ensureHomeGsap, gsap, ScrollTrigger } from '@/lib/motion/home-gsap';
@@ -99,7 +99,13 @@ export default function HomePage() {
 	const tPrinciples = useTranslations('Principles');
 	const tContact = useTranslations('Contact');
 	const [activeSection, setActiveSection] = useState('hero');
+	const [isMobileNavOpen, setIsMobileNavOpen] = useState(false);
 	const rootRef = useRef<HTMLDivElement>(null);
+
+	function handleSectionSelect(id: string) {
+		scrollToSection(id);
+		setIsMobileNavOpen(false);
+	}
 
 	const socialLinks = useMemo(
 		() => [
@@ -364,12 +370,12 @@ export default function HomePage() {
 			<div className="pointer-events-none absolute inset-0 opacity-50 [background-image:linear-gradient(rgba(153,190,255,0.065)_1px,transparent_1px),linear-gradient(90deg,rgba(153,190,255,0.04)_1px,transparent_1px)] [background-size:96px_96px]" />
 			<div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-cyan-200/40 to-transparent" />
 
-			<header className="sticky top-0 z-50 border-b border-white/8 bg-[#07101d]/82 backdrop-blur-xl">
+			<header className="fixed inset-x-0 top-0 z-50 border-b border-white/8 bg-[#07101d]/92 backdrop-blur-xl">
 				<div className="mx-auto flex max-w-[1380px] items-center justify-between gap-6 px-4 py-4 sm:px-6 lg:px-10">
 					<button
 						data-home-header-brand
 						type="button"
-						onClick={() => scrollToSection('hero')}
+						onClick={() => handleSectionSelect('hero')}
 						className="flex items-center gap-4 text-left"
 					>
 						<span className="h-2.5 w-2.5 rounded-full bg-cyan-300 shadow-[0_0_18px_rgba(103,232,249,0.5)]" />
@@ -386,7 +392,7 @@ export default function HomePage() {
 								<button
 									key={section.id}
 									type="button"
-									onClick={() => scrollToSection(section.id)}
+									onClick={() => handleSectionSelect(section.id)}
 									className={`group flex items-center gap-3 border-b pb-2 text-sm transition-colors duration-200 ${
 										active
 											? 'border-cyan-300 text-white'
@@ -402,27 +408,88 @@ export default function HomePage() {
 						})}
 					</nav>
 
-					<div data-home-header-cta className="flex items-center gap-3">
+					<div data-home-header-cta className="ml-auto flex items-center gap-3">
 						<Button
 							type="button"
 							variant="outline"
-							className="hidden rounded-none border-white/15 bg-transparent px-5 text-white hover:bg-white/5 md:inline-flex"
-							onClick={() => scrollToSection('contact')}
+							size="icon"
+							className="rounded-none border-white/15 bg-transparent text-white hover:bg-white/5 xl:hidden"
+							aria-expanded={isMobileNavOpen}
+							aria-controls="mobile-nav"
+							aria-label={isMobileNavOpen ? 'Close navigation menu' : 'Open navigation menu'}
+							onClick={() => setIsMobileNavOpen((open) => !open)}
+						>
+							{isMobileNavOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+						</Button>
+						<Button
+							type="button"
+							variant="outline"
+							className="hidden rounded-none border-white/15 bg-transparent px-5 text-white hover:bg-white/5 xl:inline-flex"
+							onClick={() => handleSectionSelect('contact')}
 						>
 							{tHero('ctaSecondary')}
 						</Button>
 						<Button
 							type="button"
-							className="rounded-none bg-cyan-300 px-5 text-slate-950 hover:bg-cyan-200"
-							onClick={() => scrollToSection('work')}
+							className="hidden rounded-none bg-cyan-300 px-5 text-slate-950 hover:bg-cyan-200 xl:inline-flex"
+							onClick={() => handleSectionSelect('work')}
 						>
 							{tHero('ctaPrimary')}
 						</Button>
 					</div>
 				</div>
+
+				{isMobileNavOpen && (
+					<div
+						id="mobile-nav"
+						className="border-t border-white/8 bg-[#07101d]/96 px-4 py-4 shadow-[0_22px_65px_rgba(3,8,17,0.45)] xl:hidden"
+					>
+						<nav className="grid gap-2">
+							{navSections.map((section, index) => {
+								const active = activeSection === section.id;
+
+								return (
+									<button
+										key={`mobile-${section.id}`}
+										type="button"
+										onClick={() => handleSectionSelect(section.id)}
+										className={`flex items-center justify-between border border-white/10 px-4 py-3 text-left text-sm transition-colors duration-200 ${
+											active
+												? 'border-cyan-300/50 bg-cyan-300/10 text-white'
+												: 'text-slate-200 hover:border-cyan-300/40 hover:bg-white/4'
+										}`}
+									>
+										<span>{tNav(section.labelKey)}</span>
+										<span className="text-[10px] tracking-[0.28em] text-slate-500 uppercase">
+											{String(index + 1).padStart(2, '0')}
+										</span>
+									</button>
+								);
+							})}
+						</nav>
+
+						<div className="mt-4 grid gap-3 sm:grid-cols-2">
+							<Button
+								type="button"
+								variant="outline"
+								className="rounded-none border-white/15 bg-transparent text-white hover:bg-white/5"
+								onClick={() => handleSectionSelect('contact')}
+							>
+								{tHero('ctaSecondary')}
+							</Button>
+							<Button
+								type="button"
+								className="rounded-none bg-cyan-300 text-slate-950 hover:bg-cyan-200"
+								onClick={() => handleSectionSelect('work')}
+							>
+								{tHero('ctaPrimary')}
+							</Button>
+						</div>
+					</div>
+				)}
 			</header>
 
-			<main id="main-content" className="relative">
+			<main id="main-content" className="relative pt-24 sm:pt-26">
 				<section
 					id="hero"
 					className="mx-auto max-w-[1380px] px-4 pt-12 pb-18 sm:px-6 lg:px-10 lg:pt-16 lg:pb-24"
