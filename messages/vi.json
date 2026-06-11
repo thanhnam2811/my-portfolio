@@ -259,5 +259,30 @@
 			"linkedin": "linkedin.com/in/thanhnam2811",
 			"github": "github.com/thanhnam2811"
 		}
+	},
+	"Blog": {
+		"homeCta": "Ghi chú kỹ thuật",
+		"eyebrow": "Technical notes",
+		"title": "Những bài viết ngắn về backend systems, runtime clarity và các tradeoff trong production.",
+		"description": "Tôi dùng không gian này để ghi lại các quyết định kỹ thuật đằng sau những hệ thống ổn định, giao diện có kỷ luật và cách delivery sạch hơn.",
+		"featured": "Bài viết nổi bật",
+		"latest": "Bài viết mới nhất",
+		"backHome": "Quay về trang chủ",
+		"backToBlog": "Quay lại danh sách bài viết",
+		"readArticle": "Đọc bài viết",
+		"published": "Ngày đăng",
+		"readingTimeSuffix": "phút đọc",
+		"topics": "Chủ đề",
+		"toc": "Nội dung trang",
+		"fallbackNotice": "Bài viết này hiện mới có bản tiếng Anh.",
+		"allNotes": "Tất cả bài viết",
+		"previous": "Bài trước",
+		"next": "Bài tiếp",
+		"moreNotes": "Xem thêm",
+		"empty": "Chưa có bài viết nào được xuất bản.",
+		"meta": {
+			"title": "Ghi chú kỹ thuật",
+			"description": "Những ghi chú kỹ thuật về backend systems, runtime clarity và tradeoff delivery từ góc nhìn production-minded."
+		}
 	}
 }

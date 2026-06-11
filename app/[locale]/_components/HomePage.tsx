@@ -89,6 +89,7 @@ function getChromeCopy(locale: string) {
 export default function HomePage() {
 	const locale = useLocale();
 	const chrome = useMemo(() => getChromeCopy(locale), [locale]);
+	const blogHref = `/${locale}/blog`;
 	const tNav = useTranslations('Nav');
 	const tMeta = useTranslations('Metadata');
 	const tHero = useTranslations('Hero');
@@ -98,6 +99,7 @@ export default function HomePage() {
 	const tExperience = useTranslations('Experience');
 	const tPrinciples = useTranslations('Principles');
 	const tContact = useTranslations('Contact');
+	const tBlog = useTranslations('Blog');
 	const [activeSection, setActiveSection] = useState('hero');
 	const [isMobileNavOpen, setIsMobileNavOpen] = useState(false);
 	const rootRef = useRef<HTMLDivElement>(null);
@@ -422,6 +424,13 @@ export default function HomePage() {
 							{isMobileNavOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
 						</Button>
 						<Button
+							asChild
+							variant="outline"
+							className="hidden rounded-none border-white/15 bg-transparent px-5 text-white hover:bg-white/5 xl:inline-flex"
+						>
+							<Link href={blogHref}>{tBlog('homeCta')}</Link>
+						</Button>
+						<Button
 							type="button"
 							variant="outline"
 							className="hidden rounded-none border-white/15 bg-transparent px-5 text-white hover:bg-white/5 xl:inline-flex"
@@ -469,6 +478,15 @@ export default function HomePage() {
 						</nav>
 
 						<div className="mt-4 grid gap-3 sm:grid-cols-2">
+							<Button
+								asChild
+								variant="outline"
+								className="rounded-none border-white/15 bg-transparent text-white hover:bg-white/5"
+							>
+								<Link href={blogHref} onClick={() => setIsMobileNavOpen(false)}>
+									{tBlog('homeCta')}
+								</Link>
+							</Button>
 							<Button
 								type="button"
 								variant="outline"

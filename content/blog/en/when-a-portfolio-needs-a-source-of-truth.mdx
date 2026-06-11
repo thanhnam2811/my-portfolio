@@ -1,0 +1,85 @@
+---
+title: "When a Portfolio Needs a Source of Truth"
+description: "Why I stopped treating my portfolio as a landing page experiment and started treating it like a system with one canonical implementation."
+publishedAt: "2026-06-10"
+tags:
+  - Architecture
+  - Frontend Systems
+  - Product Thinking
+featured: true
+readingTime: 7
+---
+
+Most personal sites begin as a quick delivery surface: a homepage, a few sections, a contact form, maybe some motion to make the first impression feel sharper. That phase is useful, but it also creates a trap. Once the site gets iterated on often enough, the thing that used to be a simple page starts behaving like a product, while the code still behaves like a prototype.
+
+That is exactly where the idea of a **source of truth** starts to matter.
+
+## Versioning is useful until it becomes a product smell
+
+It is common to build a second version of a homepage while keeping the first one alive. The intent is usually pragmatic: compare directions, move faster, or protect the stable route while a redesign is in progress. The problem comes later. Once the newer version is clearly better, leaving both versions alive does not buy flexibility anymore. It creates ambiguity.
+
+You stop having:
+
+- one entry route
+- one set of copy assumptions
+- one motion system
+- one sitemap story
+- one mental model for what the site actually is
+
+At that point the old version is no longer a backup. It is debt with a nice folder name.
+
+## The real cost is not visual inconsistency
+
+People usually notice the visible problem first. A stale section, a different layout, a page that feels older than the rest of the site. But the more expensive problems are hidden deeper:
+
+- metadata diverges
+- translations drift
+- content gets updated in one path but not another
+- routing stops being obvious
+- cleanup becomes politically harder because there is always “maybe we still need it”
+
+For a recruiter-facing or client-facing portfolio, that ambiguity is worse than shipping a smaller surface. A focused product reads as confidence. A split product reads as hesitation.
+
+## A homepage is still a system boundary
+
+The useful mindset shift for me was simple: stop thinking of the homepage as decoration and start thinking of it as a system boundary.
+
+The homepage decides:
+
+- what the canonical route is
+- what content hierarchy users see first
+- what metadata search engines receive
+- what internal components are still alive
+- which visual language the rest of the site inherits
+
+Once those responsibilities are acknowledged, “keeping both versions around for now” becomes much harder to defend.
+
+## Cleanup is a product decision, not just a refactor
+
+The hard part of consolidating a portfolio is rarely the component move itself. It is deciding that the newer implementation is now the product and that the older code no longer deserves runtime influence.
+
+That means making a few explicit calls:
+
+- the canonical route changes now
+- legacy sections are deleted, not archived into runtime
+- message keys are normalized
+- legacy shell components are removed if they only serve the old path
+- docs stop describing history and start describing reality
+
+This is less glamorous than a redesign reveal, but it is what turns a redesign into a stable platform.
+
+## The payoff is clarity everywhere else
+
+Once the site has one source of truth again, follow-on work gets easier immediately.
+
+Adding a blog becomes cleaner because there is only one homepage to integrate with. SEO decisions become cleaner because there is only one primary route. New content becomes easier to reason about because there is no parallel universe of old copy, old navigation, or old motion assumptions.
+
+The best part is that users do not experience this as “cleanup.” They experience it as coherence.
+
+## A small site still deserves architectural discipline
+
+I do not think every personal site needs elaborate abstractions. Most do not. But even a small site benefits from one serious rule: once a direction wins, make it real all the way down.
+
+That means one canonical route, one runtime story, one content model, and one truth about what the product is.
+
+A portfolio does not need enterprise architecture. It does need the discipline to stop pretending multiple futures are still active when only one of them should ship.
