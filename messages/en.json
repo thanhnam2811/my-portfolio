@@ -5,230 +5,14 @@
 		"english": "English",
 		"vietnamese": "Tiếng Việt"
 	},
-	"Nav": {
-		"about": "About",
-		"skills": "Skills",
-		"experience": "Experience",
-		"projects": "Projects",
-		"contact": "Contact"
-	},
 	"Metadata": {
-		"title": "Nam's Portfolio | Backend Developer",
-		"description": "Backend Developer specializing in high-performance game server architecture and real-time systems. Explore my projects and technical expertise.",
-		"siteName": "Nam's Portfolio"
-	},
-	"Hero": {
-		"eyebrow": "Backend engineer for real-time products",
-		"headline": "I design backend systems that stay fast under multiplayer and real-time pressure.",
-		"summary": "Backend Developer focused on game server architecture, low-latency messaging, and data paths that hold up under concurrent load.",
-		"primaryCta": "View Projects",
-		"secondaryCta": "Download CV",
-		"tertiaryCta": "Contact",
-		"trustLabel": "Core focus",
-		"proofTitle": "What I bring",
-		"runtimeEyebrow": "Runtime snapshot",
-		"runtimeTitle": "Production-minded backend operator",
-		"runtimeState": "Live systems mindset",
-		"signalTitle": "Operational signals",
-		"signalWindow": "Current posture",
-		"proofItems": {
-			"experience": "2+ years shipping game server systems",
-			"domain": "Real-time backend and multiplayer infrastructure",
-			"scale": "Systems built for thousands of concurrent players",
-			"availability": "Available for freelance and consulting work"
-		},
-		"metrics": {
-			"instances": {
-				"value": "20+",
-				"label": "server instances"
-			},
-			"players": {
-				"value": "1k+",
-				"label": "concurrent players"
-			},
-			"queries": {
-				"value": "-40%",
-				"label": "query volume on key flows"
-			},
-			"alerts": {
-				"value": "24/7",
-				"label": "alerting coverage"
-			}
-		},
-		"signals": {
-			"runtime": {
-				"title": "Runtime stability first",
-				"description": "Designing event flow and service behavior to stay predictable under real-time pressure."
-			},
-			"observability": {
-				"title": "Observability built in",
-				"description": "Logging, alerting, and operational signals are treated as part of the product, not afterthoughts."
-			},
-			"delivery": {
-				"title": "Delivery under constraints",
-				"description": "Shipping features while protecting throughput, debugging speed, and system clarity."
-			}
-		},
-		"capabilities": {
-			"gameServer": "Game Server",
-			"realtime": "Real-time Systems",
-			"websocket": "WebSocket",
-			"scalableBackend": "Scalable Backend"
-		},
-		"viewProjects": "View Projects",
-		"contactMe": "Contact Me",
-		"downloadCv": "Download CV"
-	},
-	"About": {
-		"title": "About",
-		"eyebrow": "Profile",
-		"summaryTitle": "Backend engineer with a systems-first mindset",
-		"summary": "I work on backend systems where latency, throughput, and operational visibility directly affect player experience. My strength is turning product requirements into stable runtime behavior, cleaner observability, and infrastructure that remains understandable as it scales.",
-		"highlights": "Core strengths",
-		"positioningLabel": "Positioning",
-		"positioning": "Best fit for teams building multiplayer, event-driven, or performance-sensitive products."
-	},
-	"Skills": {
-		"title": "Capabilities",
-		"eyebrow": "Execution stack",
-		"intro": "The stack matters, but the value is how each layer helps me build fast, stable, and observable systems.",
-		"Categories": {
-			"backend": "Backend & Runtime",
-			"realtime": "Real-time & Networking",
-			"database": "Data & Performance",
-			"frontend": "Delivery Surface",
-			"devops": "Operations & Tooling"
-		},
-		"Descriptions": {
-			"backend": "API design, runtime structure, and service boundaries that stay maintainable as product scope grows.",
-			"realtime": "Connection handling, event flow, and low-latency messaging for interactive systems.",
-			"database": "Query design, caching strategy, and data access patterns tuned for throughput and response time.",
-			"frontend": "Enough frontend depth to ship product surfaces, internal tools, and technical demos without handoff friction.",
-			"devops": "Daily workflow, deployment hygiene, and operational tooling that keep development and debugging efficient."
-		}
-	},
-	"Experience": {
-		"title": "Experience",
-		"eyebrow": "Proof of work",
-		"intro": "The strongest signal in this portfolio is shipped backend work under live product constraints.",
-		"scope": "Scope",
-		"impact": "Impact",
-		"systems": "Systems handled",
-		"achievements": "Selected outcomes",
-		"technologies": "Core technologies",
-		"present": "Present"
-	},
-	"Projects": {
-		"title": "Selected Projects",
-		"eyebrow": "Case studies",
-		"intro": "A small set of projects chosen to show architecture decisions, delivery ownership, and technical judgment.",
-		"problem": "Problem",
-		"role": "Role",
-		"impact": "Impact",
-		"stack": "Stack",
-		"viewProject": "View Project",
-		"privateProject": "Private Project",
-		"github": "GitHub",
-		"viewSource": "View Source"
-	},
-	"Contact": {
-		"title": "Contact",
-		"eyebrow": "Open to the right conversations",
-		"leadTitle": "Recruiting, freelance, or backend consulting",
-		"lead": "If you are hiring for backend systems, real-time infrastructure, or performance-focused product work, I am open to a focused conversation.",
-		"directTitle": "Direct contact",
-		"directDescription": "Email or LinkedIn is the fastest path. The form is available if you prefer async outreach.",
-		"formTitle": "Send a message",
-		"formDescription": "Useful for project briefs, collaboration inquiries, or detailed context.",
-		"name": "Name",
-		"email": "Email",
-		"subject": "Subject",
-		"message": "Message",
-		"send": "Send Message",
-		"sending": "Sending...",
-		"success": "Message sent! I'll get back to you soon.",
-		"error": "Something went wrong. Please try again.",
-		"workTogether": "Best for",
-		"contactInfo": "Contact Information",
-		"availability": "Availability",
-		"availabilityValue": "Open to selected freelance, consulting, and recruiter conversations.",
-		"responseTime": "Typical response",
-		"responseTimeValue": "Usually within 24-48 hours.",
-		"Titles": {
-			"email": "Email",
-			"linkedin": "LinkedIn",
-			"github": "GitHub"
-		}
-	},
-	"Profile": {
-		"name": "Nam",
-		"title": "Backend Developer",
-		"tagLine": "Specializing in game server architecture, real-time systems, and high-throughput backend engineering.",
-		"location": "Ho Chi Minh City, Vietnam",
-		"availability": "Open to freelance projects and consulting opportunities.",
-		"description": "Backend Developer with 2+ years of hands-on experience architecting and optimizing game server infrastructure. I build scalable, low-latency systems for products where concurrency, uptime, and response time are not optional.",
-		"contactDescription": "Strong fit for teams building multiplayer products, event-driven backends, or systems that need better runtime performance and observability.",
-		"highlights": [
-			"Design backend flows that remain understandable under live product complexity.",
-			"Optimize event, socket, and data paths for lower latency and less operational friction.",
-			"Bridge implementation and debugging with stronger logging, monitoring, and runtime visibility."
-		]
-	},
-	"Works": {
-		"onky": {
-			"title": "Backend Developer (Game Server)",
-			"startDate": "2023-05-01",
-			"endDate": null,
-			"location": "Ho Chi Minh City, Vietnam",
-			"description": "Owned backend architecture and runtime stability for multiple online game products, covering server structure, real-time event handling, data performance, and production observability.",
-			"scope": "Architect and maintain game server infrastructure, optimize live systems, and support feature delivery under multiplayer and operational constraints.",
-			"impact": "Improved throughput, debugging speed, and system visibility while supporting thousands of concurrent players across production game servers.",
-			"achievements": [
-				"Deployed 20+ game server instances that supported thousands of concurrent players across live products.",
-				"Built custom event systems into the core server architecture to support product-specific gameplay logic.",
-				"Created an S.O.S monitoring pipeline for real-time alerting, log aggregation, and automated reporting across Telegram, Discord, and Slack.",
-				"Reduced database queries by 40% through random distribution algorithm optimization, improving response latency on critical flows.",
-				"Refactored the logging layer to enable more granular debugging and faster issue isolation in production."
-			],
-			"systems": [
-				"Real-time gameplay events and socket communication",
-				"Game server deployment and runtime orchestration",
-				"Logging, monitoring, and alerting workflows",
-				"Database performance tuning for high-traffic workloads"
-			]
-		}
-	},
-	"ProjectItems": {
-		"vmu": {
-			"title": "VMU Test Exam",
-			"description": "Online exam platform for medical students with real-time admin visibility, question bank management, and exam session support.",
-			"problem": "The product needed a stable assessment flow for students plus a moderation layer for admins to monitor live sessions.",
-			"role": "Built backend-heavy product flows and real-time session management between user activity and admin tooling.",
-			"impact": "Delivered a production-ready learning platform with real-time moderation support and clearer operational visibility during exam activity."
-		},
-		"tinylink": {
-			"title": "TinyLink",
-			"description": "URL shortener built as a lean systems exercise around performance, reliability, and observability on constrained infrastructure.",
-			"problem": "Most URL shorteners hide the engineering tradeoffs. This project was built to explore how far a compact service can go with careful runtime and data-path decisions.",
-			"role": "Designed and implemented the service architecture, persistence layer, cache strategy, and deployment path.",
-			"impact": "Showcases engineering judgment around fast redirects, service reliability, and observability in a cost-sensitive environment."
-		}
-	},
-	"Footer": {
-		"quickLinks": "Sections",
-		"connect": "Direct links",
-		"madeWith": "Built with",
-		"using": "using",
-		"tagline": "Backend developer focused on real-time systems and scalable infrastructure."
-	},
-	"V2Meta": {
 		"title": "Thai Thanh Nam | Backend Systems for Real-Time Products",
 		"description": "Backend developer focused on real-time systems, production reliability, and scalable server-side architecture for multiplayer and operationally sensitive products.",
 		"siteName": "Thai Thanh Nam",
 		"role": "Backend Developer",
 		"location": "Ho Chi Minh City, Vietnam"
 	},
-	"V2Nav": {
+	"Nav": {
 		"hero": "Overview",
 		"proof": "Proof",
 		"work": "Work",
@@ -236,7 +20,7 @@
 		"experience": "Experience",
 		"contact": "Contact"
 	},
-	"V2Hero": {
+	"Hero": {
 		"eyebrow": "Backend systems for real-time products",
 		"headline": "I build backend systems that stay clear, fast, and reliable when concurrency starts to matter.",
 		"summary": "Backend Developer with 2+ years of hands-on work across multiplayer game servers, real-time communication, monitoring pipelines, and production backend flows. My focus is on runtime behavior that remains understandable under load.",
@@ -262,7 +46,7 @@
 			}
 		}
 	},
-	"V2Proof": {
+	"Proof": {
 		"experience": {
 			"value": "2+ years",
 			"label": "Designing and maintaining backend systems in production."
@@ -284,7 +68,7 @@
 			"label": "Practical experience across SQL Server, MySQL, Redis, MongoDB, REST APIs, and real-time messaging."
 		}
 	},
-	"V2Projects": {
+	"Projects": {
 		"eyebrow": "Selected work",
 		"title": "Case studies that show systems thinking, not just feature delivery.",
 		"intro": "This mix combines production game server work, product delivery, and systems exercises to show how I think about architecture, runtime stability, and operational clarity.",
@@ -323,7 +107,7 @@
 			}
 		}
 	},
-	"V2Capabilities": {
+	"Capabilities": {
 		"eyebrow": "Capability architecture",
 		"title": "The stack matters, but the real value is what each layer lets me ship confidently.",
 		"intro": "I prefer grouping skills by system capability instead of technology checklists. That maps much better to how backend work is actually delivered.",
@@ -360,7 +144,7 @@
 			}
 		}
 	},
-	"V2Experience": {
+	"Experience": {
 		"eyebrow": "Experience",
 		"title": "A progression through production backend work, full-stack delivery, and real-time systems.",
 		"intro": "The route here matters: internships, product work, freelance delivery, and then live game server systems under real-time constraints.",
@@ -432,7 +216,7 @@
 			}
 		}
 	},
-	"V2Principles": {
+	"Principles": {
 		"eyebrow": "Working style",
 		"title": "How I try to build backend systems that survive production reality.",
 		"intro": "I care less about appearing clever and more about whether the system remains reliable, observable, and understandable once real traffic, incidents, and feature pressure arrive.",
@@ -459,7 +243,7 @@
 			}
 		}
 	},
-	"V2Contact": {
+	"Contact": {
 		"eyebrow": "Open to the right conversations",
 		"title": "If you need backend ownership around real-time systems, runtime clarity, or production stability, let's talk.",
 		"intro": "Best fit for teams building multiplayer products, internal operational tooling, event-driven backends, or systems where observability and reliability are part of the product.",

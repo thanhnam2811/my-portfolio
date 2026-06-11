@@ -1,4 +1,4 @@
-type V2FeaturedWorkItem = {
+type FeaturedWorkItem = {
 	id: 'onky' | 'vmu' | 'tinylink';
 	stack: readonly string[];
 	accent: string;
@@ -7,7 +7,7 @@ type V2FeaturedWorkItem = {
 	github?: string;
 };
 
-export const v2NavSections = [
+export const navSections = [
 	{ id: 'hero', labelKey: 'hero' },
 	{ id: 'proof', labelKey: 'proof' },
 	{ id: 'work', labelKey: 'work' },
@@ -16,9 +16,9 @@ export const v2NavSections = [
 	{ id: 'contact', labelKey: 'contact' },
 ] as const;
 
-export const v2ProofItems = ['experience', 'servers', 'concurrency', 'incidents', 'stack'] as const;
+export const proofItems = ['experience', 'servers', 'concurrency', 'incidents', 'stack'] as const;
 
-export const v2FeaturedWork: readonly V2FeaturedWorkItem[] = [
+export const featuredWork: readonly FeaturedWorkItem[] = [
 	{
 		id: 'onky',
 		stack: ['Node.js', 'WebSocket', 'Express.js', 'SQL Server', 'MySQL', 'Redis'],
@@ -41,8 +41,8 @@ export const v2FeaturedWork: readonly V2FeaturedWorkItem[] = [
 	},
 ] as const;
 
-export const v2CapabilityGroups = ['realtime', 'backend', 'data', 'observability', 'delivery'] as const;
+export const capabilityGroups = ['realtime', 'backend', 'data', 'observability', 'delivery'] as const;
 
-export const v2ExperienceEntries = ['onky', 'onkyIntern', 'freelancer', 'fostech', 'fostechIntern'] as const;
+export const experienceEntries = ['onky', 'onkyIntern', 'freelancer', 'fostech', 'fostechIntern'] as const;
 
-export const v2Principles = ['reliability', 'clarity', 'concurrency', 'visibility'] as const;
+export const principles = ['reliability', 'clarity', 'concurrency', 'visibility'] as const;

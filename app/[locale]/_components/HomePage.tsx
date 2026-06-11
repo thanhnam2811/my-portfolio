@@ -6,16 +6,16 @@ import { useLayoutEffect, useMemo, useRef, useState } from 'react';
 import { ArrowRight, Download, ExternalLink, Github, Linkedin, Mail } from 'lucide-react';
 import { useLocale, useTranslations } from 'next-intl';
 import { Button } from '@/components/ui/button';
-import { ensureV2Gsap, gsap, ScrollTrigger } from '@/lib/motion/v2-gsap';
-import { v2Motion } from '@/lib/motion/v2-presets';
+import { ensureHomeGsap, gsap, ScrollTrigger } from '@/lib/motion/home-gsap';
+import { homeMotion } from '@/lib/motion/home-presets';
 import {
-	v2CapabilityGroups,
-	v2ExperienceEntries,
-	v2FeaturedWork,
-	v2NavSections,
-	v2Principles,
-	v2ProofItems,
-} from '@/app/[locale]/v2/_data/content';
+	capabilityGroups,
+	experienceEntries,
+	featuredWork,
+	navSections,
+	principles,
+	proofItems,
+} from '@/app/[locale]/_data/content';
 
 const HEADER_OFFSET = 88;
 
@@ -86,18 +86,18 @@ function getChromeCopy(locale: string) {
 	};
 }
 
-export default function V2HomePage() {
+export default function HomePage() {
 	const locale = useLocale();
 	const chrome = useMemo(() => getChromeCopy(locale), [locale]);
-	const tNav = useTranslations('V2Nav');
-	const tMeta = useTranslations('V2Meta');
-	const tHero = useTranslations('V2Hero');
-	const tProof = useTranslations('V2Proof');
-	const tWork = useTranslations('V2Projects');
-	const tCapabilities = useTranslations('V2Capabilities');
-	const tExperience = useTranslations('V2Experience');
-	const tPrinciples = useTranslations('V2Principles');
-	const tContact = useTranslations('V2Contact');
+	const tNav = useTranslations('Nav');
+	const tMeta = useTranslations('Metadata');
+	const tHero = useTranslations('Hero');
+	const tProof = useTranslations('Proof');
+	const tWork = useTranslations('Projects');
+	const tCapabilities = useTranslations('Capabilities');
+	const tExperience = useTranslations('Experience');
+	const tPrinciples = useTranslations('Principles');
+	const tContact = useTranslations('Contact');
 	const [activeSection, setActiveSection] = useState('hero');
 	const rootRef = useRef<HTMLDivElement>(null);
 
@@ -125,14 +125,14 @@ export default function V2HomePage() {
 	useLayoutEffect(() => {
 		if (!rootRef.current) return;
 
-		ensureV2Gsap();
+		ensureHomeGsap();
 		const ctx = gsap.context(() => {
-			const sections = gsap.utils.toArray<HTMLElement>('[data-v2-reveal]');
-			const parallaxItems = gsap.utils.toArray<HTMLElement>('[data-v2-parallax]');
+			const sections = gsap.utils.toArray<HTMLElement>('[data-home-reveal]');
+			const parallaxItems = gsap.utils.toArray<HTMLElement>('[data-home-parallax]');
 			const mm = gsap.matchMedia();
 
 			const bindActiveSections = () => {
-				v2NavSections.forEach((section) => {
+				navSections.forEach((section) => {
 					const element = document.getElementById(section.id);
 					if (!element) return;
 					ScrollTrigger.create({
@@ -152,18 +152,18 @@ export default function V2HomePage() {
 			mm.add('(prefers-reduced-motion: no-preference)', () => {
 				bindActiveSections();
 
-				gsap.set('[data-v2-line-y]', { scaleY: 0, transformOrigin: 'top center' });
-				gsap.set('[data-v2-mask] > *', { yPercent: 110 });
+				gsap.set('[data-home-line-y]', { scaleY: 0, transformOrigin: 'top center' });
+				gsap.set('[data-home-mask] > *', { yPercent: 110 });
 
-				const heroTimeline = gsap.timeline({ defaults: { ease: v2Motion.ease } });
+				const heroTimeline = gsap.timeline({ defaults: { ease: homeMotion.ease } });
 				heroTimeline
-					.from('[data-v2-header-brand]', {
+					.from('[data-home-header-brand]', {
 						opacity: 0,
 						y: 12,
 						duration: 0.4,
 					})
 					.from(
-						'[data-v2-header-nav] button',
+						'[data-home-header-nav] button',
 						{
 							opacity: 0,
 							y: 10,
@@ -173,7 +173,7 @@ export default function V2HomePage() {
 						'-=0.18',
 					)
 					.from(
-						'[data-v2-header-cta] > *',
+						'[data-home-header-cta] > *',
 						{
 							opacity: 0,
 							y: 10,
@@ -183,7 +183,7 @@ export default function V2HomePage() {
 						'-=0.14',
 					)
 					.to(
-						'[data-v2-line-y]',
+						'[data-home-line-y]',
 						{
 							scaleY: 1,
 							duration: 0.75,
@@ -191,7 +191,7 @@ export default function V2HomePage() {
 						'-=0.08',
 					)
 					.from(
-						'[data-v2-hero-label]',
+						'[data-home-hero-label]',
 						{
 							opacity: 0,
 							y: 12,
@@ -201,7 +201,7 @@ export default function V2HomePage() {
 						'-=0.54',
 					)
 					.to(
-						'[data-v2-mask] > *',
+						'[data-home-mask] > *',
 						{
 							yPercent: 0,
 							duration: 0.82,
@@ -210,7 +210,7 @@ export default function V2HomePage() {
 						'-=0.18',
 					)
 					.from(
-						'[data-v2-summary]',
+						'[data-home-summary]',
 						{
 							opacity: 0,
 							y: 18,
@@ -219,7 +219,7 @@ export default function V2HomePage() {
 						'-=0.48',
 					)
 					.from(
-						'[data-v2-cta-row] > *',
+						'[data-home-cta-row] > *',
 						{
 							opacity: 0,
 							y: 14,
@@ -229,7 +229,7 @@ export default function V2HomePage() {
 						'-=0.34',
 					)
 					.from(
-						'[data-v2-metric-rail] > *',
+						'[data-home-metric-rail] > *',
 						{
 							opacity: 0,
 							y: 18,
@@ -239,7 +239,7 @@ export default function V2HomePage() {
 						'-=0.22',
 					)
 					.from(
-						'[data-v2-dossier]',
+						'[data-home-dossier]',
 						{
 							opacity: 0,
 							x: 28,
@@ -248,7 +248,7 @@ export default function V2HomePage() {
 						'-=0.86',
 					)
 					.from(
-						'[data-v2-dossier] [data-v2-row]',
+						'[data-home-dossier] [data-home-row]',
 						{
 							opacity: 0,
 							y: 12,
@@ -258,7 +258,7 @@ export default function V2HomePage() {
 						'-=0.38',
 					);
 
-				gsap.to('[data-v2-scanline]', {
+				gsap.to('[data-home-scanline]', {
 					xPercent: 115,
 					duration: 5.6,
 					ease: 'none',
@@ -267,13 +267,13 @@ export default function V2HomePage() {
 				});
 
 				sections.forEach((section) => {
-					const lineX = section.querySelectorAll<HTMLElement>('[data-v2-section-line-x]');
-					const lineY = section.querySelectorAll<HTMLElement>('[data-v2-section-line-y]');
-					const labels = section.querySelectorAll<HTMLElement>('[data-v2-section-label]');
-					const blocks = section.querySelectorAll<HTMLElement>('[data-v2-block]');
+					const lineX = section.querySelectorAll<HTMLElement>('[data-home-section-line-x]');
+					const lineY = section.querySelectorAll<HTMLElement>('[data-home-section-line-y]');
+					const labels = section.querySelectorAll<HTMLElement>('[data-home-section-label]');
+					const blocks = section.querySelectorAll<HTMLElement>('[data-home-block]');
 
 					const sectionTimeline = gsap.timeline({
-						defaults: { ease: v2Motion.ease },
+						defaults: { ease: homeMotion.ease },
 						scrollTrigger: {
 							trigger: section,
 							start: 'top 80%',
@@ -326,7 +326,7 @@ export default function V2HomePage() {
 							{
 								opacity: 0,
 								y: 22,
-								duration: v2Motion.reveal,
+								duration: homeMotion.reveal,
 								stagger: 0.06,
 							},
 							0.12,
@@ -367,7 +367,7 @@ export default function V2HomePage() {
 			<header className="sticky top-0 z-50 border-b border-white/8 bg-[#07101d]/82 backdrop-blur-xl">
 				<div className="mx-auto flex max-w-[1380px] items-center justify-between gap-6 px-4 py-4 sm:px-6 lg:px-10">
 					<button
-						data-v2-header-brand
+						data-home-header-brand
 						type="button"
 						onClick={() => scrollToSection('hero')}
 						className="flex items-center gap-4 text-left"
@@ -379,8 +379,8 @@ export default function V2HomePage() {
 						</div>
 					</button>
 
-					<nav data-v2-header-nav className="hidden items-center gap-5 xl:flex">
-						{v2NavSections.map((section, index) => {
+					<nav data-home-header-nav className="hidden items-center gap-5 xl:flex">
+						{navSections.map((section, index) => {
 							const active = activeSection === section.id;
 							return (
 								<button
@@ -402,7 +402,7 @@ export default function V2HomePage() {
 						})}
 					</nav>
 
-					<div data-v2-header-cta className="flex items-center gap-3">
+					<div data-home-header-cta className="flex items-center gap-3">
 						<Button
 							type="button"
 							variant="outline"
@@ -428,21 +428,21 @@ export default function V2HomePage() {
 					className="mx-auto max-w-[1380px] px-4 pt-12 pb-18 sm:px-6 lg:px-10 lg:pt-16 lg:pb-24"
 				>
 					<div className="grid gap-10 xl:grid-cols-[120px_minmax(0,1fr)_430px]">
-						<div data-v2-hero className="hidden xl:flex xl:flex-col xl:justify-between">
+						<div data-home-hero className="hidden xl:flex xl:flex-col xl:justify-between">
 							<div>
 								<p
-									data-v2-hero-label
+									data-home-hero-label
 									className="text-[11px] tracking-[0.28em] text-slate-500 uppercase"
 								>
 									{chrome.navIndex}
 								</p>
-								<p data-v2-hero-label className="mt-3 text-2xl font-semibold text-white">
+								<p data-home-hero-label className="mt-3 text-2xl font-semibold text-white">
 									{chrome.heroSection}
 								</p>
 							</div>
 							<div className="space-y-4 pb-6">
 								<div
-									data-v2-line-y
+									data-home-line-y
 									className="h-24 w-px bg-gradient-to-b from-cyan-300/70 via-white/20 to-transparent"
 								/>
 								<p className="max-w-[8rem] text-xs leading-6 text-slate-400">{chrome.scrollLabel}</p>
@@ -452,31 +452,31 @@ export default function V2HomePage() {
 						<div className="min-w-0">
 							<div className="max-w-4xl">
 								<p
-									data-v2-hero
-									data-v2-hero-label
+									data-home-hero
+									data-home-hero-label
 									className="font-mono text-[12px] tracking-[0.26em] text-cyan-200/70 uppercase"
 								>
 									{chrome.heroLabel}
 								</p>
-								<div data-v2-mask className="mt-8 overflow-hidden">
+								<div data-home-mask className="mt-8 overflow-hidden">
 									<h1
-										data-v2-hero
+										data-home-hero
 										className="max-w-5xl text-5xl font-semibold tracking-[-0.065em] text-white sm:text-6xl lg:text-[6.2rem] lg:leading-[0.92]"
 									>
 										{tHero('headline')}
 									</h1>
 								</div>
 								<p
-									data-v2-hero
-									data-v2-summary
+									data-home-hero
+									data-home-summary
 									className="mt-10 max-w-3xl text-xl leading-10 text-slate-300 sm:text-[1.45rem]"
 								>
 									{tHero('summary')}
 								</p>
 							</div>
 
-							<div data-v2-hero className="mt-10 border-t border-white/10 pt-8">
-								<div data-v2-cta-row className="flex flex-wrap items-center gap-4">
+							<div data-home-hero className="mt-10 border-t border-white/10 pt-8">
+								<div data-home-cta-row className="flex flex-wrap items-center gap-4">
 									<Button
 										type="button"
 										className="rounded-none bg-cyan-300 px-8 text-slate-950 hover:bg-cyan-200"
@@ -499,11 +499,11 @@ export default function V2HomePage() {
 							</div>
 
 							<div
-								data-v2-hero
-								data-v2-metric-rail
+								data-home-hero
+								data-home-metric-rail
 								className="mt-9 grid gap-4 border-t border-white/10 pt-8 sm:grid-cols-4"
 							>
-								{v2ProofItems.slice(0, 4).map((key) => (
+								{proofItems.slice(0, 4).map((key) => (
 									<div key={key} className="border-l border-white/12 pl-4">
 										<p className="text-[11px] tracking-[0.26em] text-slate-500 uppercase">
 											{chrome.metricsLabel}
@@ -517,18 +517,18 @@ export default function V2HomePage() {
 						</div>
 
 						<aside
-							data-v2-hero
-							data-v2-dossier
+							data-home-hero
+							data-home-dossier
 							className="relative border border-white/10 bg-[linear-gradient(180deg,rgba(20,36,66,0.84),rgba(9,16,28,0.78))] p-7 shadow-[0_24px_90px_rgba(6,10,20,0.45)]"
 						>
 							<div className="pointer-events-none absolute inset-x-0 top-0 overflow-hidden">
 								<div
-									data-v2-scanline
+									data-home-scanline
 									className="h-px w-1/3 -translate-x-full bg-gradient-to-r from-transparent via-cyan-200/70 to-transparent"
 								/>
 							</div>
 							<div
-								data-v2-row
+								data-home-row
 								className="flex items-start justify-between gap-6 border-b border-white/10 pb-6"
 							>
 								<div>
@@ -544,7 +544,7 @@ export default function V2HomePage() {
 								</div>
 							</div>
 
-							<div data-v2-row className="flex gap-4 border-b border-white/10 py-6">
+							<div data-home-row className="flex gap-4 border-b border-white/10 py-6">
 								<div className="relative h-20 w-20 overflow-hidden border border-white/12">
 									<Image
 										src="/images/avatar.png"
@@ -563,7 +563,7 @@ export default function V2HomePage() {
 
 							<div className="grid gap-0 border-b border-white/10 py-6">
 								<div
-									data-v2-row
+									data-home-row
 									className="grid gap-3 border-b border-white/8 pb-5 md:grid-cols-[132px_minmax(0,1fr)]"
 								>
 									<p className="font-mono text-[11px] tracking-[0.24em] text-slate-500 uppercase">
@@ -572,7 +572,7 @@ export default function V2HomePage() {
 									<p className="text-sm leading-7 text-slate-200">{chrome.currentFocusValue}</p>
 								</div>
 								<div
-									data-v2-row
+									data-home-row
 									className="grid gap-3 border-b border-white/8 py-5 md:grid-cols-[132px_minmax(0,1fr)]"
 								>
 									<p className="font-mono text-[11px] tracking-[0.24em] text-slate-500 uppercase">
@@ -580,7 +580,7 @@ export default function V2HomePage() {
 									</p>
 									<p className="text-sm leading-7 text-slate-200">{chrome.statusValue}</p>
 								</div>
-								<div data-v2-row className="grid gap-3 pt-5 md:grid-cols-[132px_minmax(0,1fr)]">
+								<div data-home-row className="grid gap-3 pt-5 md:grid-cols-[132px_minmax(0,1fr)]">
 									<p className="font-mono text-[11px] tracking-[0.24em] text-slate-500 uppercase">
 										{chrome.stackLabel}
 									</p>
@@ -590,7 +590,7 @@ export default function V2HomePage() {
 
 							<div className="grid gap-0 pt-6">
 								<p
-									data-v2-row
+									data-home-row
 									className="mb-5 font-mono text-[11px] tracking-[0.24em] text-cyan-200/75 uppercase"
 								>
 									{chrome.dossierLabel}
@@ -616,9 +616,12 @@ export default function V2HomePage() {
 					</div>
 				</section>
 
-				<section id="proof" data-v2-reveal className="border-y border-white/8">
+				<section id="proof" data-home-reveal className="border-y border-white/8">
 					<div className="mx-auto grid max-w-[1380px] gap-0 px-4 sm:px-6 lg:grid-cols-[220px_repeat(5,minmax(0,1fr))] lg:px-10">
-						<div data-v2-block className="border-b border-white/8 py-8 lg:border-r lg:border-b-0 lg:py-10">
+						<div
+							data-home-block
+							className="border-b border-white/8 py-8 lg:border-r lg:border-b-0 lg:py-10"
+						>
 							<p className="font-mono text-[11px] tracking-[0.28em] text-cyan-200/70 uppercase">
 								{chrome.workLedger}
 							</p>
@@ -626,10 +629,10 @@ export default function V2HomePage() {
 								{chrome.narrativeLabel}
 							</p>
 						</div>
-						{v2ProofItems.map((key) => (
+						{proofItems.map((key) => (
 							<div
 								key={key}
-								data-v2-block
+								data-home-block
 								className="border-b border-white/8 px-0 py-8 lg:border-r lg:border-b-0 lg:px-5 lg:py-10"
 							>
 								<p className="text-3xl font-semibold tracking-[-0.04em] text-white">
@@ -643,18 +646,18 @@ export default function V2HomePage() {
 
 				<section
 					id="work"
-					data-v2-reveal
+					data-home-reveal
 					className="mx-auto max-w-[1380px] px-4 py-24 sm:px-6 lg:px-10 lg:py-30"
 				>
 					<div className="grid gap-12 xl:grid-cols-[180px_minmax(0,1fr)]">
 						<div className="hidden xl:block">
 							<p
-								data-v2-section-label
+								data-home-section-label
 								className="font-mono text-[11px] tracking-[0.28em] text-slate-500 uppercase"
 							>
 								{chrome.workIndexLabel}
 							</p>
-							<p data-v2-block className="mt-4 text-2xl font-semibold text-white">
+							<p data-home-block className="mt-4 text-2xl font-semibold text-white">
 								{chrome.workSection}
 							</p>
 						</div>
@@ -662,28 +665,28 @@ export default function V2HomePage() {
 						<div>
 							<div className="max-w-4xl border-b border-white/10 pb-10">
 								<p
-									data-v2-section-label
+									data-home-section-label
 									className="font-mono text-[11px] tracking-[0.28em] text-cyan-200/70 uppercase"
 								>
 									{tWork('eyebrow')}
 								</p>
-								<div data-v2-section-line-x className="mt-4 h-px w-28 bg-cyan-300/45" />
+								<div data-home-section-line-x className="mt-4 h-px w-28 bg-cyan-300/45" />
 								<h2
-									data-v2-block
+									data-home-block
 									className="mt-6 max-w-5xl text-4xl font-semibold tracking-[-0.05em] text-white sm:text-5xl lg:text-6xl"
 								>
 									{tWork('title')}
 								</h2>
-								<p data-v2-block className="mt-6 max-w-3xl text-lg leading-8 text-slate-300">
+								<p data-home-block className="mt-6 max-w-3xl text-lg leading-8 text-slate-300">
 									{tWork('intro')}
 								</p>
 							</div>
 
 							<div className="divide-y divide-white/10">
-								{v2FeaturedWork.map((item, index) => (
+								{featuredWork.map((item, index) => (
 									<article
 										key={item.id}
-										data-v2-block
+										data-home-block
 										className="grid gap-10 py-12 lg:grid-cols-[260px_minmax(0,1fr)]"
 									>
 										<div className="space-y-6">
@@ -730,7 +733,7 @@ export default function V2HomePage() {
 										<div className="space-y-8">
 											{item.image && (
 												<div
-													data-v2-parallax
+													data-home-parallax
 													className="relative aspect-[16/9] overflow-hidden border border-white/10 bg-slate-900/40"
 												>
 													<Image
@@ -774,45 +777,45 @@ export default function V2HomePage() {
 					</div>
 				</section>
 
-				<section id="capabilities" data-v2-reveal className="border-y border-white/8 bg-black/12">
+				<section id="capabilities" data-home-reveal className="border-y border-white/8 bg-black/12">
 					<div className="mx-auto grid max-w-[1380px] gap-12 px-4 py-24 sm:px-6 lg:grid-cols-[180px_minmax(0,1fr)] lg:px-10">
 						<div className="hidden xl:block">
 							<p
-								data-v2-section-label
+								data-home-section-label
 								className="font-mono text-[11px] tracking-[0.28em] text-slate-500 uppercase"
 							>
 								{chrome.capabilityLabel}
 							</p>
-							<p data-v2-block className="mt-4 text-2xl font-semibold text-white">
+							<p data-home-block className="mt-4 text-2xl font-semibold text-white">
 								{chrome.capabilitySection}
 							</p>
 						</div>
 
 						<div>
 							<p
-								data-v2-section-label
+								data-home-section-label
 								className="font-mono text-[11px] tracking-[0.28em] text-cyan-200/70 uppercase"
 							>
 								{tCapabilities('eyebrow')}
 							</p>
 							<div className="mt-6 grid gap-8 lg:grid-cols-[0.82fr_1.18fr]">
 								<div>
-									<div data-v2-section-line-x className="mb-4 h-px w-28 bg-cyan-300/45" />
+									<div data-home-section-line-x className="mb-4 h-px w-28 bg-cyan-300/45" />
 									<h2
-										data-v2-block
+										data-home-block
 										className="text-4xl font-semibold tracking-[-0.05em] text-white sm:text-5xl"
 									>
 										{tCapabilities('title')}
 									</h2>
-									<p data-v2-block className="mt-6 max-w-2xl text-lg leading-8 text-slate-300">
+									<p data-home-block className="mt-6 max-w-2xl text-lg leading-8 text-slate-300">
 										{tCapabilities('intro')}
 									</p>
 								</div>
 								<div className="divide-y divide-white/10 border-t border-white/10">
-									{v2CapabilityGroups.map((group, index) => (
+									{capabilityGroups.map((group, index) => (
 										<div
 											key={group}
-											data-v2-block
+											data-home-block
 											className="grid gap-5 py-6 md:grid-cols-[90px_minmax(0,1fr)]"
 										>
 											<div className="font-mono text-[11px] tracking-[0.28em] text-slate-500 uppercase">
@@ -849,16 +852,20 @@ export default function V2HomePage() {
 					</div>
 				</section>
 
-				<section id="experience" data-v2-reveal className="mx-auto max-w-[1380px] px-4 py-24 sm:px-6 lg:px-10">
+				<section
+					id="experience"
+					data-home-reveal
+					className="mx-auto max-w-[1380px] px-4 py-24 sm:px-6 lg:px-10"
+				>
 					<div className="grid gap-12 xl:grid-cols-[180px_minmax(0,1fr)]">
 						<div className="hidden xl:block">
 							<p
-								data-v2-section-label
+								data-home-section-label
 								className="font-mono text-[11px] tracking-[0.28em] text-slate-500 uppercase"
 							>
 								{chrome.experienceLabel}
 							</p>
-							<p data-v2-block className="mt-4 text-2xl font-semibold text-white">
+							<p data-home-block className="mt-4 text-2xl font-semibold text-white">
 								{chrome.experienceSection}
 							</p>
 						</div>
@@ -866,28 +873,28 @@ export default function V2HomePage() {
 						<div>
 							<div className="max-w-4xl border-b border-white/10 pb-10">
 								<p
-									data-v2-section-label
+									data-home-section-label
 									className="font-mono text-[11px] tracking-[0.28em] text-cyan-200/70 uppercase"
 								>
 									{tExperience('eyebrow')}
 								</p>
-								<div data-v2-section-line-x className="mt-4 h-px w-28 bg-cyan-300/45" />
+								<div data-home-section-line-x className="mt-4 h-px w-28 bg-cyan-300/45" />
 								<h2
-									data-v2-block
+									data-home-block
 									className="mt-6 text-4xl font-semibold tracking-[-0.05em] text-white sm:text-5xl lg:text-6xl"
 								>
 									{tExperience('title')}
 								</h2>
-								<p data-v2-block className="mt-6 max-w-3xl text-lg leading-8 text-slate-300">
+								<p data-home-block className="mt-6 max-w-3xl text-lg leading-8 text-slate-300">
 									{tExperience('intro')}
 								</p>
 							</div>
 
 							<div className="divide-y divide-white/10">
-								{v2ExperienceEntries.map((entry, index) => (
+								{experienceEntries.map((entry, index) => (
 									<div
 										key={entry}
-										data-v2-block
+										data-home-block
 										className="grid gap-8 py-10 lg:grid-cols-[220px_minmax(0,1fr)]"
 									>
 										<div>
@@ -932,16 +939,16 @@ export default function V2HomePage() {
 					</div>
 				</section>
 
-				<section id="principles" data-v2-reveal className="border-y border-white/8 bg-black/16">
+				<section id="principles" data-home-reveal className="border-y border-white/8 bg-black/16">
 					<div className="mx-auto grid max-w-[1380px] gap-12 px-4 py-24 sm:px-6 lg:grid-cols-[180px_minmax(0,1fr)] lg:px-10">
 						<div className="hidden xl:block">
 							<p
-								data-v2-section-label
+								data-home-section-label
 								className="font-mono text-[11px] tracking-[0.28em] text-slate-500 uppercase"
 							>
 								{chrome.principlesLabel}
 							</p>
-							<p data-v2-block className="mt-4 text-2xl font-semibold text-white">
+							<p data-home-block className="mt-4 text-2xl font-semibold text-white">
 								{chrome.principlesSection}
 							</p>
 						</div>
@@ -949,28 +956,28 @@ export default function V2HomePage() {
 						<div className="grid gap-10 lg:grid-cols-[0.78fr_1.22fr]">
 							<div>
 								<p
-									data-v2-section-label
+									data-home-section-label
 									className="font-mono text-[11px] tracking-[0.28em] text-cyan-200/70 uppercase"
 								>
 									{tPrinciples('eyebrow')}
 								</p>
-								<div data-v2-section-line-x className="mt-4 h-px w-28 bg-cyan-300/45" />
+								<div data-home-section-line-x className="mt-4 h-px w-28 bg-cyan-300/45" />
 								<h2
-									data-v2-block
+									data-home-block
 									className="mt-6 text-4xl font-semibold tracking-[-0.05em] text-white sm:text-5xl lg:text-6xl"
 								>
 									{tPrinciples('title')}
 								</h2>
-								<p data-v2-block className="mt-6 max-w-2xl text-lg leading-9 text-slate-300">
+								<p data-home-block className="mt-6 max-w-2xl text-lg leading-9 text-slate-300">
 									{tPrinciples('intro')}
 								</p>
 							</div>
 
 							<div className="divide-y divide-white/10 border-t border-white/10">
-								{v2Principles.map((item, index) => (
+								{principles.map((item, index) => (
 									<div
 										key={item}
-										data-v2-block
+										data-home-block
 										className="grid gap-5 py-6 md:grid-cols-[90px_minmax(0,1fr)]"
 									>
 										<div className="font-mono text-[11px] tracking-[0.28em] text-slate-500 uppercase">
@@ -996,18 +1003,18 @@ export default function V2HomePage() {
 
 				<section
 					id="contact"
-					data-v2-reveal
+					data-home-reveal
 					className="mx-auto max-w-[1380px] px-4 py-24 sm:px-6 lg:px-10 lg:py-28"
 				>
 					<div className="grid gap-12 border-y border-white/10 py-12 lg:grid-cols-[180px_minmax(0,1fr)]">
 						<div className="hidden xl:block">
 							<p
-								data-v2-section-label
+								data-home-section-label
 								className="font-mono text-[11px] tracking-[0.28em] text-slate-500 uppercase"
 							>
 								{chrome.contactLabel}
 							</p>
-							<p data-v2-block className="mt-4 text-2xl font-semibold text-white">
+							<p data-home-block className="mt-4 text-2xl font-semibold text-white">
 								{chrome.contactSection}
 							</p>
 						</div>
@@ -1015,23 +1022,23 @@ export default function V2HomePage() {
 						<div className="grid gap-10 lg:grid-cols-[0.88fr_1.12fr]">
 							<div>
 								<p
-									data-v2-section-label
+									data-home-section-label
 									className="font-mono text-[11px] tracking-[0.28em] text-cyan-200/70 uppercase"
 								>
 									{tContact('eyebrow')}
 								</p>
-								<div data-v2-section-line-x className="mt-4 h-px w-28 bg-cyan-300/45" />
+								<div data-home-section-line-x className="mt-4 h-px w-28 bg-cyan-300/45" />
 								<h2
-									data-v2-block
+									data-home-block
 									className="mt-6 max-w-4xl text-4xl font-semibold tracking-[-0.05em] text-white sm:text-5xl lg:text-6xl"
 								>
 									{tContact('title')}
 								</h2>
-								<p data-v2-block className="mt-6 max-w-3xl text-lg leading-8 text-slate-300">
+								<p data-home-block className="mt-6 max-w-3xl text-lg leading-8 text-slate-300">
 									{tContact('intro')}
 								</p>
 
-								<div data-v2-block className="mt-10 flex flex-wrap gap-4">
+								<div data-home-block className="mt-10 flex flex-wrap gap-4">
 									<Button
 										asChild
 										className="rounded-none bg-cyan-300 text-slate-950 hover:bg-cyan-200"

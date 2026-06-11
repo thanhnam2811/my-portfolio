@@ -18,7 +18,7 @@ Guidance for coding agents working in this repository.
 
 ## Project Snapshot
 
-- Stack: Next.js 15 App Router, React 19, TypeScript, Tailwind CSS v4, `next-intl`, Framer Motion, Radix UI.
+- Stack: Next.js 15 App Router, React 19, TypeScript, Tailwind CSS v4, `next-intl`, GSAP, Radix UI.
 - Package manager: `pnpm`
 - App type: single-page portfolio with localized routes under `app/[locale]`
 
@@ -50,10 +50,11 @@ Before finishing a meaningful code change, run `pnpm build`. For formatting-only
 
 - Prefer Server Components by default. Add `"use client"` only when the component truly needs browser APIs, state,
   effects, or animation hooks.
-- Keep page sections in `app/_sections/`.
+- Keep localized route entrypoints under `app/[locale]/`.
+- Keep homepage-specific components in `app/[locale]/_components/`.
 - Keep reusable primitives in `components/ui/`.
 - Put cross-section components in `components/`.
-- Keep static content and structured portfolio data in `app/_data/`.
+- Keep homepage static content and structured data in `app/[locale]/_data/`.
 - Keep localized copy in both `messages/en.json` and `messages/vi.json`. Do not update one locale without the other.
 
 ## Styling And UI Rules
@@ -71,7 +72,6 @@ Before finishing a meaningful code change, run `pnpm build`. For formatting-only
 - Prefer animating `transform` and `opacity`.
 - Avoid reintroducing global continuous effects such as custom cursors, full-screen animated backgrounds, or scroll
   systems that compete with native scrolling unless there is a measured reason.
-- Desktop-only section snap is intentional. Treat it as a soft assist, not a hard lock.
 - Use `next/image` correctly with realistic `sizes`; prefer modern formats and avoid oversized source assets.
 - Prefer one animation system per interaction path. Avoid stacking multiple scroll or timeline controllers on the same
   UI.
@@ -93,7 +93,7 @@ Before finishing a meaningful code change, run `pnpm build`. For formatting-only
     - verify desktop layout
     - verify mobile layout
     - verify both locales if copy or structure changed
-    - verify section snap, anchor navigation, and reduced-motion behavior when relevant
+    - verify chapter navigation, section scrolling, and reduced-motion behavior when relevant
 - If you changed navigation, hero, or section composition, verify that the page still feels coherent from top to bottom
   rather than checking only the edited block.
 - If you added a dependency or animation runtime, call out the tradeoff explicitly in the final summary.

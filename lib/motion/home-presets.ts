@@ -1,4 +1,4 @@
-export const v2Motion = {
+export const homeMotion = {
 	pageEnter: 0.55,
 	heroEnter: 0.52,
 	reveal: 0.52,
