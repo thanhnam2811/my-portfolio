@@ -1,28 +1,34 @@
-# My Portfolio - NodeJS Developer
+# My Portfolio - Backend Systems Portfolio
 
-Personal portfolio website built with Next.js.
+Localized portfolio website built with Next.js for a backend engineer focused on real-time systems and production
+infrastructure.
 
 ## 🛠️ Tech Stack
 
 - **Framework**: Next.js 15
 - **Language**: TypeScript
 - **Styling**: TailwindCSS 4
-- **Animations**: Framer Motion
+- **Animations**: GSAP + ScrollTrigger
+- **Localization**: next-intl
 - **UI Components**: Radix UI
-- **Carousel**: Embla Carousel
 
 ## 📁 Project Structure
 
 ```
 my-portfolio/
 ├── app/
-│   ├── _data/      # Static data (personal, skills, projects, etc.)
-│   ├── _sections/  # Section components
-│   └── page.tsx    # Main page
+│   ├── [locale]/
+│   │   ├── _components/  # Homepage components
+│   │   ├── _data/        # Homepage structured content
+│   │   ├── layout.tsx    # Localized app shell
+│   │   └── page.tsx      # Localized homepage
+│   ├── robots.ts
+│   └── sitemap.ts
 ├── components/
 │   └── ui/         # UI components
+├── messages/       # Locale dictionaries
 ├── docs/           # Documentation & Roadmap
-├── lib/            # Utilities
+├── lib/            # Motion helpers and utilities
 └── public/         # Static files
 ```
 
@@ -46,13 +52,13 @@ Open [http://localhost:3000](http://localhost:3000) to view the result.
 
 ## 📋 Roadmap
 
-See the development roadmap at [docs/ROADMAP.md](./docs/ROADMAP.md).
+See the current maintenance roadmap at [docs/ROADMAP.md](./docs/ROADMAP.md).
 
 ## 🔗 Useful Links
 
 - [Next.js Documentation](https://nextjs.org/docs)
 - [TailwindCSS Docs](https://tailwindcss.com/docs)
-- [Framer Motion](https://www.framer.com/motion/)
+- [GSAP](https://gsap.com/docs/v3/)
 - [Vercel Deployment](https://vercel.com/docs)
 
 ## 📄 License

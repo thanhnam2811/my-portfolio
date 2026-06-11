@@ -5,220 +5,259 @@
 		"english": "English",
 		"vietnamese": "Tiếng Việt"
 	},
+	"Metadata": {
+		"title": "Thai Thanh Nam | Backend Systems cho sản phẩm real-time",
+		"description": "Lập trình viên Backend tập trung vào real-time systems, production reliability và server-side architecture cho các sản phẩm multiplayer hoặc nhạy cảm về vận hành.",
+		"siteName": "Thai Thanh Nam",
+		"role": "Lập trình viên Backend",
+		"location": "Thành phố Hồ Chí Minh, Việt Nam"
+	},
 	"Nav": {
-		"about": "Giới thiệu",
-		"skills": "Kỹ năng",
+		"hero": "Tổng quan",
+		"proof": "Dấu mốc",
+		"work": "Dự án",
+		"capabilities": "Năng lực",
 		"experience": "Kinh nghiệm",
-		"projects": "Dự án",
 		"contact": "Liên hệ"
 	},
-	"Metadata": {
-		"title": "Nam's Portfolio | Lập trình viên Backend",
-		"description": "Lập trình viên Backend chuyên về kiến trúc game server hiệu năng cao và hệ thống thời gian thực. Khám phá các dự án và chuyên môn kỹ thuật của tôi.",
-		"siteName": "Nam's Portfolio"
-	},
 	"Hero": {
-		"eyebrow": "Backend engineer cho sản phẩm real-time",
-		"headline": "Tôi thiết kế backend đủ nhanh và đủ ổn định cho các hệ thống multiplayer, real-time và tải đồng thời cao.",
-		"summary": "Tôi tập trung vào game server architecture, low-latency communication và những data path chịu tải tốt trong production.",
-		"primaryCta": "Xem dự án",
-		"secondaryCta": "Tải CV",
-		"tertiaryCta": "Liên hệ",
-		"trustLabel": "Trọng tâm chuyên môn",
-		"proofTitle": "Những gì tôi mang lại",
-		"runtimeEyebrow": "Runtime snapshot",
-		"runtimeTitle": "Backend operator với tư duy production",
-		"runtimeState": "Mindset cho live systems",
-		"signalTitle": "Operational signals",
-		"signalWindow": "Trạng thái hiện tại",
-		"proofItems": {
-			"experience": "Hơn 2 năm xây game server systems",
-			"domain": "Backend real-time và hạ tầng multiplayer",
-			"scale": "Triển khai hệ thống phục vụ hàng nghìn người chơi cùng lúc",
-			"availability": "Mở cho freelance và consulting"
-		},
-		"metrics": {
-			"instances": {
-				"value": "20+",
-				"label": "server instances"
-			},
-			"players": {
-				"value": "1k+",
-				"label": "người chơi đồng thời"
-			},
-			"queries": {
-				"value": "-40%",
-				"label": "database queries ở flow chính"
-			},
-			"alerts": {
-				"value": "24/7",
-				"label": "mức phủ alerting"
-			}
-		},
+		"eyebrow": "Backend systems cho sản phẩm real-time",
+		"headline": "Tôi build backend systems đủ rõ ràng, đủ nhanh và đủ ổn định khi concurrency bắt đầu trở thành bài toán thật.",
+		"summary": "Lập trình viên Backend với hơn 2 năm kinh nghiệm thực chiến trong game servers, real-time communication, monitoring pipelines và production backend flows. Tôi tập trung vào runtime behavior vẫn dễ hiểu kể cả khi hệ thống chịu tải.",
+		"ctaPrimary": "Xem dự án chọn lọc",
+		"ctaSecondary": "Liên hệ",
+		"ctaDownload": "Tải CV",
+		"panelEyebrow": "Góc nhìn vận hành",
+		"panelTitle": "Backend operator với tư duy production",
+		"panelState": "Mở cho cơ hội phù hợp",
+		"signalsEyebrow": "Tư thế vận hành",
 		"signals": {
 			"runtime": {
-				"title": "Ưu tiên runtime stability",
-				"description": "Thiết kế event flow và service behavior để hệ thống vẫn dễ đoán khi tải real-time tăng cao."
+				"title": "Ưu tiên runtime",
+				"description": "Tôi quan tâm đến connection flow, concurrency và service behavior ở những nơi tải real-time sẽ bộc lộ kiến trúc yếu rất nhanh."
 			},
 			"observability": {
-				"title": "Observability được thiết kế sẵn",
-				"description": "Logging, alerting và các tín hiệu vận hành được xem là một phần của sản phẩm, không phải phần thêm sau."
+				"title": "Observability là mặc định",
+				"description": "Monitoring, alerts, logs và khả năng nhìn thấy sự cố được xem là một phần của sản phẩm, không phải phần sửa sau khi ship."
 			},
 			"delivery": {
-				"title": "Delivery trong điều kiện ràng buộc thực tế",
-				"description": "Ship feature nhưng vẫn bảo vệ throughput, tốc độ debug và độ rõ ràng của hệ thống."
+				"title": "Delivery trong điều kiện ràng buộc",
+				"description": "Tôi ưu tiên backend delivery có thể maintain được nhưng vẫn đi nhanh trong bối cảnh legacy constraints, operational limits và áp lực production."
 			}
-		},
-		"capabilities": {
-			"gameServer": "Game Server",
-			"realtime": "Real-time Systems",
-			"websocket": "WebSocket",
-			"scalableBackend": "Scalable Backend"
-		},
-		"viewProjects": "Xem dự án",
-		"contactMe": "Liên hệ với tôi",
-		"downloadCv": "Tải CV"
+		}
 	},
-	"About": {
-		"title": "Tổng quan",
-		"eyebrow": "Hồ sơ",
-		"summaryTitle": "Backend engineer với tư duy systems-first",
-		"summary": "Tôi làm việc với các hệ thống backend nơi latency, throughput và observability ảnh hưởng trực tiếp đến trải nghiệm người dùng. Điểm mạnh của tôi là biến yêu cầu sản phẩm thành runtime behavior ổn định, observability rõ ràng và hạ tầng vẫn dễ hiểu khi scale lên.",
-		"highlights": "Năng lực cốt lõi",
-		"positioningLabel": "Phù hợp nhất",
-		"positioning": "Phù hợp với các team đang build multiplayer products, event-driven backend hoặc những hệ thống nhạy cảm về performance."
-	},
-	"Skills": {
-		"title": "Năng lực thực thi",
-		"eyebrow": "Execution stack",
-		"intro": "Tech stack chỉ là bề mặt. Giá trị thật nằm ở cách từng lớp giúp hệ thống chạy nhanh, ổn định và dễ vận hành hơn.",
-		"Categories": {
-			"backend": "Backend & Runtime",
-			"realtime": "Real-time & Networking",
-			"database": "Data & Performance",
-			"frontend": "Delivery Surface",
-			"devops": "Operations & Tooling"
+	"Proof": {
+		"experience": {
+			"value": "2+ năm",
+			"label": "Thiết kế và vận hành backend systems trong production."
 		},
-		"Descriptions": {
-			"backend": "Thiết kế API, runtime structure và service boundaries đủ rõ để hệ thống vẫn dễ maintain khi sản phẩm mở rộng.",
-			"realtime": "Xử lý connections, event flow và low-latency messaging cho các hệ thống có tính tương tác cao.",
-			"database": "Tối ưu query, cache strategy và data access pattern theo throughput và response time thực tế.",
-			"frontend": "Đủ chắc phần frontend để tự ship product surface, internal tools hoặc technical demos mà không tạo ma sát khi handoff.",
-			"devops": "Workflow, deployment hygiene và operational tooling giúp việc delivery và debug gọn gàng hơn."
+		"servers": {
+			"value": "20+ servers",
+			"label": "Game server real-time đã triển khai bằng Node.js và WebSocket."
+		},
+		"concurrency": {
+			"value": "High concurrency",
+			"label": "Hệ thống được build để phục vụ hàng nghìn người dùng đồng thời và các workload nhạy cảm về vận hành."
+		},
+		"incidents": {
+			"value": "-40%",
+			"label": "Thời gian phản ứng với sự cố trung bình được cải thiện nhờ tooling monitoring và reporting nội bộ."
+		},
+		"stack": {
+			"value": "SQL + Redis + APIs",
+			"label": "Kinh nghiệm thực tế với SQL Server, MySQL, Redis, MongoDB, REST APIs và real-time messaging."
+		}
+	},
+	"Projects": {
+		"eyebrow": "Dự án chọn lọc",
+		"title": "Các case studies cho thấy systems thinking chứ không chỉ là feature delivery.",
+		"intro": "Trang này kết hợp production game server work, product delivery và systems exercises để thể hiện cách tôi nghĩ về architecture, runtime stability và operational clarity.",
+		"viewProject": "Mở dự án",
+		"viewSource": "Xem source",
+		"labels": {
+			"context": "Bối cảnh",
+			"build": "Những gì tôi đã build",
+			"systems": "Các hệ thống liên quan",
+			"impact": "Tác động"
+		},
+		"items": {
+			"onky": {
+				"title": "ONKY Game Server Systems",
+				"summary": "Production backend ownership cho nhiều sản phẩm game online, bao gồm game server architecture, monitoring, live operations và tối ưu backend flow.",
+				"context": "Tại ONKY, công việc gắn với các sản phẩm multiplayer real-time nơi service behavior, runtime clarity và backend stability ảnh hưởng trực tiếp đến trải nghiệm người chơi.",
+				"build": "Tôi build và mở rộng multiplayer game servers bằng Node.js và WebSocket, thêm custom game logic trên framework dùng chung, thiết kế APIs cho internal tools và lobby flows, đồng thời ship SOS monitoring và process-management utilities nội bộ.",
+				"systems": "Socket communication real-time, master-worker monitoring architecture, Redis-backed message flow, event logic dùng SQL, incident tooling và operations support cho game instances.",
+				"impact": "Triển khai hơn 20 game server instances, cải thiện 40% thời gian phản ứng với sự cố, giảm tải SQL dư thừa và làm cho việc debug cũng như rollout trong production dễ đoán hơn."
+			},
+			"vmu": {
+				"title": "VMU Test Exam",
+				"summary": "Nền tảng thi online cho sinh viên y khoa với admin visibility theo thời gian thực, question-bank workflows và backend support cho các exam sessions có kiểm soát.",
+				"context": "Sản phẩm cần một flow làm bài ổn định cho sinh viên, đồng thời cung cấp cho admin đủ visibility để theo dõi session và vận hành hoạt động học tập.",
+				"build": "Tôi phụ trách các luồng thiên về backend và session support giữa hoạt động của sinh viên và công cụ admin, góp phần đưa hệ thống thành một platform học tập production-ready hơn.",
+				"systems": "Node.js services, Socket.IO cho session visibility real-time, MongoDB persistence, React product surface và các luồng vận hành hỗ trợ exam.",
+				"impact": "Biến hệ thống thành một learning platform sẵn sàng cho production hơn với moderation visibility mạnh hơn và cách xử lý session rõ ràng hơn trong lúc thi."
+			},
+			"tinylink": {
+				"title": "TinyLink",
+				"summary": "Một URL shortener gọn nhẹ được build như bài toán systems engineering xoay quanh performance, observability và reliability trên stack hạn chế.",
+				"context": "Dự án này đào sâu các tradeoff đằng sau một service nhỏ nhưng vẫn phải có redirect nhanh, data path hợp lý và operational behavior sạch sẽ.",
+				"build": "Tôi thiết kế backend architecture, persistence layer, cache strategy và deployment path với trọng tâm là các quyết định runtime thực tế thay vì những claim scale trừu tượng.",
+				"systems": "Fastify runtime, PostgreSQL persistence, Redis caching, Dockerized delivery path và các observability patterns gọn phù hợp cho một lean service.",
+				"impact": "Thể hiện technical judgment về fast redirects, reliability và maintainability trong khi vẫn giữ service compact và cost-aware."
+			}
+		}
+	},
+	"Capabilities": {
+		"eyebrow": "Kiến trúc năng lực",
+		"title": "Tech stack quan trọng, nhưng giá trị thật nằm ở việc mỗi lớp giúp tôi ship hệ thống tự tin hơn như thế nào.",
+		"intro": "Tôi thích nhóm kỹ năng theo năng lực hệ thống thay vì checklist công nghệ. Cách đó phản ánh đúng hơn cách backend work được giao và được đánh giá trong thực tế.",
+		"items": {
+			"realtime": {
+				"eyebrow": "Real-time systems",
+				"title": "Event flow, sockets và interactive runtime behavior",
+				"description": "Tôi làm tốt ở các môi trường backend nơi connection handling, messaging timing, event routing và runtime predictability ảnh hưởng trực tiếp đến trải nghiệm người dùng.",
+				"stack": ["WebSocket", "Socket.IO", "Node.js", "Event-driven architecture"]
+			},
+			"backend": {
+				"eyebrow": "Backend runtime",
+				"title": "API design và server-side product logic",
+				"description": "Phần backend của tôi bao gồm service logic, REST APIs, authentication flows, internal tools và runtime structures vẫn đủ rõ để maintain khi phạm vi sản phẩm tăng lên.",
+				"stack": ["Node.js", "Express.js", "REST APIs", "JWT", "TypeScript"]
+			},
+			"data": {
+				"eyebrow": "Data and performance",
+				"title": "SQL, Redis và các quyết định backend theo throughput",
+				"description": "Tôi tối ưu data paths ở những nơi query volume, concurrency và latency thực sự quan trọng. Bao gồm SQL tuning, cache usage và giảm backend work dư thừa khi hệ thống có tải.",
+				"stack": ["SQL Server", "MySQL", "Redis", "MongoDB", "Query optimization"]
+			},
+			"observability": {
+				"eyebrow": "Operational tooling",
+				"title": "Monitoring, incident response và runtime visibility",
+				"description": "Tôi đã có kinh nghiệm trực tiếp build internal monitoring và operational tools để cải thiện alerting, reporting, incident response và server management trong production.",
+				"stack": ["Monitoring tools", "Telegram API", "Slack API", "Process management"]
+			},
+			"delivery": {
+				"eyebrow": "Delivery surface",
+				"title": "Đủ breadth để ship complete outcomes",
+				"description": "Ngoài backend-heavy work, tôi cũng có thể đóng góp ở product delivery surface khi cần, đặc biệt với internal tools, admin systems và full-stack product flows.",
+				"stack": ["React", "Next.js", "Frontend delivery", "Admin tooling"]
+			}
 		}
 	},
 	"Experience": {
-		"title": "Kinh nghiệm",
-		"eyebrow": "Proof of work",
-		"intro": "Tín hiệu mạnh nhất trong portfolio này là backend work đã chạy trong điều kiện production thực tế.",
-		"scope": "Phạm vi phụ trách",
-		"impact": "Tác động",
-		"systems": "Hệ thống đã xử lý",
-		"achievements": "Kết quả tiêu biểu",
-		"technologies": "Công nghệ cốt lõi",
-		"present": "Hiện tại"
+		"eyebrow": "Kinh nghiệm",
+		"title": "Một lộ trình đi qua production backend work, full-stack delivery và real-time systems.",
+		"intro": "Con đường này quan trọng: từ internships, product work, freelance delivery cho tới live game server systems dưới áp lực real-time thật sự.",
+		"items": {
+			"onky": {
+				"company": "ONKY",
+				"title": "Game Server Developer",
+				"period": "07/2023 - Hiện tại",
+				"location": "Thành phố Hồ Chí Minh, Việt Nam",
+				"summary": "Phụ trách backend architecture và runtime stability cho nhiều sản phẩm game online, bao gồm server behavior, APIs, data performance, monitoring và operational tooling.",
+				"highlights": [
+					"Build hơn 20 real-time multiplayer game servers bằng Node.js và WebSocket.",
+					"Thiết kế internal APIs và backend flows cho lobby systems và operational tooling.",
+					"Xây SOS monitoring infrastructure tích hợp Telegram và Slack.",
+					"Tối ưu concurrency và giảm redundant SQL work dưới tải cao."
+				]
+			},
+			"onkyIntern": {
+				"company": "ONKY",
+				"title": "Game Server Developer Intern",
+				"period": "05/2023 - 07/2023",
+				"location": "Thành phố Hồ Chí Minh, Việt Nam",
+				"summary": "Bắt đầu từ real-time backend work ở mức thấp hơn và system analysis, chứng minh backend fundamentals qua implementation clarity thay vì framework abstraction.",
+				"highlights": [
+					"Build một 1v1 Caro game server từ đầu bằng pure Node.js và WebSocket.",
+					"Phân tích và tài liệu hóa production game server codebase đang có.",
+					"Implement một multiplayer game server mới theo yêu cầu công ty.",
+					"Hoàn thành các bài tập internship xoay quanh backend real-time và database handling."
+				]
+			},
+			"freelancer": {
+				"company": "Freelancer",
+				"title": "Web Developer",
+				"period": "03/2023 - 07/2024",
+				"location": "Remote / Client delivery",
+				"summary": "Ship một nền tảng học tập và kiểm tra full-stack với role-aware access control, course material flows, scoring và progress tracking.",
+				"highlights": [
+					"Thiết kế và build full-stack app bằng React, Express, Node.js và MongoDB.",
+					"Implement authentication và authorization dùng JWT.",
+					"Ship quiz, scoring, progress tracking và user management features.",
+					"Build admin dashboard riêng cho users, lessons và courses."
+				]
+			},
+			"fostech": {
+				"company": "FosTECH",
+				"title": "Web Developer",
+				"period": "08/2022 - 04/2023",
+				"location": "Việt Nam",
+				"summary": "Làm product delivery ở frontend và integration, đóng góp cho product-management surfaces, reporting flows và cải thiện build performance.",
+				"highlights": [
+					"Build UI components và product-management screens cho Proshop.",
+					"Tối ưu Webpack configuration để cải thiện load và build performance.",
+					"Implement API integration cho dynamic reporting ở WLIN CRM.",
+					"Hỗ trợ customer-relationship workflows thông qua React interfaces."
+				]
+			},
+			"fostechIntern": {
+				"company": "FosTECH",
+				"title": "Web Developer Intern",
+				"period": "06/2022 - 08/2022",
+				"location": "Việt Nam",
+				"summary": "Giai đoạn kỹ thuật sớm tập trung vào third-party integration, payment-flow correctness và secure transaction behavior trong một React application đang tồn tại.",
+				"highlights": [
+					"Integrate Megapay payment solution vào React application đang có.",
+					"Implement authentication và transaction flows theo API specification.",
+					"Enable secure in-app payments cho người dùng cuối.",
+					"Hoàn thành integration với tinh thần production-minded correctness."
+				]
+			}
+		}
 	},
-	"Projects": {
-		"title": "Dự án chọn lọc",
-		"eyebrow": "Case studies",
-		"intro": "Một vài dự án được chọn để thể hiện cách tôi ra quyết định về architecture, ownership trong delivery và technical judgment.",
-		"problem": "Bài toán",
-		"role": "Vai trò",
-		"impact": "Tác động",
-		"stack": "Công nghệ",
-		"viewProject": "Xem dự án",
-		"privateProject": "Dự án nội bộ",
-		"github": "Mã nguồn",
-		"viewSource": "Xem source"
+	"Principles": {
+		"eyebrow": "Cách làm việc",
+		"title": "Cách tôi cố gắng build backend systems đủ khỏe để chịu được production reality.",
+		"intro": "Tôi ít quan tâm đến việc trông có vẻ clever, và quan tâm nhiều hơn đến việc hệ thống có còn reliable, observable và understandable khi traffic, incidents và feature pressure thực sự xuất hiện hay không.",
+		"items": {
+			"reliability": {
+				"eyebrow": "Reliability",
+				"title": "Tối ưu cho behavior dưới áp lực",
+				"description": "Backend tốt phải vẫn còn hợp lý khi concurrency tăng, sự cố xảy ra hoặc live product bắt đầu phơi bày những giả định yếu."
+			},
+			"clarity": {
+				"eyebrow": "Clarity",
+				"title": "Giữ runtime và code path đủ dễ hiểu",
+				"description": "Tôi đánh giá cao những hệ thống dễ inspect, debug và extend hơn là những kiến trúc chỉ trông ấn tượng trên giấy."
+			},
+			"concurrency": {
+				"eyebrow": "Concurrency",
+				"title": "Thiết kế với tải và timing trong đầu",
+				"description": "Connection handling, event flow, redundant queries và race conditions không phải edge cases trong real-time products. Chúng chính là sản phẩm."
+			},
+			"visibility": {
+				"eyebrow": "Visibility",
+				"title": "Observability là một phần của delivery",
+				"description": "Monitoring, alerts, logs và reporting phải làm giảm stress vận hành và rút ngắn incident response time, không chỉ làm đẹp stack."
+			}
+		}
 	},
 	"Contact": {
-		"title": "Liên hệ",
-		"eyebrow": "Sẵn sàng cho những cuộc trao đổi phù hợp",
-		"leadTitle": "Recruiting, freelance hoặc backend consulting",
-		"lead": "Nếu bạn đang tuyển backend engineer, cần hạ tầng real-time hoặc cần người tối ưu hiệu năng hệ thống, tôi sẵn sàng trao đổi ngắn gọn và đi thẳng vào vấn đề.",
-		"directTitle": "Liên hệ trực tiếp",
-		"directDescription": "Email hoặc LinkedIn là cách nhanh nhất. Form vẫn có sẵn nếu bạn muốn gửi brief chi tiết.",
-		"formTitle": "Gửi tin nhắn",
-		"formDescription": "Phù hợp cho project brief, đề nghị hợp tác hoặc những trao đổi cần nhiều bối cảnh hơn.",
-		"name": "Họ và tên",
-		"email": "Email",
-		"subject": "Tiêu đề",
-		"message": "Tin nhắn",
-		"send": "Gửi tin nhắn",
-		"sending": "Đang gửi...",
-		"success": "Đã gửi tin nhắn! Tôi sẽ phản hồi sớm nhất có thể.",
-		"error": "Đã có lỗi xảy ra. Vui lòng thử lại.",
-		"workTogether": "Phù hợp để trao đổi",
-		"contactInfo": "Thông tin liên hệ",
-		"availability": "Trạng thái",
-		"availabilityValue": "Mở cho một số cơ hội freelance, consulting và trao đổi với recruiter phù hợp.",
-		"responseTime": "Thời gian phản hồi",
-		"responseTimeValue": "Thường trong vòng 24-48 giờ.",
-		"Titles": {
-			"email": "Email",
-			"linkedin": "LinkedIn",
-			"github": "Mã nguồn"
+		"eyebrow": "Mở cho những cuộc trao đổi phù hợp",
+		"title": "Nếu bạn cần người phụ trách backend cho real-time systems, runtime clarity hoặc production stability, hãy trao đổi với tôi.",
+		"intro": "Phù hợp nhất với các team đang build multiplayer products, internal operational tooling, event-driven backends hoặc các hệ thống nơi observability và reliability là một phần của sản phẩm.",
+		"download": "Tải CV",
+		"mail": "Gửi email",
+		"availabilityLabel": "Trạng thái hiện tại",
+		"availabilityValue": "Mở cho một số cơ hội freelance, consulting và trao đổi với recruiter có góc nhìn mạnh về backend hoặc systems.",
+		"educationLabel": "Học vấn",
+		"educationValue": "Bachelor of Engineering in Computer Science (Information Technology), Ho Chi Minh City University of Technology and Education.",
+		"educationMeta": "2019 - 2024 · GPA 8.61 / 10",
+		"links": {
+			"email": "thanhnam.thai01@gmail.com",
+			"linkedin": "linkedin.com/in/thanhnam2811",
+			"github": "github.com/thanhnam2811"
 		}
-	},
-	"Profile": {
-		"name": "Nam",
-		"title": "Lập trình viên Backend",
-		"tagLine": "Chuyên về game server architecture, real-time systems và backend engineering chịu tải cao.",
-		"location": "Thành phố Hồ Chí Minh, Việt Nam",
-		"availability": "Mở cho các dự án freelance và consulting phù hợp.",
-		"description": "Lập trình viên Backend với hơn 2 năm kinh nghiệm thiết kế và tối ưu hạ tầng game server. Tôi build những hệ thống có thể scale, độ trễ thấp và đủ ổn định cho các sản phẩm mà concurrency, uptime và response time là yêu cầu bắt buộc.",
-		"contactDescription": "Phù hợp với các team đang build multiplayer products, event-driven backend hoặc những hệ thống cần cải thiện runtime performance và observability.",
-		"highlights": [
-			"Thiết kế backend flow vẫn rõ ràng ngay cả khi độ phức tạp production tăng lên.",
-			"Tối ưu event, socket và data paths để giảm latency và giảm ma sát khi vận hành.",
-			"Kết nối implementation với debug tốt hơn nhờ logging, monitoring và runtime visibility."
-		]
-	},
-	"Works": {
-		"onky": {
-			"title": "Lập trình viên Backend (Game Server)",
-			"startDate": "2023-05-01",
-			"endDate": null,
-			"location": "Thành phố Hồ Chí Minh, Việt Nam",
-			"description": "Phụ trách backend architecture và runtime stability cho nhiều sản phẩm game online, bao gồm cấu trúc server, xử lý event real-time, hiệu năng dữ liệu và observability trong production.",
-			"scope": "Thiết kế, vận hành và tối ưu hạ tầng game server, đồng thời hỗ trợ feature delivery trong bối cảnh multiplayer và các ràng buộc vận hành thực tế.",
-			"impact": "Cải thiện throughput, tốc độ debug và mức độ quan sát hệ thống trong khi vẫn phục vụ hàng nghìn người chơi cùng lúc trên production.",
-			"achievements": [
-				"Triển khai hơn 20 game server instances phục vụ hàng nghìn người chơi cùng lúc trên các sản phẩm đang vận hành.",
-				"Xây dựng custom event system tích hợp vào kiến trúc server core để phục vụ gameplay logic riêng theo từng sản phẩm.",
-				"Tạo pipeline S.O.S monitoring cho real-time alerting, log aggregation và automated reporting qua Telegram, Discord và Slack.",
-				"Giảm 40% số lượng database queries bằng cách tối ưu thuật toán phân phối ngẫu nhiên, từ đó cải thiện latency ở các luồng quan trọng.",
-				"Refactor logging layer để debug chi tiết hơn và khoanh vùng sự cố production nhanh hơn."
-			],
-			"systems": [
-				"Gameplay events real-time và socket communication",
-				"Game server deployment và runtime orchestration",
-				"Logging, monitoring và alerting workflows",
-				"Database tuning cho high-traffic workloads"
-			]
-		}
-	},
-	"ProjectItems": {
-		"vmu": {
-			"title": "VMU Test Exam",
-			"description": "Nền tảng thi online cho sinh viên y khoa với khả năng theo dõi session real-time, quản lý question bank và hỗ trợ vận hành kỳ thi.",
-			"problem": "Sản phẩm cần một flow làm bài ổn định cho sinh viên, đồng thời có lớp moderation để admin theo dõi các sessions đang diễn ra.",
-			"role": "Phụ trách các luồng thiên về backend và real-time session management giữa hoạt động người dùng và công cụ admin.",
-			"impact": "Hoàn thiện một nền tảng học tập production-ready với khả năng moderation real-time và observability tốt hơn trong quá trình thi."
-		},
-		"tinylink": {
-			"title": "TinyLink",
-			"description": "Dịch vụ rút gọn URL được build như một bài toán systems engineering xoay quanh performance, reliability và observability trên hạ tầng hạn chế.",
-			"problem": "Phần lớn URL shorteners chỉ cho thấy tính năng. Dự án này được làm ra để đào sâu các trade-off kỹ thuật của một service nhỏ nhưng phải phản hồi nhanh và ổn định.",
-			"role": "Thiết kế và triển khai service architecture, persistence layer, cache strategy và deployment path.",
-			"impact": "Thể hiện technical judgment về fast redirects, service reliability và observability trong môi trường tối ưu chi phí."
-		}
-	},
-	"Footer": {
-		"quickLinks": "Các phần",
-		"connect": "Liên kết trực tiếp",
-		"madeWith": "Xây dựng với",
-		"using": "bằng",
-		"tagline": "Backend developer tập trung vào real-time systems và hạ tầng có khả năng scale."
 	}
 }
