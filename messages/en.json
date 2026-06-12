@@ -259,5 +259,30 @@
 			"linkedin": "linkedin.com/in/thanhnam2811",
 			"github": "github.com/thanhnam2811"
 		}
+	},
+	"Blog": {
+		"homeCta": "Read notes",
+		"eyebrow": "Technical notes",
+		"title": "Short essays on backend systems, runtime clarity, and production tradeoffs.",
+		"description": "I use this space to write down the engineering choices behind stable systems, disciplined interfaces, and cleaner delivery.",
+		"featured": "Featured post",
+		"latest": "Latest articles",
+		"backHome": "Back to homepage",
+		"backToBlog": "Back to all notes",
+		"readArticle": "Read article",
+		"published": "Published",
+		"readingTimeSuffix": "min read",
+		"topics": "Topics",
+		"toc": "On this page",
+		"fallbackNotice": "This article is currently available in English only.",
+		"allNotes": "All notes",
+		"previous": "Previous article",
+		"next": "Next article",
+		"moreNotes": "More notes",
+		"empty": "No articles published yet.",
+		"meta": {
+			"title": "Technical Notes",
+			"description": "Technical notes on backend systems, runtime clarity, and delivery tradeoffs from a production-minded engineer."
+		}
 	}
 }

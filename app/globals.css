@@ -192,3 +192,54 @@ main section[data-snap='true'] {
 		min-height: 100svh;
 	}
 }
+
+.blog-prose {
+	color: rgb(226 232 240);
+	font-size: 1.05rem;
+	line-height: 1.95;
+}
+
+.blog-prose > * + * {
+	margin-top: 1.5rem;
+}
+
+.blog-prose h2,
+.blog-prose h3 {
+	scroll-margin-top: 6rem;
+	font-weight: 600;
+	letter-spacing: -0.03em;
+	color: white;
+}
+
+.blog-prose h2 {
+	margin-top: 3.25rem;
+	font-size: clamp(1.8rem, 3vw, 2.5rem);
+}
+
+.blog-prose h3 {
+	margin-top: 2.25rem;
+	font-size: clamp(1.25rem, 2vw, 1.65rem);
+}
+
+.blog-prose p,
+.blog-prose li {
+	max-width: 72ch;
+	color: rgb(203 213 225);
+}
+
+.blog-prose ul,
+.blog-prose ol {
+	padding-left: 1.4rem;
+}
+
+.blog-prose li + li {
+	margin-top: 0.65rem;
+}
+
+.blog-prose strong {
+	color: white;
+}
+
+.blog-prose img {
+	border: 1px solid rgb(255 255 255 / 0.08);
+}
