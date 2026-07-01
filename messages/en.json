@@ -216,6 +216,49 @@
 			}
 		}
 	},
+	"Incidents": {
+		"eyebrow": "Incident history",
+		"title": "Production challenges, framed as the incidents they really were.",
+		"intro": "Backend work is a stream of events: things degrade, you detect, you resolve, you learn. These are real challenges from live game-server work, written up like postmortems.",
+		"labels": {
+			"impact": "Impact",
+			"rootCause": "Root cause",
+			"detection": "Detection",
+			"resolution": "Resolution",
+			"lessons": "Lessons learned"
+		},
+		"expand": "Read postmortem",
+		"collapse": "Collapse",
+		"items": {
+			"inc001": {
+				"title": "Slow incident response before internal tooling",
+				"date": "2024-02",
+				"impact": "Issues on live game servers were caught late, stretching response time and operational stress.",
+				"rootCause": "No centralized alerting or health signal across 20+ server instances.",
+				"detection": "Recurring manual checks and player-reported issues instead of proactive alerts.",
+				"resolution": "Built SOS monitoring with Telegram and Slack alerts plus process-management utilities.",
+				"lessons": "Alerting is part of the product. Average incident response time dropped by about 40%."
+			},
+			"inc002": {
+				"title": "Redundant SQL load under concurrency",
+				"date": "2023-11",
+				"impact": "Hot paths hit the database repeatedly, adding latency as concurrent players increased.",
+				"rootCause": "Frequently-read state was fetched from SQL on every request instead of being cached.",
+				"detection": "Query volume and latency climbing together under concurrent load.",
+				"resolution": "Moved hot state to Redis with pub/sub and cut redundant reads off the database hot path.",
+				"lessons": "Cache the read path before scaling the database. In realtime, timing is the product."
+			},
+			"inc003": {
+				"title": "Unpredictable game-server rollouts",
+				"date": "2024-05",
+				"impact": "Restarts and deploys risked dropping live sessions without clear supervision.",
+				"rootCause": "No master-worker supervision or standardized process management across instances.",
+				"detection": "Operational friction during rollouts and occasional process crashes.",
+				"resolution": "Introduced master-worker monitoring and process-management tooling for safer deploys.",
+				"lessons": "Make rollouts boring. Observable supervision beats heroics at 3 AM."
+			}
+		}
+	},
 	"Principles": {
 		"eyebrow": "Working style",
 		"title": "How I try to build backend systems that survive production reality.",

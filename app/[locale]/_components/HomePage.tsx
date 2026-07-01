@@ -10,6 +10,7 @@ import SystemVisualization from '@/components/SystemVisualization';
 import SystemClock from '@/components/SystemClock';
 import ConsoleFooter from '@/components/ConsoleFooter';
 import ArchitectureDiagram from '@/components/ArchitectureDiagram';
+import IncidentHistory from '@/components/IncidentHistory';
 import { ensureHomeGsap, gsap, ScrollTrigger } from '@/lib/motion/home-gsap';
 import { homeMotion } from '@/lib/motion/home-presets';
 import {
@@ -51,9 +52,11 @@ function getChromeCopy(locale: string) {
 			capabilityLabel: 'He nang luc',
 			experienceSection: 'Chuong 04',
 			experienceLabel: 'Lo trinh',
-			principlesSection: 'Chuong 05',
+			incidentsSection: 'Chuong 05',
+			incidentsLabel: 'Postmortem',
+			principlesSection: 'Chuong 06',
 			principlesLabel: 'Manifesto',
-			contactSection: 'Chuong 06',
+			contactSection: 'Chuong 07',
 			contactLabel: 'Lien he truc tiep',
 			scrollLabel: 'Keo xuong de xem he thong',
 			dossierLabel: 'Ban do van hanh',
@@ -85,9 +88,11 @@ function getChromeCopy(locale: string) {
 		capabilityLabel: 'Capability map',
 		experienceSection: 'Chapter 04',
 		experienceLabel: 'Journey',
-		principlesSection: 'Chapter 05',
+		incidentsSection: 'Chapter 05',
+		incidentsLabel: 'Postmortem',
+		principlesSection: 'Chapter 06',
 		principlesLabel: 'Manifesto',
-		contactSection: 'Chapter 06',
+		contactSection: 'Chapter 07',
 		contactLabel: 'Direct line',
 		scrollLabel: 'Scroll to inspect the system',
 		dossierLabel: 'Operating map',
@@ -112,6 +117,7 @@ export default function HomePage() {
 	const tWork = useTranslations('Projects');
 	const tCapabilities = useTranslations('Capabilities');
 	const tExperience = useTranslations('Experience');
+	const tIncidents = useTranslations('Incidents');
 	const tPrinciples = useTranslations('Principles');
 	const tContact = useTranslations('Contact');
 	const tBlog = useTranslations('Blog');
@@ -1059,6 +1065,47 @@ export default function HomePage() {
 										</div>
 									</div>
 								))}
+							</div>
+						</div>
+					</div>
+				</section>
+
+				<section id="incidents" data-home-reveal className="border-y border-white/8 bg-black/12">
+					<div className="mx-auto grid max-w-[1380px] gap-12 px-4 py-24 sm:px-6 lg:grid-cols-[180px_minmax(0,1fr)] lg:px-10">
+						<div className="hidden xl:block">
+							<p
+								data-home-section-label
+								className="font-mono text-[11px] tracking-[0.28em] text-slate-500 uppercase"
+							>
+								{chrome.incidentsLabel}
+							</p>
+							<p data-home-block className="mt-4 text-2xl font-semibold text-white">
+								{chrome.incidentsSection}
+							</p>
+						</div>
+
+						<div>
+							<div className="max-w-4xl border-b border-white/10 pb-10">
+								<p
+									data-home-section-label
+									className="font-mono text-[11px] tracking-[0.28em] text-cyan-200/70 uppercase"
+								>
+									{tIncidents('eyebrow')}
+								</p>
+								<div data-home-section-line-x className="mt-4 h-px w-28 bg-cyan-300/45" />
+								<h2
+									data-home-block
+									className="mt-6 text-4xl font-semibold tracking-[-0.05em] text-white sm:text-5xl lg:text-6xl"
+								>
+									{tIncidents('title')}
+								</h2>
+								<p data-home-block className="mt-6 max-w-3xl text-lg leading-8 text-slate-300">
+									{tIncidents('intro')}
+								</p>
+							</div>
+
+							<div className="mt-10">
+								<IncidentHistory />
 							</div>
 						</div>
 					</div>

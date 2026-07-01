@@ -216,6 +216,49 @@
 			}
 		}
 	},
+	"Incidents": {
+		"eyebrow": "Lịch sử sự cố",
+		"title": "Những thử thách production, kể lại đúng như các sự cố thật.",
+		"intro": "Công việc backend là một chuỗi sự kiện: hệ thống suy giảm, mình phát hiện, xử lý, rồi rút kinh nghiệm. Đây là các thử thách thật từ công việc game-server, viết theo dạng postmortem.",
+		"labels": {
+			"impact": "Ảnh hưởng",
+			"rootCause": "Nguyên nhân gốc",
+			"detection": "Phát hiện",
+			"resolution": "Cách xử lý",
+			"lessons": "Bài học"
+		},
+		"expand": "Đọc postmortem",
+		"collapse": "Thu gọn",
+		"items": {
+			"inc001": {
+				"title": "Phản hồi sự cố chậm khi chưa có tooling nội bộ",
+				"date": "2024-02",
+				"impact": "Sự cố trên game server live bị phát hiện muộn, kéo dài thời gian phản hồi và tăng áp lực vận hành.",
+				"rootCause": "Chưa có cảnh báo tập trung hay tín hiệu health cho 20+ server instance.",
+				"detection": "Kiểm tra thủ công lặp lại và người chơi báo lỗi thay vì cảnh báo chủ động.",
+				"resolution": "Xây dựng SOS monitoring với cảnh báo Telegram và Slack cùng tiện ích quản lý tiến trình.",
+				"lessons": "Cảnh báo là một phần của sản phẩm. Thời gian phản hồi sự cố trung bình giảm khoảng 40%."
+			},
+			"inc002": {
+				"title": "Tải SQL dư thừa khi concurrency tăng",
+				"date": "2023-11",
+				"impact": "Các hot path liên tục truy vấn database, làm tăng latency khi số người chơi đồng thời tăng.",
+				"rootCause": "State đọc thường xuyên bị lấy từ SQL ở mỗi request thay vì được cache.",
+				"detection": "Lượng truy vấn và latency cùng tăng dưới tải đồng thời.",
+				"resolution": "Đưa hot state sang Redis với pub/sub và cắt các lượt đọc dư thừa khỏi hot path của database.",
+				"lessons": "Cache đường đọc trước khi scale database. Với realtime, thời gian chính là sản phẩm."
+			},
+			"inc003": {
+				"title": "Rollout game server thiếu ổn định",
+				"date": "2024-05",
+				"impact": "Restart và deploy có nguy cơ làm rớt các phiên chơi live khi thiếu giám sát rõ ràng.",
+				"rootCause": "Chưa có giám sát master-worker hay quản lý tiến trình chuẩn hoá giữa các instance.",
+				"detection": "Ma sát vận hành khi rollout và thỉnh thoảng tiến trình bị crash.",
+				"resolution": "Đưa vào giám sát master-worker và tooling quản lý tiến trình để deploy an toàn hơn.",
+				"lessons": "Làm rollout trở nên nhàm chán. Giám sát quan sát được thắng việc chữa cháy lúc 3 giờ sáng."
+			}
+		}
+	},
 	"Principles": {
 		"eyebrow": "Cách làm việc",
 		"title": "Cách tôi cố gắng build backend systems đủ khỏe để chịu được production reality.",

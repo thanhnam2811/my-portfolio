@@ -70,6 +70,10 @@ export const featuredWork: readonly FeaturedWorkItem[] = [
 
 export const capabilityGroups = ['realtime', 'backend', 'data', 'observability', 'delivery'] as const;
 
+export const incidentSeverity = { inc001: 'SEV-2', inc002: 'SEV-2', inc003: 'SEV-3' } as const;
+export const incidents = ['inc001', 'inc002', 'inc003'] as const;
+export const incidentFields = ['impact', 'rootCause', 'detection', 'resolution', 'lessons'] as const;
+
 export const experienceEntries = ['onky', 'onkyIntern', 'freelancer', 'fostech', 'fostechIntern'] as const;
 
 export const principles = ['reliability', 'clarity', 'concurrency', 'visibility'] as const;
