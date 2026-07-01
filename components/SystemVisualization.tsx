@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
 import { X } from 'lucide-react';
 
@@ -16,6 +16,11 @@ import { X } from 'lucide-react';
  * `prefers-reduced-motion` (the topology still reads).
  */
 
+interface NodeMetric {
+	label: string;
+	value: string;
+}
+
 interface SystemNode {
 	id: string;
 	title: string;
@@ -23,6 +28,7 @@ interface SystemNode {
 	role: string;
 	tech: string[];
 	note: string;
+	metrics: NodeMetric[];
 }
 
 const NODES: SystemNode[] = [
@@ -33,6 +39,10 @@ const NODES: SystemNode[] = [
 		role: 'Game clients hold a persistent connection and stream input/state at interactive rates.',
 		tech: ['WebSocket client', 'reconnect logic'],
 		note: 'Backed 20+ real-time multiplayer server instances at ONKY where client behavior drove server design.',
+		metrics: [
+			{ label: 'sessions', value: '842' },
+			{ label: 'transport', value: 'WebSocket' },
+		],
 	},
 	{
 		id: 'gateway',
@@ -41,6 +51,11 @@ const NODES: SystemNode[] = [
 		role: 'Terminates connections, handles the handshake/auth, and routes each client to the right game server.',
 		tech: ['WebSocket', 'auth handshake', 'routing'],
 		note: 'The ingress is where connection storms and back-pressure show up first — the first place I instrument.',
+		metrics: [
+			{ label: 'latency', value: '2ms' },
+			{ label: 'connections', value: '842' },
+			{ label: 'queue depth', value: '12' },
+		],
 	},
 	{
 		id: 'server',
@@ -49,6 +64,11 @@ const NODES: SystemNode[] = [
 		role: 'Authoritative loop: validates input, advances game state on a fixed tick, and broadcasts to players.',
 		tech: ['Node.js', 'custom game logic', 'shared framework'],
 		note: 'Built and extended multiplayer servers on a shared framework with custom per-product game logic.',
+		metrics: [
+			{ label: 'tick', value: '30 Hz' },
+			{ label: 'throughput', value: '1.4k msg/s' },
+			{ label: 'instances', value: '20+' },
+		],
 	},
 	{
 		id: 'redis',
@@ -57,6 +77,10 @@ const NODES: SystemNode[] = [
 		role: 'Shared fast state and pub/sub fan-out between server instances; absorbs read pressure off the database.',
 		tech: ['Redis', 'pub/sub', 'caching'],
 		note: 'Used Redis-backed message flow to coordinate instances and cut redundant SQL reads under load.',
+		metrics: [
+			{ label: 'latency', value: '0.4ms' },
+			{ label: 'hit rate', value: '96%' },
+		],
 	},
 	{
 		id: 'db',
@@ -65,11 +89,33 @@ const NODES: SystemNode[] = [
 		role: 'Durable state, event logic, and reporting — tuned so the hot path never waits on it.',
 		tech: ['SQL Server', 'MySQL', 'query tuning'],
 		note: 'Optimized SQL-backed event logic to reduce redundant load and make live operations predictable.',
+		metrics: [
+			{ label: 'latency', value: '5ms' },
+			{ label: 'writes', value: 'batched' },
+		],
 	},
 ];
 
 const EDGE_LABELS = ['connect', 'input', 'sync', 'persist'];
 const EDGE_LATENCY = ['2ms', '1ms', '0.4ms', '5ms'];
+
+interface StatSpec {
+	key: string;
+	base: number;
+	jitter: number;
+	decimals: number;
+	unit: string;
+}
+
+/** Illustrative live telemetry for the packet-sim stats bar (clearly labeled). */
+const STATS: StatSpec[] = [
+	{ key: 'connections', base: 842, jitter: 16, decimals: 0, unit: '' },
+	{ key: 'avg latency', base: 2.1, jitter: 0.4, decimals: 1, unit: 'ms' },
+	{ key: 'throughput', base: 1.4, jitter: 0.14, decimals: 1, unit: 'k req/s' },
+	{ key: 'uptime', base: 99.97, jitter: 0, decimals: 2, unit: '%' },
+];
+
+const formatStat = (value: number, spec: StatSpec) => `${value.toFixed(spec.decimals)}${spec.unit}`;
 
 const VIEW_W = 1000;
 const VIEW_H = 210;
@@ -87,9 +133,19 @@ const centerX = (index: number) => {
 export default function SystemVisualization() {
 	const reduceMotion = useReducedMotion();
 	const [selectedId, setSelectedId] = useState<string | null>(null);
+	const [stats, setStats] = useState<number[]>(() => STATS.map((spec) => spec.base));
 	const selected = NODES.find((node) => node.id === selectedId) ?? null;
 
 	const toggle = (id: string) => setSelectedId((current) => (current === id ? null : id));
+
+	// Gently fluctuate the telemetry to read as a live feed (off under reduced motion).
+	useEffect(() => {
+		if (reduceMotion) return;
+		const id = setInterval(() => {
+			setStats(STATS.map((spec) => spec.base + (Math.random() - 0.5) * 2 * spec.jitter));
+		}, 1600);
+		return () => clearInterval(id);
+	}, [reduceMotion]);
 
 	return (
 		<div className="space-y-6">
@@ -237,6 +293,26 @@ export default function SystemVisualization() {
 				})}
 			</svg>
 
+			<div className="flex flex-wrap items-center gap-x-8 gap-y-3 border-y border-white/8 py-4">
+				<span className="flex items-center gap-2 font-mono text-[10px] tracking-[0.24em] text-emerald-200/80 uppercase">
+					<span className="relative flex h-1.5 w-1.5">
+						<span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-300/50 motion-reduce:animate-none" />
+						<span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-emerald-300" />
+					</span>
+					live sim
+				</span>
+				{STATS.map((spec, index) => (
+					<div key={spec.key} className="flex items-baseline gap-2">
+						<span className="font-mono text-sm text-white tabular-nums">
+							{formatStat(stats[index], spec)}
+						</span>
+						<span className="font-mono text-[10px] tracking-[0.18em] text-slate-500 uppercase">
+							{spec.key}
+						</span>
+					</div>
+				))}
+			</div>
+
 			<AnimatePresence mode="wait">
 				{selected ? (
 					<motion.div
@@ -267,6 +343,16 @@ export default function SystemVisualization() {
 								>
 									{tech}
 								</span>
+							))}
+						</div>
+						<div className="mt-5 grid gap-3 border-t border-white/10 pt-4 sm:grid-cols-3">
+							{selected.metrics.map((metric) => (
+								<div key={metric.label}>
+									<p className="font-mono text-[10px] tracking-[0.2em] text-slate-500 uppercase">
+										{metric.label}
+									</p>
+									<p className="mt-1 font-mono text-lg text-cyan-100 tabular-nums">{metric.value}</p>
+								</div>
 							))}
 						</div>
 						<p className="mt-5 border-t border-white/10 pt-4 text-sm leading-7 text-slate-400">
