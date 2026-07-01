@@ -7,6 +7,8 @@ import { ArrowRight, Download, ExternalLink, Github, Linkedin, Mail, Menu, X } f
 import { useLocale, useTranslations } from 'next-intl';
 import { Button } from '@/components/ui/button';
 import SystemVisualization from '@/components/SystemVisualization';
+import SystemClock from '@/components/SystemClock';
+import ConsoleFooter from '@/components/ConsoleFooter';
 import { ensureHomeGsap, gsap, ScrollTrigger } from '@/lib/motion/home-gsap';
 import { homeMotion } from '@/lib/motion/home-presets';
 import {
@@ -57,6 +59,8 @@ function getChromeCopy(locale: string) {
 			narrativeLabel: 'Doc theo chapter',
 			systemLabel: 'He thong realtime',
 			systemCaption: 'Duong di cua mot packet qua mot vong choi — tu client den luu tru.',
+			statusNominal: 'Tat ca on dinh',
+			footerTagline: 'Systems Operations Console',
 		};
 	}
 
@@ -88,6 +92,8 @@ function getChromeCopy(locale: string) {
 		narrativeLabel: 'Read as chapters',
 		systemLabel: 'Runtime topology',
 		systemCaption: 'How a single packet travels through one game loop — from client to storage.',
+		statusNominal: 'All systems nominal',
+		footerTagline: 'Systems Operations Console',
 	};
 }
 
@@ -416,6 +422,7 @@ export default function HomePage() {
 					</nav>
 
 					<div data-home-header-cta className="ml-auto flex items-center gap-3">
+						<SystemClock />
 						<Button
 							type="button"
 							variant="outline"
@@ -1214,6 +1221,13 @@ export default function HomePage() {
 					</div>
 				</section>
 			</main>
+
+			<ConsoleFooter
+				nominalLabel={chrome.statusNominal}
+				region={tMeta('location')}
+				tagline={chrome.footerTagline}
+				year={new Date().getFullYear()}
+			/>
 		</div>
 	);
 }
