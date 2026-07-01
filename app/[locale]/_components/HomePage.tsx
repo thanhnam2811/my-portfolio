@@ -2,6 +2,7 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
+import dynamic from 'next/dynamic';
 import { useLayoutEffect, useMemo, useRef, useState } from 'react';
 import { ArrowRight, Download, ExternalLink, Github, Linkedin, Mail, Menu, X } from 'lucide-react';
 import { useLocale, useTranslations } from 'next-intl';
@@ -16,6 +17,8 @@ import {
 	principles,
 	proofItems,
 } from '@/app/[locale]/_data/content';
+
+const BackgroundCanvas = dynamic(() => import('@/components/webgl/BackgroundCanvas'), { ssr: false });
 
 const HEADER_OFFSET = 88;
 
@@ -370,7 +373,8 @@ export default function HomePage() {
 		<div ref={rootRef} className="operator-shell relative min-h-screen overflow-x-hidden text-white">
 			<div className="operator-atmosphere pointer-events-none absolute inset-0" />
 			<div className="operator-grid pointer-events-none absolute inset-0 opacity-50" />
-			<div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-cyan-200/40 to-transparent" />
+			<BackgroundCanvas />
+			<div className="pointer-events-none absolute inset-x-0 top-0 z-10 h-px bg-gradient-to-r from-transparent via-cyan-200/40 to-transparent" />
 
 			<header className="fixed inset-x-0 top-0 z-50 border-b border-white/8 bg-[#07101d]/92 backdrop-blur-xl">
 				<div className="mx-auto flex max-w-[1380px] items-center justify-between gap-6 px-4 py-4 sm:px-6 lg:px-10">
@@ -507,7 +511,7 @@ export default function HomePage() {
 				)}
 			</header>
 
-			<main id="main-content" className="relative pt-24 sm:pt-26">
+			<main id="main-content" className="relative z-10 pt-24 sm:pt-26">
 				<section
 					id="hero"
 					className="mx-auto max-w-[1380px] px-4 pt-12 pb-18 sm:px-6 lg:px-10 lg:pt-16 lg:pb-24"
