@@ -1,6 +1,7 @@
 'use client';
 
 import { Bloom, EffectComposer, Noise, Vignette } from '@react-three/postprocessing';
+import CameraRig from './CameraRig';
 import SystemCore from './SystemCore';
 import Particles from './Particles';
 import type { SceneSettings } from '@/lib/webgl/tier-settings';
@@ -19,6 +20,7 @@ export default function Scene({ settings }: SceneProps) {
 			<pointLight position={[0, 0, 0]} intensity={12} color="#22d3ee" distance={20} />
 			<pointLight position={[6, 4, 6]} intensity={3} color="#3b82f6" />
 
+			<CameraRig />
 			<SystemCore />
 			{settings.particleCount > 0 && <Particles count={settings.particleCount} />}
 

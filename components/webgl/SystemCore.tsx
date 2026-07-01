@@ -4,7 +4,6 @@ import { useMemo, useRef } from 'react';
 import { useFrame } from '@react-three/fiber';
 import { MeshDistortMaterial } from '@react-three/drei';
 import * as THREE from 'three';
-import { getScrollState } from '@/lib/motion/scroll-progress';
 
 const NODE_COUNT = 14;
 const NODE_RADIUS = 3.2;
@@ -50,11 +49,10 @@ export default function SystemCore() {
 
 	useFrame((state, delta) => {
 		const t = state.clock.elapsedTime;
-		const { progress } = getScrollState();
 
 		if (group.current) {
-			// Pointer parallax + a slow drift, plus a gentle scroll-linked yaw.
-			const targetY = state.pointer.x * 0.4 + progress * Math.PI * 0.5;
+			// Pointer parallax + a slow idle drift. The scroll journey is driven by the camera.
+			const targetY = state.pointer.x * 0.4;
 			const targetX = -state.pointer.y * 0.25;
 			group.current.rotation.y += (targetY - group.current.rotation.y) * 0.05 + delta * 0.03;
 			group.current.rotation.x += (targetX - group.current.rotation.x) * 0.05;
