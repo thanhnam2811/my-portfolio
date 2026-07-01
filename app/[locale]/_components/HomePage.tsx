@@ -367,9 +367,9 @@ export default function HomePage() {
 	}, []);
 
 	return (
-		<div ref={rootRef} className="relative min-h-screen overflow-x-hidden bg-[#07111f] text-white">
-			<div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_20%_0%,rgba(53,88,166,0.34),transparent_28%),radial-gradient(circle_at_88%_18%,rgba(39,146,175,0.15),transparent_24%),linear-gradient(180deg,#0a1528_0%,#09111d_38%,#050a13_100%)]" />
-			<div className="pointer-events-none absolute inset-0 opacity-50 [background-image:linear-gradient(rgba(153,190,255,0.065)_1px,transparent_1px),linear-gradient(90deg,rgba(153,190,255,0.04)_1px,transparent_1px)] [background-size:96px_96px]" />
+		<div ref={rootRef} className="operator-shell relative min-h-screen overflow-x-hidden text-white">
+			<div className="operator-atmosphere pointer-events-none absolute inset-0" />
+			<div className="operator-grid pointer-events-none absolute inset-0 opacity-50" />
 			<div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-cyan-200/40 to-transparent" />
 
 			<header className="fixed inset-x-0 top-0 z-50 border-b border-white/8 bg-[#07101d]/92 backdrop-blur-xl">

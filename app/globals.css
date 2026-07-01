@@ -44,6 +44,7 @@
 
 	/* PREMIUM: Minimalist Shadows & Glass */
 	--shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+	--shadow-neu: 0 1px 2px 0 rgb(15 23 42 / 0.06), 0 10px 24px -18px rgb(15 23 42 / 0.24);
 	--shadow-md: 0 12px 28px -18px rgb(15 23 42 / 0.22);
 	--shadow-lg: 0 28px 70px -42px rgb(15 23 42 / 0.3);
 	--shadow-xl: 0 40px 90px -56px rgb(15 23 42 / 0.34);
@@ -88,6 +89,19 @@
 	--bg-mesh-1: oklch(0.98 0.008 245);
 	--bg-mesh-2: oklch(0.965 0.015 230);
 	--bg-mesh-3: oklch(0.975 0.01 255);
+
+	/* Operator palette — the homepage immersive shell (always dark, theme-independent).
+	   Tokenized so the WebGL upgrade can drive/replace the atmosphere from one place. */
+	--operator-bg: #07111f;
+	--operator-atm-1: rgba(53, 88, 166, 0.34);
+	--operator-atm-2: rgba(39, 146, 175, 0.15);
+	--operator-grad-top: #0a1528;
+	--operator-grad-mid: #09111d;
+	--operator-grad-bot: #050a13;
+	--operator-grid: rgba(153, 190, 255, 0.065);
+	--operator-grid-soft: rgba(153, 190, 255, 0.04);
+	--operator-accent: #67e8f9;
+	--operator-accent-strong: #a5f3fc;
 }
 
 .dark {
@@ -169,6 +183,30 @@ aside {
 
 @utility premium-heading {
 	@apply font-bold tracking-[-0.04em] leading-[0.98];
+}
+
+/* Operator immersive shell — homepage atmosphere layers, tokenized. */
+@utility operator-shell {
+	background-color: var(--operator-bg);
+}
+
+@utility operator-atmosphere {
+	background-image:
+		radial-gradient(circle at 20% 0%, var(--operator-atm-1), transparent 28%),
+		radial-gradient(circle at 88% 18%, var(--operator-atm-2), transparent 24%),
+		linear-gradient(
+			180deg,
+			var(--operator-grad-top) 0%,
+			var(--operator-grad-mid) 38%,
+			var(--operator-grad-bot) 100%
+		);
+}
+
+@utility operator-grid {
+	background-image:
+		linear-gradient(var(--operator-grid) 1px, transparent 1px),
+		linear-gradient(90deg, var(--operator-grid-soft) 1px, transparent 1px);
+	background-size: 96px 96px;
 }
 
 @utility section-label {
