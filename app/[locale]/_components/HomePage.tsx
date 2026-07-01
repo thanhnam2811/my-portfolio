@@ -1149,27 +1149,27 @@ export default function HomePage() {
 								</p>
 							</div>
 
-							<div className="divide-y divide-white/10 border-t border-white/10">
+							<div className="grid gap-4 border-t border-white/10 pt-8 sm:grid-cols-2">
 								{principles.map((item, index) => (
 									<div
 										key={item}
 										data-home-block
-										className="grid gap-5 py-6 md:grid-cols-[90px_minmax(0,1fr)]"
+										className="border border-white/10 bg-white/2 p-6 transition-colors duration-200 hover:border-cyan-300/30"
 									>
-										<div className="font-mono text-[11px] tracking-[0.28em] text-slate-500 uppercase">
-											{String(index + 1).padStart(2, '0')}
-										</div>
-										<div>
-											<p className="text-[11px] tracking-[0.24em] text-cyan-200/70 uppercase">
+										<p className="font-mono text-[11px] tracking-[0.22em] text-cyan-200/70 uppercase">
+											Principle {String(index + 1).padStart(2, '0')}
+											<span className="text-slate-600"> · </span>
+											<span className="text-slate-500">
 												{tPrinciples(`items.${item}.eyebrow`)}
-											</p>
-											<h3 className="mt-3 text-2xl font-semibold text-white">
-												{tPrinciples(`items.${item}.title`)}
-											</h3>
-											<p className="mt-4 text-base leading-8 text-slate-300">
-												{tPrinciples(`items.${item}.description`)}
-											</p>
-										</div>
+											</span>
+										</p>
+										<div className="my-4 h-px w-full bg-gradient-to-r from-cyan-300/40 to-transparent" />
+										<h3 className="text-xl font-semibold text-white">
+											{tPrinciples(`items.${item}.title`)}
+										</h3>
+										<p className="mt-3 text-sm leading-7 text-slate-300">
+											{tPrinciples(`items.${item}.description`)}
+										</p>
 									</div>
 								))}
 							</div>
