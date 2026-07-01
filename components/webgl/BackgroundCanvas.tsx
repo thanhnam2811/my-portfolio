@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import { Canvas } from '@react-three/fiber';
 import { PerformanceMonitor } from '@react-three/drei';
-import { detectGpuTier, type GpuTier } from '@/lib/webgl/gpu-tier';
+import { detectGpuTier, prefersReducedMotion, type GpuTier } from '@/lib/webgl/gpu-tier';
 import { SCENE_SETTINGS } from '@/lib/webgl/tier-settings';
 import Scene from './Scene';
 
@@ -16,10 +16,12 @@ import Scene from './Scene';
  */
 export default function BackgroundCanvas() {
 	const [tier, setTier] = useState<GpuTier | null>(null);
+	const [reduced, setReduced] = useState(false);
 	const [degraded, setDegraded] = useState(false);
 
 	useEffect(() => {
 		setTier(detectGpuTier());
+		setReduced(prefersReducedMotion());
 	}, []);
 
 	if (!tier || tier === 'low') return null;
@@ -34,7 +36,7 @@ export default function BackgroundCanvas() {
 				camera={{ position: [0, 0, 9], fov: 42 }}
 			>
 				<PerformanceMonitor onDecline={() => setDegraded(true)} />
-				<Scene settings={settings} />
+				<Scene settings={settings} reducedMotion={reduced} />
 			</Canvas>
 		</div>
 	);

@@ -17,12 +17,20 @@ export type GpuTier = 'low' | 'mid' | 'high';
 
 type NavigatorWithMemory = Navigator & { deviceMemory?: number };
 
-function readRenderer(): string {
+function getWebGLContext(): WebGLRenderingContext | null {
 	try {
 		const canvas = document.createElement('canvas');
-		const gl = (canvas.getContext('webgl') ??
+		return (canvas.getContext('webgl2') ??
+			canvas.getContext('webgl') ??
 			canvas.getContext('experimental-webgl')) as WebGLRenderingContext | null;
-		if (!gl) return '';
+	} catch {
+		return null;
+	}
+}
+
+function readRenderer(gl: WebGLRenderingContext | null): string {
+	if (!gl) return '';
+	try {
 		const info = gl.getExtension('WEBGL_debug_renderer_info');
 		if (!info) return '';
 		return String(gl.getParameter(info.UNMASKED_RENDERER_WEBGL)).toLowerCase();
@@ -31,28 +39,31 @@ function readRenderer(): string {
 	}
 }
 
+/** Whether the user asked for reduced motion. The scene still renders, but static. */
+export function prefersReducedMotion(): boolean {
+	if (typeof window === 'undefined') return false;
+	return window.matchMedia?.('(prefers-reduced-motion: reduce)').matches ?? false;
+}
+
 export function detectGpuTier(): GpuTier {
 	if (typeof window === 'undefined' || typeof navigator === 'undefined') return 'high';
 
-	if (window.matchMedia?.('(prefers-reduced-motion: reduce)').matches) return 'low';
+	const gl = getWebGLContext();
+	const renderer = readRenderer(gl);
+	const isSoftware = /(swiftshader|llvmpipe|software|microsoft basic)/.test(renderer);
+
+	// Only fall back to the static CSS atmosphere when WebGL is genuinely unusable.
+	if (!gl || isSoftware) return 'low';
 
 	const isCoarsePointer = window.matchMedia?.('(pointer: coarse)').matches ?? false;
 	const cores = navigator.hardwareConcurrency ?? 4;
 	const memory = (navigator as NavigatorWithMemory).deviceMemory ?? 4;
-
-	const renderer = readRenderer();
-	// Software renderers and low-power integrated GPUs → treat as weak.
-	const isSoftware = /(swiftshader|llvmpipe|software)/.test(renderer);
+	// Integrated GPUs (Intel HD/UHD) render fine at the mid budget — don't exclude them.
 	const isWeakIntegrated = /(intel|uhd|hd graphics)/.test(renderer) && !/(iris|arc)/.test(renderer);
-	const isWeakGpu = isSoftware || isWeakIntegrated;
 
-	if (isSoftware) return 'low';
-
-	if (isCoarsePointer || cores <= 4 || memory <= 4) {
-		return isWeakGpu ? 'low' : 'mid';
-	}
-
-	return isWeakGpu ? 'mid' : 'high';
+	// Capable discrete/desktop hardware gets the full budget; everything else still renders at mid.
+	const constrained = isCoarsePointer || cores <= 4 || memory <= 4 || isWeakIntegrated;
+	return constrained ? 'mid' : 'high';
 }
 
 /** React hook wrapper around {@link detectGpuTier}. Resolves after mount. */

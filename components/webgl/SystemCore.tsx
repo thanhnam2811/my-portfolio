@@ -16,7 +16,12 @@ const NODE_RADIUS = 3.2;
  * for a subtle rotation response (the full scroll-driven camera journey lands in
  * Phase 2). Speaks the vocabulary of the role: core, nodes, packet propagation.
  */
-export default function SystemCore() {
+interface SystemCoreProps {
+	/** Freeze packet flow and idle drift, and still the core pulse (reduced-motion). */
+	reducedMotion?: boolean;
+}
+
+export default function SystemCore({ reducedMotion = false }: SystemCoreProps) {
 	const group = useRef<THREE.Group>(null);
 	const packetRefs = useRef<Array<THREE.Mesh | null>>([]);
 
@@ -48,6 +53,7 @@ export default function SystemCore() {
 	}, [nodes]);
 
 	useFrame((state, delta) => {
+		if (reducedMotion) return;
 		const t = state.clock.elapsedTime;
 
 		if (group.current) {
@@ -76,11 +82,11 @@ export default function SystemCore() {
 				<MeshDistortMaterial
 					color="#0b3b52"
 					emissive="#22d3ee"
-					emissiveIntensity={1.5}
+					emissiveIntensity={1.05}
 					roughness={0.25}
 					metalness={0.3}
 					distort={0.32}
-					speed={2}
+					speed={reducedMotion ? 0 : 2}
 				/>
 			</mesh>
 

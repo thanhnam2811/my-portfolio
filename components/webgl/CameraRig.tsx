@@ -24,14 +24,19 @@ function clamp01(value: number): number {
 	return Math.min(1, Math.max(0, value));
 }
 
-export default function CameraRig() {
+interface CameraRigProps {
+	/** Hold the opening framing instead of following scroll (reduced-motion). */
+	frozen?: boolean;
+}
+
+export default function CameraRig({ frozen = false }: CameraRigProps) {
 	const { camera } = useThree();
 	const curve = useMemo(() => new THREE.CatmullRomCurve3(WAYPOINTS, false, 'catmullrom', 0.5), []);
 	const targetPosition = useRef(new THREE.Vector3(0, 0.5, 9));
 	const lookTarget = useRef(new THREE.Vector3(0, 0, 0));
 
 	useFrame((_, delta) => {
-		const { progress } = getScrollState();
+		const progress = frozen ? 0 : getScrollState().progress;
 		curve.getPointAt(clamp01(progress), targetPosition.current);
 
 		// Frame-rate-independent damping so the ride stays smooth on top of Lenis.
