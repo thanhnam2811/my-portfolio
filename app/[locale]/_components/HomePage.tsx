@@ -6,6 +6,7 @@ import { useLayoutEffect, useMemo, useRef, useState } from 'react';
 import { ArrowRight, Download, ExternalLink, Github, Linkedin, Mail, Menu, X } from 'lucide-react';
 import { useLocale, useTranslations } from 'next-intl';
 import { Button } from '@/components/ui/button';
+import SystemVisualization from '@/components/SystemVisualization';
 import { ensureHomeGsap, gsap, ScrollTrigger } from '@/lib/motion/home-gsap';
 import { homeMotion } from '@/lib/motion/home-presets';
 import {
@@ -54,6 +55,8 @@ function getChromeCopy(locale: string) {
 			dossierLabel: 'Ban do van hanh',
 			metricsLabel: 'Tin hieu chinh',
 			narrativeLabel: 'Doc theo chapter',
+			systemLabel: 'He thong realtime',
+			systemCaption: 'Duong di cua mot packet qua mot vong choi — tu client den luu tru.',
 		};
 	}
 
@@ -83,6 +86,8 @@ function getChromeCopy(locale: string) {
 		dossierLabel: 'Operating map',
 		metricsLabel: 'Signal set',
 		narrativeLabel: 'Read as chapters',
+		systemLabel: 'Runtime topology',
+		systemCaption: 'How a single packet travels through one game loop — from client to storage.',
 	};
 }
 
@@ -698,6 +703,25 @@ export default function HomePage() {
 								))}
 							</div>
 						</aside>
+					</div>
+				</section>
+
+				<section id="system" data-home-reveal className="border-y border-white/8">
+					<div className="mx-auto max-w-[1380px] px-4 py-16 sm:px-6 lg:px-10 lg:py-20">
+						<div className="flex flex-col gap-3 border-b border-white/8 pb-8">
+							<p
+								data-home-block
+								className="font-mono text-[11px] tracking-[0.28em] text-cyan-200/70 uppercase"
+							>
+								{chrome.systemLabel}
+							</p>
+							<p data-home-block className="max-w-2xl text-lg leading-8 text-slate-300">
+								{chrome.systemCaption}
+							</p>
+						</div>
+						<div data-home-block className="pt-12">
+							<SystemVisualization />
+						</div>
 					</div>
 				</section>
 
