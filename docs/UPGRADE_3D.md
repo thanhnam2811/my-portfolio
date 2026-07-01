@@ -108,7 +108,7 @@ Rough effort: ~7–10 focused days.
 
 - [x] **P0** — smooth scroll, scroll store, GPU tier scaffold, atmosphere tokens
 - [x] P1 — canvas + System Core
-- [ ] P2 — scroll camera journey
+- [x] P2 — scroll camera journey
 - [ ] P3 — section depth + system visualization
 - [ ] P4 — GPU tiers + fallbacks + verification
 - [ ] P5 — idle cinematic mode
