@@ -70,6 +70,13 @@ export const featuredWork: readonly FeaturedWorkItem[] = [
 
 export const capabilityGroups = ['realtime', 'backend', 'data', 'observability', 'delivery'] as const;
 
+/** Architecture Decision Records attached to each project. */
+export const projectAdrs: Record<ProjectId, readonly string[]> = {
+	onky: ['onkyRedis', 'onkyWs'],
+	vmu: ['vmuSocket'],
+	tinylink: ['tinyStateful'],
+};
+
 export const incidentSeverity = { inc001: 'SEV-2', inc002: 'SEV-2', inc003: 'SEV-3' } as const;
 export const incidents = ['inc001', 'inc002', 'inc003'] as const;
 export const incidentFields = ['impact', 'rootCause', 'detection', 'resolution', 'lessons'] as const;

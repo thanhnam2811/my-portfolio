@@ -10,6 +10,7 @@ import SystemVisualization from '@/components/SystemVisualization';
 import SystemClock from '@/components/SystemClock';
 import ConsoleFooter from '@/components/ConsoleFooter';
 import ArchitectureDiagram from '@/components/ArchitectureDiagram';
+import AdrPanel from '@/components/AdrPanel';
 import IncidentHistory from '@/components/IncidentHistory';
 import { ensureHomeGsap, gsap, ScrollTrigger } from '@/lib/motion/home-gsap';
 import { homeMotion } from '@/lib/motion/home-presets';
@@ -20,6 +21,7 @@ import {
 	featuredWork,
 	navSections,
 	principles,
+	projectAdrs,
 	proofItems,
 } from '@/app/[locale]/_data/content';
 
@@ -889,6 +891,8 @@ export default function HomePage() {
 												nodes={architectureDiagrams[item.id]}
 												label={chrome.architectureLabel}
 											/>
+
+											<AdrPanel ids={projectAdrs[item.id]} />
 
 											<div className="flex flex-wrap gap-2 border-t border-white/10 pt-6">
 												{item.stack.map((tech) => (
