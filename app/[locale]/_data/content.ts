@@ -1,10 +1,37 @@
+import type { ArchNode } from '@/components/ArchitectureDiagram';
+
+type ProjectId = 'onky' | 'vmu' | 'tinylink';
+
 type FeaturedWorkItem = {
-	id: 'onky' | 'vmu' | 'tinylink';
+	id: ProjectId;
 	stack: readonly string[];
 	accent: string;
 	image?: string;
 	link?: string;
 	github?: string;
+};
+
+/** Data-flow sketch per project, rendered by `ArchitectureDiagram`. */
+export const architectureDiagrams: Record<ProjectId, readonly ArchNode[]> = {
+	onky: [
+		{ label: 'Game Client', type: 'client', sub: 'WebSocket', via: 'ws' },
+		{ label: 'Gateway', type: 'server', sub: 'auth · routing', via: 'route' },
+		{ label: 'Game Server', type: 'server', sub: 'Node.js tick', via: 'pub/sub' },
+		{ label: 'Redis', type: 'cache', sub: 'state · fan-out', via: 'persist' },
+		{ label: 'SQL Server', type: 'database', sub: 'durable state' },
+	],
+	vmu: [
+		{ label: 'Browser', type: 'client', sub: 'React', via: 'http' },
+		{ label: 'Node.js API', type: 'server', sub: 'Express', via: 'socket.io' },
+		{ label: 'Realtime Layer', type: 'server', sub: 'session visibility', via: 'driver' },
+		{ label: 'MongoDB', type: 'database', sub: 'persistence' },
+	],
+	tinylink: [
+		{ label: 'Client', type: 'client', sub: 'redirect', via: 'http' },
+		{ label: 'Fastify', type: 'server', sub: 'Node.js · TS', via: 'cache-aside' },
+		{ label: 'Redis', type: 'cache', sub: 'hot lookups', via: 'on miss' },
+		{ label: 'PostgreSQL', type: 'database', sub: 'source of truth' },
+	],
 };
 
 export const navSections = [

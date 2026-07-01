@@ -9,9 +9,11 @@ import { Button } from '@/components/ui/button';
 import SystemVisualization from '@/components/SystemVisualization';
 import SystemClock from '@/components/SystemClock';
 import ConsoleFooter from '@/components/ConsoleFooter';
+import ArchitectureDiagram from '@/components/ArchitectureDiagram';
 import { ensureHomeGsap, gsap, ScrollTrigger } from '@/lib/motion/home-gsap';
 import { homeMotion } from '@/lib/motion/home-presets';
 import {
+	architectureDiagrams,
 	capabilityGroups,
 	experienceEntries,
 	featuredWork,
@@ -61,6 +63,7 @@ function getChromeCopy(locale: string) {
 			systemCaption: 'Duong di cua mot packet qua mot vong choi — tu client den luu tru.',
 			statusNominal: 'Tat ca on dinh',
 			footerTagline: 'Systems Operations Console',
+			architectureLabel: 'Luong du lieu',
 		};
 	}
 
@@ -94,6 +97,7 @@ function getChromeCopy(locale: string) {
 		systemCaption: 'How a single packet travels through one game loop — from client to storage.',
 		statusNominal: 'All systems nominal',
 		footerTagline: 'Systems Operations Console',
+		architectureLabel: 'Data flow',
 	};
 }
 
@@ -874,6 +878,11 @@ export default function HomePage() {
 													</div>
 												))}
 											</div>
+
+											<ArchitectureDiagram
+												nodes={architectureDiagrams[item.id]}
+												label={chrome.architectureLabel}
+											/>
 
 											<div className="flex flex-wrap gap-2 border-t border-white/10 pt-6">
 												{item.stack.map((tech) => (
