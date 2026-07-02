@@ -84,10 +84,11 @@ function getChromeCopy(locale: string) {
 	};
 }
 
+/* Placement per docs/DESIGN_SYSTEM.md §4: tablet = 2 cols, desktop = 12×6 deck. */
 const CARD_GRID: Record<CardId, string> = {
-	identity: 'lg:col-span-5 lg:row-span-3',
-	topology: 'lg:col-span-7 lg:row-span-2',
-	proof: 'lg:col-span-7 lg:row-span-1',
+	identity: 'md:col-span-2 lg:col-span-5 lg:row-span-3',
+	topology: 'md:col-span-2 lg:col-span-7 lg:row-span-2',
+	proof: 'md:col-span-2 lg:col-span-7 lg:row-span-1',
 	onky: 'lg:col-span-3 lg:row-span-2',
 	vmu: 'lg:col-span-3 lg:row-span-2',
 	tinylink: 'lg:col-span-3 lg:row-span-2',
@@ -97,8 +98,7 @@ const CARD_GRID: Record<CardId, string> = {
 	contact: 'lg:col-span-4 lg:row-span-1',
 };
 
-const CARD_BASE =
-	'group relative flex min-h-0 flex-col overflow-hidden border border-white/10 bg-[linear-gradient(180deg,rgba(20,36,66,0.5),rgba(9,16,28,0.55))] p-5 text-left transition-colors duration-200';
+const CARD_BASE = 'deck-card group relative flex min-h-0 flex-col overflow-hidden p-5 text-left';
 
 const SOCIAL_LINKS = [
 	{ label: 'Email', href: 'mailto:thanhnam.thai01@gmail.com', icon: Mail },
@@ -107,12 +107,12 @@ const SOCIAL_LINKS = [
 ] as const;
 
 function CardLabel({ children }: { children: React.ReactNode }) {
-	return <p className="font-mono text-[10px] tracking-[0.26em] text-cyan-200/70 uppercase">{children}</p>;
+	return <p className="deck-label">{children}</p>;
 }
 
 function OpenHint({ label }: { label: string }) {
 	return (
-		<span className="pointer-events-none absolute top-4 right-4 flex items-center gap-1 font-mono text-[10px] tracking-[0.18em] text-slate-500 uppercase opacity-0 transition-opacity duration-200 group-hover:opacity-100">
+		<span className="deck-label-muted pointer-events-none absolute top-4 right-4 flex items-center gap-1 opacity-0 transition-opacity duration-200 group-hover:opacity-100">
 			{label}
 			<ArrowUpRight className="h-3 w-3" />
 		</span>
@@ -218,9 +218,7 @@ export default function HomePage() {
 				<div className="mt-6 grid gap-x-8 gap-y-6 md:grid-cols-2">
 					{(['context', 'build', 'systems', 'impact'] as const).map((block) => (
 						<div key={block} className="border-t border-white/10 pt-4">
-							<p className="font-mono text-[10px] tracking-[0.24em] text-slate-500 uppercase">
-								{tWork(`labels.${block}`)}
-							</p>
+							<p className="deck-label-muted">{tWork(`labels.${block}`)}</p>
 							<p className="mt-3 text-sm leading-7 text-slate-200">{tWork(`items.${id}.${block}`)}</p>
 						</div>
 					))}
@@ -278,9 +276,7 @@ export default function HomePage() {
 								[chrome.stackLabel, chrome.stackValue],
 							].map(([label, value]) => (
 								<div key={label} className="grid gap-2 py-4 md:grid-cols-[140px_minmax(0,1fr)]">
-									<p className="font-mono text-[10px] tracking-[0.24em] text-slate-500 uppercase">
-										{label}
-									</p>
+									<p className="deck-label-muted">{label}</p>
 									<p className="text-sm leading-7 text-slate-200">{value}</p>
 								</div>
 							))}
@@ -317,7 +313,7 @@ export default function HomePage() {
 						<div className="mt-6 divide-y divide-white/10 border-t border-white/10">
 							{capabilityGroups.map((group, index) => (
 								<div key={group} className="py-5">
-									<p className="font-mono text-[10px] tracking-[0.24em] text-slate-500 uppercase">
+									<p className="deck-label-muted">
 										{String(index + 1).padStart(2, '0')} · {tCapabilities(`items.${group}.eyebrow`)}
 									</p>
 									<h3 className="mt-2 text-lg font-semibold text-white">
@@ -394,7 +390,7 @@ export default function HomePage() {
 						<div className="mt-6 grid gap-4 sm:grid-cols-2">
 							{principles.map((item, index) => (
 								<div key={item} className="border border-white/10 bg-white/2 p-5">
-									<p className="font-mono text-[10px] tracking-[0.22em] text-cyan-200/70 uppercase">
+									<p className="deck-label">
 										Principle {String(index + 1).padStart(2, '0')}
 										<span className="text-slate-600"> · </span>
 										<span className="text-slate-500">{tPrinciples(`items.${item}.eyebrow`)}</span>
@@ -457,15 +453,11 @@ export default function HomePage() {
 						</div>
 						<div className="mt-6 divide-y divide-white/10 border-y border-white/10">
 							<div className="grid gap-2 py-4 md:grid-cols-[140px_minmax(0,1fr)]">
-								<p className="font-mono text-[10px] tracking-[0.24em] text-slate-500 uppercase">
-									{tContact('availabilityLabel')}
-								</p>
+								<p className="deck-label-muted">{tContact('availabilityLabel')}</p>
 								<p className="text-sm leading-7 text-slate-200">{tContact('availabilityValue')}</p>
 							</div>
 							<div className="grid gap-2 py-4 md:grid-cols-[140px_minmax(0,1fr)]">
-								<p className="font-mono text-[10px] tracking-[0.24em] text-slate-500 uppercase">
-									{tContact('educationLabel')}
-								</p>
+								<p className="deck-label-muted">{tContact('educationLabel')}</p>
 								<div>
 									<p className="text-sm leading-7 text-slate-200">{tContact('educationValue')}</p>
 									<p className="mt-1 text-xs text-slate-400">{tContact('educationMeta')}</p>
@@ -485,7 +477,7 @@ export default function HomePage() {
 			<div className="operator-grid pointer-events-none absolute inset-0 opacity-50" />
 			<div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-cyan-200/40 to-transparent" />
 
-			<header className="fixed inset-x-0 top-0 z-40 border-b border-white/8 bg-[#07101d]/92 backdrop-blur-xl">
+			<header className="operator-header fixed inset-x-0 top-0 z-40">
 				<div className="mx-auto flex h-16 max-w-[1600px] items-center justify-between gap-4 px-4 sm:px-6">
 					<div className="flex items-center gap-3">
 						<span className="h-2.5 w-2.5 rounded-full bg-cyan-300 shadow-[0_0_18px_rgba(103,232,249,0.5)]" />
@@ -494,9 +486,7 @@ export default function HomePage() {
 							<p className="text-xs text-slate-400">{tMeta('role')}</p>
 						</div>
 					</div>
-					<p className="hidden font-mono text-[10px] tracking-[0.24em] text-slate-500 uppercase lg:block">
-						{chrome.deckHint}
-					</p>
+					<p className="deck-label-muted hidden lg:block">{chrome.deckHint}</p>
 					<div className="flex items-center gap-3">
 						<Button
 							asChild
@@ -520,9 +510,9 @@ export default function HomePage() {
 
 			<main
 				id="main-content"
-				className="relative mx-auto max-w-[1600px] px-3 pt-20 pb-3 sm:px-4 lg:h-dvh lg:overflow-hidden"
+				className="lg:tall:h-dvh lg:tall:overflow-hidden relative mx-auto max-w-[1600px] px-3 pt-20 pb-3 sm:px-4"
 			>
-				<div className="grid grid-cols-1 gap-3 lg:h-full lg:grid-cols-12 lg:grid-rows-6">
+				<div className="lg:tall:h-full lg:tall:grid-rows-6 grid grid-cols-1 gap-3 md:grid-cols-2 lg:grid-cols-12">
 					{card(
 						'identity',
 						0,
@@ -541,9 +531,7 @@ export default function HomePage() {
 									{tHero('panelState')}
 								</span>
 							</div>
-							<p className="mt-5 font-mono text-[11px] tracking-[0.24em] text-cyan-200/70 uppercase">
-								{tHero('eyebrow')}
-							</p>
+							<p className="deck-label mt-5">{tHero('eyebrow')}</p>
 							<h1 className="mt-3 text-2xl font-semibold tracking-[-0.045em] text-white sm:text-3xl xl:text-4xl xl:leading-[1.08]">
 								{tHero('headline')}
 							</h1>
@@ -640,7 +628,7 @@ export default function HomePage() {
 							<p className="mt-3 line-clamp-3 text-xs leading-6 text-slate-300">
 								{tExperience('items.onky.summary')}
 							</p>
-							<p className="mt-auto pt-4 font-mono text-[11px] text-slate-500">
+							<p className="deck-label-muted mt-auto pt-4">
 								{experienceEntries.length} {chrome.rolesLabel} · 2022 → {chrome.nowLabel.toLowerCase()}
 							</p>
 						</>,
@@ -715,7 +703,7 @@ export default function HomePage() {
 								role="dialog"
 								aria-modal="true"
 								tabIndex={-1}
-								className="pointer-events-auto relative max-h-full w-full max-w-3xl overflow-y-auto border border-cyan-300/25 bg-[linear-gradient(180deg,rgba(16,30,54,0.98),rgba(7,13,24,0.98))] p-6 shadow-[0_30px_120px_rgba(2,6,14,0.7)] outline-none sm:p-9"
+								className="overlay-surface pointer-events-auto relative max-h-full w-full max-w-3xl overflow-y-auto p-6 outline-none sm:p-9"
 							>
 								<button
 									type="button"

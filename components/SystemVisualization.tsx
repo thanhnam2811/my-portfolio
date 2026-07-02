@@ -53,9 +53,9 @@ export default function SystemVisualization() {
 		>
 			<defs>
 				<linearGradient id="sv-edge" x1="0" y1="0" x2="1" y2="0">
-					<stop offset="0%" stopColor="#22d3ee" stopOpacity="0.05" />
-					<stop offset="50%" stopColor="#22d3ee" stopOpacity="0.45" />
-					<stop offset="100%" stopColor="#22d3ee" stopOpacity="0.05" />
+					<stop offset="0%" stopColor="var(--operator-accent-deep)" stopOpacity="0.05" />
+					<stop offset="50%" stopColor="var(--operator-accent-deep)" stopOpacity="0.45" />
+					<stop offset="100%" stopColor="var(--operator-accent-deep)" stopOpacity="0.05" />
 				</linearGradient>
 			</defs>
 
@@ -91,7 +91,7 @@ export default function SystemVisualization() {
 
 						{!reduceMotion && (
 							<>
-								<circle r="3" fill="#67e8f9">
+								<circle r="3" fill="var(--operator-accent)">
 									<animateMotion
 										dur="2.2s"
 										repeatCount="indefinite"
@@ -99,7 +99,7 @@ export default function SystemVisualization() {
 										begin={`${i * 0.5}s`}
 									/>
 								</circle>
-								<circle r="2" fill="#a5f3fc" opacity="0.7">
+								<circle r="2" fill="var(--operator-accent-strong)" opacity="0.7">
 									<animateMotion
 										dur="2.2s"
 										repeatCount="indefinite"
@@ -130,7 +130,7 @@ export default function SystemVisualization() {
 								height={NODE_H + 8}
 								rx={12}
 								fill="none"
-								stroke="#22d3ee"
+								stroke="var(--operator-accent-deep)"
 								strokeWidth="1"
 							>
 								<animate
@@ -147,11 +147,16 @@ export default function SystemVisualization() {
 							width={NODE_W}
 							height={NODE_H}
 							rx={10}
-							fill="#0a1626"
-							stroke={isServer ? '#22d3ee' : '#1e3a5f'}
+							fill="var(--operator-node-fill)"
+							stroke={isServer ? 'var(--operator-accent-deep)' : 'var(--operator-node-stroke)'}
 							strokeWidth={isServer ? 1.5 : 1}
 						/>
-						<circle cx={x + 18} cy={y + 22} r="3" fill={isServer ? '#67e8f9' : '#3b82f6'} />
+						<circle
+							cx={x + 18}
+							cy={y + 22}
+							r="3"
+							fill={isServer ? 'var(--operator-accent)' : 'var(--operator-node-dot)'}
+						/>
 						<text x={x + 30} y={y + 26} className="fill-slate-100" fontSize="15" fontWeight="600">
 							{node.title}
 						</text>
