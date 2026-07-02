@@ -1,5 +1,25 @@
 # Portfolio Upgrade Plan: Beyond CV + Scroll
 
+> ## ⚠️ Direction change — 2026-07-02: Bento Command Deck
+>
+> The Systems Operations Console direction below was **built (Tier 1 complete), then rolled back**. In practice the
+> console features (terminal, incident history, ADR panels, live packet sim, console footer) inflated the page far
+> beyond its actual job: **presenting a real CV with a premium UI**.
+>
+> The current direction is a **Bento Command Deck**:
+>
+> - The whole CV reads as a **single-viewport bento grid** on desktop (identity, topology, proof, 3 work cards,
+>   experience, capabilities, principles, contact). Below `lg` the grid stacks and scrolls normally.
+> - Cards expand into **detail overlays** via Framer Motion shared-layout morph (Esc/backdrop close, reduced-motion
+>   aware). No scroll-driven animation system on the homepage.
+> - The static SVG/SMIL **runtime topology** stays as the one signature visual.
+> - All console add-ons were removed; content remains the real CV data in `messages/{en,vi}.json` + `content.ts`.
+>
+> The spec below is kept as **archive/reference** for individual ideas (some may return as small, contained
+> enhancements), but its roadmap and status checklists are superseded.
+
+---
+
 > **Vision:** Transform the site from a single-scroll CV into an interactive **Systems Operations Console** — a control
 > center that demonstrates backend engineering thinking through its very interface. Every panel, metric, and interaction
 > reinforces the story of an engineer who builds reliable, observable, real-time systems.
