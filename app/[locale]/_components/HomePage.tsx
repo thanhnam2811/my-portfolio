@@ -2,8 +2,8 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
-import { useEffect, useMemo, useRef, useState } from 'react';
-import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
+import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
+import { motion, useReducedMotion } from 'framer-motion';
 import { ArrowUpRight, Download, ExternalLink, Github, Linkedin, Mail, X } from 'lucide-react';
 import { useLocale, useTranslations } from 'next-intl';
 import { Button } from '@/components/ui/button';
@@ -18,9 +18,9 @@ import {
 
 /**
  * Bento "Command Deck" homepage: the whole CV reads as a single-viewport grid
- * of panels on desktop. Cards expand into detail overlays (fade+scale —
- * transform/opacity only, see DESIGN_SYSTEM §6). Below `lg` the grid stacks
- * and the page scrolls normally. No scroll-driven animation on the deck.
+ * of panels on desktop. Cards expand into detail overlays via a surface-only
+ * shared-layout morph (see DESIGN_SYSTEM §6). Below `lg` the grid stacks and
+ * the page scrolls normally. No scroll-driven animation on the deck.
  */
 
 type CardId =
@@ -45,44 +45,6 @@ const EXPANDABLE: readonly CardId[] = [
 	'principles',
 	'contact',
 ];
-
-function getChromeCopy(locale: string) {
-	if (locale === 'vi') {
-		return {
-			deckHint: 'Bam vao mot the de xem chi tiet',
-			openLabel: 'Mo',
-			closeLabel: 'Dong',
-			systemLabel: 'He thong realtime',
-			systemCaption: 'Duong di cua mot packet qua mot vong choi — tu client den luu tru.',
-			signalsLabel: 'Tin hieu chinh',
-			currentFocus: 'Tap trung hien tai',
-			currentFocusValue: 'Real-time backend, observability va product delivery thuc te.',
-			statusLabel: 'Trang thai',
-			statusValue: 'San sang cho co hoi phu hop',
-			stackLabel: 'Core stack',
-			stackValue: 'Node.js, TypeScript, WebSocket, SQL, Redis, internal tooling.',
-			rolesLabel: 'vai tro',
-			nowLabel: 'Hien tai',
-		};
-	}
-
-	return {
-		deckHint: 'Click any card to inspect it',
-		openLabel: 'Open',
-		closeLabel: 'Close',
-		systemLabel: 'Runtime topology',
-		systemCaption: 'How a single packet travels through one game loop — from client to storage.',
-		signalsLabel: 'Signal set',
-		currentFocus: 'Current focus',
-		currentFocusValue: 'Real-time backend, observability, and production-minded product delivery.',
-		statusLabel: 'Status',
-		statusValue: 'Open to the right opportunities',
-		stackLabel: 'Core stack',
-		stackValue: 'Node.js, TypeScript, WebSocket, SQL, Redis, internal tooling.',
-		rolesLabel: 'roles',
-		nowLabel: 'Now',
-	};
-}
 
 /* Placement per docs/DESIGN_SYSTEM.md §4: tablet = 2 cols, desktop = 12×6 deck. */
 const CARD_GRID: Record<CardId, string> = {
@@ -119,10 +81,79 @@ function OpenHint({ label }: { label: string }) {
 	);
 }
 
+type MorphPhase = 'opening' | 'open' | 'closing';
+
+const MORPH_MS = 450;
+const MORPH_EASE = 'cubic-bezier(0.22, 1, 0.36, 1)';
+
+/**
+ * State-driven FLIP morph for the overlay surface: the clicked card's rect is
+ * the shared element. Opening animates card-bounds → dialog-bounds; closing
+ * animates back before the parent unmounts the overlay (`onSettled`). Driven
+ * by plain CSS transitions on transform/opacity — deliberately no framer
+ * `layoutId`/AnimatePresence-exit here (deadlock-prone) and no full-card
+ * layout projection (re-measures every card, janks iGPUs).
+ */
+function MorphSurface({
+	fromRect,
+	phase,
+	onSettled,
+}: {
+	fromRect: DOMRect;
+	phase: MorphPhase;
+	onSettled: (phase: MorphPhase) => void;
+}) {
+	const ref = useRef<HTMLDivElement>(null);
+	// Final bounds are measured once from our own node (its ref attaches before
+	// this layout effect runs — a parent's ref would still be null here) and
+	// cached, so close-time fromRect updates re-derive the delta for free.
+	const [toRect, setToRect] = useState<DOMRect | null>(null);
+
+	useLayoutEffect(() => {
+		if (ref.current) setToRect(ref.current.getBoundingClientRect());
+	}, []);
+
+	useLayoutEffect(() => {
+		const node = ref.current;
+		if (!node || !toRect) return;
+		const atCard = `translate(${fromRect.left - toRect.left}px, ${fromRect.top - toRect.top}px) scale(${
+			fromRect.width / toRect.width
+		}, ${fromRect.height / toRect.height})`;
+		const run = `transform ${MORPH_MS}ms ${MORPH_EASE}, opacity ${MORPH_MS}ms ${MORPH_EASE}`;
+
+		if (phase === 'opening') {
+			// Paint the start frame at the card's bounds, then release the morph.
+			node.style.transition = 'none';
+			node.style.transform = atCard;
+			node.style.opacity = '0.5';
+			node.getBoundingClientRect(); // force the start frame to commit
+			node.style.transition = run;
+			node.style.transform = 'translate(0px, 0px) scale(1, 1)';
+			node.style.opacity = '1';
+		} else if (phase === 'closing') {
+			node.style.transition = run;
+			node.style.transform = atCard;
+			node.style.opacity = '0.4';
+		}
+	}, [phase, fromRect, toRect]);
+
+	return (
+		<div
+			ref={ref}
+			aria-hidden
+			onTransitionEnd={(event) => {
+				if (event.propertyName === 'transform' && event.target === ref.current) onSettled(phase);
+			}}
+			className="overlay-surface absolute inset-0"
+			style={{ transformOrigin: 'top left', visibility: toRect ? 'visible' : 'hidden' }}
+		/>
+	);
+}
+
 export default function HomePage() {
 	const locale = useLocale();
-	const chrome = useMemo(() => getChromeCopy(locale), [locale]);
 	const blogHref = `/${locale}/blog`;
+	const tDeck = useTranslations('Deck');
 	const tNav = useTranslations('Nav');
 	const tMeta = useTranslations('Metadata');
 	const tHero = useTranslations('Hero');
@@ -135,24 +166,45 @@ export default function HomePage() {
 	const tBlog = useTranslations('Blog');
 
 	const reduceMotion = useReducedMotion();
-	const [expanded, setExpanded] = useState<CardId | null>(null);
+	const [overlay, setOverlay] = useState<{ id: CardId; fromRect: DOMRect; phase: MorphPhase } | null>(null);
 	const panelRef = useRef<HTMLDivElement>(null);
+	const cardRefs = useRef<Partial<Record<CardId, HTMLButtonElement>>>({});
 
-	useEffect(() => {
-		const onKey = (event: KeyboardEvent) => {
-			if (event.key === 'Escape') setExpanded(null);
-		};
-		window.addEventListener('keydown', onKey);
-		return () => window.removeEventListener('keydown', onKey);
+	// Close = reverse morph back to the card's current slot, then unmount.
+	const requestClose = useCallback(() => {
+		setOverlay((current) => {
+			if (!current || current.phase === 'closing') return current;
+			if (reduceMotion) return null;
+			const cardEl = cardRefs.current[current.id];
+			const fromRect = cardEl ? cardEl.getBoundingClientRect() : current.fromRect;
+			return { ...current, fromRect, phase: 'closing' };
+		});
+		// Safety net: if transitionend is swallowed (e.g. tab hidden mid-close),
+		// still unmount once the morph duration has passed.
+		window.setTimeout(() => {
+			setOverlay((current) => (current?.phase === 'closing' ? null : current));
+		}, MORPH_MS + 250);
+	}, [reduceMotion]);
+
+	const handleMorphSettled = useCallback((phase: MorphPhase) => {
+		if (phase === 'opening') {
+			setOverlay((current) => (current && current.phase === 'opening' ? { ...current, phase: 'open' } : current));
+		} else if (phase === 'closing') {
+			setOverlay(null);
+		}
 	}, []);
 
 	useEffect(() => {
-		if (expanded) panelRef.current?.focus();
-	}, [expanded]);
+		const onKey = (event: KeyboardEvent) => {
+			if (event.key === 'Escape') requestClose();
+		};
+		window.addEventListener('keydown', onKey);
+		return () => window.removeEventListener('keydown', onKey);
+	}, [requestClose]);
 
-	// Plain fade+scale (transform/opacity only) — a shared-layout morph forces
-	// framer to measure every card's layout on open/close, which janks on iGPUs.
-	const overlayTransition = reduceMotion ? { duration: 0 } : { duration: 0.22, ease: [0.22, 1, 0.36, 1] as const };
+	useEffect(() => {
+		if (overlay?.id) panelRef.current?.focus();
+	}, [overlay?.id]);
 
 	const entry = (index: number) =>
 		reduceMotion
@@ -180,12 +232,24 @@ export default function HomePage() {
 			<motion.button
 				key={id}
 				type="button"
+				ref={(el: HTMLButtonElement | null) => {
+					if (el) cardRefs.current[id] = el;
+					else delete cardRefs.current[id];
+				}}
 				className={className}
-				onClick={() => setExpanded(id)}
+				// The card vanishes from the grid while it "is" the modal.
+				style={overlay?.id === id ? { visibility: 'hidden' as const } : {}}
+				onClick={(event) =>
+					setOverlay({
+						id,
+						fromRect: event.currentTarget.getBoundingClientRect(),
+						phase: reduceMotion ? 'open' : 'opening',
+					})
+				}
 				aria-haspopup="dialog"
 				{...entry(index)}
 			>
-				<OpenHint label={chrome.openLabel} />
+				<OpenHint label={tDeck('open')} />
 				{children}
 			</motion.button>
 		);
@@ -272,9 +336,9 @@ export default function HomePage() {
 						</h2>
 						<div className="mt-6 divide-y divide-white/10 border-y border-white/10">
 							{[
-								[chrome.currentFocus, chrome.currentFocusValue],
-								[chrome.statusLabel, chrome.statusValue],
-								[chrome.stackLabel, chrome.stackValue],
+								[tDeck('currentFocus'), tDeck('currentFocusValue')],
+								[tDeck('statusLabel'), tDeck('statusValue')],
+								[tDeck('stackLabel'), tDeck('stackValue')],
 							].map(([label, value]) => (
 								<div key={label} className="grid gap-2 py-4 md:grid-cols-[140px_minmax(0,1fr)]">
 									<p className="deck-label-muted">{label}</p>
@@ -487,7 +551,7 @@ export default function HomePage() {
 							<p className="text-xs text-slate-400">{tMeta('role')}</p>
 						</div>
 					</div>
-					<p className="deck-label-muted hidden lg:block">{chrome.deckHint}</p>
+					<p className="deck-label-muted hidden lg:block">{tDeck('hint')}</p>
 					<div className="flex items-center gap-3">
 						<Button
 							asChild
@@ -555,8 +619,8 @@ export default function HomePage() {
 						1,
 						<>
 							<div className="flex items-baseline justify-between gap-4">
-								<CardLabel>{chrome.systemLabel}</CardLabel>
-								<p className="hidden text-xs text-slate-400 sm:block">{chrome.systemCaption}</p>
+								<CardLabel>{tDeck('systemLabel')}</CardLabel>
+								<p className="hidden text-xs text-slate-400 sm:block">{tDeck('systemCaption')}</p>
 							</div>
 							<div className="mt-3 flex min-h-0 flex-1 items-center">
 								<SystemVisualization />
@@ -568,7 +632,7 @@ export default function HomePage() {
 						'proof',
 						2,
 						<>
-							<CardLabel>{chrome.signalsLabel}</CardLabel>
+							<CardLabel>{tDeck('signalsLabel')}</CardLabel>
 							<div className="mt-3 grid flex-1 grid-cols-2 items-center gap-x-6 gap-y-3 sm:grid-cols-5">
 								{proofItems.map((key) => (
 									<div key={key}>
@@ -630,7 +694,7 @@ export default function HomePage() {
 								{tExperience('items.onky.summary')}
 							</p>
 							<p className="deck-label-muted mt-auto pt-4">
-								{experienceEntries.length} {chrome.rolesLabel} · 2022 → {chrome.nowLabel.toLowerCase()}
+								{experienceEntries.length} {tDeck('roles')} · 2022 → {tDeck('now')}
 							</p>
 						</>,
 					)}
@@ -683,46 +747,59 @@ export default function HomePage() {
 				</div>
 			</main>
 
-			<AnimatePresence>
-				{expanded && (
-					<>
-						<motion.div
-							key="deck-backdrop"
-							className="fixed inset-0 z-50 bg-[#040a14]/85"
-							initial={reduceMotion ? false : { opacity: 0 }}
-							animate={{ opacity: 1 }}
-							exit={{ opacity: 0 }}
-							transition={{ duration: reduceMotion ? 0 : 0.2 }}
-							onClick={() => setExpanded(null)}
-						/>
-						<div className="pointer-events-none fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-8">
-							<motion.div
-								key={`panel-${expanded}`}
-								ref={panelRef}
+			{overlay && (
+				<>
+					<div
+						className="fixed inset-0 z-50 bg-[#040a14]/85"
+						style={{
+							animation: reduceMotion ? 'none' : 'deck-fade-in 250ms ease backwards',
+							opacity: overlay.phase === 'closing' ? 0 : 1,
+							transition: 'opacity 250ms ease',
+						}}
+						onClick={requestClose}
+					/>
+					<div className="pointer-events-none fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-8">
+						<div
+							ref={panelRef}
+							role="dialog"
+							aria-modal="true"
+							tabIndex={-1}
+							className="pointer-events-auto relative flex max-h-full w-full max-w-3xl outline-none"
+						>
+							{reduceMotion ? (
+								<div aria-hidden className="overlay-surface absolute inset-0" />
+							) : (
+								<MorphSurface
+									fromRect={overlay.fromRect}
+									phase={overlay.phase}
+									onSettled={handleMorphSettled}
+								/>
+							)}
+							<div
 								data-lenis-prevent
-								initial={reduceMotion ? false : { opacity: 0, scale: 0.96, y: 10 }}
-								animate={{ opacity: 1, scale: 1, y: 0 }}
-								exit={{ opacity: 0, scale: 0.97, y: 8 }}
-								transition={overlayTransition}
-								role="dialog"
-								aria-modal="true"
-								tabIndex={-1}
-								className="overlay-surface pointer-events-auto relative max-h-full w-full max-w-3xl overflow-y-auto p-6 outline-none sm:p-9"
+								className="relative min-h-0 w-full overflow-y-auto p-6 sm:p-9"
+								style={{
+									animation: reduceMotion
+										? 'none'
+										: `deck-fade-in 300ms ${MORPH_EASE} 220ms backwards`,
+									opacity: overlay.phase === 'closing' ? 0 : 1,
+									transition: 'opacity 150ms ease',
+								}}
 							>
 								<button
 									type="button"
-									onClick={() => setExpanded(null)}
-									aria-label={chrome.closeLabel}
+									onClick={requestClose}
+									aria-label={tDeck('close')}
 									className="absolute top-4 right-4 z-10 border border-white/10 p-2 text-slate-400 transition-colors hover:border-cyan-300/50 hover:text-white"
 								>
 									<X className="h-4 w-4" />
 								</button>
-								{renderDetail(expanded)}
-							</motion.div>
+								{renderDetail(overlay.id)}
+							</div>
 						</div>
-					</>
-				)}
-			</AnimatePresence>
+					</div>
+				</>
+			)}
 		</div>
 	);
 }
