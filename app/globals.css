@@ -2,6 +2,8 @@
 @import 'tw-animate-css';
 
 @custom-variant dark (&:is(.dark *));
+/* Single-viewport bento deck only engages when the viewport is tall enough. */
+@custom-variant tall (@media (min-height: 720px));
 
 @theme inline {
 	--color-background: var(--background);
@@ -102,6 +104,17 @@
 	--operator-grid-soft: rgba(153, 190, 255, 0.04);
 	--operator-accent: #67e8f9;
 	--operator-accent-strong: #a5f3fc;
+	--operator-accent-deep: #22d3ee;
+	--operator-border: rgba(255, 255, 255, 0.1);
+	--operator-border-soft: rgba(255, 255, 255, 0.08);
+	--operator-panel-top: rgba(20, 36, 66, 0.5);
+	--operator-panel-bot: rgba(9, 16, 28, 0.55);
+	--operator-overlay-top: rgba(16, 30, 54, 0.98);
+	--operator-overlay-bot: rgba(7, 13, 24, 0.98);
+	--operator-header-bg: rgba(7, 16, 29, 0.92);
+	--operator-node-fill: #0a1626;
+	--operator-node-stroke: #1e3a5f;
+	--operator-node-dot: #3b82f6;
 }
 
 .dark {
@@ -181,10 +194,6 @@ aside {
 		border-color 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-@utility premium-heading {
-	@apply font-bold tracking-[-0.04em] leading-[0.98];
-}
-
 /* Operator immersive shell — homepage atmosphere layers, tokenized. */
 @utility operator-shell {
 	background-color: var(--operator-bg);
@@ -209,26 +218,35 @@ aside {
 	background-size: 96px 96px;
 }
 
-@utility section-label {
-	@apply text-[11px] uppercase tracking-[0.24em] font-black text-primary/75;
+/* Operator deck recipes — see docs/DESIGN_SYSTEM.md §3–§5. */
+@utility operator-header {
+	background-color: var(--operator-header-bg);
+	@apply border-b backdrop-blur-xl;
+	border-color: var(--operator-border-soft);
 }
 
-@utility section-shell {
-	@apply w-full max-w-6xl mx-auto px-4 sm:px-6 lg:px-8;
+@utility deck-label {
+	@apply font-mono text-[10px] tracking-[0.24em] uppercase text-cyan-200/70;
 }
 
-@utility editorial-surface {
-	@apply rounded-[2rem] border border-border bg-card/95 shadow-premium;
+@utility deck-label-muted {
+	@apply font-mono text-[10px] tracking-[0.24em] uppercase text-slate-500;
 }
 
-main section[data-snap='true'] {
-	scroll-margin-top: calc(var(--header-offset) + 0.75rem);
-}
-
-@media (min-width: 1024px) and (hover: hover) and (pointer: fine) {
-	html[data-section-snap='true'] main section[data-snap='true'] {
-		min-height: 100svh;
+@utility deck-card {
+	border: 1px solid var(--operator-border);
+	background-image: linear-gradient(180deg, var(--operator-panel-top), var(--operator-panel-bot));
+	@apply transition-colors duration-200 focus-visible:outline-none;
+	&:focus-visible {
+		border-color: color-mix(in srgb, var(--operator-accent) 60%, transparent);
+		box-shadow: 0 0 0 1px color-mix(in srgb, var(--operator-accent) 40%, transparent);
 	}
+}
+
+@utility overlay-surface {
+	border: 1px solid color-mix(in srgb, var(--operator-accent) 25%, transparent);
+	background-image: linear-gradient(180deg, var(--operator-overlay-top), var(--operator-overlay-bot));
+	box-shadow: 0 30px 120px rgba(2, 6, 14, 0.7);
 }
 
 .blog-prose {
