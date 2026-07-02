@@ -49,23 +49,28 @@
 	"Proof": {
 		"experience": {
 			"value": "2+ years",
-			"label": "Designing and maintaining backend systems in production."
+			"label": "Designing and maintaining backend systems in production.",
+			"short": "building production backends"
 		},
 		"servers": {
 			"value": "20+ servers",
-			"label": "Real-time multiplayer game server instances delivered with Node.js and WebSocket."
+			"label": "Real-time multiplayer game server instances delivered with Node.js and WebSocket.",
+			"short": "Node.js · WebSocket"
 		},
 		"concurrency": {
 			"value": "High concurrency",
-			"label": "Systems built to support thousands of concurrent users and operationally sensitive workloads."
+			"label": "Systems built to support thousands of concurrent users and operationally sensitive workloads.",
+			"short": "thousands of concurrent users"
 		},
 		"incidents": {
 			"value": "-40%",
-			"label": "Average incident response time improved through internal monitoring and reporting tooling."
+			"label": "Average incident response time improved through internal monitoring and reporting tooling.",
+			"short": "faster incident response"
 		},
 		"stack": {
 			"value": "SQL + Redis + APIs",
-			"label": "Practical experience across SQL Server, MySQL, Redis, MongoDB, REST APIs, and real-time messaging."
+			"label": "Practical experience across SQL Server, MySQL, Redis, MongoDB, REST APIs, and real-time messaging.",
+			"short": "used daily in real products"
 		}
 	},
 	"Projects": {
@@ -299,6 +304,7 @@
 		"stackLabel": "Core stack",
 		"stackValue": "Node.js, TypeScript, WebSocket, SQL, Redis, internal tooling.",
 		"roles": "roles",
-		"now": "now"
+		"now": "now",
+		"signalsTitle": "Proof, in numbers"
 	}
 }

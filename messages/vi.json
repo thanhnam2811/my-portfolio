@@ -49,23 +49,28 @@
 	"Proof": {
 		"experience": {
 			"value": "2+ năm",
-			"label": "Thiết kế và vận hành backend systems trong production."
+			"label": "Thiết kế và vận hành backend systems trong production.",
+			"short": "xây dựng backend production"
 		},
 		"servers": {
 			"value": "20+ servers",
-			"label": "Game server real-time đã triển khai bằng Node.js và WebSocket."
+			"label": "Game server real-time đã triển khai bằng Node.js và WebSocket.",
+			"short": "Node.js · WebSocket"
 		},
 		"concurrency": {
 			"value": "High concurrency",
-			"label": "Hệ thống được build để phục vụ hàng nghìn người dùng đồng thời và các workload nhạy cảm về vận hành."
+			"label": "Hệ thống được build để phục vụ hàng nghìn người dùng đồng thời và các workload nhạy cảm về vận hành.",
+			"short": "hàng nghìn người dùng đồng thời"
 		},
 		"incidents": {
 			"value": "-40%",
-			"label": "Thời gian phản ứng với sự cố trung bình được cải thiện nhờ tooling monitoring và reporting nội bộ."
+			"label": "Thời gian phản ứng với sự cố trung bình được cải thiện nhờ tooling monitoring và reporting nội bộ.",
+			"short": "phản hồi sự cố nhanh hơn"
 		},
 		"stack": {
 			"value": "SQL + Redis + APIs",
-			"label": "Kinh nghiệm thực tế với SQL Server, MySQL, Redis, MongoDB, REST APIs và real-time messaging."
+			"label": "Kinh nghiệm thực tế với SQL Server, MySQL, Redis, MongoDB, REST APIs và real-time messaging.",
+			"short": "dùng hằng ngày trong sản phẩm thật"
 		}
 	},
 	"Projects": {
@@ -299,6 +304,7 @@
 		"stackLabel": "Core stack",
 		"stackValue": "Node.js, TypeScript, WebSocket, SQL, Redis, internal tooling.",
 		"roles": "vai trò",
-		"now": "nay"
+		"now": "nay",
+		"signalsTitle": "Bằng chứng qua con số"
 	}
 }

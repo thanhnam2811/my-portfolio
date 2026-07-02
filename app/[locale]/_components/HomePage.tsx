@@ -37,6 +37,7 @@ type CardId =
 
 const EXPANDABLE: readonly CardId[] = [
 	'identity',
+	'proof',
 	'onky',
 	'vmu',
 	'tinylink',
@@ -363,6 +364,27 @@ export default function HomePage() {
 						</div>
 					</div>
 				);
+			case 'proof':
+				return (
+					<div>
+						<CardLabel>{tDeck('signalsLabel')}</CardLabel>
+						<h2 className="mt-4 text-3xl font-semibold tracking-[-0.04em] text-white sm:text-4xl">
+							{tDeck('signalsTitle')}
+						</h2>
+						<div className="mt-6 divide-y divide-white/10 border-t border-white/10">
+							{proofItems.map((key) => (
+								<div key={key} className="grid gap-2 py-5 md:grid-cols-[220px_minmax(0,1fr)]">
+									<p className="text-2xl font-semibold tracking-[-0.03em] text-white">
+										{tProof(`${key}.value`)}
+									</p>
+									<p className="self-center text-sm leading-7 text-slate-300">
+										{tProof(`${key}.label`)}
+									</p>
+								</div>
+							))}
+						</div>
+					</div>
+				);
 			case 'onky':
 			case 'vmu':
 			case 'tinylink':
@@ -640,7 +662,7 @@ export default function HomePage() {
 											{tProof(`${key}.value`)}
 										</p>
 										<p className="mt-1 line-clamp-2 text-[11px] leading-4 text-slate-400">
-											{tProof(`${key}.label`)}
+											{tProof(`${key}.short`)}
 										</p>
 									</div>
 								))}
