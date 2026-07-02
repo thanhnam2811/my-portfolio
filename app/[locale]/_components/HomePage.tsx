@@ -18,9 +18,9 @@ import {
 
 /**
  * Bento "Command Deck" homepage: the whole CV reads as a single-viewport grid
- * of panels on desktop. Cards expand into detail overlays (Framer Motion
- * shared-layout morph). Below `lg` the grid stacks and the page scrolls
- * normally. No scroll-driven animation system — entry stagger + morph only.
+ * of panels on desktop. Cards expand into detail overlays (fade+scale —
+ * transform/opacity only, see DESIGN_SYSTEM §6). Below `lg` the grid stacks
+ * and the page scrolls normally. No scroll-driven animation on the deck.
  */
 
 type CardId =
