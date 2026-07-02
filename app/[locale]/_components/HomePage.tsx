@@ -150,7 +150,9 @@ export default function HomePage() {
 		if (expanded) panelRef.current?.focus();
 	}, [expanded]);
 
-	const morphTransition = reduceMotion ? { duration: 0 } : { type: 'spring' as const, stiffness: 320, damping: 32 };
+	// Plain fade+scale (transform/opacity only) — a shared-layout morph forces
+	// framer to measure every card's layout on open/close, which janks on iGPUs.
+	const overlayTransition = reduceMotion ? { duration: 0 } : { duration: 0.22, ease: [0.22, 1, 0.36, 1] as const };
 
 	const entry = (index: number) =>
 		reduceMotion
@@ -169,7 +171,7 @@ export default function HomePage() {
 
 		if (!expandable) {
 			return (
-				<motion.div key={id} layoutId={`card-${id}`} className={className} {...entry(index)}>
+				<motion.div key={id} className={className} {...entry(index)}>
 					{children}
 				</motion.div>
 			);
@@ -178,7 +180,6 @@ export default function HomePage() {
 			<motion.button
 				key={id}
 				type="button"
-				layoutId={`card-${id}`}
 				className={className}
 				onClick={() => setExpanded(id)}
 				aria-haspopup="dialog"
@@ -687,7 +688,7 @@ export default function HomePage() {
 					<>
 						<motion.div
 							key="deck-backdrop"
-							className="fixed inset-0 z-50 bg-[#040a14]/80 backdrop-blur-sm"
+							className="fixed inset-0 z-50 bg-[#040a14]/85"
 							initial={reduceMotion ? false : { opacity: 0 }}
 							animate={{ opacity: 1 }}
 							exit={{ opacity: 0 }}
@@ -698,8 +699,11 @@ export default function HomePage() {
 							<motion.div
 								key={`panel-${expanded}`}
 								ref={panelRef}
-								layoutId={`card-${expanded}`}
-								transition={morphTransition}
+								data-lenis-prevent
+								initial={reduceMotion ? false : { opacity: 0, scale: 0.96, y: 10 }}
+								animate={{ opacity: 1, scale: 1, y: 0 }}
+								exit={{ opacity: 0, scale: 0.97, y: 8 }}
+								transition={overlayTransition}
 								role="dialog"
 								aria-modal="true"
 								tabIndex={-1}
