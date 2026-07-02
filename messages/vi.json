@@ -284,5 +284,21 @@
 			"title": "Ghi chú kỹ thuật",
 			"description": "Những ghi chú kỹ thuật về backend systems, runtime clarity và tradeoff delivery từ góc nhìn production-minded."
 		}
+	},
+	"Deck": {
+		"hint": "Bấm vào một thẻ để xem chi tiết",
+		"open": "Mở",
+		"close": "Đóng",
+		"systemLabel": "Hệ thống realtime",
+		"systemCaption": "Đường đi của một packet qua một vòng chơi — từ client đến lưu trữ.",
+		"signalsLabel": "Tín hiệu chính",
+		"currentFocus": "Trọng tâm hiện tại",
+		"currentFocusValue": "Real-time backend, observability và product delivery thực tế.",
+		"statusLabel": "Trạng thái",
+		"statusValue": "Sẵn sàng cho cơ hội phù hợp",
+		"stackLabel": "Core stack",
+		"stackValue": "Node.js, TypeScript, WebSocket, SQL, Redis, internal tooling.",
+		"roles": "vai trò",
+		"now": "nay"
 	}
 }

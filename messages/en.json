@@ -284,5 +284,21 @@
 			"title": "Technical Notes",
 			"description": "Technical notes on backend systems, runtime clarity, and delivery tradeoffs from a production-minded engineer."
 		}
+	},
+	"Deck": {
+		"hint": "Click any card to inspect it",
+		"open": "Open",
+		"close": "Close",
+		"systemLabel": "Runtime topology",
+		"systemCaption": "How a single packet travels through one game loop — from client to storage.",
+		"signalsLabel": "Signal set",
+		"currentFocus": "Current focus",
+		"currentFocusValue": "Real-time backend, observability, and production-minded product delivery.",
+		"statusLabel": "Status",
+		"statusValue": "Open to the right opportunities",
+		"stackLabel": "Core stack",
+		"stackValue": "Node.js, TypeScript, WebSocket, SQL, Redis, internal tooling.",
+		"roles": "roles",
+		"now": "now"
 	}
 }
