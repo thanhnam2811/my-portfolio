@@ -128,7 +128,6 @@ export default function SystemVisualization() {
 								y={y - 4}
 								width={NODE_W + 8}
 								height={NODE_H + 8}
-								rx={12}
 								fill="none"
 								stroke="var(--operator-accent-deep)"
 								strokeWidth="1"
@@ -146,7 +145,6 @@ export default function SystemVisualization() {
 							y={y}
 							width={NODE_W}
 							height={NODE_H}
-							rx={10}
 							fill="var(--operator-node-fill)"
 							stroke={isServer ? 'var(--operator-accent-deep)' : 'var(--operator-node-stroke)'}
 							strokeWidth={isServer ? 1.5 : 1}
@@ -160,8 +158,14 @@ export default function SystemVisualization() {
 						<text x={x + 30} y={y + 26} className="fill-slate-100" fontSize="15" fontWeight="600">
 							{node.title}
 						</text>
-						<text x={x + 18} y={y + 52} className="fill-slate-400 font-mono" fontSize="10">
-							{node.sub}
+						<text
+							x={x + 18}
+							y={y + 54}
+							className="fill-slate-400 font-mono"
+							fontSize="9"
+							letterSpacing="1.5"
+						>
+							{node.sub.toUpperCase()}
 						</text>
 					</g>
 				);

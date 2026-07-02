@@ -113,8 +113,8 @@
 	--operator-overlay-bot: rgba(7, 13, 24, 0.98);
 	--operator-header-bg: rgba(7, 16, 29, 0.92);
 	--operator-node-fill: #0a1626;
-	--operator-node-stroke: #1e3a5f;
-	--operator-node-dot: #3b82f6;
+	--operator-node-stroke: rgba(255, 255, 255, 0.12);
+	--operator-node-dot: #94a3b8;
 }
 
 .dark {
@@ -158,6 +158,27 @@
 @layer base {
 	* {
 		@apply border-border/60 outline-ring/50;
+	}
+
+	/* Themed scrollbars — thin and quiet, accent on hover (DESIGN_SYSTEM §5).
+	   Slate thumb reads on both the dark operator shell and the editorial surface. */
+	* {
+		scrollbar-width: thin;
+		scrollbar-color: rgba(148, 163, 184, 0.35) transparent;
+	}
+	::-webkit-scrollbar {
+		width: 8px;
+		height: 8px;
+	}
+	::-webkit-scrollbar-track {
+		background: transparent;
+	}
+	::-webkit-scrollbar-thumb {
+		background-color: rgba(148, 163, 184, 0.35);
+		border-radius: 999px;
+	}
+	::-webkit-scrollbar-thumb:hover {
+		background-color: color-mix(in srgb, var(--operator-accent) 55%, transparent);
 	}
 	html {
 		scroll-behavior: smooth;
