@@ -2,6 +2,8 @@
 @import 'tw-animate-css';
 
 @custom-variant dark (&:is(.dark *));
+/* Single-viewport bento deck only engages when the viewport is tall enough. */
+@custom-variant tall (@media (min-height: 720px));
 
 @theme inline {
 	--color-background: var(--background);
@@ -44,6 +46,7 @@
 
 	/* PREMIUM: Minimalist Shadows & Glass */
 	--shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+	--shadow-neu: 0 1px 2px 0 rgb(15 23 42 / 0.06), 0 10px 24px -18px rgb(15 23 42 / 0.24);
 	--shadow-md: 0 12px 28px -18px rgb(15 23 42 / 0.22);
 	--shadow-lg: 0 28px 70px -42px rgb(15 23 42 / 0.3);
 	--shadow-xl: 0 40px 90px -56px rgb(15 23 42 / 0.34);
@@ -88,6 +91,30 @@
 	--bg-mesh-1: oklch(0.98 0.008 245);
 	--bg-mesh-2: oklch(0.965 0.015 230);
 	--bg-mesh-3: oklch(0.975 0.01 255);
+
+	/* Operator palette — the homepage immersive shell (always dark, theme-independent).
+	   Tokenized so the WebGL upgrade can drive/replace the atmosphere from one place. */
+	--operator-bg: #07111f;
+	--operator-atm-1: rgba(53, 88, 166, 0.34);
+	--operator-atm-2: rgba(39, 146, 175, 0.15);
+	--operator-grad-top: #0a1528;
+	--operator-grad-mid: #09111d;
+	--operator-grad-bot: #050a13;
+	--operator-grid: rgba(153, 190, 255, 0.065);
+	--operator-grid-soft: rgba(153, 190, 255, 0.04);
+	--operator-accent: #67e8f9;
+	--operator-accent-strong: #a5f3fc;
+	--operator-accent-deep: #22d3ee;
+	--operator-border: rgba(255, 255, 255, 0.1);
+	--operator-border-soft: rgba(255, 255, 255, 0.08);
+	--operator-panel-top: rgba(20, 36, 66, 0.5);
+	--operator-panel-bot: rgba(9, 16, 28, 0.55);
+	--operator-overlay-top: rgba(16, 30, 54, 0.98);
+	--operator-overlay-bot: rgba(7, 13, 24, 0.98);
+	--operator-header-bg: rgba(7, 16, 29, 0.92);
+	--operator-node-fill: #0a1626;
+	--operator-node-stroke: rgba(255, 255, 255, 0.12);
+	--operator-node-dot: #94a3b8;
 }
 
 .dark {
@@ -132,6 +159,27 @@
 	* {
 		@apply border-border/60 outline-ring/50;
 	}
+
+	/* Themed scrollbars — thin and quiet, accent on hover (DESIGN_SYSTEM §5).
+	   Slate thumb reads on both the dark operator shell and the editorial surface. */
+	* {
+		scrollbar-width: thin;
+		scrollbar-color: rgba(148, 163, 184, 0.35) transparent;
+	}
+	::-webkit-scrollbar {
+		width: 8px;
+		height: 8px;
+	}
+	::-webkit-scrollbar-track {
+		background: transparent;
+	}
+	::-webkit-scrollbar-thumb {
+		background-color: rgba(148, 163, 184, 0.35);
+		border-radius: 999px;
+	}
+	::-webkit-scrollbar-thumb:hover {
+		background-color: color-mix(in srgb, var(--operator-accent) 55%, transparent);
+	}
 	html {
 		scroll-behavior: smooth;
 		scroll-padding-top: var(--header-offset);
@@ -167,30 +215,66 @@ aside {
 		border-color 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-@utility premium-heading {
-	@apply font-bold tracking-[-0.04em] leading-[0.98];
+/* Operator immersive shell — homepage atmosphere layers, tokenized. */
+@utility operator-shell {
+	background-color: var(--operator-bg);
 }
 
-@utility section-label {
-	@apply text-[11px] uppercase tracking-[0.24em] font-black text-primary/75;
+@utility operator-atmosphere {
+	background-image:
+		radial-gradient(circle at 20% 0%, var(--operator-atm-1), transparent 28%),
+		radial-gradient(circle at 88% 18%, var(--operator-atm-2), transparent 24%),
+		linear-gradient(
+			180deg,
+			var(--operator-grad-top) 0%,
+			var(--operator-grad-mid) 38%,
+			var(--operator-grad-bot) 100%
+		);
 }
 
-@utility section-shell {
-	@apply w-full max-w-6xl mx-auto px-4 sm:px-6 lg:px-8;
+@utility operator-grid {
+	background-image:
+		linear-gradient(var(--operator-grid) 1px, transparent 1px),
+		linear-gradient(90deg, var(--operator-grid-soft) 1px, transparent 1px);
+	background-size: 96px 96px;
 }
 
-@utility editorial-surface {
-	@apply rounded-[2rem] border border-border bg-card/95 shadow-premium;
+/* Operator deck recipes — see docs/DESIGN_SYSTEM.md §3–§5. */
+@utility operator-header {
+	background-color: var(--operator-header-bg);
+	@apply border-b backdrop-blur-xl;
+	border-color: var(--operator-border-soft);
 }
 
-main section[data-snap='true'] {
-	scroll-margin-top: calc(var(--header-offset) + 0.75rem);
+@utility deck-label {
+	@apply font-mono text-[10px] tracking-[0.24em] uppercase text-cyan-200/70;
 }
 
-@media (min-width: 1024px) and (hover: hover) and (pointer: fine) {
-	html[data-section-snap='true'] main section[data-snap='true'] {
-		min-height: 100svh;
+@utility deck-label-muted {
+	@apply font-mono text-[10px] tracking-[0.24em] uppercase text-slate-500;
+}
+
+@utility deck-card {
+	border: 1px solid var(--operator-border);
+	background-image: linear-gradient(180deg, var(--operator-panel-top), var(--operator-panel-bot));
+	@apply transition-colors duration-200 focus-visible:outline-none;
+	&:focus-visible {
+		border-color: color-mix(in srgb, var(--operator-accent) 60%, transparent);
+		box-shadow: 0 0 0 1px color-mix(in srgb, var(--operator-accent) 40%, transparent);
 	}
+}
+
+/* Entry fade for the deck overlay backdrop/content (CSS-driven, see HomePage). */
+@keyframes deck-fade-in {
+	from {
+		opacity: 0;
+	}
+}
+
+@utility overlay-surface {
+	border: 1px solid color-mix(in srgb, var(--operator-accent) 25%, transparent);
+	background-image: linear-gradient(180deg, var(--operator-overlay-top), var(--operator-overlay-bot));
+	box-shadow: 0 30px 120px rgba(2, 6, 14, 0.7);
 }
 
 .blog-prose {

@@ -23,7 +23,7 @@
 	"Hero": {
 		"eyebrow": "Backend systems for real-time products",
 		"headline": "I build backend systems that stay clear, fast, and reliable when concurrency starts to matter.",
-		"summary": "Backend Developer with 2+ years of hands-on work across multiplayer game servers, real-time communication, monitoring pipelines, and production backend flows. My focus is on runtime behavior that remains understandable under load.",
+		"summary": "Backend Developer with 3+ years of hands-on work across multiplayer game servers, real-time communication, monitoring pipelines, and production backend flows. My focus is on runtime behavior that remains understandable under load.",
 		"ctaPrimary": "See selected work",
 		"ctaSecondary": "Contact",
 		"ctaDownload": "Download CV",
@@ -48,24 +48,29 @@
 	},
 	"Proof": {
 		"experience": {
-			"value": "2+ years",
-			"label": "Designing and maintaining backend systems in production."
+			"value": "3+ years",
+			"label": "Designing and maintaining backend systems in production.",
+			"short": "building production backends"
 		},
 		"servers": {
 			"value": "20+ servers",
-			"label": "Real-time multiplayer game server instances delivered with Node.js and WebSocket."
+			"label": "Real-time multiplayer game server instances delivered with Node.js and WebSocket.",
+			"short": "Node.js · WebSocket"
 		},
 		"concurrency": {
 			"value": "High concurrency",
-			"label": "Systems built to support thousands of concurrent users and operationally sensitive workloads."
+			"label": "Systems built to support thousands of concurrent users and operationally sensitive workloads.",
+			"short": "thousands of concurrent users"
 		},
 		"incidents": {
 			"value": "-40%",
-			"label": "Average incident response time improved through internal monitoring and reporting tooling."
+			"label": "Average incident response time improved through internal monitoring and reporting tooling.",
+			"short": "faster incident response"
 		},
 		"stack": {
 			"value": "SQL + Redis + APIs",
-			"label": "Practical experience across SQL Server, MySQL, Redis, MongoDB, REST APIs, and real-time messaging."
+			"label": "Practical experience across SQL Server, MySQL, Redis, MongoDB, REST APIs, and real-time messaging.",
+			"short": "used daily in real products"
 		}
 	},
 	"Projects": {
@@ -284,5 +289,22 @@
 			"title": "Technical Notes",
 			"description": "Technical notes on backend systems, runtime clarity, and delivery tradeoffs from a production-minded engineer."
 		}
+	},
+	"Deck": {
+		"hint": "Click any card to inspect it",
+		"open": "Open",
+		"close": "Close",
+		"systemLabel": "Runtime topology",
+		"systemCaption": "How a single packet travels through one game loop — from client to storage.",
+		"signalsLabel": "Signal set",
+		"currentFocus": "Current focus",
+		"currentFocusValue": "Real-time backend, observability, and production-minded product delivery.",
+		"statusLabel": "Status",
+		"statusValue": "Open to the right opportunities",
+		"stackLabel": "Core stack",
+		"stackValue": "Node.js, TypeScript, WebSocket, SQL, Redis, internal tooling.",
+		"roles": "roles",
+		"now": "now",
+		"signalsTitle": "Proof, in numbers"
 	}
 }

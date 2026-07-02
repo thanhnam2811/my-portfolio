@@ -1,20 +1,13 @@
+type ProjectId = 'onky' | 'vmu' | 'tinylink';
+
 type FeaturedWorkItem = {
-	id: 'onky' | 'vmu' | 'tinylink';
+	id: ProjectId;
 	stack: readonly string[];
 	accent: string;
 	image?: string;
 	link?: string;
 	github?: string;
 };
-
-export const navSections = [
-	{ id: 'hero', labelKey: 'hero' },
-	{ id: 'proof', labelKey: 'proof' },
-	{ id: 'work', labelKey: 'work' },
-	{ id: 'capabilities', labelKey: 'capabilities' },
-	{ id: 'experience', labelKey: 'experience' },
-	{ id: 'contact', labelKey: 'contact' },
-] as const;
 
 export const proofItems = ['experience', 'servers', 'concurrency', 'incidents', 'stack'] as const;
 
