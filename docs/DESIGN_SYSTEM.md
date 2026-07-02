@@ -163,8 +163,11 @@ node rects. This is deliberate contrast with the editorial surface.
 
 - **Framer Motion only** on the homepage (GSAP/Lenis remain for page smooth-scroll via `SmoothScroll`).
 - Entry: per-card fade + `y:14→0`, `0.4s`, `0.05s * index` stagger, ease `[0.22,1,0.36,1]`. Runs once.
-- Expand: overlay fade + scale (`opacity/scale/y`, `0.22s`) — **not** a shared-layout morph; `layoutId` forces framer to
-  re-measure every card's layout on open/close, which janks on integrated GPUs.
+- Expand: **state-driven FLIP morph** (`opening → open → closing → unmount`, see `MorphSurface`) — the clicked card
+  hides (`visibility: hidden`, its slot stays), the overlay surface CSS-transitions from the card's rect to the dialog
+  bounds (`450ms`, transform/opacity only), and closing morphs back to the card's current slot before unmounting.
+  Content/backdrop fade via `deck-fade-in` keyframes. Do **not** use framer `layoutId`/AnimatePresence-exit for this:
+  exit coordination is deadlock-prone and full-card layout projection re-measures every card (janks iGPUs).
 - Close: Esc, backdrop click, or the ✕ button. Focus moves to the dialog on open.
 - Topology packets: SVG **SMIL** (`<animateMotion>`) — zero per-frame JS. The only persistent motion on the page.
 - `prefers-reduced-motion`: entry/morph collapse to duration 0; SMIL packets and pulses are not rendered.
@@ -196,7 +199,8 @@ Retired (removed from `globals.css`, do not reintroduce): `section-shell`, `sect
   `aria-modal`, receives focus on open, closes on Esc.
 - `prefers-reduced-motion` honored everywhere (entry, morph, SMIL, status pings use `motion-reduce:animate-none`).
 - Meaningful `alt`; `next/image` with realistic `sizes`.
-- Keep `en` and `vi` copy in sync (`messages/*.json`); `lang` set per-locale.
+- **All UI copy lives in `messages/{en,vi}.json`** — never hardcode user-facing strings (especially Vietnamese, which
+  loses diacritics when typed as ASCII) in components. Keep both locales in sync; `lang` set per-locale.
 
 ---
 
