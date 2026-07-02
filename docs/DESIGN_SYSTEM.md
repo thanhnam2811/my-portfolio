@@ -146,7 +146,11 @@ Interaction states (built into `deck-card`):
 
 - Hover: border shifts to `cyan-300/40`; the "open" hint fades in.
 - Focus: `focus-visible` ring in accent — every expandable card is a `<button>` and must show it.
-- Overlay: backdrop `bg-[#040a14]/80 backdrop-blur-sm`; panel `max-w-3xl`, `max-h-full overflow-y-auto`.
+- Overlay: backdrop `bg-[#040a14]/85` — **no `backdrop-blur`** (full-screen blur janks integrated GPUs); panel
+  `max-w-3xl`, `max-h-full overflow-y-auto` and **must carry `data-lenis-prevent`** so wheel scrolling works inside it
+  while Lenis owns the page.
+- Scrollbars: global thin slate thumb (`8px`, `rgba(148,163,184,0.35)`) on transparent track, accent on hover — defined
+  once in `globals.css` base layer, never per-component.
 
 Corners on the operator surface are **square** (`rounded-none` buttons, unrounded cards) except the topology SVG's own
 node rects. This is deliberate contrast with the editorial surface.
@@ -159,7 +163,8 @@ node rects. This is deliberate contrast with the editorial surface.
 
 - **Framer Motion only** on the homepage (GSAP/Lenis remain for page smooth-scroll via `SmoothScroll`).
 - Entry: per-card fade + `y:14→0`, `0.4s`, `0.05s * index` stagger, ease `[0.22,1,0.36,1]`. Runs once.
-- Expand: shared-layout morph (`layoutId: card-<id>`), spring `stiffness 320 / damping 32`.
+- Expand: overlay fade + scale (`opacity/scale/y`, `0.22s`) — **not** a shared-layout morph; `layoutId` forces framer to
+  re-measure every card's layout on open/close, which janks on integrated GPUs.
 - Close: Esc, backdrop click, or the ✕ button. Focus moves to the dialog on open.
 - Topology packets: SVG **SMIL** (`<animateMotion>`) — zero per-frame JS. The only persistent motion on the page.
 - `prefers-reduced-motion`: entry/morph collapse to duration 0; SMIL packets and pulses are not rendered.
