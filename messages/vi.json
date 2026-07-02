@@ -23,7 +23,7 @@
 	"Hero": {
 		"eyebrow": "Backend systems cho sản phẩm real-time",
 		"headline": "Tôi build backend systems đủ rõ ràng, đủ nhanh và đủ ổn định khi concurrency bắt đầu trở thành bài toán thật.",
-		"summary": "Lập trình viên Backend với hơn 2 năm kinh nghiệm thực chiến trong game servers, real-time communication, monitoring pipelines và production backend flows. Tôi tập trung vào runtime behavior vẫn dễ hiểu kể cả khi hệ thống chịu tải.",
+		"summary": "Lập trình viên Backend với hơn 3 năm kinh nghiệm thực chiến trong game servers, real-time communication, monitoring pipelines và production backend flows. Tôi tập trung vào runtime behavior vẫn dễ hiểu kể cả khi hệ thống chịu tải.",
 		"ctaPrimary": "Xem dự án chọn lọc",
 		"ctaSecondary": "Liên hệ",
 		"ctaDownload": "Tải CV",
@@ -48,7 +48,7 @@
 	},
 	"Proof": {
 		"experience": {
-			"value": "2+ năm",
+			"value": "3+ năm",
 			"label": "Thiết kế và vận hành backend systems trong production.",
 			"short": "xây dựng backend production"
 		},
