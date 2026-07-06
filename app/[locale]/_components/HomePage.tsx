@@ -84,14 +84,15 @@ function OpenHint({ label }: { label: string }) {
 
 type MorphPhase = 'opening' | 'open' | 'closing';
 
-const MORPH_MS = 450;
+const MORPH_MS = 400;
 const MORPH_EASE = 'cubic-bezier(0.22, 1, 0.36, 1)';
 
 /**
  * State-driven FLIP morph for the overlay surface: the clicked card's rect is
  * the shared element. Opening animates card-bounds → dialog-bounds; closing
  * animates back before the parent unmounts the overlay (`onSettled`). Driven
- * by plain CSS transitions on transform/opacity — deliberately no framer
+ * by a plain CSS transition on transform only (opacity stays 1 — a crossfade
+ * here lets the page grid flash through the surface) — deliberately no framer
  * `layoutId`/AnimatePresence-exit here (deadlock-prone) and no full-card
  * layout projection (re-measures every card, janks iGPUs).
  */
@@ -120,21 +121,18 @@ function MorphSurface({
 		const atCard = `translate(${fromRect.left - toRect.left}px, ${fromRect.top - toRect.top}px) scale(${
 			fromRect.width / toRect.width
 		}, ${fromRect.height / toRect.height})`;
-		const run = `transform ${MORPH_MS}ms ${MORPH_EASE}, opacity ${MORPH_MS}ms ${MORPH_EASE}`;
+		const run = `transform ${MORPH_MS}ms ${MORPH_EASE}`;
 
 		if (phase === 'opening') {
 			// Paint the start frame at the card's bounds, then release the morph.
 			node.style.transition = 'none';
 			node.style.transform = atCard;
-			node.style.opacity = '0.5';
 			node.getBoundingClientRect(); // force the start frame to commit
 			node.style.transition = run;
 			node.style.transform = 'translate(0px, 0px) scale(1, 1)';
-			node.style.opacity = '1';
 		} else if (phase === 'closing') {
 			node.style.transition = run;
 			node.style.transform = atCard;
-			node.style.opacity = '0.4';
 		}
 	}, [phase, fromRect, toRect]);
 
@@ -146,7 +144,12 @@ function MorphSurface({
 				if (event.propertyName === 'transform' && event.target === ref.current) onSettled(phase);
 			}}
 			className="overlay-surface absolute inset-0"
-			style={{ transformOrigin: 'top left', visibility: toRect ? 'visible' : 'hidden' }}
+			style={{
+				transformOrigin: 'top left',
+				visibility: toRect ? 'visible' : 'hidden',
+				// Keep the surface on its own compositor layer only while it moves.
+				willChange: phase === 'open' ? 'auto' : 'transform',
+			}}
 		/>
 	);
 }
@@ -206,6 +209,35 @@ export default function HomePage() {
 	useEffect(() => {
 		if (overlay?.id) panelRef.current?.focus();
 	}, [overlay?.id]);
+
+	// Lock background scroll (native + Lenis) while the overlay is mounted so
+	// the close morph returns to a card that hasn't moved underneath it.
+	const overlayMounted = overlay !== null;
+	useEffect(() => {
+		if (!overlayMounted) return;
+		const root = document.documentElement;
+		const previous = root.style.overflow;
+		root.style.overflow = 'hidden';
+		return () => {
+			root.style.overflow = previous;
+		};
+	}, [overlayMounted]);
+
+	// Detail content stays unpainted (opacity 0) while the surface morphs, then
+	// fades/rises in once the morph settles — heavy content paint never lands on
+	// a morph frame. Closing fades it out fast before the reverse morph reads.
+	const detailStyle =
+		!overlay || reduceMotion
+			? {}
+			: overlay.phase === 'open'
+				? {
+						opacity: 1,
+						transform: 'none',
+						transition: `opacity 240ms ease, transform 240ms ${MORPH_EASE}`,
+					}
+				: overlay.phase === 'opening'
+					? { opacity: 0, transform: 'translateY(10px)' }
+					: { opacity: 0, transform: 'none', transition: 'opacity 120ms ease' };
 
 	const entry = (index: number) =>
 		reduceMotion
@@ -797,26 +829,22 @@ export default function HomePage() {
 									onSettled={handleMorphSettled}
 								/>
 							)}
-							<div
-								data-lenis-prevent
-								className="relative min-h-0 w-full overflow-y-auto p-6 sm:p-9"
-								style={{
-									animation: reduceMotion
-										? 'none'
-										: `deck-fade-in 300ms ${MORPH_EASE} 220ms backwards`,
-									opacity: overlay.phase === 'closing' ? 0 : 1,
-									transition: 'opacity 150ms ease',
-								}}
-							>
+							<div className="relative flex min-h-0 w-full" style={detailStyle}>
+								<div
+									data-lenis-prevent
+									className="min-h-0 w-full overflow-y-auto overscroll-contain p-6 sm:p-9"
+								>
+									{renderDetail(overlay.id)}
+								</div>
+								{/* Sibling of the scroller, not inside it: stays visible however far the content scrolls. */}
 								<button
 									type="button"
 									onClick={requestClose}
 									aria-label={tDeck('close')}
-									className="absolute top-4 right-4 z-10 border border-white/10 p-2 text-slate-400 transition-colors hover:border-cyan-300/50 hover:text-white"
+									className="absolute top-4 right-4 z-10 border border-white/10 bg-slate-950/60 p-2 text-slate-400 transition-colors hover:border-cyan-300/50 hover:text-white"
 								>
 									<X className="h-4 w-4" />
 								</button>
-								{renderDetail(overlay.id)}
 							</div>
 						</div>
 					</div>

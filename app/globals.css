@@ -264,7 +264,7 @@ aside {
 	}
 }
 
-/* Entry fade for the deck overlay backdrop/content (CSS-driven, see HomePage). */
+/* Entry fade for the deck overlay backdrop (CSS-driven, see HomePage). */
 @keyframes deck-fade-in {
 	from {
 		opacity: 0;
