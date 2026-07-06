@@ -84,13 +84,13 @@ function OpenHint({ label }: { label: string }) {
 
 type MorphPhase = 'opening' | 'open' | 'closing';
 
-const MORPH_OPEN_MS = 500;
-const MORPH_CLOSE_MS = 380;
+const MORPH_OPEN_MS = 700;
+const MORPH_CLOSE_MS = 550;
 /* Gentle deceleration (iOS-sheet-like) — spreads the travel out so the morph
  * reads as motion instead of a snap; avoid stronger expo-out eases here. */
 const MORPH_EASE = 'cubic-bezier(0.32, 0.72, 0, 1)';
-const CHROME_FADE_MS = 220;
-const FACE_FADE_MS = 200;
+const CHROME_FADE_MS = 300;
+const FACE_FADE_MS = 280;
 
 /**
  * State-driven FLIP morph for the overlay surface: the clicked card's rect is
@@ -317,8 +317,8 @@ export default function HomePage() {
 		!overlay || reduceMotion
 			? {}
 			: overlay.phase === 'closing'
-				? { animation: 'none', opacity: 0, transition: 'opacity 120ms ease' }
-				: { animation: `deck-detail-in 320ms ${MORPH_EASE} 100ms backwards`, opacity: 1 };
+				? { animation: 'none', opacity: 0, transition: 'opacity 160ms ease' }
+				: { animation: `deck-detail-in 440ms ${MORPH_EASE} 120ms backwards`, opacity: 1 };
 
 	const entry = (index: number) =>
 		reduceMotion
@@ -889,9 +889,9 @@ export default function HomePage() {
 					<div
 						className="fixed inset-0 z-50 bg-[#040a14]/85"
 						style={{
-							animation: reduceMotion ? 'none' : 'deck-fade-in 250ms ease backwards',
+							animation: reduceMotion ? 'none' : 'deck-fade-in 300ms ease backwards',
 							opacity: overlay.phase === 'closing' ? 0 : 1,
-							transition: 'opacity 250ms ease',
+							transition: 'opacity 380ms ease',
 						}}
 						onClick={requestClose}
 					/>
