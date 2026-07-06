@@ -223,21 +223,18 @@ export default function HomePage() {
 		};
 	}, [overlayMounted]);
 
-	// Detail content stays unpainted (opacity 0) while the surface morphs, then
-	// fades/rises in once the morph settles — heavy content paint never lands on
-	// a morph frame. Closing fades it out fast before the reverse morph reads.
+	// Detail content fades/rises in while the surface morph is still running
+	// (short head start so the first frames stay paint-free) — no separate
+	// "surface first, text later" beat. The transform-only, will-change'd morph
+	// stays compositor-driven, so the content paint doesn't stall it. Closing
+	// fades the content out alongside the reverse morph; `animation: none`
+	// hands opacity back to the transition if the entry is still mid-flight.
 	const detailStyle =
 		!overlay || reduceMotion
 			? {}
-			: overlay.phase === 'open'
-				? {
-						opacity: 1,
-						transform: 'none',
-						transition: `opacity 240ms ease, transform 240ms ${MORPH_EASE}`,
-					}
-				: overlay.phase === 'opening'
-					? { opacity: 0, transform: 'translateY(10px)' }
-					: { opacity: 0, transform: 'none', transition: 'opacity 120ms ease' };
+			: overlay.phase === 'closing'
+				? { animation: 'none', opacity: 0, transition: 'opacity 120ms ease' }
+				: { animation: `deck-detail-in 260ms ${MORPH_EASE} 90ms backwards`, opacity: 1 };
 
 	const entry = (index: number) =>
 		reduceMotion
