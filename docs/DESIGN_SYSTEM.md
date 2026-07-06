@@ -166,10 +166,11 @@ node rects. This is deliberate contrast with the editorial surface.
 - Expand: **state-driven FLIP morph** (`opening → open → closing → unmount`, see `MorphSurface`) — the clicked card
   hides (`visibility: hidden`, its slot stays), the overlay surface CSS-transitions from the card's rect to the dialog
   bounds (`400ms`, transform only, `will-change` while moving), and closing morphs back to the card's current slot
-  before unmounting. Detail content stays unpainted (`opacity: 0`) during the morph and fades/rises in on settle, so
-  heavy content paint never lands on a morph frame; the backdrop fades via `deck-fade-in`. Background scroll is locked
-  while the overlay is mounted. Do **not** use framer `layoutId`/AnimatePresence-exit for this: exit coordination is
-  deadlock-prone and full-card layout projection re-measures every card (janks iGPUs).
+  before unmounting. Detail content fades/rises in (`deck-detail-in`, ~90ms head start) while the morph is still running
+  — no "surface first, text later" beat; the transform-only, `will-change`'d morph stays compositor-driven so the
+  content paint doesn't stall it. The backdrop fades via `deck-fade-in`. Background scroll is locked while the overlay
+  is mounted. Do **not** use framer `layoutId`/AnimatePresence-exit for this: exit coordination is deadlock-prone and
+  full-card layout projection re-measures every card (janks iGPUs).
 - Close: Esc, backdrop click, or the ✕ button. Focus moves to the dialog on open.
 - Topology packets: SVG **SMIL** (`<animateMotion>`) — zero per-frame JS. The only persistent motion on the page.
 - `prefers-reduced-motion`: entry/morph collapse to duration 0; SMIL packets and pulses are not rendered.
