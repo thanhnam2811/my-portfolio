@@ -84,27 +84,40 @@ function OpenHint({ label }: { label: string }) {
 
 type MorphPhase = 'opening' | 'open' | 'closing';
 
-const MORPH_MS = 450;
-const MORPH_EASE = 'cubic-bezier(0.22, 1, 0.36, 1)';
+const MORPH_OPEN_MS = 700;
+const MORPH_CLOSE_MS = 550;
+/* Gentle deceleration (iOS-sheet-like) — spreads the travel out so the morph
+ * reads as motion instead of a snap; avoid stronger expo-out eases here. */
+const MORPH_EASE = 'cubic-bezier(0.32, 0.72, 0, 1)';
+const CHROME_FADE_MS = 300;
+const FACE_FADE_MS = 280;
 
 /**
  * State-driven FLIP morph for the overlay surface: the clicked card's rect is
- * the shared element. Opening animates card-bounds → dialog-bounds; closing
- * animates back before the parent unmounts the overlay (`onSettled`). Driven
- * by plain CSS transitions on transform/opacity — deliberately no framer
- * `layoutId`/AnimatePresence-exit here (deadlock-prone) and no full-card
- * layout projection (re-measures every card, janks iGPUs).
+ * the shared element. A live DOM clone of the clicked card (the "face") rides
+ * inside the surface, counter-scaled every frame so it never stretches — the
+ * morph's first frame (open) and last frame (close) are pixel-identical to
+ * the real card, and the face crossfades against the dialog chrome in
+ * between. Driven by plain CSS transitions on the surface transform —
+ * deliberately no framer `layoutId`/AnimatePresence-exit here
+ * (deadlock-prone) and no full-card layout projection (re-measures every
+ * card, janks iGPUs).
  */
 function MorphSurface({
 	fromRect,
 	phase,
+	cardId,
+	resolveCardEl,
 	onSettled,
 }: {
 	fromRect: DOMRect;
 	phase: MorphPhase;
+	cardId: CardId;
+	resolveCardEl: (id: CardId) => HTMLElement | null;
 	onSettled: (phase: MorphPhase) => void;
 }) {
 	const ref = useRef<HTMLDivElement>(null);
+	const faceRef = useRef<HTMLDivElement>(null);
 	// Final bounds are measured once from our own node (its ref attaches before
 	// this layout effect runs — a parent's ref would still be null here) and
 	// cached, so close-time fromRect updates re-derive the delta for free.
@@ -114,29 +127,59 @@ function MorphSurface({
 		if (ref.current) setToRect(ref.current.getBoundingClientRect());
 	}, []);
 
+	// Mount the card face: a DOM clone of the real card (which is hidden while
+	// the overlay "is" it), so the morph carries actual card pixels.
+	useLayoutEffect(() => {
+		const host = faceRef.current;
+		const cardEl = resolveCardEl(cardId);
+		if (!host || !cardEl) return;
+		const clone = cardEl.cloneNode(true) as HTMLElement;
+		clone.style.visibility = 'visible'; // the source card is hidden at clone time
+		clone.style.width = '100%';
+		clone.style.height = '100%';
+		clone.setAttribute('inert', '');
+		host.appendChild(clone);
+		return () => clone.remove();
+	}, [cardId, resolveCardEl]);
+
 	useLayoutEffect(() => {
 		const node = ref.current;
 		if (!node || !toRect) return;
 		const atCard = `translate(${fromRect.left - toRect.left}px, ${fromRect.top - toRect.top}px) scale(${
 			fromRect.width / toRect.width
 		}, ${fromRect.height / toRect.height})`;
-		const run = `transform ${MORPH_MS}ms ${MORPH_EASE}, opacity ${MORPH_MS}ms ${MORPH_EASE}`;
-
 		if (phase === 'opening') {
 			// Paint the start frame at the card's bounds, then release the morph.
 			node.style.transition = 'none';
 			node.style.transform = atCard;
-			node.style.opacity = '0.5';
 			node.getBoundingClientRect(); // force the start frame to commit
-			node.style.transition = run;
+			node.style.transition = `transform ${MORPH_OPEN_MS}ms ${MORPH_EASE}`;
 			node.style.transform = 'translate(0px, 0px) scale(1, 1)';
-			node.style.opacity = '1';
 		} else if (phase === 'closing') {
-			node.style.transition = run;
+			node.style.transition = `transform ${MORPH_CLOSE_MS}ms ${MORPH_EASE}`;
 			node.style.transform = atCard;
-			node.style.opacity = '0.4';
 		}
 	}, [phase, fromRect, toRect]);
+
+	// Counter-scale the face every frame (inverse of the surface's current
+	// scale) so the card pixels stay crisp instead of stretching with the
+	// surface. One computed-style read + one style write per frame —
+	// negligible next to the compositor-driven surface transition.
+	useEffect(() => {
+		if (phase === 'open') return; // face is faded out while fully open
+		const node = ref.current;
+		const face = faceRef.current;
+		if (!node || !face) return;
+		let raf = requestAnimationFrame(function track() {
+			const current = getComputedStyle(node).transform;
+			if (current && current !== 'none') {
+				const m = new DOMMatrixReadOnly(current);
+				face.style.transform = `scale(${1 / (m.a || 1)}, ${1 / (m.d || 1)})`;
+			}
+			raf = requestAnimationFrame(track);
+		});
+		return () => cancelAnimationFrame(raf);
+	}, [phase]);
 
 	return (
 		<div
@@ -145,9 +188,51 @@ function MorphSurface({
 			onTransitionEnd={(event) => {
 				if (event.propertyName === 'transform' && event.target === ref.current) onSettled(phase);
 			}}
-			className="overlay-surface absolute inset-0"
-			style={{ transformOrigin: 'top left', visibility: toRect ? 'visible' : 'hidden' }}
-		/>
+			className="pointer-events-none absolute inset-0"
+			style={{
+				transformOrigin: 'top left',
+				visibility: toRect ? 'visible' : 'hidden',
+				// Keep the surface on its own compositor layer only while it moves.
+				willChange: phase === 'open' ? 'auto' : 'transform',
+			}}
+		>
+			{/* Dialog chrome: sits under the face; on close it fades out over the
+			    tail of the travel so the landing frame is card pixels only. */}
+			<div
+				className="overlay-surface absolute inset-0"
+				style={
+					phase === 'closing'
+						? {
+								opacity: 0,
+								transition: `opacity ${CHROME_FADE_MS}ms ease ${MORPH_CLOSE_MS - CHROME_FADE_MS}ms`,
+							}
+						: { opacity: 1 }
+				}
+			/>
+			{/* Card face: starts as the exact card and fades out while opening;
+			    fades back in over the tail of the close so the surface lands as
+			    the real card, pixel for pixel. */}
+			<div
+				ref={faceRef}
+				className="absolute top-0 left-0 overflow-hidden"
+				style={{
+					width: fromRect.width,
+					height: fromRect.height,
+					transformOrigin: 'top left',
+					// The real card's semi-transparent gradient composites over the
+					// page background — back the clone with the same base so the
+					// face matches the card, not the chrome underneath.
+					backgroundColor: 'var(--operator-bg)',
+					...(phase === 'closing'
+						? {
+								animation: 'none',
+								opacity: 1,
+								transition: `opacity ${FACE_FADE_MS}ms ease ${MORPH_CLOSE_MS - FACE_FADE_MS}ms`,
+							}
+						: { animation: `deck-fade-out ${FACE_FADE_MS}ms ease forwards` }),
+				}}
+			/>
+		</div>
 	);
 }
 
@@ -184,8 +269,10 @@ export default function HomePage() {
 		// still unmount once the morph duration has passed.
 		window.setTimeout(() => {
 			setOverlay((current) => (current?.phase === 'closing' ? null : current));
-		}, MORPH_MS + 250);
+		}, MORPH_CLOSE_MS + 250);
 	}, [reduceMotion]);
+
+	const resolveCardEl = useCallback((id: CardId) => cardRefs.current[id] ?? null, []);
 
 	const handleMorphSettled = useCallback((phase: MorphPhase) => {
 		if (phase === 'opening') {
@@ -206,6 +293,32 @@ export default function HomePage() {
 	useEffect(() => {
 		if (overlay?.id) panelRef.current?.focus();
 	}, [overlay?.id]);
+
+	// Lock background scroll (native + Lenis) while the overlay is mounted so
+	// the close morph returns to a card that hasn't moved underneath it.
+	const overlayMounted = overlay !== null;
+	useEffect(() => {
+		if (!overlayMounted) return;
+		const root = document.documentElement;
+		const previous = root.style.overflow;
+		root.style.overflow = 'hidden';
+		return () => {
+			root.style.overflow = previous;
+		};
+	}, [overlayMounted]);
+
+	// Detail content fades/rises in while the surface morph is still running
+	// (short head start so the first frames stay paint-free) — no separate
+	// "surface first, text later" beat. The transform-only, will-change'd morph
+	// stays compositor-driven, so the content paint doesn't stall it. Closing
+	// fades the content out alongside the reverse morph; `animation: none`
+	// hands opacity back to the transition if the entry is still mid-flight.
+	const detailStyle =
+		!overlay || reduceMotion
+			? {}
+			: overlay.phase === 'closing'
+				? { animation: 'none', opacity: 0, transition: 'opacity 160ms ease' }
+				: { animation: `deck-detail-in 440ms ${MORPH_EASE} 120ms backwards`, opacity: 1 };
 
 	const entry = (index: number) =>
 		reduceMotion
@@ -238,8 +351,10 @@ export default function HomePage() {
 					else delete cardRefs.current[id];
 				}}
 				className={className}
-				// The card vanishes from the grid while it "is" the modal.
-				style={overlay?.id === id ? { visibility: 'hidden' as const } : {}}
+				// The card vanishes from the grid while it "is" the modal, and
+				// returns the moment closing starts so the shrinking surface
+				// dissolves onto real card content instead of an empty slot.
+				style={overlay?.id === id && overlay.phase !== 'closing' ? { visibility: 'hidden' as const } : {}}
 				onClick={(event) =>
 					setOverlay({
 						id,
@@ -774,9 +889,9 @@ export default function HomePage() {
 					<div
 						className="fixed inset-0 z-50 bg-[#040a14]/85"
 						style={{
-							animation: reduceMotion ? 'none' : 'deck-fade-in 250ms ease backwards',
+							animation: reduceMotion ? 'none' : 'deck-fade-in 300ms ease backwards',
 							opacity: overlay.phase === 'closing' ? 0 : 1,
-							transition: 'opacity 250ms ease',
+							transition: 'opacity 380ms ease',
 						}}
 						onClick={requestClose}
 					/>
@@ -794,29 +909,27 @@ export default function HomePage() {
 								<MorphSurface
 									fromRect={overlay.fromRect}
 									phase={overlay.phase}
+									cardId={overlay.id}
+									resolveCardEl={resolveCardEl}
 									onSettled={handleMorphSettled}
 								/>
 							)}
-							<div
-								data-lenis-prevent
-								className="relative min-h-0 w-full overflow-y-auto p-6 sm:p-9"
-								style={{
-									animation: reduceMotion
-										? 'none'
-										: `deck-fade-in 300ms ${MORPH_EASE} 220ms backwards`,
-									opacity: overlay.phase === 'closing' ? 0 : 1,
-									transition: 'opacity 150ms ease',
-								}}
-							>
+							<div className="relative flex min-h-0 w-full" style={detailStyle}>
+								<div
+									data-lenis-prevent
+									className="min-h-0 w-full overflow-y-auto overscroll-contain p-6 sm:p-9"
+								>
+									{renderDetail(overlay.id)}
+								</div>
+								{/* Sibling of the scroller, not inside it: stays visible however far the content scrolls. */}
 								<button
 									type="button"
 									onClick={requestClose}
 									aria-label={tDeck('close')}
-									className="absolute top-4 right-4 z-10 border border-white/10 p-2 text-slate-400 transition-colors hover:border-cyan-300/50 hover:text-white"
+									className="absolute top-4 right-4 z-10 border border-white/10 bg-slate-950/60 p-2 text-slate-400 transition-colors hover:border-cyan-300/50 hover:text-white"
 								>
 									<X className="h-4 w-4" />
 								</button>
-								{renderDetail(overlay.id)}
 							</div>
 						</div>
 					</div>

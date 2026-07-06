@@ -165,9 +165,15 @@ node rects. This is deliberate contrast with the editorial surface.
 - Entry: per-card fade + `y:14→0`, `0.4s`, `0.05s * index` stagger, ease `[0.22,1,0.36,1]`. Runs once.
 - Expand: **state-driven FLIP morph** (`opening → open → closing → unmount`, see `MorphSurface`) — the clicked card
   hides (`visibility: hidden`, its slot stays), the overlay surface CSS-transitions from the card's rect to the dialog
-  bounds (`450ms`, transform/opacity only), and closing morphs back to the card's current slot before unmounting.
-  Content/backdrop fade via `deck-fade-in` keyframes. Do **not** use framer `layoutId`/AnimatePresence-exit for this:
-  exit coordination is deadlock-prone and full-card layout projection re-measures every card (janks iGPUs).
+  bounds (`700ms`, transform-only, `will-change` while moving, gentle `cubic-bezier(0.32,0.72,0,1)` — stronger expo-out
+  eases make the travel read as a snap). A DOM clone of the card (the "face") rides inside the surface, **counter-scaled
+  every frame** so it never stretches: the open's first frame and the close's landing frame are pixel-identical to the
+  real card, and the face crossfades against the dialog chrome in between. Detail content fades/rises in
+  (`deck-detail-in`, ~120ms head start) while the morph is still running — no "surface first, text later" beat. Closing
+  (`550ms`): the card un-hides immediately, the chrome fades out and the face fades in over the tail of the travel, so
+  the surface lands as the card itself. The backdrop fades via `deck-fade-in`. Background scroll is locked while the
+  overlay is mounted. Do **not** use framer `layoutId`/AnimatePresence-exit for this: exit coordination is
+  deadlock-prone and full-card layout projection re-measures every card (janks iGPUs).
 - Close: Esc, backdrop click, or the ✕ button. Focus moves to the dialog on open.
 - Topology packets: SVG **SMIL** (`<animateMotion>`) — zero per-frame JS. The only persistent motion on the page.
 - `prefers-reduced-motion`: entry/morph collapse to duration 0; SMIL packets and pulses are not rendered.

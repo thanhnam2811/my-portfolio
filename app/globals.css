@@ -264,9 +264,24 @@ aside {
 	}
 }
 
-/* Entry fade for the deck overlay backdrop/content (CSS-driven, see HomePage). */
+/* Entry fade for the deck overlay backdrop (CSS-driven, see HomePage). */
 @keyframes deck-fade-in {
 	from {
+		opacity: 0;
+	}
+}
+
+/* Overlay detail content: fades/rises in while the surface morph is still running. */
+@keyframes deck-detail-in {
+	from {
+		opacity: 0;
+		transform: translateY(8px);
+	}
+}
+
+/* Morph card face: visible at the endpoints, faded out while the dialog is open. */
+@keyframes deck-fade-out {
+	to {
 		opacity: 0;
 	}
 }
