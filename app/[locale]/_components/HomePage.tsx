@@ -89,28 +89,35 @@ const MORPH_CLOSE_MS = 380;
 /* Gentle deceleration (iOS-sheet-like) — spreads the travel out so the morph
  * reads as motion instead of a snap; avoid stronger expo-out eases here. */
 const MORPH_EASE = 'cubic-bezier(0.32, 0.72, 0, 1)';
-const CLOSE_SURFACE_FADE_MS = 220;
+const CHROME_FADE_MS = 220;
+const FACE_FADE_MS = 200;
 
 /**
  * State-driven FLIP morph for the overlay surface: the clicked card's rect is
- * the shared element. Opening animates card-bounds → dialog-bounds at full
- * opacity (a crossfade here lets the page grid flash through). Closing
- * animates back and fades the surface out over the tail of the travel so it
- * dissolves onto the (already visible) card before the parent unmounts the
- * overlay (`onSettled`). Driven by plain CSS transitions — deliberately no
- * framer `layoutId`/AnimatePresence-exit here (deadlock-prone) and no
- * full-card layout projection (re-measures every card, janks iGPUs).
+ * the shared element. A live DOM clone of the clicked card (the "face") rides
+ * inside the surface, counter-scaled every frame so it never stretches — the
+ * morph's first frame (open) and last frame (close) are pixel-identical to
+ * the real card, and the face crossfades against the dialog chrome in
+ * between. Driven by plain CSS transitions on the surface transform —
+ * deliberately no framer `layoutId`/AnimatePresence-exit here
+ * (deadlock-prone) and no full-card layout projection (re-measures every
+ * card, janks iGPUs).
  */
 function MorphSurface({
 	fromRect,
 	phase,
+	cardId,
+	resolveCardEl,
 	onSettled,
 }: {
 	fromRect: DOMRect;
 	phase: MorphPhase;
+	cardId: CardId;
+	resolveCardEl: (id: CardId) => HTMLElement | null;
 	onSettled: (phase: MorphPhase) => void;
 }) {
 	const ref = useRef<HTMLDivElement>(null);
+	const faceRef = useRef<HTMLDivElement>(null);
 	// Final bounds are measured once from our own node (its ref attaches before
 	// this layout effect runs — a parent's ref would still be null here) and
 	// cached, so close-time fromRect updates re-derive the delta for free.
@@ -119,6 +126,21 @@ function MorphSurface({
 	useLayoutEffect(() => {
 		if (ref.current) setToRect(ref.current.getBoundingClientRect());
 	}, []);
+
+	// Mount the card face: a DOM clone of the real card (which is hidden while
+	// the overlay "is" it), so the morph carries actual card pixels.
+	useLayoutEffect(() => {
+		const host = faceRef.current;
+		const cardEl = resolveCardEl(cardId);
+		if (!host || !cardEl) return;
+		const clone = cardEl.cloneNode(true) as HTMLElement;
+		clone.style.visibility = 'visible'; // the source card is hidden at clone time
+		clone.style.width = '100%';
+		clone.style.height = '100%';
+		clone.setAttribute('inert', '');
+		host.appendChild(clone);
+		return () => clone.remove();
+	}, [cardId, resolveCardEl]);
 
 	useLayoutEffect(() => {
 		const node = ref.current;
@@ -134,14 +156,30 @@ function MorphSurface({
 			node.style.transition = `transform ${MORPH_OPEN_MS}ms ${MORPH_EASE}`;
 			node.style.transform = 'translate(0px, 0px) scale(1, 1)';
 		} else if (phase === 'closing') {
-			// Shrink back and dissolve onto the card over the last stretch.
-			node.style.transition = `transform ${MORPH_CLOSE_MS}ms ${MORPH_EASE}, opacity ${CLOSE_SURFACE_FADE_MS}ms ease ${
-				MORPH_CLOSE_MS - CLOSE_SURFACE_FADE_MS
-			}ms`;
+			node.style.transition = `transform ${MORPH_CLOSE_MS}ms ${MORPH_EASE}`;
 			node.style.transform = atCard;
-			node.style.opacity = '0';
 		}
 	}, [phase, fromRect, toRect]);
+
+	// Counter-scale the face every frame (inverse of the surface's current
+	// scale) so the card pixels stay crisp instead of stretching with the
+	// surface. One computed-style read + one style write per frame —
+	// negligible next to the compositor-driven surface transition.
+	useEffect(() => {
+		if (phase === 'open') return; // face is faded out while fully open
+		const node = ref.current;
+		const face = faceRef.current;
+		if (!node || !face) return;
+		let raf = requestAnimationFrame(function track() {
+			const current = getComputedStyle(node).transform;
+			if (current && current !== 'none') {
+				const m = new DOMMatrixReadOnly(current);
+				face.style.transform = `scale(${1 / (m.a || 1)}, ${1 / (m.d || 1)})`;
+			}
+			raf = requestAnimationFrame(track);
+		});
+		return () => cancelAnimationFrame(raf);
+	}, [phase]);
 
 	return (
 		<div
@@ -150,14 +188,51 @@ function MorphSurface({
 			onTransitionEnd={(event) => {
 				if (event.propertyName === 'transform' && event.target === ref.current) onSettled(phase);
 			}}
-			className="overlay-surface absolute inset-0"
+			className="pointer-events-none absolute inset-0"
 			style={{
 				transformOrigin: 'top left',
 				visibility: toRect ? 'visible' : 'hidden',
 				// Keep the surface on its own compositor layer only while it moves.
 				willChange: phase === 'open' ? 'auto' : 'transform',
 			}}
-		/>
+		>
+			{/* Dialog chrome: sits under the face; on close it fades out over the
+			    tail of the travel so the landing frame is card pixels only. */}
+			<div
+				className="overlay-surface absolute inset-0"
+				style={
+					phase === 'closing'
+						? {
+								opacity: 0,
+								transition: `opacity ${CHROME_FADE_MS}ms ease ${MORPH_CLOSE_MS - CHROME_FADE_MS}ms`,
+							}
+						: { opacity: 1 }
+				}
+			/>
+			{/* Card face: starts as the exact card and fades out while opening;
+			    fades back in over the tail of the close so the surface lands as
+			    the real card, pixel for pixel. */}
+			<div
+				ref={faceRef}
+				className="absolute top-0 left-0 overflow-hidden"
+				style={{
+					width: fromRect.width,
+					height: fromRect.height,
+					transformOrigin: 'top left',
+					// The real card's semi-transparent gradient composites over the
+					// page background — back the clone with the same base so the
+					// face matches the card, not the chrome underneath.
+					backgroundColor: 'var(--operator-bg)',
+					...(phase === 'closing'
+						? {
+								animation: 'none',
+								opacity: 1,
+								transition: `opacity ${FACE_FADE_MS}ms ease ${MORPH_CLOSE_MS - FACE_FADE_MS}ms`,
+							}
+						: { animation: `deck-fade-out ${FACE_FADE_MS}ms ease forwards` }),
+				}}
+			/>
+		</div>
 	);
 }
 
@@ -196,6 +271,8 @@ export default function HomePage() {
 			setOverlay((current) => (current?.phase === 'closing' ? null : current));
 		}, MORPH_CLOSE_MS + 250);
 	}, [reduceMotion]);
+
+	const resolveCardEl = useCallback((id: CardId) => cardRefs.current[id] ?? null, []);
 
 	const handleMorphSettled = useCallback((phase: MorphPhase) => {
 		if (phase === 'opening') {
@@ -832,6 +909,8 @@ export default function HomePage() {
 								<MorphSurface
 									fromRect={overlay.fromRect}
 									phase={overlay.phase}
+									cardId={overlay.id}
+									resolveCardEl={resolveCardEl}
 									onSettled={handleMorphSettled}
 								/>
 							)}
