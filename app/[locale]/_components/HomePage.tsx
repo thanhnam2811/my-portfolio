@@ -84,17 +84,22 @@ function OpenHint({ label }: { label: string }) {
 
 type MorphPhase = 'opening' | 'open' | 'closing';
 
-const MORPH_MS = 400;
-const MORPH_EASE = 'cubic-bezier(0.22, 1, 0.36, 1)';
+const MORPH_OPEN_MS = 500;
+const MORPH_CLOSE_MS = 380;
+/* Gentle deceleration (iOS-sheet-like) — spreads the travel out so the morph
+ * reads as motion instead of a snap; avoid stronger expo-out eases here. */
+const MORPH_EASE = 'cubic-bezier(0.32, 0.72, 0, 1)';
+const CLOSE_SURFACE_FADE_MS = 220;
 
 /**
  * State-driven FLIP morph for the overlay surface: the clicked card's rect is
- * the shared element. Opening animates card-bounds → dialog-bounds; closing
- * animates back before the parent unmounts the overlay (`onSettled`). Driven
- * by a plain CSS transition on transform only (opacity stays 1 — a crossfade
- * here lets the page grid flash through the surface) — deliberately no framer
- * `layoutId`/AnimatePresence-exit here (deadlock-prone) and no full-card
- * layout projection (re-measures every card, janks iGPUs).
+ * the shared element. Opening animates card-bounds → dialog-bounds at full
+ * opacity (a crossfade here lets the page grid flash through). Closing
+ * animates back and fades the surface out over the tail of the travel so it
+ * dissolves onto the (already visible) card before the parent unmounts the
+ * overlay (`onSettled`). Driven by plain CSS transitions — deliberately no
+ * framer `layoutId`/AnimatePresence-exit here (deadlock-prone) and no
+ * full-card layout projection (re-measures every card, janks iGPUs).
  */
 function MorphSurface({
 	fromRect,
@@ -121,18 +126,20 @@ function MorphSurface({
 		const atCard = `translate(${fromRect.left - toRect.left}px, ${fromRect.top - toRect.top}px) scale(${
 			fromRect.width / toRect.width
 		}, ${fromRect.height / toRect.height})`;
-		const run = `transform ${MORPH_MS}ms ${MORPH_EASE}`;
-
 		if (phase === 'opening') {
 			// Paint the start frame at the card's bounds, then release the morph.
 			node.style.transition = 'none';
 			node.style.transform = atCard;
 			node.getBoundingClientRect(); // force the start frame to commit
-			node.style.transition = run;
+			node.style.transition = `transform ${MORPH_OPEN_MS}ms ${MORPH_EASE}`;
 			node.style.transform = 'translate(0px, 0px) scale(1, 1)';
 		} else if (phase === 'closing') {
-			node.style.transition = run;
+			// Shrink back and dissolve onto the card over the last stretch.
+			node.style.transition = `transform ${MORPH_CLOSE_MS}ms ${MORPH_EASE}, opacity ${CLOSE_SURFACE_FADE_MS}ms ease ${
+				MORPH_CLOSE_MS - CLOSE_SURFACE_FADE_MS
+			}ms`;
 			node.style.transform = atCard;
+			node.style.opacity = '0';
 		}
 	}, [phase, fromRect, toRect]);
 
@@ -187,7 +194,7 @@ export default function HomePage() {
 		// still unmount once the morph duration has passed.
 		window.setTimeout(() => {
 			setOverlay((current) => (current?.phase === 'closing' ? null : current));
-		}, MORPH_MS + 250);
+		}, MORPH_CLOSE_MS + 250);
 	}, [reduceMotion]);
 
 	const handleMorphSettled = useCallback((phase: MorphPhase) => {
@@ -234,7 +241,7 @@ export default function HomePage() {
 			? {}
 			: overlay.phase === 'closing'
 				? { animation: 'none', opacity: 0, transition: 'opacity 120ms ease' }
-				: { animation: `deck-detail-in 260ms ${MORPH_EASE} 90ms backwards`, opacity: 1 };
+				: { animation: `deck-detail-in 320ms ${MORPH_EASE} 100ms backwards`, opacity: 1 };
 
 	const entry = (index: number) =>
 		reduceMotion
@@ -267,8 +274,10 @@ export default function HomePage() {
 					else delete cardRefs.current[id];
 				}}
 				className={className}
-				// The card vanishes from the grid while it "is" the modal.
-				style={overlay?.id === id ? { visibility: 'hidden' as const } : {}}
+				// The card vanishes from the grid while it "is" the modal, and
+				// returns the moment closing starts so the shrinking surface
+				// dissolves onto real card content instead of an empty slot.
+				style={overlay?.id === id && overlay.phase !== 'closing' ? { visibility: 'hidden' as const } : {}}
 				onClick={(event) =>
 					setOverlay({
 						id,
