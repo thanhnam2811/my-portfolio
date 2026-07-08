@@ -36,6 +36,13 @@ export async function generateMetadata({
 		return {
 			title: post.title,
 			description: post.description,
+			alternates: {
+				canonical: `https://thanhnam2811.vercel.app/${locale}/blog/${post.slug}`,
+				languages: {
+					en: `https://thanhnam2811.vercel.app/en/blog/${post.slug}`,
+					vi: `https://thanhnam2811.vercel.app/vi/blog/${post.slug}`,
+				},
+			},
 			openGraph: {
 				title: post.title,
 				description: post.description,

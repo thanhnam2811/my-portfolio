@@ -66,6 +66,12 @@ function resolvePostLocale(locale: BlogLocale, slug: string): BlogLocale | null 
 	const fallbackPath = getPostPath(DEFAULT_LOCALE, slug);
 	if (fs.existsSync(fallbackPath)) return DEFAULT_LOCALE;
 
+	// Last resort fallback: check other active locales
+	for (const otherLocale of routing.locales) {
+		const otherPath = getPostPath(otherLocale, slug);
+		if (fs.existsSync(otherPath)) return otherLocale;
+	}
+
 	return null;
 }
 
