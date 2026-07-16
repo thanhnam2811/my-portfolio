@@ -115,14 +115,13 @@ never overflow it.
 - **Desktop (`lg` + viewport ≥ 720px tall — the `tall` variant):** `grid-cols-12 grid-rows-6`, `h-dvh`,
   `overflow-hidden` — a true single-viewport deck.
 
-| Card                                | Placement               |
-| ----------------------------------- | ----------------------- |
-| identity                            | `col-span-5 row-span-3` |
-| topology                            | `col-span-7 row-span-2` |
-| proof                               | `col-span-7 row-span-1` |
-| work × 3                            | `col-span-3 row-span-2` |
-| experience                          | `col-span-3 row-span-2` |
-| capabilities / principles / contact | `col-span-4 row-span-1` |
+| Card                                             | Placement               |
+| ------------------------------------------------ | ----------------------- |
+| identity                                         | `col-span-5 row-span-3` |
+| topology                                         | `col-span-7 row-span-2` |
+| proof                                            | `col-span-7 row-span-1` |
+| work × 4 (onky / vmu / tinylink / matchingHub)   | `col-span-3 row-span-2` |
+| experience / capabilities / principles / contact | `col-span-3 row-span-1` |
 
 - **Short desktop (`lg` but < 720px tall):** same 12-col grid, but **no fixed height** — rows size to content and the
   page scrolls. Never squash text to force one viewport.

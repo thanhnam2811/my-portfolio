@@ -1,4 +1,4 @@
-type ProjectId = 'onky' | 'vmu' | 'tinylink';
+type ProjectId = 'onky' | 'vmu' | 'tinylink' | 'matchingHub';
 
 type FeaturedWorkItem = {
 	id: ProjectId;
@@ -29,8 +29,16 @@ export const featuredWork: readonly FeaturedWorkItem[] = [
 		stack: ['Node.js', 'TypeScript', 'Fastify', 'PostgreSQL', 'Redis', 'Docker'],
 		accent: 'Systems exercise',
 		image: '/images/projects/tiny-link.png',
-		link: 'https://tnli.vercel.app',
+		link: 'https://link.namtt.dev',
 		github: 'https://github.com/thanhnam2811/tiny-link',
+	},
+	{
+		id: 'matchingHub',
+		stack: ['NestJS', 'Next.js', 'TypeScript', 'Prisma', 'PostgreSQL', 'Docker'],
+		accent: 'Platform build',
+		image: '/images/projects/matching-hub.png',
+		link: 'https://match.namtt.dev',
+		github: 'https://github.com/thanhnam2811/matching-man',
 	},
 ] as const;
 
