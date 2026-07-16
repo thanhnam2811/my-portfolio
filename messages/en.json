@@ -109,6 +109,14 @@
 				"build": "Designed the backend architecture, persistence layer, cache strategy, and deployment path with a focus on practical runtime choices rather than abstract scale claims.",
 				"systems": "Fastify runtime, PostgreSQL persistence, Redis caching, Dockerized delivery path, and lightweight observability patterns suitable for a lean service.",
 				"impact": "Shows backend judgment around fast redirects, reliability, and maintainability while keeping the service compact and cost-aware."
+			},
+			"matchingHub": {
+				"title": "Matching Hub",
+				"summary": "Matchmaking-as-a-service for game servers — a multi-tenant platform handling player queuing, skill-based matching, Elo ratings, and reliable webhook delivery.",
+				"context": "Game studios keep rebuilding the same matchmaking plumbing — queues, rating windows, timeouts, result callbacks. Matching Hub centralizes that into a single multi-tenant API so game servers don't have to own it.",
+				"build": "Designed and built the platform end to end: a NestJS API with project/environment-scoped queues, three rating modes (internal Elo, external rating, or disabled), HMAC-signed webhook delivery with retry and backoff, and a Next.js operator dashboard for API keys, live pool monitoring, and match history.",
+				"systems": "NestJS + Prisma + PostgreSQL API, PostgreSQL-backed in-process schedulers for webhook retries and queue timeouts (no Redis dependency), a Next.js dashboard that talks to the API server-side only, and a Docker/GHCR pipeline deploying to a VPS behind a Cloudflare Tunnel with the dashboard on Vercel.",
+				"impact": "Shows end-to-end platform ownership — API design, domain modeling, security (hashed keys, signed webhooks), and a real CI/CD pipeline — for a service built to run unattended in production."
 			}
 		}
 	},

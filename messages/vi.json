@@ -109,6 +109,14 @@
 				"build": "Tôi thiết kế backend architecture, persistence layer, cache strategy và deployment path — tập trung vào các quyết định runtime thực tế thay vì mấy claim scale trừu tượng.",
 				"systems": "Fastify runtime, PostgreSQL persistence, Redis caching, Dockerized delivery path và mấy pattern observability gọn nhẹ phù hợp cho một lean service.",
 				"impact": "Thể hiện technical judgment về fast redirects, reliability và maintainability — trong khi vẫn giữ service compact và cost-aware."
+			},
+			"matchingHub": {
+				"title": "Matching Hub",
+				"summary": "Matchmaking-as-a-service cho game server — nền tảng multi-tenant xử lý player queuing, skill-based matching, Elo rating và webhook delivery đáng tin cậy.",
+				"context": "Các studio game cứ phải build đi build lại cùng một bộ matchmaking plumbing — queue, rating window, timeout, result callback. Matching Hub gom hết vào một API multi-tenant duy nhất để game server không cần tự làm nữa.",
+				"build": "Tôi thiết kế và build toàn bộ nền tảng end-to-end: một NestJS API với queue scoped theo project/environment, ba rating mode (internal Elo, external rating, hoặc tắt rating), webhook delivery ký HMAC kèm retry và backoff, cùng một Next.js dashboard cho operator để quản lý API key, theo dõi pool real-time và match history.",
+				"systems": "API dùng NestJS + Prisma + PostgreSQL, scheduler chạy in-process backed bởi PostgreSQL cho webhook retry và queue timeout (không cần Redis), Next.js dashboard chỉ gọi API server-side, và pipeline Docker/GHCR deploy lên VPS qua Cloudflare Tunnel còn dashboard chạy trên Vercel.",
+				"impact": "Thể hiện khả năng ownership một platform end-to-end — API design, domain modeling, security (hashed key, webhook ký signed), và một CI/CD pipeline thật — cho một service được build để chạy unattended trong production."
 			}
 		}
 	},

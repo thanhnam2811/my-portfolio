@@ -30,6 +30,7 @@ type CardId =
 	| 'onky'
 	| 'vmu'
 	| 'tinylink'
+	| 'matchingHub'
 	| 'capabilities'
 	| 'experience'
 	| 'principles'
@@ -41,6 +42,7 @@ const EXPANDABLE: readonly CardId[] = [
 	'onky',
 	'vmu',
 	'tinylink',
+	'matchingHub',
 	'capabilities',
 	'experience',
 	'principles',
@@ -55,10 +57,11 @@ const CARD_GRID: Record<CardId, string> = {
 	onky: 'lg:col-span-3 lg:row-span-2',
 	vmu: 'lg:col-span-3 lg:row-span-2',
 	tinylink: 'lg:col-span-3 lg:row-span-2',
-	experience: 'lg:col-span-3 lg:row-span-2',
-	capabilities: 'lg:col-span-4 lg:row-span-1',
-	principles: 'lg:col-span-4 lg:row-span-1',
-	contact: 'lg:col-span-4 lg:row-span-1',
+	matchingHub: 'lg:col-span-3 lg:row-span-2',
+	experience: 'lg:col-span-3 lg:row-span-1',
+	capabilities: 'lg:col-span-3 lg:row-span-1',
+	principles: 'lg:col-span-3 lg:row-span-1',
+	contact: 'lg:col-span-3 lg:row-span-1',
 };
 
 const CARD_BASE = 'deck-card group relative flex min-h-0 flex-col overflow-hidden p-5 text-left';
@@ -371,7 +374,7 @@ export default function HomePage() {
 		);
 	}
 
-	function renderWorkDetail(id: 'onky' | 'vmu' | 'tinylink') {
+	function renderWorkDetail(id: 'onky' | 'vmu' | 'tinylink' | 'matchingHub') {
 		const item = featuredWork.find((work) => work.id === id);
 		if (!item) return null;
 		return (
@@ -503,6 +506,7 @@ export default function HomePage() {
 			case 'onky':
 			case 'vmu':
 			case 'tinylink':
+			case 'matchingHub':
 				return renderWorkDetail(id);
 			case 'capabilities':
 				return (
@@ -820,17 +824,16 @@ export default function HomePage() {
 
 					{card(
 						'experience',
-						6,
+						7,
 						<>
 							<CardLabel>{tNav('experience')}</CardLabel>
-							<p className="mt-3 text-lg font-semibold text-white">{tExperience('items.onky.title')}</p>
-							<p className="mt-1 text-xs tracking-[0.16em] text-cyan-200/70 uppercase">
+							<p className="mt-2 text-sm font-semibold text-white xl:text-base">
+								{tExperience('items.onky.title')}
+							</p>
+							<p className="text-xs tracking-[0.16em] text-cyan-200/70 uppercase">
 								{tExperience('items.onky.company')} · {tExperience('items.onky.period')}
 							</p>
-							<p className="mt-3 line-clamp-3 text-xs leading-6 text-slate-300">
-								{tExperience('items.onky.summary')}
-							</p>
-							<p className="deck-label-muted mt-auto pt-4">
+							<p className="deck-label-muted mt-auto pt-2">
 								{experienceEntries.length} {tDeck('roles')} · 2022 → {tDeck('now')}
 							</p>
 						</>,
@@ -838,22 +841,25 @@ export default function HomePage() {
 
 					{card(
 						'capabilities',
-						7,
+						8,
 						<>
 							<CardLabel>{tNav('capabilities')}</CardLabel>
-							<div className="mt-3 flex flex-wrap items-center gap-x-3 gap-y-1.5">
-								{capabilityGroups.map((group) => (
+							<div className="mt-2 flex flex-wrap items-center gap-x-3 gap-y-1.5">
+								{capabilityGroups.slice(0, 4).map((group) => (
 									<span key={group} className="text-sm text-slate-200">
 										{tCapabilities(`items.${group}.eyebrow`)}
 									</span>
 								))}
+								{capabilityGroups.length > 4 && (
+									<span className="text-sm text-slate-500">+{capabilityGroups.length - 4}</span>
+								)}
 							</div>
 						</>,
 					)}
 
 					{card(
 						'principles',
-						8,
+						9,
 						<>
 							<CardLabel>{tPrinciples('eyebrow')}</CardLabel>
 							<div className="mt-3 flex flex-wrap items-center gap-x-3 gap-y-1.5">
@@ -868,7 +874,7 @@ export default function HomePage() {
 
 					{card(
 						'contact',
-						9,
+						10,
 						<>
 							<CardLabel>{tNav('contact')}</CardLabel>
 							<div className="mt-3 flex items-center gap-4">
