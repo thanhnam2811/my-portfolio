@@ -13,7 +13,7 @@ interface SmoothScrollProps {
  * Global smooth-scroll provider.
  *
  * Wraps the app in a Lenis-driven scroll loop synced to the GSAP ticker so
- * ScrollTrigger-based animations and the future WebGL scene share one clock.
+ * ScrollTrigger-based animations share one clock.
  * Publishes scroll progress into the mutation-based store for per-frame reads.
  * Disabled entirely under `prefers-reduced-motion` — native scrolling wins.
  */
