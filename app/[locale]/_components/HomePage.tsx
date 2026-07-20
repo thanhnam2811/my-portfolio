@@ -256,6 +256,7 @@ export default function HomePage() {
 
 	const reduceMotion = useReducedMotion();
 	const [overlay, setOverlay] = useState<{ id: CardId; fromRect: DOMRect; phase: MorphPhase } | null>(null);
+	const [imageLoaded, setImageLoaded] = useState(false);
 	const panelRef = useRef<HTMLDivElement>(null);
 	const cardRefs = useRef<Partial<Record<CardId, HTMLButtonElement>>>({});
 
@@ -295,6 +296,7 @@ export default function HomePage() {
 
 	useEffect(() => {
 		if (overlay?.id) panelRef.current?.focus();
+		setImageLoaded(false);
 	}, [overlay?.id]);
 
 	// Lock background scroll (native + Lenis) while the overlay is mounted so
@@ -389,12 +391,14 @@ export default function HomePage() {
 
 				{item.image && (
 					<div className="relative mt-6 aspect-[16/9] overflow-hidden border border-white/10 bg-slate-900/40">
+						{!imageLoaded && <div className="absolute inset-0 animate-pulse bg-white/5" />}
 						<Image
 							src={item.image}
 							alt={tWork(`items.${id}.title`)}
 							fill
-							className="object-cover"
+							className={`object-cover transition-opacity duration-300 ${imageLoaded ? 'opacity-100' : 'opacity-0'}`}
 							sizes="(min-width: 1024px) 640px, 100vw"
+							onLoad={() => setImageLoaded(true)}
 						/>
 					</div>
 				)}
@@ -683,7 +687,7 @@ export default function HomePage() {
 			<div className="operator-grid pointer-events-none absolute inset-0 opacity-50" />
 			<div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-cyan-200/40 to-transparent" />
 
-			<header className="operator-header fixed inset-x-0 top-0 z-40">
+			<header className="operator-header fixed inset-x-0 top-0 z-40" inert={overlayMounted}>
 				<div className="mx-auto flex h-16 max-w-[1600px] items-center justify-between gap-4 px-4 sm:px-6">
 					<div className="flex items-center gap-3">
 						<span className="h-2.5 w-2.5 rounded-full bg-cyan-300 shadow-[0_0_18px_rgba(103,232,249,0.5)]" />
@@ -716,6 +720,7 @@ export default function HomePage() {
 
 			<main
 				id="main-content"
+				inert={overlayMounted}
 				className="lg:tall:h-dvh lg:tall:overflow-hidden relative mx-auto max-w-[1600px] px-3 pt-20 pb-3 sm:px-4"
 			>
 				<div className="lg:tall:h-full lg:tall:grid-rows-6 grid grid-cols-1 gap-3 md:grid-cols-2 lg:grid-cols-12">

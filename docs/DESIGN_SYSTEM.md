@@ -46,17 +46,18 @@ status", everything else is a quiet slate ladder on near-black blue.
 
 ### Surface tokens (CSS variables, `globals.css`)
 
-| Token                                               | Role                                         |
-| --------------------------------------------------- | -------------------------------------------- |
-| `--operator-bg`                                     | page base (`#07111f`)                        |
-| `--operator-grad-top/mid/bot`, `--operator-atm-1/2` | atmosphere gradients (`operator-atmosphere`) |
-| `--operator-grid`, `--operator-grid-soft`           | background grid lines (`operator-grid`)      |
-| `--operator-accent`, `--operator-accent-strong`     | cyan accent pair (`#67e8f9` / `#a5f3fc`)     |
-| `--operator-border`, `--operator-border-soft`       | hairlines (`white/10`, `white/8`)            |
-| `--operator-panel-top/bot`                          | card surface gradient stops                  |
-| `--operator-overlay-top/bot`                        | overlay/dialog surface gradient stops        |
-| `--operator-header-bg`                              | fixed header chrome                          |
-| `--operator-node-fill/stroke/dot`                   | topology SVG node colors                     |
+| Token                                               | Role                                                                                                                                                            |
+| --------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `--operator-bg`                                     | page base (`#07111f`)                                                                                                                                           |
+| `--operator-grad-top/mid/bot`, `--operator-atm-1/2` | atmosphere gradients (`operator-atmosphere`)                                                                                                                    |
+| `--operator-grid`, `--operator-grid-soft`           | background grid lines (`operator-grid`)                                                                                                                         |
+| `--operator-accent`, `--operator-accent-strong`     | cyan accent pair (`#67e8f9` / `#a5f3fc`)                                                                                                                        |
+| `--operator-accent-deep`                            | third, saturated cyan (`#22d3ee`) — reserved for the topology diagram (edge gradient, active-node highlight in `SystemVisualization`), not general UI accenting |
+| `--operator-border`, `--operator-border-soft`       | hairlines (`white/10`, `white/8`)                                                                                                                               |
+| `--operator-panel-top/bot`                          | card surface gradient stops                                                                                                                                     |
+| `--operator-overlay-top/bot`                        | overlay/dialog surface gradient stops                                                                                                                           |
+| `--operator-header-bg`                              | fixed header chrome                                                                                                                                             |
+| `--operator-node-fill/stroke/dot`                   | topology SVG node colors                                                                                                                                        |
 
 ### Text ladder (Tailwind palette classes — canonical on this surface only)
 

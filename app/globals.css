@@ -50,7 +50,6 @@
 	--shadow-md: 0 12px 28px -18px rgb(15 23 42 / 0.22);
 	--shadow-lg: 0 28px 70px -42px rgb(15 23 42 / 0.3);
 	--shadow-xl: 0 40px 90px -56px rgb(15 23 42 / 0.34);
-	--shadow-premium: 0 32px 80px -48px oklch(0.2 0.02 255 / 0.28);
 }
 
 :root {
@@ -92,8 +91,7 @@
 	--bg-mesh-2: oklch(0.965 0.015 230);
 	--bg-mesh-3: oklch(0.975 0.01 255);
 
-	/* Operator palette — the homepage immersive shell (always dark, theme-independent).
-	   Tokenized so the WebGL upgrade can drive/replace the atmosphere from one place. */
+	/* Operator palette — the homepage immersive shell (always dark, theme-independent). */
 	--operator-bg: #07111f;
 	--operator-atm-1: rgba(53, 88, 166, 0.34);
 	--operator-atm-2: rgba(39, 146, 175, 0.15);
