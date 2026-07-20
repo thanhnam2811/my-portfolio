@@ -68,6 +68,21 @@ Tokens (color/typography/spacing/shadow) live in `app/globals.css`; the rules fo
   in-article TOC. Rendered via `next-mdx-remote` with `remark-gfm` + `rehype-slug` and
   `components/blog/MdxComponents.tsx`.
 
+## AI card (CV chat + JD fit-check)
+
+The homepage "AI" bento card (`app/[locale]/_components/ai/AiCard.tsx`) offers two features grounded in the CV content:
+a Q&A chat and a job-description fit checker.
+
+- `lib/ai/providers.ts` — the model chain, tried in order: Gemini (`google('gemini-2.5-flash')`), then two Groq models
+  (`llama-3.3-70b-versatile`, `llama-3.1-8b-instant`) as separate-quota fallbacks.
+- `lib/ai/fallback.ts` — `runWithFallback()` walks the chain on any error. Deliberately **non-streaming**
+  (`generateText`, not `streamText`): a failed provider mid-stream would already have leaked partial output to the
+  client, so fallback only works cleanly with a full response per call.
+- `lib/ai/context.ts` — `buildPortfolioContext(locale)` serializes the same `messages/{locale}.json` content the UI
+  renders into the system-prompt context, so the model can't drift from what's actually on the page.
+- `app/api/ai/{chat,jd-fit}/route.ts` — the two endpoints; both require `GOOGLE_GENERATIVE_AI_API_KEY` and
+  `GROQ_API_KEY` (see `.env.example`) and return a `502` when every model in the chain fails.
+
 ## Conventions to follow
 
 - Server Components by default; add `"use client"` only for state/effects/animation.

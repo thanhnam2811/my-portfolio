@@ -42,6 +42,19 @@ export const featuredWork: readonly FeaturedWorkItem[] = [
 	},
 ] as const;
 
+type WorkGroupId = 'workProduction' | 'workSideProjects';
+
+type WorkGroup = {
+	id: WorkGroupId;
+	projectIds: readonly ProjectId[];
+};
+
+/** Groups the 4 case studies into 2 bento cards (real-world production work vs. side-project exercises). */
+export const workGroups: readonly WorkGroup[] = [
+	{ id: 'workProduction', projectIds: ['onky', 'vmu'] },
+	{ id: 'workSideProjects', projectIds: ['tinylink', 'matchingHub'] },
+] as const;
+
 export const capabilityGroups = ['realtime', 'backend', 'data', 'observability', 'delivery'] as const;
 
 export const experienceEntries = ['onky', 'onkyIntern', 'freelancer', 'fostech', 'fostechIntern'] as const;

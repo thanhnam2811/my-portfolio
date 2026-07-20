@@ -4,16 +4,18 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
-import { ArrowUpRight, Download, ExternalLink, Github, Linkedin, Mail, X } from 'lucide-react';
+import { ArrowUpRight, Download, ExternalLink, Github, Linkedin, Mail, Sparkles, X } from 'lucide-react';
 import { useLocale, useTranslations } from 'next-intl';
 import { Button } from '@/components/ui/button';
 import SystemVisualization from '@/components/SystemVisualization';
+import AiCard from '@/app/[locale]/_components/ai/AiCard';
 import {
 	capabilityGroups,
 	experienceEntries,
 	featuredWork,
 	principles,
 	proofItems,
+	workGroups,
 } from '@/app/[locale]/_data/content';
 
 /**
@@ -27,10 +29,9 @@ type CardId =
 	| 'identity'
 	| 'topology'
 	| 'proof'
-	| 'onky'
-	| 'vmu'
-	| 'tinylink'
-	| 'matchingHub'
+	| 'workProduction'
+	| 'workSideProjects'
+	| 'ai'
 	| 'capabilities'
 	| 'experience'
 	| 'principles'
@@ -39,10 +40,9 @@ type CardId =
 const EXPANDABLE: readonly CardId[] = [
 	'identity',
 	'proof',
-	'onky',
-	'vmu',
-	'tinylink',
-	'matchingHub',
+	'workProduction',
+	'workSideProjects',
+	'ai',
 	'capabilities',
 	'experience',
 	'principles',
@@ -54,10 +54,9 @@ const CARD_GRID: Record<CardId, string> = {
 	identity: 'md:col-span-2 lg:col-span-5 lg:row-span-3',
 	topology: 'md:col-span-2 lg:col-span-7 lg:row-span-2',
 	proof: 'md:col-span-2 lg:col-span-7 lg:row-span-1',
-	onky: 'lg:col-span-3 lg:row-span-2',
-	vmu: 'lg:col-span-3 lg:row-span-2',
-	tinylink: 'lg:col-span-3 lg:row-span-2',
-	matchingHub: 'lg:col-span-3 lg:row-span-2',
+	workProduction: 'lg:col-span-4 lg:row-span-2',
+	workSideProjects: 'lg:col-span-4 lg:row-span-2',
+	ai: 'lg:col-span-4 lg:row-span-2',
 	experience: 'lg:col-span-3 lg:row-span-1',
 	capabilities: 'lg:col-span-3 lg:row-span-1',
 	principles: 'lg:col-span-3 lg:row-span-1',
@@ -253,6 +252,7 @@ export default function HomePage() {
 	const tPrinciples = useTranslations('Principles');
 	const tContact = useTranslations('Contact');
 	const tBlog = useTranslations('Blog');
+	const tAi = useTranslations('AI');
 
 	const reduceMotion = useReducedMotion();
 	const [overlay, setOverlay] = useState<{ id: CardId; fromRect: DOMRect; phase: MorphPhase } | null>(null);
@@ -448,6 +448,18 @@ export default function HomePage() {
 		);
 	}
 
+	function renderWorkGroupDetail(groupId: 'workProduction' | 'workSideProjects') {
+		const group = workGroups.find((candidate) => candidate.id === groupId);
+		if (!group) return null;
+		return (
+			<div className="space-y-10 divide-y divide-white/10 [&>*:not(:first-child)]:pt-10">
+				{group.projectIds.map((projectId) => (
+					<div key={projectId}>{renderWorkDetail(projectId)}</div>
+				))}
+			</div>
+		);
+	}
+
 	function renderDetail(id: CardId) {
 		switch (id) {
 			case 'identity':
@@ -507,11 +519,11 @@ export default function HomePage() {
 						</div>
 					</div>
 				);
-			case 'onky':
-			case 'vmu':
-			case 'tinylink':
-			case 'matchingHub':
-				return renderWorkDetail(id);
+			case 'workProduction':
+			case 'workSideProjects':
+				return renderWorkGroupDetail(id);
+			case 'ai':
+				return <AiCard locale={locale as 'en' | 'vi'} />;
 			case 'capabilities':
 				return (
 					<div>
@@ -794,42 +806,65 @@ export default function HomePage() {
 						</>,
 					)}
 
-					{featuredWork.map((item, index) =>
-						card(
-							item.id,
+					{workGroups.map((group, index) => {
+						const projects = group.projectIds
+							.map((projectId) => featuredWork.find((item) => item.id === projectId))
+							.filter((item): item is (typeof featuredWork)[number] => Boolean(item));
+						const combinedStack = Array.from(new Set(projects.flatMap((project) => project.stack)));
+						return card(
+							group.id,
 							3 + index,
 							<>
-								<CardLabel>
-									{String(index + 1).padStart(2, '0')} · {item.accent}
-								</CardLabel>
-								<h3 className="mt-3 text-lg font-semibold tracking-[-0.03em] text-white xl:text-xl">
-									{tWork(`items.${item.id}.title`)}
-								</h3>
-								<p className="mt-2 line-clamp-3 text-xs leading-6 text-slate-300 xl:text-sm xl:leading-7">
-									{tWork(`items.${item.id}.summary`)}
-								</p>
+								<CardLabel>{tWork(`groups.${group.id}.eyebrow`)}</CardLabel>
+								<div className="mt-3 space-y-1.5">
+									{projects.map((project) => (
+										<h3
+											key={project.id}
+											className="text-base font-semibold tracking-[-0.025em] text-white xl:text-lg"
+										>
+											{tWork(`items.${project.id}.title`)}
+										</h3>
+									))}
+								</div>
 								<div className="mt-auto flex flex-wrap gap-1.5 pt-4">
-									{item.stack.slice(0, 3).map((tech) => (
+									{combinedStack.slice(0, 4).map((tech) => (
 										<span
-											key={`${item.id}-${tech}`}
+											key={`${group.id}-${tech}`}
 											className="border border-white/10 px-2 py-0.5 font-mono text-[10px] text-slate-200"
 										>
 											{tech}
 										</span>
 									))}
-									{item.stack.length > 3 && (
+									{combinedStack.length > 4 && (
 										<span className="px-1 py-0.5 font-mono text-[10px] text-slate-500">
-											+{item.stack.length - 3}
+											+{combinedStack.length - 4}
 										</span>
 									)}
 								</div>
 							</>,
-						),
+						);
+					})}
+
+					{card(
+						'ai',
+						5,
+						<>
+							<div className="flex items-start justify-between gap-3">
+								<CardLabel>{tAi('eyebrow')}</CardLabel>
+								<Sparkles className="h-4 w-4 shrink-0 text-cyan-200" />
+							</div>
+							<h3 className="mt-3 text-lg font-semibold tracking-[-0.03em] text-white xl:text-xl">
+								{tAi('title')}
+							</h3>
+							<p className="mt-2 line-clamp-3 text-xs leading-6 text-slate-300 xl:text-sm xl:leading-7">
+								{tAi('cardTeaser')}
+							</p>
+						</>,
 					)}
 
 					{card(
 						'experience',
-						7,
+						6,
 						<>
 							<CardLabel>{tNav('experience')}</CardLabel>
 							<p className="mt-2 text-sm font-semibold text-white xl:text-base">
@@ -846,7 +881,7 @@ export default function HomePage() {
 
 					{card(
 						'capabilities',
-						8,
+						7,
 						<>
 							<CardLabel>{tNav('capabilities')}</CardLabel>
 							<div className="mt-2 flex flex-wrap items-center gap-x-3 gap-y-1.5">
@@ -864,7 +899,7 @@ export default function HomePage() {
 
 					{card(
 						'principles',
-						9,
+						8,
 						<>
 							<CardLabel>{tPrinciples('eyebrow')}</CardLabel>
 							<div className="mt-3 flex flex-wrap items-center gap-x-3 gap-y-1.5">
@@ -879,7 +914,7 @@ export default function HomePage() {
 
 					{card(
 						'contact',
-						10,
+						9,
 						<>
 							<CardLabel>{tNav('contact')}</CardLabel>
 							<div className="mt-3 flex items-center gap-4">

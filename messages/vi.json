@@ -7,7 +7,7 @@
 	},
 	"Metadata": {
 		"title": "Thái Thành Nam | Backend Systems cho sản phẩm real-time",
-		"description": "Backend Developer tập trung vào real-time systems, production reliability và server-side architecture cho các sản phẩm multiplayer và hệ thống nhạy cảm về vận hành.",
+		"description": "Backend Developer xây real-time systems: game server multiplayer, monitoring pipeline và production APIs đủ sức chịu concurrency thật.",
 		"siteName": "Thái Thành Nam",
 		"role": "Backend Developer",
 		"location": "Thành phố Hồ Chí Minh, Việt Nam"
@@ -23,7 +23,7 @@
 	"Hero": {
 		"eyebrow": "Backend systems cho sản phẩm real-time",
 		"headline": "Tôi xây backend systems đủ rõ ràng, đủ nhanh và đủ ổn định, ngay cả khi concurrency bắt đầu trở thành vấn đề thực sự.",
-		"summary": "Backend Developer với hơn 3 năm kinh nghiệm thực tế về game server multiplayer, real-time communication, monitoring pipelines và các luồng backend production. Tôi tập trung vào runtime behavior: thứ vẫn phải dễ hiểu ngay cả khi hệ thống đang chịu tải.",
+		"summary": "Backend Developer với hơn 3 năm làm game server multiplayer, real-time communication và monitoring cho hệ thống production. Điều tôi quan tâm nhất là runtime behavior vẫn dễ hiểu khi traffic thật sự đổ vào.",
 		"ctaPrimary": "Xem dự án chọn lọc",
 		"ctaSecondary": "Liên hệ",
 		"ctaDownload": "Tải CV",
@@ -34,49 +34,49 @@
 		"signals": {
 			"runtime": {
 				"title": "Runtime-first",
-				"description": "Tôi quan tâm đến connection flow, concurrency và service behavior, ở những chỗ mà áp lực real-time sẽ expose điểm yếu của architecture rất nhanh."
+				"description": "Connection flow, concurrency và service behavior tôi để ý từ sớm, vì áp lực real-time làm lộ điểm yếu của architecture rất nhanh."
 			},
 			"observability": {
-				"title": "Observability là mặc định",
-				"description": "Monitoring, alerts, logs và khả năng nhìn thấy incident được xem như một phần của sản phẩm, không phải thứ đi dọn sau khi ship."
+				"title": "Observability ngay từ đầu",
+				"description": "Tôi build monitoring, alert và log song song với tính năng, không đợi đến lúc có sự cố mới đi dựng."
 			},
 			"delivery": {
-				"title": "Delivery trong điều kiện ràng buộc",
-				"description": "Tôi ưu tiên backend delivery maintain được nhưng vẫn đi nhanh, trong bối cảnh legacy constraints, operational limits và áp lực production thực tế."
+				"title": "Delivery trong điều kiện thật",
+				"description": "Tôi ship backend work vẫn maintain được, kể cả khi có legacy code, deadline gấp và sản phẩm đang chạy live không chờ ai."
 			}
 		}
 	},
 	"Proof": {
 		"experience": {
 			"value": "3+ năm",
-			"label": "Thiết kế và vận hành backend systems trong môi trường production thực tế.",
+			"label": "Thiết kế và vận hành backend systems trong môi trường production.",
 			"short": "xây dựng backend production"
 		},
 		"servers": {
 			"value": "20+ servers",
-			"label": "20+ instance game server multiplayer real-time đã deliver bằng Node.js và WebSocket.",
+			"label": "20+ instance game server multiplayer real-time, xây bằng Node.js và WebSocket.",
 			"short": "Node.js · WebSocket"
 		},
 		"concurrency": {
 			"value": "High concurrency",
-			"label": "Hệ thống được xây dựng để serve hàng nghìn người dùng concurrent cùng lúc và các workload nhạy cảm về vận hành.",
+			"label": "Hệ thống chịu được hàng nghìn người chơi cùng lúc mà không sập.",
 			"short": "hàng nghìn người dùng concurrent"
 		},
 		"incidents": {
 			"value": "-40%",
-			"label": "Thời gian phản ứng incident trung bình giảm nhờ internal monitoring và reporting tooling.",
+			"label": "Giảm 40% thời gian phản ứng incident nhờ xây internal monitoring tốt hơn.",
 			"short": "phản hồi incident nhanh hơn"
 		},
 		"stack": {
 			"value": "SQL + Redis + APIs",
-			"label": "Kinh nghiệm thực tế với SQL Server, MySQL, Redis, MongoDB, REST APIs và real-time messaging, dùng hằng ngày trong sản phẩm thật.",
+			"label": "SQL Server, MySQL, Redis, MongoDB, REST APIs và real-time messaging, dùng hằng ngày.",
 			"short": "dùng hằng ngày trong sản phẩm thật"
 		}
 	},
 	"Projects": {
 		"eyebrow": "Dự án chọn lọc",
 		"title": "Mấy cái case study này cho thấy systems thinking, chứ không chỉ là feature delivery.",
-		"intro": "Danh sách này kết hợp production game server work, product delivery và systems exercises, để cho thấy cách tôi nghĩ về architecture, runtime stability và operational clarity.",
+		"intro": "Bốn case study: game server production, một sản phẩm full-stack tôi tham gia ship, và hai bài tập hệ thống tôi tự làm để mài kỹ năng.",
 		"viewProject": "Mở dự án",
 		"viewSource": "Xem source",
 		"labels": {
@@ -85,82 +85,86 @@
 			"systems": "Hệ thống liên quan",
 			"impact": "Kết quả"
 		},
+		"groups": {
+			"workProduction": { "eyebrow": "Công việc production" },
+			"workSideProjects": { "eyebrow": "Dự án cá nhân" }
+		},
 		"items": {
 			"onky": {
 				"title": "ONKY Game Server Systems",
-				"summary": "Production backend ownership trên nhiều sản phẩm game online: từ game server architecture, monitoring, live operations đến tối ưu backend flow.",
-				"context": "Ở ONKY, tôi làm với các sản phẩm multiplayer real-time, nơi service behavior, runtime clarity và backend stability ảnh hưởng trực tiếp đến trải nghiệm người chơi thật.",
+				"summary": "Production backend ownership trên các sản phẩm game online của ONKY: server architecture, monitoring và live operations.",
+				"context": "Sản phẩm multiplayer real-time, nơi service behavior và runtime clarity ảnh hưởng trực tiếp đến người chơi thật, và backend stability không phải chuyện tùy chọn.",
 				"build": "Tôi xây và mở rộng multiplayer game servers bằng Node.js và WebSocket, thêm custom game logic trên shared framework, thiết kế APIs cho internal tools và lobby flows, đồng thời ship SOS monitoring cùng process-management utilities nội bộ.",
-				"systems": "Socket communication real-time, master-worker monitoring architecture, Redis-backed message flow, event logic qua SQL, incident tooling và operations support cho game instances.",
-				"impact": "Deliver hơn 20 game server instances, cải thiện 40% thời gian phản ứng incident, giảm redundant SQL load, và làm cho debug cũng như rollout trong production dễ đoán hơn."
+				"systems": "Socket communication real-time, master-worker monitoring architecture, Redis-backed message flow, event logic qua SQL và incident tooling cho game instances đang chạy live.",
+				"impact": "Deliver hơn 20 game server instances, giảm 40% thời gian phản ứng incident, giảm redundant SQL load, và làm debug cũng như rollout trong production dễ đoán hơn."
 			},
 			"vmu": {
 				"title": "VMU Test Exam",
-				"summary": "Nền tảng thi online cho sinh viên y khoa: real-time admin visibility, question-bank workflows và backend support cho các exam session có kiểm soát.",
-				"context": "Cần một flow làm bài ổn định cho sinh viên, đồng thời cho admin đủ visibility để theo dõi session và vận hành hoạt động học tập.",
-				"build": "Tôi phụ trách các luồng backend-heavy và session support giữa student activity và admin tooling, góp phần đưa hệ thống thành một learning platform production-ready hơn.",
-				"systems": "Node.js services, Socket.IO cho session visibility real-time, MongoDB persistence, React product surface và các luồng vận hành hỗ trợ exam.",
-				"impact": "Biến hệ thống thành learning platform sẵn sàng cho production hơn, với moderation visibility tốt hơn và session handling rõ ràng hơn trong lúc thi thật."
+				"summary": "Nền tảng thi online cho sinh viên y khoa, với real-time admin visibility và backend support cho các exam session có kiểm soát.",
+				"context": "Sinh viên cần một flow làm bài chạy êm. Admin cần đủ visibility để theo dõi session mà không phải đoán mò.",
+				"build": "Tôi phụ trách các luồng backend-heavy và session support nối student activity với admin tooling, góp phần đưa hệ thống thành production-ready hơn.",
+				"systems": "Node.js services, Socket.IO cho session visibility real-time, MongoDB persistence và React front end, cùng các luồng vận hành hỗ trợ exam.",
+				"impact": "Biến hệ thống thành learning platform production-ready hơn, với moderation visibility tốt hơn và session handling rõ ràng hơn khi thi thật."
 			},
 			"tinylink": {
 				"title": "TinyLink",
-				"summary": "URL shortener gọn nhẹ, được build như một bài toán systems engineering xoay quanh performance, observability và reliability trên stack có giới hạn.",
-				"context": "Dự án này đào sâu các tradeoff đằng sau một service nhỏ nhưng vẫn cần redirect nhanh, data path hợp lý và operational behavior sạch.",
-				"build": "Tôi thiết kế backend architecture, persistence layer, cache strategy và deployment path, tập trung vào các quyết định runtime thực tế thay vì mấy claim scale trừu tượng.",
-				"systems": "Fastify runtime, PostgreSQL persistence, Redis caching, Dockerized delivery path và mấy pattern observability gọn nhẹ phù hợp cho một lean service.",
-				"impact": "Thể hiện technical judgment về fast redirects, reliability và maintainability, trong khi vẫn giữ service compact và cost-aware."
+				"summary": "URL shortener gọn nhẹ, làm như một bài tập hệ thống xoay quanh performance, observability và reliability trên stack có giới hạn.",
+				"context": "Một service nhỏ vẫn phải chứng minh giá trị: redirect nhanh, data path hợp lý, và operational behavior không làm ai giật mình lúc 2 giờ sáng.",
+				"build": "Tôi thiết kế backend architecture, persistence layer, cache strategy và deployment path quanh các quyết định runtime thực tế, không phải mấy claim scale mà chẳng ai hỏi.",
+				"systems": "Fastify runtime, PostgreSQL persistence, Redis caching, Dockerized delivery path và observability pattern vừa đủ cho một lean service.",
+				"impact": "Một ví dụ cụ thể về technical judgment: redirect nhanh, reliable và dễ maintain, giữ cố tình compact và cost-aware."
 			},
 			"matchingHub": {
 				"title": "Matching Hub",
 				"summary": "Matchmaking-as-a-service cho game server: nền tảng multi-tenant xử lý player queuing, skill-based matching, Elo rating và webhook delivery đáng tin cậy.",
-				"context": "Các studio game cứ phải build đi build lại cùng một bộ matchmaking plumbing: queue, rating window, timeout, result callback. Matching Hub gom hết vào một API multi-tenant duy nhất để game server không cần tự làm nữa.",
-				"build": "Tôi thiết kế và build toàn bộ nền tảng end-to-end: một NestJS API với queue scoped theo project/environment, ba rating mode (internal Elo, external rating, hoặc tắt rating), webhook delivery ký HMAC kèm retry và backoff, cùng một Next.js dashboard cho operator để quản lý API key, theo dõi pool real-time và match history.",
-				"systems": "API dùng NestJS + Prisma + PostgreSQL, scheduler chạy in-process backed bởi PostgreSQL cho webhook retry và queue timeout (không cần Redis), Next.js dashboard chỉ gọi API server-side, và pipeline Docker/GHCR deploy lên VPS qua Cloudflare Tunnel còn dashboard chạy trên Vercel.",
-				"impact": "Thể hiện khả năng ownership một platform end-to-end, gồm API design, domain modeling, security (hashed key, webhook ký signed), và một CI/CD pipeline thật, cho một service được build để chạy unattended trong production."
+				"context": "Studio game nào cũng build đi build lại cùng một bộ matchmaking plumbing: queue, rating window, timeout, result callback. Matching Hub gom hết vào một API multi-tenant để game server không cần tự làm nữa.",
+				"build": "Tôi thiết kế và build toàn bộ nền tảng end-to-end: NestJS API với queue scoped theo project/environment, ba rating mode (internal Elo, external rating, hoặc tắt), webhook delivery ký HMAC kèm retry và backoff, và một Next.js dashboard để quản lý API key, theo dõi pool real-time và match history.",
+				"systems": "API dùng NestJS + Prisma + PostgreSQL, scheduler in-process backed bởi PostgreSQL cho webhook retry và queue timeout (không cần Redis), Next.js dashboard chỉ gọi API server-side, và pipeline Docker/GHCR deploy lên VPS qua Cloudflare Tunnel, dashboard chạy trên Vercel.",
+				"impact": "Ownership một platform end-to-end: API design, domain modeling, security thật (hashed key, webhook ký signed), và một CI/CD pipeline cho service được build để chạy unattended trong production."
 			}
 		}
 	},
 	"Capabilities": {
 		"eyebrow": "Năng lực",
 		"title": "Tech stack quan trọng, nhưng giá trị thực sự nằm ở chỗ mỗi lớp giúp tôi ship hệ thống tự tin hơn như thế nào.",
-		"intro": "Tôi thích nhóm kỹ năng theo năng lực hệ thống hơn là checklist công nghệ. Cách đó phản ánh đúng hơn cách backend work được giao và được đánh giá trong thực tế.",
+		"intro": "Tôi nhóm kỹ năng theo việc chúng giúp tôi làm được gì, không theo checklist công nghệ. Cách đó phản ánh đúng hơn cách backend work được giao trong thực tế.",
 		"items": {
 			"realtime": {
 				"eyebrow": "Real-time systems",
 				"title": "Event flow, sockets và interactive runtime behavior",
-				"description": "Tôi làm tốt ở môi trường backend nơi connection handling, messaging timing, event routing và runtime predictability ảnh hưởng trực tiếp đến trải nghiệm người dùng.",
+				"description": "Tôi thoải mái ở môi trường backend nơi connection handling, message timing và event routing ảnh hưởng trực tiếp đến trải nghiệm người dùng.",
 				"stack": ["WebSocket", "Socket.IO", "Node.js", "Event-driven architecture"]
 			},
 			"backend": {
 				"eyebrow": "Backend runtime",
 				"title": "API design và server-side product logic",
-				"description": "Backend work của tôi gồm service logic, REST APIs, authentication flows, internal tools và runtime structures, đủ rõ để maintain khi phạm vi sản phẩm mở rộng.",
+				"description": "Service logic, REST APIs, authentication flows, internal tools và runtime structures đủ rõ để maintain khi sản phẩm mở rộng.",
 				"stack": ["Node.js", "Express.js", "REST APIs", "JWT", "TypeScript"]
 			},
 			"data": {
 				"eyebrow": "Data and performance",
 				"title": "SQL, Redis và các quyết định backend theo throughput",
-				"description": "Tôi tối ưu data paths ở những chỗ query volume, concurrency và latency thực sự quan trọng, bao gồm SQL tuning, cache strategy và cắt giảm backend work dư thừa khi hệ thống có tải.",
+				"description": "Tôi tối ưu data paths ở chỗ query volume, concurrency và latency thực sự quan trọng: SQL tuning, cache strategy, và cắt bớt backend work dư thừa khi có tải.",
 				"stack": ["SQL Server", "MySQL", "Redis", "MongoDB", "Query optimization"]
 			},
 			"observability": {
 				"eyebrow": "Operational tooling",
 				"title": "Monitoring, incident response và runtime visibility",
-				"description": "Tôi có kinh nghiệm trực tiếp xây dựng internal monitoring và operational tools, cải thiện alerting, reporting, incident response và server management trong môi trường production.",
+				"description": "Kinh nghiệm trực tiếp xây internal monitoring và tooling, giúp alerting, reporting và incident response nhanh hơn trong production.",
 				"stack": ["Monitoring tools", "Telegram API", "Slack API", "Process management"]
 			},
 			"delivery": {
 				"eyebrow": "Delivery surface",
-				"title": "Đủ breadth để ship complete outcomes",
-				"description": "Ngoài backend-heavy work, tôi cũng có thể đóng góp ở product delivery surface khi cần, đặc biệt với internal tools, admin systems và full-stack product flows.",
+				"title": "Đủ breadth để ship trọn vẹn một outcome",
+				"description": "Tôi cũng làm được các phần khác của stack khi dự án cần: internal tools, admin systems và full-stack product flows.",
 				"stack": ["React", "Next.js", "Frontend delivery", "Admin tooling"]
 			}
 		}
 	},
 	"Experience": {
 		"eyebrow": "Kinh nghiệm",
-		"title": "Một quá trình đi qua production backend work, full-stack delivery và real-time systems.",
-		"intro": "Lộ trình này có ý nghĩa: từ internship, product work, freelance delivery cho tới live game server systems dưới áp lực real-time thực sự.",
+		"title": "Một hành trình qua production backend work, full-stack delivery và real-time systems.",
+		"intro": "Thứ tự ở đây có ý nghĩa: internship trước, rồi đến product work và freelance delivery, sau đó là live game server systems dưới áp lực concurrency thật.",
 		"items": {
 			"onky": {
 				"company": "ONKY",
@@ -231,39 +235,39 @@
 	},
 	"Principles": {
 		"eyebrow": "Cách làm việc",
-		"title": "Cách tôi cố gắng xây backend systems đủ khỏe để chịu được production reality.",
-		"intro": "Tôi ít quan tâm đến chuyện trông có vẻ clever, mà quan tâm nhiều hơn đến việc hệ thống có còn reliable, observable và understandable khi traffic, incidents và feature pressure thực sự xuất hiện hay không.",
+		"title": "Cách tôi cố xây backend systems sống sót được qua thực tế production.",
+		"intro": "Tôi ít quan tâm chuyện trông có vẻ clever, mà quan tâm nhiều hơn việc hệ thống có còn reliable và dễ suy luận khi traffic và incident thật sự xuất hiện.",
 		"items": {
 			"reliability": {
 				"eyebrow": "Reliability",
 				"title": "Tối ưu cho behavior dưới áp lực",
-				"description": "Backend tốt phải vẫn còn hợp lý khi concurrency tăng, incident xảy ra hoặc live product bắt đầu expose những assumptions yếu."
+				"description": "Backend tốt vẫn phải hợp lý khi concurrency tăng, incident xảy ra, hoặc live product bắt đầu lộ ra một assumption yếu."
 			},
 			"clarity": {
 				"eyebrow": "Clarity",
-				"title": "Giữ runtime và code path đủ dễ hiểu",
-				"description": "Tôi đánh giá cao hệ thống dễ inspect, debug và extend hơn là architecture chỉ trông ấn tượng trên giấy."
+				"title": "Giữ runtime và code path dễ đọc",
+				"description": "Tôi thích hệ thống dễ inspect và debug hơn là architecture chỉ trông ấn tượng trên giấy."
 			},
 			"concurrency": {
 				"eyebrow": "Concurrency",
 				"title": "Thiết kế với load và timing trong đầu",
-				"description": "Connection handling, event flow, redundant queries và race conditions không phải edge cases trong real-time products. Chính chúng là sản phẩm."
+				"description": "Connection handling, event flow và race conditions không phải edge case trong sản phẩm real-time. Chúng chính là sản phẩm."
 			},
 			"visibility": {
 				"eyebrow": "Visibility",
 				"title": "Observability là một phần của delivery",
-				"description": "Monitoring, alerts, logs và reporting phải làm giảm operational stress và rút ngắn incident response time, không chỉ để trang trí stack."
+				"description": "Monitoring tốt rút ngắn thời gian phản ứng incident và giảm áp lực khi trực. Đó mới là mục đích của nó, không phải một checkbox."
 			}
 		}
 	},
 	"Contact": {
 		"eyebrow": "Mở cho những trao đổi phù hợp",
-		"title": "Nếu bạn cần người phụ trách backend cho real-time systems, runtime clarity hoặc production stability, hãy nói chuyện với tôi.",
-		"intro": "Phù hợp nhất với các team đang build multiplayer products, internal operational tooling, event-driven backends hoặc hệ thống mà observability và reliability là một phần của sản phẩm.",
+		"title": "Cần người phụ trách backend cho real-time systems hoặc production stability? Nói chuyện với tôi.",
+		"intro": "Tôi hợp với các team đang xây multiplayer products, event-driven backends, hoặc hệ thống mà reliability không phải chuyện tùy chọn.",
 		"download": "Tải CV",
 		"mail": "Gửi email",
 		"availabilityLabel": "Trạng thái hiện tại",
-		"availabilityValue": "Mở cho một số cơ hội freelance, consulting và trao đổi với recruiter, đặc biệt nếu có góc nhìn mạnh về backend hoặc systems.",
+		"availabilityValue": "Mở cho một số cơ hội freelance, consulting và trao đổi với recruiter, nếu có góc nhìn backend hoặc systems thực sự.",
 		"educationLabel": "Học vấn",
 		"educationValue": "Bachelor of Engineering in Computer Science (Information Technology), Ho Chi Minh City University of Technology and Education.",
 		"educationMeta": "2019 - 2024 · GPA 8.61 / 10",
@@ -277,7 +281,7 @@
 		"homeCta": "Ghi chú kỹ thuật",
 		"eyebrow": "Ghi chú kỹ thuật",
 		"title": "Mấy bài viết ngắn về backend systems, runtime clarity và tradeoff trong production.",
-		"description": "Tôi dùng chỗ này để ghi lại các quyết định kỹ thuật đằng sau những hệ thống ổn định, interface có kỷ luật và cách delivery sạch hơn.",
+		"description": "Nơi tôi ghi lại các quyết định kỹ thuật đằng sau những hệ thống ổn định, chủ yếu để sau này còn nhớ vì sao mình chọn vậy.",
 		"featured": "Bài nổi bật",
 		"latest": "Bài mới nhất",
 		"backHome": "Về trang chủ",
@@ -295,7 +299,7 @@
 		"empty": "Chưa có bài viết nào.",
 		"meta": {
 			"title": "Ghi chú kỹ thuật",
-			"description": "Ghi chú kỹ thuật về backend systems, runtime clarity và delivery tradeoffs từ góc nhìn production-minded engineer."
+			"description": "Ghi chú về backend systems, runtime clarity và delivery tradeoffs, từ người phải sống chung với những quyết định đó."
 		}
 	},
 	"Deck": {
@@ -314,5 +318,38 @@
 		"roles": "vai trò",
 		"now": "hiện tại",
 		"signalsTitle": "Proof, bằng con số"
+	},
+	"AI": {
+		"eyebrow": "Trợ lý AI",
+		"title": "Hỏi về CV của tôi hoặc kiểm tra độ phù hợp JD",
+		"cardTeaser": "Trò chuyện với AI dựa trên CV của tôi, hoặc dán JD để xem mức độ phù hợp.",
+		"tabs": {
+			"chat": "Trò chuyện",
+			"jdFit": "Kiểm tra JD"
+		},
+		"chat": {
+			"placeholder": "Hỏi về kinh nghiệm, công nghệ, hoặc dự án của tôi…",
+			"send": "Gửi",
+			"empty": "Hỏi bất cứ điều gì về kinh nghiệm, công nghệ, hoặc dự án của tôi.",
+			"thinking": "Đang xử lý…",
+			"error": "Cả hai nhà cung cấp AI hiện không khả dụng. Vui lòng thử lại sau hoặc liên hệ trực tiếp với tôi."
+		},
+		"jdFit": {
+			"placeholder": "Dán mô tả công việc (JD)…",
+			"submit": "Kiểm tra độ phù hợp",
+			"checking": "Đang kiểm tra…",
+			"error": "Cả hai nhà cung cấp AI hiện không khả dụng. Vui lòng thử lại sau hoặc liên hệ trực tiếp với tôi.",
+			"verdictLabel": "Kết luận",
+			"scoreLabel": "Điểm phù hợp",
+			"strengthsLabel": "Điểm mạnh",
+			"gapsLabel": "Khoảng trống",
+			"summaryLabel": "Tóm tắt",
+			"verdicts": {
+				"strong_fit": "Phù hợp cao",
+				"partial_fit": "Phù hợp một phần",
+				"weak_fit": "Ít phù hợp"
+			}
+		},
+		"disclaimer": "Câu trả lời được tạo từ nội dung CV của tôi và có thể chưa hoàn hảo. Với vấn đề quan trọng, hãy liên hệ trực tiếp."
 	}
 }

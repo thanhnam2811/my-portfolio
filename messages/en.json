@@ -7,7 +7,7 @@
 	},
 	"Metadata": {
 		"title": "Thai Thanh Nam | Backend Systems for Real-Time Products",
-		"description": "Backend developer focused on real-time systems, production reliability, and scalable server-side architecture for multiplayer and operationally sensitive products.",
+		"description": "Backend developer building real-time systems: multiplayer game servers, monitoring pipelines, and production APIs that hold up under real concurrency.",
 		"siteName": "Thai Thanh Nam",
 		"role": "Backend Developer",
 		"location": "Ho Chi Minh City, Vietnam"
@@ -23,7 +23,7 @@
 	"Hero": {
 		"eyebrow": "Backend systems for real-time products",
 		"headline": "I build backend systems that stay clear, fast, and reliable when concurrency starts to matter.",
-		"summary": "Backend Developer with 3+ years of hands-on work across multiplayer game servers, real-time communication, monitoring pipelines, and production backend flows. My focus is on runtime behavior that remains understandable under load.",
+		"summary": "Backend Developer with 3+ years building multiplayer game servers, real-time communication, and monitoring for production systems. What I care about most is runtime behavior that's still understandable once real traffic shows up.",
 		"ctaPrimary": "See selected work",
 		"ctaSecondary": "Contact",
 		"ctaDownload": "Download CV",
@@ -34,49 +34,49 @@
 		"signals": {
 			"runtime": {
 				"title": "Runtime first",
-				"description": "I care about connection flow, concurrency, and service behavior where real-time pressure exposes weak architecture quickly."
+				"description": "Connection flow, concurrency, and service behavior get my attention early, because real-time pressure exposes weak architecture fast."
 			},
 			"observability": {
-				"title": "Observability included",
-				"description": "Monitoring, alerts, logs, and incident visibility are treated as part of the product, not a cleanup step after shipping."
+				"title": "Observability from day one",
+				"description": "I build in monitoring, alerts, and logs while I'm building the feature, not as a fire drill after something breaks in production."
 			},
 			"delivery": {
-				"title": "Delivery with constraints",
-				"description": "I aim for maintainable backend delivery that still moves fast under operational limits, legacy constraints, and live product pressure."
+				"title": "Delivery under real constraints",
+				"description": "I ship backend work that stays maintainable even with legacy code, tight timelines, and a live product that isn't going to wait."
 			}
 		}
 	},
 	"Proof": {
 		"experience": {
 			"value": "3+ years",
-			"label": "Designing and maintaining backend systems in production.",
+			"label": "Designing and running backend systems in production.",
 			"short": "building production backends"
 		},
 		"servers": {
 			"value": "20+ servers",
-			"label": "Real-time multiplayer game server instances delivered with Node.js and WebSocket.",
+			"label": "Real-time multiplayer game server instances built with Node.js and WebSocket.",
 			"short": "Node.js · WebSocket"
 		},
 		"concurrency": {
 			"value": "High concurrency",
-			"label": "Systems built to support thousands of concurrent users and operationally sensitive workloads.",
+			"label": "Systems built to hold thousands of concurrent players without falling over.",
 			"short": "thousands of concurrent users"
 		},
 		"incidents": {
 			"value": "-40%",
-			"label": "Average incident response time improved through internal monitoring and reporting tooling.",
+			"label": "Average incident response time cut by 40% after building better internal monitoring.",
 			"short": "faster incident response"
 		},
 		"stack": {
 			"value": "SQL + Redis + APIs",
-			"label": "Practical experience across SQL Server, MySQL, Redis, MongoDB, REST APIs, and real-time messaging.",
+			"label": "SQL Server, MySQL, Redis, MongoDB, REST APIs, and real-time messaging, used daily.",
 			"short": "used daily in real products"
 		}
 	},
 	"Projects": {
 		"eyebrow": "Selected work",
 		"title": "Case studies that show systems thinking, not just feature delivery.",
-		"intro": "This mix combines production game server work, product delivery, and systems exercises to show how I think about architecture, runtime stability, and operational clarity.",
+		"intro": "Four case studies: production game servers, a full-stack product I helped ship, and two systems exercises I built to sharpen specific skills.",
 		"viewProject": "Open project",
 		"viewSource": "View source",
 		"labels": {
@@ -85,82 +85,86 @@
 			"systems": "Systems involved",
 			"impact": "Impact"
 		},
+		"groups": {
+			"workProduction": { "eyebrow": "Production work" },
+			"workSideProjects": { "eyebrow": "Side projects" }
+		},
 		"items": {
 			"onky": {
 				"title": "ONKY Game Server Systems",
-				"summary": "Production backend ownership across multiple online game products, including game server architecture, monitoring, live operations, and backend flow optimization.",
-				"context": "At ONKY, the work involved real-time multiplayer products where service behavior, runtime clarity, and backend stability directly affected live player experience.",
+				"summary": "Production backend ownership across ONKY's online game products: server architecture, monitoring, and live operations.",
+				"context": "Real-time multiplayer products, where service behavior and runtime clarity affect live players directly, and backend stability isn't optional.",
 				"build": "Built and extended multiplayer game servers with Node.js and WebSocket, added custom game logic on top of a shared framework, designed APIs for internal tools and lobby flows, and shipped internal SOS monitoring and process-management utilities.",
-				"systems": "Real-time socket communication, master-worker monitoring architecture, Redis-backed message flow, SQL-backed event logic, incident tooling, and operations support for game instances.",
-				"impact": "Delivered 20+ game server instances, improved average incident response time by 40%, reduced redundant SQL load, and made debugging and rollout operations more predictable in production."
+				"systems": "Real-time socket communication, master-worker monitoring architecture, Redis-backed message flow, SQL-backed event logic, and incident tooling for live game instances.",
+				"impact": "20+ game server instances delivered, average incident response time down 40%, redundant SQL load reduced, and production debugging and rollouts made more predictable."
 			},
 			"vmu": {
 				"title": "VMU Test Exam",
-				"summary": "An online exam platform for medical students with real-time admin visibility, question bank workflows, and backend support for controlled exam sessions.",
-				"context": "The product needed a stable testing flow for students while giving administrators enough visibility to monitor sessions and manage learning operations.",
-				"build": "Worked on backend-heavy product flows and session support between student activity and admin tooling, helping shape the platform into a usable production-ready learning system.",
-				"systems": "Node.js services, Socket.IO-based real-time session visibility, MongoDB persistence, React-based product surface, and operational flows for exam support.",
-				"impact": "Turned the system into a more production-ready learning platform with stronger moderation visibility and clearer session handling during live exam activity."
+				"summary": "An online exam platform for medical students, with real-time admin visibility and backend support for controlled exam sessions.",
+				"context": "Students needed a testing flow that just worked. Admins needed enough visibility to monitor sessions and run the platform without guessing.",
+				"build": "Worked on the backend-heavy product flows and session support connecting student activity to admin tooling, shaping the platform into something production-ready.",
+				"systems": "Node.js services, Socket.IO for real-time session visibility, MongoDB persistence, and a React front end, with operational flows for exam support.",
+				"impact": "Turned the system into a production-ready learning platform, with clearer moderation visibility and more reliable session handling during live exams."
 			},
 			"tinylink": {
 				"title": "TinyLink",
-				"summary": "A compact URL shortener built as a systems exercise around performance, observability, and reliability on a constrained stack.",
-				"context": "This project explores the tradeoffs behind a small service that still needs fast redirects, sane data paths, and clean operational behavior.",
-				"build": "Designed the backend architecture, persistence layer, cache strategy, and deployment path with a focus on practical runtime choices rather than abstract scale claims.",
-				"systems": "Fastify runtime, PostgreSQL persistence, Redis caching, Dockerized delivery path, and lightweight observability patterns suitable for a lean service.",
-				"impact": "Shows backend judgment around fast redirects, reliability, and maintainability while keeping the service compact and cost-aware."
+				"summary": "A compact URL shortener, built as a systems exercise around performance, observability, and reliability on a lean stack.",
+				"context": "A small service still has to earn its keep: fast redirects, sane data paths, and operational behavior that doesn't surprise you at 2am.",
+				"build": "Designed the backend architecture, persistence layer, cache strategy, and deployment path around practical runtime choices, not abstract scale claims nobody was asking for.",
+				"systems": "Fastify runtime, PostgreSQL persistence, Redis caching, a Dockerized delivery path, and observability patterns sized for a lean service.",
+				"impact": "A working demonstration of backend judgment: fast redirects, reliability, and maintainability, kept compact and cost-aware on purpose."
 			},
 			"matchingHub": {
 				"title": "Matching Hub",
-				"summary": "Matchmaking-as-a-service for game servers: a multi-tenant platform handling player queuing, skill-based matching, Elo ratings, and reliable webhook delivery.",
-				"context": "Game studios keep rebuilding the same matchmaking plumbing: queues, rating windows, timeouts, result callbacks. Matching Hub centralizes that into a single multi-tenant API so game servers don't have to own it.",
-				"build": "Designed and built the platform end to end: a NestJS API with project/environment-scoped queues, three rating modes (internal Elo, external rating, or disabled), HMAC-signed webhook delivery with retry and backoff, and a Next.js operator dashboard for API keys, live pool monitoring, and match history.",
-				"systems": "NestJS + Prisma + PostgreSQL API, PostgreSQL-backed in-process schedulers for webhook retries and queue timeouts (no Redis dependency), a Next.js dashboard that talks to the API server-side only, and a Docker/GHCR pipeline deploying to a VPS behind a Cloudflare Tunnel with the dashboard on Vercel.",
-				"impact": "Shows end-to-end platform ownership across API design, domain modeling, security (hashed keys, signed webhooks), and a real CI/CD pipeline, for a service built to run unattended in production."
+				"summary": "Matchmaking-as-a-service for game servers: a multi-tenant platform handling player queuing, skill-based matching, Elo ratings, and webhook delivery.",
+				"context": "Every game studio rebuilds the same matchmaking plumbing: queues, rating windows, timeouts, result callbacks. Matching Hub centralizes that into one multi-tenant API so game servers don't have to own it.",
+				"build": "Designed and built the platform end to end: a NestJS API with project/environment-scoped queues, three rating modes (internal Elo, external rating, or none), HMAC-signed webhook delivery with retry and backoff, and a Next.js dashboard for API keys, live pool monitoring, and match history.",
+				"systems": "NestJS + Prisma + PostgreSQL for the API, PostgreSQL-backed in-process schedulers for webhook retries and queue timeouts (no Redis needed), a Next.js dashboard that only talks to the API server-side, and a Docker/GHCR pipeline deploying to a VPS behind a Cloudflare Tunnel, with the dashboard on Vercel.",
+				"impact": "End-to-end platform ownership: API design, domain modeling, real security work (hashed keys, signed webhooks), and a CI/CD pipeline for a service meant to run unattended in production."
 			}
 		}
 	},
 	"Capabilities": {
 		"eyebrow": "Capability architecture",
 		"title": "The stack matters, but the real value is what each layer lets me ship confidently.",
-		"intro": "I prefer grouping skills by system capability instead of technology checklists. That maps much better to how backend work is actually delivered.",
+		"intro": "I group skills by what they let me build, not by a technology checklist. It maps better to how backend work actually gets delivered.",
 		"items": {
 			"realtime": {
 				"eyebrow": "Real-time systems",
 				"title": "Event flow, sockets, and interactive runtime behavior",
-				"description": "I work well in backend environments where connection handling, messaging timing, event routing, and runtime predictability affect the end-user experience directly.",
+				"description": "I'm comfortable in backend environments where connection handling, message timing, and event routing shape the end-user experience directly.",
 				"stack": ["WebSocket", "Socket.IO", "Node.js", "Event-driven architecture"]
 			},
 			"backend": {
 				"eyebrow": "Backend runtime",
 				"title": "API design and server-side product logic",
-				"description": "My backend work includes service logic, REST APIs, authentication flows, internal tools, and runtime structures that stay understandable as product scope grows.",
+				"description": "Service logic, REST APIs, authentication flows, internal tools, and runtime structures that stay understandable as a product grows.",
 				"stack": ["Node.js", "Express.js", "REST APIs", "JWT", "TypeScript"]
 			},
 			"data": {
 				"eyebrow": "Data and performance",
 				"title": "SQL, Redis, and throughput-focused backend decisions",
-				"description": "I optimize data paths where query volume, concurrency, and latency matter. That includes SQL tuning, cache usage, and reducing redundant backend work under load.",
+				"description": "I optimize data paths where query volume, concurrency, and latency actually matter: SQL tuning, cache usage, and cutting redundant work under load.",
 				"stack": ["SQL Server", "MySQL", "Redis", "MongoDB", "Query optimization"]
 			},
 			"observability": {
 				"eyebrow": "Operational tooling",
 				"title": "Monitoring, incident response, and runtime visibility",
-				"description": "I have hands-on experience building internal monitoring and operational tools that improve alerting, reporting, incident response, and server management in production.",
+				"description": "Hands-on experience building internal monitoring and tooling that made alerting, reporting, and incident response faster in production.",
 				"stack": ["Monitoring tools", "Telegram API", "Slack API", "Process management"]
 			},
 			"delivery": {
 				"eyebrow": "Delivery surface",
-				"title": "Enough product breadth to ship complete outcomes",
-				"description": "Beyond backend-heavy work, I can also contribute across product delivery surfaces when needed, especially for internal tools, admin systems, and full-stack product flows.",
+				"title": "Enough range to ship complete outcomes",
+				"description": "I can also work across the rest of the stack when a project needs it: internal tools, admin systems, and full-stack product flows.",
 				"stack": ["React", "Next.js", "Frontend delivery", "Admin tooling"]
 			}
 		}
 	},
 	"Experience": {
 		"eyebrow": "Experience",
-		"title": "A progression through production backend work, full-stack delivery, and real-time systems.",
-		"intro": "The route here matters: internships, product work, freelance delivery, and then live game server systems under real-time constraints.",
+		"title": "A path through production backend work, full-stack delivery, and real-time systems.",
+		"intro": "The order matters: internships first, then product work and freelance delivery, then live game server systems under real concurrency.",
 		"items": {
 			"onky": {
 				"company": "ONKY",
@@ -231,39 +235,39 @@
 	},
 	"Principles": {
 		"eyebrow": "Working style",
-		"title": "How I try to build backend systems that survive production reality.",
-		"intro": "I care less about appearing clever and more about whether the system remains reliable, observable, and understandable once real traffic, incidents, and feature pressure arrive.",
+		"title": "How I try to build backend systems that survive contact with production.",
+		"intro": "I care less about looking clever and more about whether the system is still reliable and easy to reason about once real traffic and incidents show up.",
 		"items": {
 			"reliability": {
 				"eyebrow": "Reliability",
 				"title": "Optimize for behavior under pressure",
-				"description": "Good backend work should still make sense when concurrency rises, incidents happen, or a live product starts exposing weak assumptions."
+				"description": "Good backend work should still make sense when concurrency rises, incidents happen, or a live product exposes a weak assumption."
 			},
 			"clarity": {
 				"eyebrow": "Clarity",
-				"title": "Keep runtime and code paths understandable",
-				"description": "I value systems that are easier to inspect, debug, and extend instead of architectures that only look impressive on paper."
+				"title": "Keep runtime and code paths readable",
+				"description": "I'd rather have a system that's easy to inspect and debug than an architecture that only looks impressive on paper."
 			},
 			"concurrency": {
 				"eyebrow": "Concurrency",
 				"title": "Design with load and timing in mind",
-				"description": "Connection handling, event flow, redundant queries, and race conditions are not edge cases in real-time products. They are the product."
+				"description": "Connection handling, event flow, and race conditions aren't edge cases in real-time products. They're the product."
 			},
 			"visibility": {
 				"eyebrow": "Visibility",
 				"title": "Observability is part of delivery",
-				"description": "Monitoring, alerts, logs, and reporting should reduce operational stress and shorten incident response time, not just decorate the stack."
+				"description": "Good monitoring shortens incident response and lowers the stress of being on call. That's the point of it, not a checkbox."
 			}
 		}
 	},
 	"Contact": {
 		"eyebrow": "Open to the right conversations",
-		"title": "If you need backend ownership around real-time systems, runtime clarity, or production stability, let's talk.",
-		"intro": "Best fit for teams building multiplayer products, internal operational tooling, event-driven backends, or systems where observability and reliability are part of the product.",
+		"title": "Need backend ownership for real-time systems or production stability? Let's talk.",
+		"intro": "I'm a good fit for teams building multiplayer products, event-driven backends, or systems where reliability isn't optional.",
 		"download": "Download CV",
 		"mail": "Send email",
 		"availabilityLabel": "Availability",
-		"availabilityValue": "Open to selected freelance, consulting, and recruiter conversations with a strong backend or systems angle.",
+		"availabilityValue": "Open to select freelance, consulting, and recruiter conversations with a real backend or systems angle.",
 		"educationLabel": "Education",
 		"educationValue": "Bachelor of Engineering in Computer Science (Information Technology), Ho Chi Minh City University of Technology and Education.",
 		"educationMeta": "Graduated 2019 - 2024 · GPA 8.61 / 10",
@@ -277,7 +281,7 @@
 		"homeCta": "Read notes",
 		"eyebrow": "Technical notes",
 		"title": "Short essays on backend systems, runtime clarity, and production tradeoffs.",
-		"description": "I use this space to write down the engineering choices behind stable systems, disciplined interfaces, and cleaner delivery.",
+		"description": "Where I write down the engineering decisions behind stable systems and cleaner delivery, mostly so I remember why I made them.",
 		"featured": "Featured post",
 		"latest": "Latest articles",
 		"backHome": "Back to homepage",
@@ -295,7 +299,7 @@
 		"empty": "No articles published yet.",
 		"meta": {
 			"title": "Technical Notes",
-			"description": "Technical notes on backend systems, runtime clarity, and delivery tradeoffs from a production-minded engineer."
+			"description": "Notes on backend systems, runtime clarity, and delivery tradeoffs, from someone who has to live with the decisions."
 		}
 	},
 	"Deck": {
@@ -314,5 +318,38 @@
 		"roles": "roles",
 		"now": "now",
 		"signalsTitle": "Proof, in numbers"
+	},
+	"AI": {
+		"eyebrow": "AI assistant",
+		"title": "Ask about my CV or check a job description",
+		"cardTeaser": "Chat with an AI grounded in my CV, or paste a JD to see how well it fits.",
+		"tabs": {
+			"chat": "Chat",
+			"jdFit": "JD fit check"
+		},
+		"chat": {
+			"placeholder": "Ask about my experience, stack, or projects…",
+			"send": "Send",
+			"empty": "Ask anything about my experience, stack, or projects.",
+			"thinking": "Thinking…",
+			"error": "Both AI providers are unavailable right now. Please try again shortly or contact me directly."
+		},
+		"jdFit": {
+			"placeholder": "Paste a job description…",
+			"submit": "Check fit",
+			"checking": "Checking…",
+			"error": "Both AI providers are unavailable right now. Please try again shortly or contact me directly.",
+			"verdictLabel": "Verdict",
+			"scoreLabel": "Fit score",
+			"strengthsLabel": "Strengths",
+			"gapsLabel": "Gaps",
+			"summaryLabel": "Summary",
+			"verdicts": {
+				"strong_fit": "Strong fit",
+				"partial_fit": "Partial fit",
+				"weak_fit": "Weak fit"
+			}
+		},
+		"disclaimer": "Answers are generated from my CV content and may be imperfect. For anything important, reach out directly."
 	}
 }
