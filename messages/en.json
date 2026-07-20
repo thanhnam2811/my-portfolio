@@ -112,11 +112,11 @@
 			},
 			"matchingHub": {
 				"title": "Matching Hub",
-				"summary": "Matchmaking-as-a-service for game servers — a multi-tenant platform handling player queuing, skill-based matching, Elo ratings, and reliable webhook delivery.",
-				"context": "Game studios keep rebuilding the same matchmaking plumbing — queues, rating windows, timeouts, result callbacks. Matching Hub centralizes that into a single multi-tenant API so game servers don't have to own it.",
+				"summary": "Matchmaking-as-a-service for game servers: a multi-tenant platform handling player queuing, skill-based matching, Elo ratings, and reliable webhook delivery.",
+				"context": "Game studios keep rebuilding the same matchmaking plumbing: queues, rating windows, timeouts, result callbacks. Matching Hub centralizes that into a single multi-tenant API so game servers don't have to own it.",
 				"build": "Designed and built the platform end to end: a NestJS API with project/environment-scoped queues, three rating modes (internal Elo, external rating, or disabled), HMAC-signed webhook delivery with retry and backoff, and a Next.js operator dashboard for API keys, live pool monitoring, and match history.",
 				"systems": "NestJS + Prisma + PostgreSQL API, PostgreSQL-backed in-process schedulers for webhook retries and queue timeouts (no Redis dependency), a Next.js dashboard that talks to the API server-side only, and a Docker/GHCR pipeline deploying to a VPS behind a Cloudflare Tunnel with the dashboard on Vercel.",
-				"impact": "Shows end-to-end platform ownership — API design, domain modeling, security (hashed keys, signed webhooks), and a real CI/CD pipeline — for a service built to run unattended in production."
+				"impact": "Shows end-to-end platform ownership across API design, domain modeling, security (hashed keys, signed webhooks), and a real CI/CD pipeline, for a service built to run unattended in production."
 			}
 		}
 	},
@@ -303,7 +303,7 @@
 		"open": "Open",
 		"close": "Close",
 		"systemLabel": "Runtime topology",
-		"systemCaption": "How a single packet travels through one game loop — from client to storage.",
+		"systemCaption": "How a single packet travels through one game loop, from client to storage.",
 		"signalsLabel": "Signal set",
 		"currentFocus": "Current focus",
 		"currentFocusValue": "Real-time backend, observability, and production-minded product delivery.",
