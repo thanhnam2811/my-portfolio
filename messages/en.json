@@ -85,6 +85,10 @@
 			"systems": "Systems involved",
 			"impact": "Impact"
 		},
+		"groups": {
+			"workProduction": { "eyebrow": "Production work" },
+			"workSideProjects": { "eyebrow": "Side projects" }
+		},
 		"items": {
 			"onky": {
 				"title": "ONKY Game Server Systems",
@@ -314,5 +318,38 @@
 		"roles": "roles",
 		"now": "now",
 		"signalsTitle": "Proof, in numbers"
+	},
+	"AI": {
+		"eyebrow": "AI assistant",
+		"title": "Ask about my CV or check a job description",
+		"cardTeaser": "Chat with an AI grounded in my CV, or paste a JD to see how well it fits.",
+		"tabs": {
+			"chat": "Chat",
+			"jdFit": "JD fit check"
+		},
+		"chat": {
+			"placeholder": "Ask about my experience, stack, or projects…",
+			"send": "Send",
+			"empty": "Ask anything about my experience, stack, or projects.",
+			"thinking": "Thinking…",
+			"error": "Both AI providers are unavailable right now. Please try again shortly or contact me directly."
+		},
+		"jdFit": {
+			"placeholder": "Paste a job description…",
+			"submit": "Check fit",
+			"checking": "Checking…",
+			"error": "Both AI providers are unavailable right now. Please try again shortly or contact me directly.",
+			"verdictLabel": "Verdict",
+			"scoreLabel": "Fit score",
+			"strengthsLabel": "Strengths",
+			"gapsLabel": "Gaps",
+			"summaryLabel": "Summary",
+			"verdicts": {
+				"strong_fit": "Strong fit",
+				"partial_fit": "Partial fit",
+				"weak_fit": "Weak fit"
+			}
+		},
+		"disclaimer": "Answers are generated from my CV content and may be imperfect. For anything important, reach out directly."
 	}
 }

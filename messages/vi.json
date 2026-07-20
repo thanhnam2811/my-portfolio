@@ -85,6 +85,10 @@
 			"systems": "Hệ thống liên quan",
 			"impact": "Kết quả"
 		},
+		"groups": {
+			"workProduction": { "eyebrow": "Công việc production" },
+			"workSideProjects": { "eyebrow": "Dự án cá nhân" }
+		},
 		"items": {
 			"onky": {
 				"title": "ONKY Game Server Systems",
@@ -314,5 +318,38 @@
 		"roles": "vai trò",
 		"now": "hiện tại",
 		"signalsTitle": "Proof, bằng con số"
+	},
+	"AI": {
+		"eyebrow": "Trợ lý AI",
+		"title": "Hỏi về CV của tôi hoặc kiểm tra độ phù hợp JD",
+		"cardTeaser": "Trò chuyện với AI dựa trên CV của tôi, hoặc dán JD để xem mức độ phù hợp.",
+		"tabs": {
+			"chat": "Trò chuyện",
+			"jdFit": "Kiểm tra JD"
+		},
+		"chat": {
+			"placeholder": "Hỏi về kinh nghiệm, công nghệ, hoặc dự án của tôi…",
+			"send": "Gửi",
+			"empty": "Hỏi bất cứ điều gì về kinh nghiệm, công nghệ, hoặc dự án của tôi.",
+			"thinking": "Đang xử lý…",
+			"error": "Cả hai nhà cung cấp AI hiện không khả dụng. Vui lòng thử lại sau hoặc liên hệ trực tiếp với tôi."
+		},
+		"jdFit": {
+			"placeholder": "Dán mô tả công việc (JD)…",
+			"submit": "Kiểm tra độ phù hợp",
+			"checking": "Đang kiểm tra…",
+			"error": "Cả hai nhà cung cấp AI hiện không khả dụng. Vui lòng thử lại sau hoặc liên hệ trực tiếp với tôi.",
+			"verdictLabel": "Kết luận",
+			"scoreLabel": "Điểm phù hợp",
+			"strengthsLabel": "Điểm mạnh",
+			"gapsLabel": "Khoảng trống",
+			"summaryLabel": "Tóm tắt",
+			"verdicts": {
+				"strong_fit": "Phù hợp cao",
+				"partial_fit": "Phù hợp một phần",
+				"weak_fit": "Ít phù hợp"
+			}
+		},
+		"disclaimer": "Câu trả lời được tạo từ nội dung CV của tôi và có thể chưa hoàn hảo. Với vấn đề quan trọng, hãy liên hệ trực tiếp."
 	}
 }
