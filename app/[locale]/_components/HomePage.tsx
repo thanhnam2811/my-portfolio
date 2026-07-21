@@ -283,14 +283,35 @@ function WorkCarousel({
 	const [api, setApi] = useState<CarouselApi | null>(null);
 	const [selected, setSelected] = useState(0);
 
+	// Auto-height: pin the embla viewport to the *active* slide's height so a
+	// short case study doesn't get stretched to the tallest one. Recomputed on
+	// slide change and whenever a slide's content resizes (images, reflow).
 	useEffect(() => {
 		if (!api) return;
-		const onSelect = () => setSelected(api.selectedScrollSnap());
+		const root = api.rootNode();
+		const nodes = api.slideNodes();
+		const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+		root.style.transition = reduce ? 'none' : 'height 320ms cubic-bezier(0.32, 0.72, 0, 1)';
+
+		const applyHeight = () => {
+			const active = nodes[api.selectedScrollSnap()];
+			if (active) root.style.height = `${active.offsetHeight}px`;
+		};
+		const onSelect = () => {
+			setSelected(api.selectedScrollSnap());
+			applyHeight();
+		};
+
 		onSelect();
 		api.on('select', onSelect);
 		api.on('reInit', onSelect);
+		const observer = new ResizeObserver(applyHeight);
+		nodes.forEach((node) => observer.observe(node));
+
 		return () => {
 			api.off('select', onSelect);
+			api.off('reInit', onSelect);
+			observer.disconnect();
 		};
 	}, [api]);
 
@@ -298,7 +319,9 @@ function WorkCarousel({
 
 	return (
 		<Carousel setApi={setApi} opts={{ align: 'start', duration: 24 }} className="w-full">
-			<div className="sticky top-0 z-10 -mx-6 mb-2 flex items-center justify-between gap-4 bg-[var(--operator-bg)]/85 px-6 py-3 backdrop-blur-sm sm:-mx-9 sm:px-9">
+			{/* pr-16 (no competing px utility) keeps the controls clear of the
+			    modal's absolute close button in the top-right corner. */}
+			<div className="sticky top-0 z-10 -mx-6 mb-2 flex items-center justify-between gap-4 bg-[var(--operator-bg)]/85 py-3 pl-6 pr-16 backdrop-blur-sm sm:-mx-9 sm:pl-9">
 				<p className="deck-label">{labels.eyebrow}</p>
 				<div className="flex items-center gap-3">
 					<span className="font-mono text-xs tabular-nums text-slate-400">
