@@ -79,6 +79,8 @@
 		"intro": "Bốn case study: game server production, một sản phẩm full-stack tôi tham gia ship, và hai bài tập hệ thống tôi tự làm để mài kỹ năng.",
 		"viewProject": "Mở dự án",
 		"viewSource": "Xem source",
+		"prev": "Dự án trước",
+		"next": "Dự án tiếp theo",
 		"labels": {
 			"context": "Bối cảnh",
 			"build": "Đã làm gì",

@@ -4,9 +4,21 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
-import { ArrowUpRight, Download, ExternalLink, Github, Linkedin, Mail, Sparkles, X } from 'lucide-react';
+import {
+	ArrowLeft,
+	ArrowRight,
+	ArrowUpRight,
+	Download,
+	ExternalLink,
+	Github,
+	Linkedin,
+	Mail,
+	Sparkles,
+	X,
+} from 'lucide-react';
 import { useLocale, useTranslations } from 'next-intl';
 import { Button } from '@/components/ui/button';
+import { Carousel, type CarouselApi, CarouselContent, CarouselItem } from '@/components/ui/carousel';
 import SystemVisualization from '@/components/SystemVisualization';
 import AiCard from '@/app/[locale]/_components/ai/AiCard';
 import {
@@ -15,7 +27,6 @@ import {
 	featuredWork,
 	principles,
 	proofItems,
-	workGroups,
 } from '@/app/[locale]/_data/content';
 
 /**
@@ -29,8 +40,7 @@ type CardId =
 	| 'identity'
 	| 'topology'
 	| 'proof'
-	| 'workProduction'
-	| 'workSideProjects'
+	| 'work'
 	| 'ai'
 	| 'capabilities'
 	| 'experience'
@@ -40,8 +50,7 @@ type CardId =
 const EXPANDABLE: readonly CardId[] = [
 	'identity',
 	'proof',
-	'workProduction',
-	'workSideProjects',
+	'work',
 	'ai',
 	'capabilities',
 	'experience',
@@ -54,8 +63,7 @@ const CARD_GRID: Record<CardId, string> = {
 	identity: 'md:col-span-2 lg:col-span-5 lg:row-span-3',
 	topology: 'md:col-span-2 lg:col-span-7 lg:row-span-2',
 	proof: 'md:col-span-2 lg:col-span-7 lg:row-span-1',
-	workProduction: 'lg:col-span-4 lg:row-span-2',
-	workSideProjects: 'lg:col-span-4 lg:row-span-2',
+	work: 'md:col-span-2 lg:col-span-8 lg:row-span-2',
 	ai: 'lg:col-span-4 lg:row-span-2',
 	experience: 'lg:col-span-3 lg:row-span-1',
 	capabilities: 'lg:col-span-3 lg:row-span-1',
@@ -238,6 +246,111 @@ function MorphSurface({
 	);
 }
 
+/** Case-study cover with a self-contained skeleton — each slide tracks its own
+ *  load state so a carousel of projects doesn't share one flag. */
+function ProjectImage({ src, alt }: { src: string; alt: string }) {
+	const [loaded, setLoaded] = useState(false);
+	return (
+		<div className="relative mt-6 aspect-[16/9] overflow-hidden border border-white/10 bg-slate-900/40">
+			{!loaded && <div className="absolute inset-0 animate-pulse bg-white/5" />}
+			<Image
+				src={src}
+				alt={alt}
+				fill
+				className={`object-cover transition-opacity duration-300 ${loaded ? 'opacity-100' : 'opacity-0'}`}
+				sizes="(min-width: 1024px) 640px, 100vw"
+				onLoad={() => setLoaded(true)}
+			/>
+		</div>
+	);
+}
+
+type WorkSlide = { id: string; title: string; content: React.ReactNode };
+
+/**
+ * Merged "Selected work" modal: the four case studies as one horizontal
+ * carousel (embla), one project per slide. A sticky control bar carries the
+ * counter, arrows, and dot jumps so navigation stays reachable while the
+ * project detail scrolls inside the dialog.
+ */
+function WorkCarousel({
+	slides,
+	labels,
+}: {
+	slides: WorkSlide[];
+	labels: { eyebrow: string; prev: string; next: string };
+}) {
+	const [api, setApi] = useState<CarouselApi | null>(null);
+	const [selected, setSelected] = useState(0);
+
+	useEffect(() => {
+		if (!api) return;
+		const onSelect = () => setSelected(api.selectedScrollSnap());
+		onSelect();
+		api.on('select', onSelect);
+		api.on('reInit', onSelect);
+		return () => {
+			api.off('select', onSelect);
+		};
+	}, [api]);
+
+	const count = slides.length;
+
+	return (
+		<Carousel setApi={setApi} opts={{ align: 'start', duration: 24 }} className="w-full">
+			<div className="sticky top-0 z-10 -mx-6 mb-2 flex items-center justify-between gap-4 bg-[var(--operator-bg)]/85 px-6 py-3 backdrop-blur-sm sm:-mx-9 sm:px-9">
+				<p className="deck-label">{labels.eyebrow}</p>
+				<div className="flex items-center gap-3">
+					<span className="font-mono text-xs tabular-nums text-slate-400">
+						{String(selected + 1).padStart(2, '0')} / {String(count).padStart(2, '0')}
+					</span>
+					<div className="flex items-center gap-1.5">
+						<button
+							type="button"
+							onClick={() => api?.scrollPrev()}
+							disabled={selected === 0}
+							aria-label={labels.prev}
+							className="border border-white/12 p-2 text-slate-300 transition-colors hover:border-cyan-300/50 hover:text-white disabled:cursor-not-allowed disabled:opacity-30 disabled:hover:border-white/12 disabled:hover:text-slate-300"
+						>
+							<ArrowLeft className="h-4 w-4" />
+						</button>
+						<button
+							type="button"
+							onClick={() => api?.scrollNext()}
+							disabled={selected === count - 1}
+							aria-label={labels.next}
+							className="border border-white/12 p-2 text-slate-300 transition-colors hover:border-cyan-300/50 hover:text-white disabled:cursor-not-allowed disabled:opacity-30 disabled:hover:border-white/12 disabled:hover:text-slate-300"
+						>
+							<ArrowRight className="h-4 w-4" />
+						</button>
+					</div>
+				</div>
+			</div>
+
+			<CarouselContent className="items-start">
+				{slides.map((slide) => (
+					<CarouselItem key={slide.id}>{slide.content}</CarouselItem>
+				))}
+			</CarouselContent>
+
+			<div className="mt-8 flex justify-center gap-2">
+				{slides.map((slide, index) => (
+					<button
+						key={slide.id}
+						type="button"
+						onClick={() => api?.scrollTo(index)}
+						aria-label={slide.title}
+						aria-current={index === selected}
+						className={`h-1.5 rounded-full transition-all ${
+							index === selected ? 'w-6 bg-cyan-300' : 'w-1.5 bg-white/20 hover:bg-white/40'
+						}`}
+					/>
+				))}
+			</div>
+		</Carousel>
+	);
+}
+
 export default function HomePage() {
 	const locale = useLocale();
 	const blogHref = `/${locale}/blog`;
@@ -256,7 +369,6 @@ export default function HomePage() {
 
 	const reduceMotion = useReducedMotion();
 	const [overlay, setOverlay] = useState<{ id: CardId; fromRect: DOMRect; phase: MorphPhase } | null>(null);
-	const [imageLoaded, setImageLoaded] = useState(false);
 	const panelRef = useRef<HTMLDivElement>(null);
 	const cardRefs = useRef<Partial<Record<CardId, HTMLButtonElement>>>({});
 
@@ -296,7 +408,6 @@ export default function HomePage() {
 
 	useEffect(() => {
 		if (overlay?.id) panelRef.current?.focus();
-		setImageLoaded(false);
 	}, [overlay?.id]);
 
 	// Lock background scroll (native + Lenis) while the overlay is mounted so
@@ -389,19 +500,7 @@ export default function HomePage() {
 				</h2>
 				<p className="mt-4 text-base leading-8 text-slate-300">{tWork(`items.${id}.summary`)}</p>
 
-				{item.image && (
-					<div className="relative mt-6 aspect-[16/9] overflow-hidden border border-white/10 bg-slate-900/40">
-						{!imageLoaded && <div className="absolute inset-0 animate-pulse bg-white/5" />}
-						<Image
-							src={item.image}
-							alt={tWork(`items.${id}.title`)}
-							fill
-							className={`object-cover transition-opacity duration-300 ${imageLoaded ? 'opacity-100' : 'opacity-0'}`}
-							sizes="(min-width: 1024px) 640px, 100vw"
-							onLoad={() => setImageLoaded(true)}
-						/>
-					</div>
-				)}
+				{item.image && <ProjectImage src={item.image} alt={tWork(`items.${id}.title`)} />}
 
 				<div className="mt-6 grid gap-x-8 gap-y-6 md:grid-cols-2">
 					{(['context', 'build', 'systems', 'impact'] as const).map((block) => (
@@ -444,18 +543,6 @@ export default function HomePage() {
 						</Link>
 					)}
 				</div>
-			</div>
-		);
-	}
-
-	function renderWorkGroupDetail(groupId: 'workProduction' | 'workSideProjects') {
-		const group = workGroups.find((candidate) => candidate.id === groupId);
-		if (!group) return null;
-		return (
-			<div className="space-y-10 divide-y divide-white/10 [&>*:not(:first-child)]:pt-10">
-				{group.projectIds.map((projectId) => (
-					<div key={projectId}>{renderWorkDetail(projectId)}</div>
-				))}
 			</div>
 		);
 	}
@@ -519,9 +606,21 @@ export default function HomePage() {
 						</div>
 					</div>
 				);
-			case 'workProduction':
-			case 'workSideProjects':
-				return renderWorkGroupDetail(id);
+			case 'work':
+				return (
+					<WorkCarousel
+						slides={featuredWork.map((item) => ({
+							id: item.id,
+							title: tWork(`items.${item.id}.title`),
+							content: renderWorkDetail(item.id),
+						}))}
+						labels={{
+							eyebrow: tWork('eyebrow'),
+							prev: tWork('prev'),
+							next: tWork('next'),
+						}}
+					/>
+				);
 			case 'ai':
 				return <AiCard locale={locale as 'en' | 'vi'} />;
 			case 'capabilities':
@@ -806,48 +905,52 @@ export default function HomePage() {
 						</>,
 					)}
 
-					{workGroups.map((group, index) => {
-						const projects = group.projectIds
-							.map((projectId) => featuredWork.find((item) => item.id === projectId))
-							.filter((item): item is (typeof featuredWork)[number] => Boolean(item));
-						const combinedStack = Array.from(new Set(projects.flatMap((project) => project.stack)));
+					{(() => {
+						const combinedStack = Array.from(new Set(featuredWork.flatMap((project) => project.stack)));
 						return card(
-							group.id,
-							3 + index,
+							'work',
+							3,
 							<>
-								<CardLabel>{tWork(`groups.${group.id}.eyebrow`)}</CardLabel>
-								<div className="mt-3 space-y-1.5">
-									{projects.map((project) => (
-										<h3
-											key={project.id}
-											className="text-base font-semibold tracking-[-0.025em] text-white xl:text-lg"
-										>
-											{tWork(`items.${project.id}.title`)}
-										</h3>
+								<div className="flex items-baseline justify-between gap-4">
+									<CardLabel>{tWork('eyebrow')}</CardLabel>
+									<p className="deck-label-muted hidden sm:block">
+										{featuredWork.length} {tNav('work')}
+									</p>
+								</div>
+								<div className="mt-3 grid flex-1 grid-cols-1 gap-x-6 gap-y-3 sm:grid-cols-2">
+									{featuredWork.map((project) => (
+										<div key={project.id}>
+											<h3 className="text-base font-semibold tracking-[-0.025em] text-white xl:text-lg">
+												{tWork(`items.${project.id}.title`)}
+											</h3>
+											<p className="mt-0.5 font-mono text-[10px] tracking-[0.16em] text-slate-500 uppercase">
+												{project.accent}
+											</p>
+										</div>
 									))}
 								</div>
 								<div className="mt-auto flex flex-wrap gap-1.5 pt-4">
-									{combinedStack.slice(0, 4).map((tech) => (
+									{combinedStack.slice(0, 6).map((tech) => (
 										<span
-											key={`${group.id}-${tech}`}
+											key={`work-${tech}`}
 											className="border border-white/10 px-2 py-0.5 font-mono text-[10px] text-slate-200"
 										>
 											{tech}
 										</span>
 									))}
-									{combinedStack.length > 4 && (
+									{combinedStack.length > 6 && (
 										<span className="px-1 py-0.5 font-mono text-[10px] text-slate-500">
-											+{combinedStack.length - 4}
+											+{combinedStack.length - 6}
 										</span>
 									)}
 								</div>
 							</>,
 						);
-					})}
+					})()}
 
 					{card(
 						'ai',
-						5,
+						4,
 						<>
 							<div className="flex items-start justify-between gap-3">
 								<CardLabel>{tAi('eyebrow')}</CardLabel>
@@ -864,7 +967,7 @@ export default function HomePage() {
 
 					{card(
 						'experience',
-						6,
+						5,
 						<>
 							<CardLabel>{tNav('experience')}</CardLabel>
 							<p className="mt-2 text-sm font-semibold text-white xl:text-base">
@@ -881,7 +984,7 @@ export default function HomePage() {
 
 					{card(
 						'capabilities',
-						7,
+						6,
 						<>
 							<CardLabel>{tNav('capabilities')}</CardLabel>
 							<div className="mt-2 flex flex-wrap items-center gap-x-3 gap-y-1.5">
@@ -899,7 +1002,7 @@ export default function HomePage() {
 
 					{card(
 						'principles',
-						8,
+						7,
 						<>
 							<CardLabel>{tPrinciples('eyebrow')}</CardLabel>
 							<div className="mt-3 flex flex-wrap items-center gap-x-3 gap-y-1.5">
@@ -914,7 +1017,7 @@ export default function HomePage() {
 
 					{card(
 						'contact',
-						9,
+						8,
 						<>
 							<CardLabel>{tNav('contact')}</CardLabel>
 							<div className="mt-3 flex items-center gap-4">

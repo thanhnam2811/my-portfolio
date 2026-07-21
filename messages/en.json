@@ -79,6 +79,8 @@
 		"intro": "Four case studies: production game servers, a full-stack product I helped ship, and two systems exercises I built to sharpen specific skills.",
 		"viewProject": "Open project",
 		"viewSource": "View source",
+		"prev": "Previous project",
+		"next": "Next project",
 		"labels": {
 			"context": "Context",
 			"build": "What I built",
