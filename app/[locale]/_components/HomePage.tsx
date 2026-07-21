@@ -1050,7 +1050,11 @@ export default function HomePage() {
 							role="dialog"
 							aria-modal="true"
 							tabIndex={-1}
-							className="pointer-events-auto relative flex max-h-full w-full max-w-3xl outline-none"
+							// The AI card is a live workspace (chat + JD check), so it claims
+							// the full dialog height; every other card sizes to its content.
+							className={`pointer-events-auto relative flex max-h-full w-full max-w-3xl outline-none ${
+								overlay.id === 'ai' ? 'h-full' : ''
+							}`}
 						>
 							{reduceMotion ? (
 								<div aria-hidden className="overlay-surface absolute inset-0" />

@@ -18,6 +18,27 @@ const VERDICT_BAR: Record<JdFitResult['verdict'], string> = {
 	weak_fit: 'bg-rose-400',
 };
 
+/**
+ * Module-level snapshot: the AI card only ever mounts once (inside the modal),
+ * so caching its state here keeps the chat transcript, draft, and JD result
+ * alive across close/reopen instead of resetting every time the modal unmounts.
+ * Transient flags (loading/error) are deliberately not persisted.
+ */
+type AiSnapshot = {
+	tab: Tab;
+	messages: ChatTurn[];
+	input: string;
+	jobDescription: string;
+	jdResult: JdFitResult | null;
+};
+const snapshot: AiSnapshot = {
+	tab: 'chat',
+	messages: [],
+	input: '',
+	jobDescription: '',
+	jdResult: null,
+};
+
 /** Right-aligned counter that stays quiet until the input nears its limit. */
 function CharCount({ value, max }: { value: number; max: number }) {
 	if (value < max * 0.8) return null;
@@ -32,37 +53,58 @@ function CharCount({ value, max }: { value: number; max: number }) {
 /**
  * Overlay content for the "AI" bento card: a CV-grounded chat and a JD
  * fit-checker, both backed by the Gemini→Groq fallback chain in
- * app/api/ai/*. Rendered only inside the card's expanded overlay (never the
- * closed tile) — see HomePage.tsx's renderDetail('ai').
+ * app/api/ai/*. Fills the dialog height (see HomePage's `h-full` panel) so the
+ * chat log gets the room; rendered only inside the card's expanded overlay.
  */
 export default function AiCard({ locale }: { locale: 'en' | 'vi' }) {
 	const t = useTranslations('AI');
-	const [tab, setTab] = useState<Tab>('chat');
+	const [tab, setTab] = useState<Tab>(snapshot.tab);
 
-	const [messages, setMessages] = useState<ChatTurn[]>([]);
-	const [input, setInput] = useState('');
+	const [messages, setMessages] = useState<ChatTurn[]>(snapshot.messages);
+	const [input, setInput] = useState(snapshot.input);
 	const [chatLoading, setChatLoading] = useState(false);
 	const [chatError, setChatError] = useState(false);
 
-	const [jobDescription, setJobDescription] = useState('');
+	const [jobDescription, setJobDescription] = useState(snapshot.jobDescription);
 	const [jdLoading, setJdLoading] = useState(false);
 	const [jdError, setJdError] = useState(false);
-	const [jdResult, setJdResult] = useState<JdFitResult | null>(null);
+	const [jdResult, setJdResult] = useState<JdFitResult | null>(snapshot.jdResult);
+
+	// Write through to the snapshot so the next open restores this session.
+	useEffect(() => {
+		snapshot.tab = tab;
+	}, [tab]);
+	useEffect(() => {
+		snapshot.messages = messages;
+	}, [messages]);
+	useEffect(() => {
+		snapshot.input = input;
+	}, [input]);
+	useEffect(() => {
+		snapshot.jobDescription = jobDescription;
+	}, [jobDescription]);
+	useEffect(() => {
+		snapshot.jdResult = jdResult;
+	}, [jdResult]);
 
 	const logRef = useRef<HTMLDivElement>(null);
 	const inputRef = useRef<HTMLInputElement>(null);
 	const didMount = useRef(false);
 
-	// Keep the newest turn (and the thinking indicator) in view without smooth
-	// scrolling — instant is jank-free and reduced-motion-safe.
+	// Keep the newest turn (and the thinking indicator) in view. rAF waits for
+	// the appended bubble to lay out before measuring scrollHeight; instant
+	// scroll is jank-free and reduced-motion-safe.
 	useEffect(() => {
 		const el = logRef.current;
-		if (el) el.scrollTop = el.scrollHeight;
-	}, [messages, chatLoading]);
+		if (!el) return;
+		const id = requestAnimationFrame(() => {
+			el.scrollTop = el.scrollHeight;
+		});
+		return () => cancelAnimationFrame(id);
+	}, [messages, chatLoading, tab]);
 
 	// Hand focus to the composer when the visitor switches to the chat tab, but
-	// not on first mount — the modal's open morph owns focus at that point and a
-	// mobile keyboard shouldn't pop up unprompted.
+	// not on first mount — the modal's open morph owns focus at that point.
 	useEffect(() => {
 		if (!didMount.current) {
 			didMount.current = true;
@@ -132,11 +174,13 @@ export default function AiCard({ locale }: { locale: 'en' | 'vi' }) {
 	}
 
 	return (
-		<div>
-			<p className="deck-label">{t('eyebrow')}</p>
-			<h2 className="mt-4 text-3xl font-semibold tracking-[-0.04em] text-white sm:text-4xl">{t('title')}</h2>
+		<div className="flex h-full min-h-0 flex-col">
+			<div className="shrink-0 pr-10">
+				<p className="deck-label">{t('eyebrow')}</p>
+				<h2 className="mt-2 text-xl font-semibold tracking-[-0.03em] text-white sm:text-2xl">{t('title')}</h2>
+			</div>
 
-			<div className="mt-6 flex gap-1 border-b border-white/10" role="tablist">
+			<div className="mt-4 flex shrink-0 gap-1 border-b border-white/10" role="tablist">
 				{(['chat', 'jdFit'] as const).map((key) => (
 					<button
 						key={key}
@@ -156,14 +200,14 @@ export default function AiCard({ locale }: { locale: 'en' | 'vi' }) {
 			</div>
 
 			{tab === 'chat' && (
-				<div className="mt-6 flex flex-col">
+				<div className="mt-4 flex min-h-0 flex-1 flex-col">
 					<div
 						ref={logRef}
 						data-lenis-prevent
 						role="log"
 						aria-live="polite"
 						aria-busy={chatLoading}
-						className="flex h-[min(55vh,420px)] flex-col gap-3 overflow-y-auto border border-white/10 bg-white/2 p-4"
+						className="flex min-h-0 flex-1 flex-col gap-3 overflow-y-auto border border-white/10 bg-white/2 p-4"
 					>
 						{messages.length === 0 && !chatLoading && (
 							<p className="text-sm text-slate-400">{t('chat.empty')}</p>
@@ -215,7 +259,7 @@ export default function AiCard({ locale }: { locale: 'en' | 'vi' }) {
 							event.preventDefault();
 							sendMessage();
 						}}
-						className="mt-3 flex gap-2"
+						className="mt-3 flex shrink-0 gap-2"
 					>
 						<input
 							ref={inputRef}
@@ -224,7 +268,8 @@ export default function AiCard({ locale }: { locale: 'en' | 'vi' }) {
 							placeholder={t('chat.placeholder')}
 							maxLength={MAX_MESSAGE_CHARS}
 							aria-label={t('chat.placeholder')}
-							className="min-w-0 flex-1 border border-white/10 bg-white/2 px-3 py-2 text-sm text-white placeholder:text-slate-500 outline-none focus:border-cyan-300/50"
+							// 16px on mobile (text-base) stops iOS Safari from zooming on focus.
+							className="min-w-0 flex-1 border border-white/10 bg-white/2 px-3 py-2 text-base text-white placeholder:text-slate-500 outline-none focus:border-cyan-300/50 sm:text-sm"
 						/>
 						<Button
 							type="submit"
@@ -234,23 +279,24 @@ export default function AiCard({ locale }: { locale: 'en' | 'vi' }) {
 							{t('chat.send')}
 						</Button>
 					</form>
-					<div className="mt-1 flex justify-end">
+					<div className="mt-1 flex shrink-0 justify-end">
 						<CharCount value={input.length} max={MAX_MESSAGE_CHARS} />
 					</div>
 				</div>
 			)}
 
 			{tab === 'jdFit' && (
-				<div className="mt-6 flex flex-col gap-3">
+				<div className="mt-4 flex min-h-0 flex-1 flex-col gap-3 overflow-y-auto">
 					<textarea
 						value={jobDescription}
 						onChange={(event) => setJobDescription(event.target.value)}
 						placeholder={t('jdFit.placeholder')}
 						maxLength={MAX_JD_CHARS}
 						rows={6}
-						className="w-full resize-y border border-white/10 bg-white/2 p-3 text-sm text-white placeholder:text-slate-500 outline-none focus:border-cyan-300/50"
+						// 16px on mobile (text-base) stops iOS Safari from zooming on focus.
+						className="w-full shrink-0 resize-y border border-white/10 bg-white/2 p-3 text-base text-white placeholder:text-slate-500 outline-none focus:border-cyan-300/50 sm:text-sm"
 					/>
-					<div className="flex items-center justify-between gap-3">
+					<div className="flex shrink-0 items-center justify-between gap-3">
 						<Button
 							type="button"
 							onClick={() => checkFit()}
@@ -315,7 +361,7 @@ export default function AiCard({ locale }: { locale: 'en' | 'vi' }) {
 				</div>
 			)}
 
-			<p className="mt-6 text-xs text-slate-500">{t('disclaimer')}</p>
+			<p className="mt-4 shrink-0 text-xs text-slate-500">{t('disclaimer')}</p>
 		</div>
 	);
 }
