@@ -86,8 +86,12 @@
 			"impact": "Kết quả"
 		},
 		"groups": {
-			"workProduction": { "eyebrow": "Công việc production" },
-			"workSideProjects": { "eyebrow": "Dự án cá nhân" }
+			"workProduction": {
+				"eyebrow": "Công việc production"
+			},
+			"workSideProjects": {
+				"eyebrow": "Dự án cá nhân"
+			}
 		},
 		"items": {
 			"onky": {
@@ -332,7 +336,8 @@
 			"send": "Gửi",
 			"empty": "Hỏi bất cứ điều gì về kinh nghiệm, công nghệ, hoặc dự án của tôi.",
 			"thinking": "Đang xử lý…",
-			"error": "Cả hai nhà cung cấp AI hiện không khả dụng. Vui lòng thử lại sau hoặc liên hệ trực tiếp với tôi."
+			"error": "Cả hai nhà cung cấp AI hiện không khả dụng. Vui lòng thử lại sau hoặc liên hệ trực tiếp với tôi.",
+			"retry": "Thử lại"
 		},
 		"jdFit": {
 			"placeholder": "Dán mô tả công việc (JD)…",

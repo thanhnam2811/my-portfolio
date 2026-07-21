@@ -284,6 +284,31 @@ aside {
 	}
 }
 
+/* AI chat "thinking" indicator — three dots that pulse in sequence. */
+@keyframes ai-typing {
+	0%,
+	70%,
+	100% {
+		opacity: 0.25;
+		transform: translateY(0);
+	}
+	35% {
+		opacity: 1;
+		transform: translateY(-2px);
+	}
+}
+
+.ai-typing-dot {
+	animation: ai-typing 1.2s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.ai-typing-dot {
+		animation: none;
+		opacity: 0.6;
+	}
+}
+
 @utility overlay-surface {
 	border: 1px solid color-mix(in srgb, var(--operator-accent) 25%, transparent);
 	background-image: linear-gradient(180deg, var(--operator-overlay-top), var(--operator-overlay-bot));
