@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import React from 'react';
-import { Info, AlertTriangle, XCircle, CheckCircle } from 'lucide-react';
+import { CheckCircle, Info, Warning, XCircle } from '@/components/icons';
 import { cn } from '@/lib/utils';
 
 // Helper function to recursively parse and format SystemTree nodes
@@ -183,7 +183,7 @@ export const mdxComponents = {
 				border: 'border-l-2 border-amber-400',
 				bg: 'bg-amber-500/5',
 				iconColor: 'text-amber-450',
-				icon: <AlertTriangle className="h-4 w-4 mt-0.5 shrink-0" />,
+				icon: <Warning className="h-4 w-4 mt-0.5 shrink-0" />,
 			},
 			error: {
 				border: 'border-l-2 border-rose-500',

@@ -1,6 +1,7 @@
 'use client';
 
 import { ThemeProvider as NextThemesProvider } from 'next-themes';
+import { IconContext } from '@phosphor-icons/react';
 import { ReactNode } from 'react';
 import { Toaster } from 'sonner';
 
@@ -11,15 +12,17 @@ interface ThemeProviderProps {
 export function ThemeProvider({ children }: ThemeProviderProps) {
 	return (
 		<NextThemesProvider attribute="class" defaultTheme="dark" enableSystem disableTransitionOnChange>
-			{children}
-			<Toaster
-				position="top-right"
-				richColors
-				closeButton
-				toastOptions={{
-					duration: 4000,
-				}}
-			/>
+			<IconContext.Provider value={{ weight: 'light' }}>
+				{children}
+				<Toaster
+					position="top-right"
+					richColors
+					closeButton
+					toastOptions={{
+						duration: 4000,
+					}}
+				/>
+			</IconContext.Provider>
 		</NextThemesProvider>
 	);
 }

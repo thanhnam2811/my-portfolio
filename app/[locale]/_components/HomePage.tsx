@@ -7,15 +7,15 @@ import { motion, useReducedMotion } from 'framer-motion';
 import {
 	ArrowLeft,
 	ArrowRight,
+	ArrowSquareOut,
 	ArrowUpRight,
-	Download,
-	ExternalLink,
-	Github,
-	Linkedin,
-	Mail,
-	Sparkles,
+	DownloadSimple,
+	EnvelopeSimple,
+	GithubLogo,
+	LinkedinLogo,
+	Sparkle,
 	X,
-} from 'lucide-react';
+} from '@phosphor-icons/react';
 import { useLocale, useTranslations } from 'next-intl';
 import { Button } from '@/components/ui/button';
 import { Carousel, type CarouselApi, CarouselContent, CarouselItem } from '@/components/ui/carousel';
@@ -74,9 +74,9 @@ const CARD_GRID: Record<CardId, string> = {
 const CARD_BASE = 'deck-card group relative flex min-h-0 flex-col overflow-hidden p-5 text-left';
 
 const SOCIAL_LINKS = [
-	{ label: 'Email', href: 'mailto:thanhnam.thai01@gmail.com', icon: Mail },
-	{ label: 'LinkedIn', href: 'https://linkedin.com/in/thanhnam2811', icon: Linkedin },
-	{ label: 'GitHub', href: 'https://github.com/thanhnam2811', icon: Github },
+	{ label: 'Email', href: 'mailto:thanhnam.thai01@gmail.com', icon: EnvelopeSimple },
+	{ label: 'LinkedIn', href: 'https://linkedin.com/in/thanhnam2811', icon: LinkedinLogo },
+	{ label: 'GitHub', href: 'https://github.com/thanhnam2811', icon: GithubLogo },
 ] as const;
 
 function CardLabel({ children }: { children: React.ReactNode }) {
@@ -551,7 +551,7 @@ export default function HomePage() {
 							className="inline-flex items-center gap-2 border border-white/12 px-4 py-2 text-sm text-white transition-colors hover:border-cyan-300/60 hover:text-cyan-100"
 						>
 							{tWork('viewProject')}
-							<ExternalLink className="h-4 w-4" />
+							<ArrowSquareOut className="h-4 w-4" />
 						</Link>
 					)}
 					{item.github && (
@@ -561,7 +561,7 @@ export default function HomePage() {
 							rel="noopener noreferrer"
 							className="inline-flex items-center gap-2 border border-white/12 px-4 py-2 text-sm text-white transition-colors hover:border-cyan-300/60 hover:text-cyan-100"
 						>
-							<Github className="h-4 w-4" />
+							<GithubLogo className="h-4 w-4" />
 							{tWork('viewSource')}
 						</Link>
 					)}
@@ -762,7 +762,7 @@ export default function HomePage() {
 						<div className="mt-6 flex flex-wrap gap-3">
 							<Button asChild className="rounded-none bg-cyan-300 text-slate-950 hover:bg-cyan-200">
 								<a href="/files/MyCV.pdf" download="CV_BE_ThaiThanhNam.pdf">
-									<Download className="mr-2 h-4 w-4" />
+									<DownloadSimple className="mr-2 h-4 w-4" />
 									{tContact('download')}
 								</a>
 							</Button>
@@ -844,7 +844,7 @@ export default function HomePage() {
 							className="hidden rounded-none bg-cyan-300 px-4 text-slate-950 hover:bg-cyan-200 sm:inline-flex"
 						>
 							<a href="/files/MyCV.pdf" download="CV_BE_ThaiThanhNam.pdf">
-								<Download className="mr-2 h-4 w-4" />
+								<DownloadSimple className="mr-2 h-4 w-4" />
 								{tHero('ctaDownload')}
 							</a>
 						</Button>
@@ -977,7 +977,7 @@ export default function HomePage() {
 						<>
 							<div className="flex items-start justify-between gap-3">
 								<CardLabel>{tAi('eyebrow')}</CardLabel>
-								<Sparkles className="h-4 w-4 shrink-0 text-cyan-200" />
+								<Sparkle className="h-4 w-4 shrink-0 text-cyan-200" />
 							</div>
 							<h3 className="mt-3 text-lg font-semibold tracking-[-0.03em] text-white xl:text-xl">
 								{tAi('title')}
