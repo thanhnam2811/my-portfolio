@@ -594,7 +594,7 @@ export default function HomePage() {
 						<div className="mt-6 space-y-5">
 							{(['runtime', 'observability', 'delivery'] as const).map((signal) => (
 								<div key={signal} className="flex gap-3">
-									<span className="mt-2 h-2 w-2 shrink-0 rounded-full bg-cyan-300" />
+									<span className="mt-2 h-2 w-2 shrink-0 bg-cyan-300" />
 									<div>
 										<p className="text-base font-semibold text-white">
 											{tHero(`signals.${signal}.title`)}

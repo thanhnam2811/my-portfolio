@@ -362,7 +362,7 @@
 	"NotFound": {
 		"eyebrow": "404 · Không tìm thấy",
 		"title": "Route này không tồn tại.",
-		"description": "Trang hoặc bài viết bạn tìm không còn ở đây — có thể đã đổi tên, bị xoá, hoặc chưa từng tồn tại. Kiểm tra lại URL, hoặc quay về trang khác.",
+		"description": "Trang hoặc bài viết bạn tìm không còn ở đây, có thể đã đổi tên, bị xoá, hoặc chưa từng tồn tại. Kiểm tra lại URL, hoặc quay về trang khác.",
 		"home": "Về trang chủ",
 		"blog": "Xem blog"
 	},
