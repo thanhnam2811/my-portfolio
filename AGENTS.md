@@ -62,7 +62,10 @@ Before finishing a meaningful code change, run `pnpm build`. For formatting-only
 - Use Tailwind utilities directly in components.
 - Use the `cn()` utility for conditional class composition.
 - Use `class-variance-authority` for shared variant-heavy UI components.
-- Use `lucide-react` for icons unless the file already establishes another icon source.
+- Use `@phosphor-icons/react` (`weight="light"` default, set globally via `IconContext.Provider` in
+  `components/ThemeProvider.tsx`) for icons unless the file already establishes another icon source. Server Components
+  must import icons from `@/components/icons` (a `'use client'` re-export), not the package directly — Phosphor's icon
+  components read `IconContext` (`React.createContext`), which isn't available in the RSC server runtime.
 - Match the existing visual direction: precise, technical, slightly editorial. Avoid generic glassmorphism or heavy
   decorative effects unless the task explicitly calls for them.
 
