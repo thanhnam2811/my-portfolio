@@ -358,5 +358,15 @@
 			}
 		},
 		"disclaimer": "Answers are generated from my CV content and may be imperfect. For anything important, reach out directly."
+	},
+	"NotFound": {
+		"eyebrow": "404 · Not found",
+		"title": "This route doesn't exist.",
+		"description": "The page or article you're looking for was moved, renamed, or never existed. Check the URL, or head back to a page that does.",
+		"home": "Back to homepage",
+		"blog": "Browse the blog"
+	},
+	"Loading": {
+		"label": "Loading…"
 	}
 }
