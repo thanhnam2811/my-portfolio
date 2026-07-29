@@ -23,6 +23,12 @@ export function generateStaticParams() {
 	return getBlogStaticParams();
 }
 
+// All valid slugs are known at build time (posts are files in the repo), so a
+// param outside generateStaticParams is never a legitimate post — 404 it at
+// the routing layer instead of rendering on-demand (which was returning a
+// 200 with the not-found UI instead of a real 404 status).
+export const dynamicParams = false;
+
 export async function generateMetadata({
 	params,
 }: {
