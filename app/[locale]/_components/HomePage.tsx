@@ -333,7 +333,7 @@ function WorkCarousel({
 							onClick={() => api?.scrollPrev()}
 							disabled={selected === 0}
 							aria-label={labels.prev}
-							className="border border-white/12 p-2 text-slate-300 transition-colors hover:border-cyan-300/50 hover:text-white disabled:cursor-not-allowed disabled:opacity-30 disabled:hover:border-white/12 disabled:hover:text-slate-300"
+							className="border border-white/15 p-2 text-slate-300 transition-colors hover:border-cyan-300/50 hover:text-white disabled:cursor-not-allowed disabled:opacity-30 disabled:hover:border-white/15 disabled:hover:text-slate-300"
 						>
 							<ArrowLeft className="h-4 w-4" />
 						</button>
@@ -342,7 +342,7 @@ function WorkCarousel({
 							onClick={() => api?.scrollNext()}
 							disabled={selected === count - 1}
 							aria-label={labels.next}
-							className="border border-white/12 p-2 text-slate-300 transition-colors hover:border-cyan-300/50 hover:text-white disabled:cursor-not-allowed disabled:opacity-30 disabled:hover:border-white/12 disabled:hover:text-slate-300"
+							className="border border-white/15 p-2 text-slate-300 transition-colors hover:border-cyan-300/50 hover:text-white disabled:cursor-not-allowed disabled:opacity-30 disabled:hover:border-white/15 disabled:hover:text-slate-300"
 						>
 							<ArrowRight className="h-4 w-4" />
 						</button>
@@ -548,7 +548,7 @@ export default function HomePage() {
 							href={item.link}
 							target="_blank"
 							rel="noopener noreferrer"
-							className="inline-flex items-center gap-2 border border-white/12 px-4 py-2 text-sm text-white transition-colors hover:border-cyan-300/60 hover:text-cyan-100"
+							className="inline-flex items-center gap-2 border border-white/15 px-4 py-2 text-sm text-white transition-colors hover:border-cyan-300/60 hover:text-cyan-100"
 						>
 							{tWork('viewProject')}
 							<ArrowSquareOut className="h-4 w-4" />
@@ -559,7 +559,7 @@ export default function HomePage() {
 							href={item.github}
 							target="_blank"
 							rel="noopener noreferrer"
-							className="inline-flex items-center gap-2 border border-white/12 px-4 py-2 text-sm text-white transition-colors hover:border-cyan-300/60 hover:text-cyan-100"
+							className="inline-flex items-center gap-2 border border-white/15 px-4 py-2 text-sm text-white transition-colors hover:border-cyan-300/60 hover:text-cyan-100"
 						>
 							<GithubLogo className="h-4 w-4" />
 							{tWork('viewSource')}
@@ -711,7 +711,7 @@ export default function HomePage() {
 											(highlight, highlightIndex) => (
 												<li
 													key={`${role}-${highlightIndex}`}
-													className="border-t border-white/8 pt-2.5 text-xs leading-6 text-slate-300"
+													className="border-t border-white/10 pt-2.5 text-xs leading-6 text-slate-300"
 												>
 													{highlight}
 												</li>
@@ -733,7 +733,7 @@ export default function HomePage() {
 						<p className="mt-4 text-base leading-8 text-slate-300">{tPrinciples('intro')}</p>
 						<div className="mt-6 grid gap-4 sm:grid-cols-2">
 							{principles.map((item, index) => (
-								<div key={item} className="border border-white/10 bg-white/2 p-5">
+								<div key={item} className="deck-field p-5">
 									<p className="deck-label">
 										Principle {String(index + 1).padStart(2, '0')}
 										<span className="text-slate-600"> · </span>
@@ -863,7 +863,7 @@ export default function HomePage() {
 						0,
 						<>
 							<div className="flex items-start justify-between gap-4">
-								<div className="relative h-16 w-16 overflow-hidden border border-white/12">
+								<div className="relative h-16 w-16 overflow-hidden border border-white/15">
 									<Image
 										src="/images/avatar.png"
 										alt="Nam"

@@ -207,7 +207,7 @@ export default function AiCard({ locale }: { locale: 'en' | 'vi' }) {
 						role="log"
 						aria-live="polite"
 						aria-busy={chatLoading}
-						className="flex min-h-0 flex-1 flex-col gap-3 overflow-y-auto border border-white/10 bg-white/2 p-4"
+						className="flex min-h-0 flex-1 flex-col gap-3 overflow-y-auto deck-field p-4"
 					>
 						{messages.length === 0 && !chatLoading && (
 							<p className="text-sm text-slate-400">{t('chat.empty')}</p>
@@ -269,7 +269,7 @@ export default function AiCard({ locale }: { locale: 'en' | 'vi' }) {
 							maxLength={MAX_MESSAGE_CHARS}
 							aria-label={t('chat.placeholder')}
 							// 16px on mobile (text-base) stops iOS Safari from zooming on focus.
-							className="min-w-0 flex-1 border border-white/10 bg-white/2 px-3 py-2 text-base text-white placeholder:text-slate-500 outline-none focus:border-cyan-300/50 sm:text-sm"
+							className="min-w-0 flex-1 deck-field px-3 py-2 text-base text-white placeholder:text-slate-500 outline-none focus:border-cyan-300/50 sm:text-sm"
 						/>
 						<Button
 							type="submit"
@@ -294,7 +294,7 @@ export default function AiCard({ locale }: { locale: 'en' | 'vi' }) {
 						maxLength={MAX_JD_CHARS}
 						rows={6}
 						// 16px on mobile (text-base) stops iOS Safari from zooming on focus.
-						className="w-full shrink-0 resize-y border border-white/10 bg-white/2 p-3 text-base text-white placeholder:text-slate-500 outline-none focus:border-cyan-300/50 sm:text-sm"
+						className="w-full shrink-0 resize-y deck-field p-3 text-base text-white placeholder:text-slate-500 outline-none focus:border-cyan-300/50 sm:text-sm"
 					/>
 					<div className="flex shrink-0 items-center justify-between gap-3">
 						<Button

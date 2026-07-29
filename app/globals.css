@@ -105,6 +105,10 @@
 	--operator-accent-deep: #22d3ee;
 	--operator-border: rgba(255, 255, 255, 0.1);
 	--operator-border-soft: rgba(255, 255, 255, 0.08);
+	/* Interactive frames (buttons, pills, avatar/control outlines) — the one
+	 * "stronger than default" hairline. Don't add a third border opacity;
+	 * fold new cases into this or --operator-border. */
+	--operator-border-strong: rgba(255, 255, 255, 0.15);
 	--operator-panel-top: rgba(20, 36, 66, 0.5);
 	--operator-panel-bot: rgba(9, 16, 28, 0.55);
 	--operator-overlay-top: rgba(16, 30, 54, 0.98);
@@ -266,6 +270,14 @@ aside {
 		border-color: color-mix(in srgb, var(--operator-accent) 60%, transparent);
 		box-shadow: 0 0 0 1px color-mix(in srgb, var(--operator-accent) 40%, transparent);
 	}
+}
+
+/* Quiet interior surface — hairline border + a near-invisible fill. For
+ * content that sits *inside* an overlay (inputs, textareas, the chat log,
+ * static content panels) where deck-card's gradient would be too heavy. */
+@utility deck-field {
+	border: 1px solid var(--operator-border);
+	background-color: rgba(255, 255, 255, 0.02);
 }
 
 /* Entry fade for the deck overlay backdrop (CSS-driven, see HomePage). */

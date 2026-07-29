@@ -53,7 +53,9 @@ status", everything else is a quiet slate ladder on near-black blue.
 | `--operator-grid`, `--operator-grid-soft`           | background grid lines (`operator-grid`)                                                                                                                         |
 | `--operator-accent`, `--operator-accent-strong`     | cyan accent pair (`#67e8f9` / `#a5f3fc`)                                                                                                                        |
 | `--operator-accent-deep`                            | third, saturated cyan (`#22d3ee`) — reserved for the topology diagram (edge gradient, active-node highlight in `SystemVisualization`), not general UI accenting |
-| `--operator-border`, `--operator-border-soft`       | hairlines (`white/10`, `white/8`)                                                                                                                               |
+| `--operator-border`                                 | default hairline (`white/10`) — content borders, dividers, chips                                                                                                |
+| `--operator-border-soft`                            | `white/8` — reserved for `operator-header` chrome only                                                                                                          |
+| `--operator-border-strong`                          | `white/15` — the one "stronger" hairline, for interactive frames (buttons, pills, avatar/control outlines, carousel arrows)                                     |
 | `--operator-panel-top/bot`                          | card surface gradient stops                                                                                                                                     |
 | `--operator-overlay-top/bot`                        | overlay/dialog surface gradient stops                                                                                                                           |
 | `--operator-header-bg`                              | fixed header chrome                                                                                                                                             |
@@ -77,7 +79,9 @@ Rules:
 - **One accent.** Cyan is the only "look here" hue. Emerald/amber/rose are reserved for status semantics (good/caution/
   bad), never decoration. Don't reach for `red`, `orange`, or any other hue for these meanings — it fragments what
   should read as one consistent status ladder.
-- Borders/hairlines come from the utilities below — don't write `border-white/10` by hand in new code.
+- **Exactly two hairline opacities**: `white/10` (default — content borders, dividers, chips) and `white/15` (strong —
+  interactive frames: buttons, pills, avatar/control outlines). Don't introduce a third (no `/8`, `/12`, etc. outside
+  `operator-header`'s reserved `border-soft`) — fold new cases into one of these two.
 - Buttons on this surface: primary = `bg-cyan-300 text-slate-950 hover:bg-cyan-200`, secondary = `variant="outline"` +
   `border-white/15 bg-transparent text-white hover:bg-white/5`, always `rounded-none`.
 
@@ -138,13 +142,14 @@ never overflow it.
 
 ## 5. Operator deck — surfaces & interaction
 
-| Utility                                 | Definition (see `globals.css`)                                             | Use                     |
-| --------------------------------------- | -------------------------------------------------------------------------- | ----------------------- |
-| `operator-shell`                        | page base color                                                            | homepage root           |
-| `operator-atmosphere` / `operator-grid` | ambient gradients + grid lines                                             | fixed decorative layers |
-| `operator-header`                       | header chrome (`--operator-header-bg` + blur)                              | fixed header            |
-| `deck-card`                             | card surface: hairline border + panel gradient + hover/focus accent border | every bento card        |
-| `overlay-surface`                       | dialog surface: accent hairline + deeper gradient + heavy soft shadow      | card expand overlays    |
+| Utility                                 | Definition (see `globals.css`)                                             | Use                                                                      |
+| --------------------------------------- | -------------------------------------------------------------------------- | ------------------------------------------------------------------------ |
+| `operator-shell`                        | page base color                                                            | homepage root                                                            |
+| `operator-atmosphere` / `operator-grid` | ambient gradients + grid lines                                             | fixed decorative layers                                                  |
+| `operator-header`                       | header chrome (`--operator-header-bg` + blur)                              | fixed header                                                             |
+| `deck-card`                             | card surface: hairline border + panel gradient + hover/focus accent border | every bento card                                                         |
+| `deck-field`                            | quiet interior surface: hairline border + 2% white fill (no gradient)      | inputs/textareas, the AI chat log, static content panels inside overlays |
+| `overlay-surface`                       | dialog surface: accent hairline + deeper gradient + heavy soft shadow      | card expand overlays                                                     |
 
 Interaction states (built into `deck-card`):
 
