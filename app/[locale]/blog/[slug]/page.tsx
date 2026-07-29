@@ -9,6 +9,7 @@ import remarkGfm from 'remark-gfm';
 import { mdxComponents } from '@/components/blog/MdxComponents';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
+import { LanguageSwitcher } from '@/components/LanguageSwitcher';
 import { getAdjacentBlogPosts, getBlogPost, getBlogStaticParams, type BlogLocale } from '@/lib/blog';
 
 function formatDate(locale: BlogLocale, value: string) {
@@ -96,7 +97,7 @@ export default async function BlogArticlePage({ params }: { params: Promise<{ lo
 			<div className="operator-atmosphere pointer-events-none absolute inset-0" />
 			<div className="relative mx-auto max-w-[1380px] px-4 py-10 sm:px-6 lg:px-10 lg:py-14">
 				<header className="border-b border-white/10 pb-8">
-					<div className="flex flex-wrap items-center gap-3">
+					<div className="flex flex-wrap items-center justify-between gap-3">
 						<Button
 							asChild
 							variant="outline"
@@ -107,6 +108,7 @@ export default async function BlogArticlePage({ params }: { params: Promise<{ lo
 								{t('backToBlog')}
 							</Link>
 						</Button>
+						<LanguageSwitcher />
 					</div>
 
 					<div className="mt-10 grid gap-8 xl:grid-cols-[minmax(0,1fr)_280px]">

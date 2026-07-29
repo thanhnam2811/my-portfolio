@@ -4,6 +4,7 @@ import { ArrowLeft, ArrowRight } from '@/components/icons';
 import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
+import { LanguageSwitcher } from '@/components/LanguageSwitcher';
 import { getAllBlogPosts, type BlogLocale } from '@/lib/blog';
 
 function formatDate(locale: BlogLocale, value: string) {
@@ -49,7 +50,7 @@ export default async function BlogIndexPage({ params }: { params: Promise<{ loca
 			<div className="operator-atmosphere pointer-events-none absolute inset-0" />
 			<div className="relative mx-auto max-w-[1380px] px-4 py-10 sm:px-6 lg:px-10 lg:py-14">
 				<header className="border-b border-white/10 pb-8">
-					<div className="flex flex-wrap items-center gap-3 text-sm text-slate-300">
+					<div className="flex flex-wrap items-center justify-between gap-3 text-sm text-slate-300">
 						<Button
 							asChild
 							variant="outline"
@@ -60,6 +61,7 @@ export default async function BlogIndexPage({ params }: { params: Promise<{ loca
 								{t('backHome')}
 							</Link>
 						</Button>
+						<LanguageSwitcher />
 					</div>
 
 					<div className="mt-10 grid gap-8 lg:grid-cols-[0.88fr_1.12fr]">

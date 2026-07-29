@@ -19,6 +19,7 @@ import {
 import { useLocale, useTranslations } from 'next-intl';
 import { Button } from '@/components/ui/button';
 import { Carousel, type CarouselApi, CarouselContent, CarouselItem } from '@/components/ui/carousel';
+import { LanguageSwitcher } from '@/components/LanguageSwitcher';
 import SystemVisualization from '@/components/SystemVisualization';
 import AiCard from '@/app/[locale]/_components/ai/AiCard';
 import {
@@ -83,9 +84,11 @@ function CardLabel({ children }: { children: React.ReactNode }) {
 	return <p className="deck-label">{children}</p>;
 }
 
+/* Low-opacity by default so touch devices (no hover) still see the card is
+ * interactive; hover/focus brings it to full strength. */
 function OpenHint({ label }: { label: string }) {
 	return (
-		<span className="deck-label-muted pointer-events-none absolute top-4 right-4 flex items-center gap-1 opacity-0 transition-opacity duration-200 group-hover:opacity-100">
+		<span className="deck-label-muted pointer-events-none absolute top-4 right-4 flex items-center gap-1 opacity-40 transition-opacity duration-200 group-hover:opacity-100 group-focus-visible:opacity-100">
 			{label}
 			<ArrowUpRight className="h-3 w-3" />
 		</span>
@@ -828,6 +831,7 @@ export default function HomePage() {
 					</div>
 					<p className="deck-label-muted hidden lg:block">{tDeck('hint')}</p>
 					<div className="flex items-center gap-3">
+						<LanguageSwitcher />
 						<Button asChild variant="deckOutline" className="px-4">
 							<Link href={blogHref}>{tBlog('homeCta')}</Link>
 						</Button>
