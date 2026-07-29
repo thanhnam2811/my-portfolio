@@ -312,6 +312,8 @@
 		"hint": "Bấm vào thẻ để xem chi tiết",
 		"open": "Mở",
 		"close": "Đóng",
+		"prevCard": "Thẻ trước",
+		"nextCard": "Thẻ sau",
 		"systemLabel": "Runtime topology",
 		"systemCaption": "Đường đi của một packet qua một vòng game, từ client tới storage.",
 		"signalsLabel": "Signal set",
@@ -329,6 +331,11 @@
 		"eyebrow": "Trợ lý AI",
 		"title": "Hỏi về CV của tôi hoặc kiểm tra độ phù hợp JD",
 		"cardTeaser": "Trò chuyện với AI dựa trên CV của tôi, hoặc dán JD để xem mức độ phù hợp.",
+		"suggestions": [
+			"Kinh nghiệm với Redis và caching thế nào?",
+			"Hệ thống của bạn từng xử lý bao nhiêu concurrent players?",
+			"Bạn có đang sẵn sàng cho cơ hội mới không?"
+		],
 		"tabs": {
 			"chat": "Trò chuyện",
 			"jdFit": "Kiểm tra JD"
@@ -368,5 +375,14 @@
 	},
 	"Loading": {
 		"label": "Đang tải…"
+	},
+	"CommandPalette": {
+		"trigger": "Tìm kiếm",
+		"placeholder": "Nhảy tới thẻ hoặc hành động…",
+		"groupCards": "Thẻ",
+		"groupActions": "Hành động",
+		"groupLanguage": "Ngôn ngữ",
+		"empty": "Không có kết quả",
+		"hint": "Di chuyển ↑↓ · Chọn ↵ · Đóng Esc"
 	}
 }

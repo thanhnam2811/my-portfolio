@@ -312,6 +312,8 @@
 		"hint": "Click any card to inspect it",
 		"open": "Open",
 		"close": "Close",
+		"prevCard": "Previous card",
+		"nextCard": "Next card",
 		"systemLabel": "Runtime topology",
 		"systemCaption": "How a single packet travels through one game loop, from client to storage.",
 		"signalsLabel": "Signal set",
@@ -329,6 +331,11 @@
 		"eyebrow": "AI assistant",
 		"title": "Ask about my CV or check a job description",
 		"cardTeaser": "Chat with an AI grounded in my CV, or paste a JD to see how well it fits.",
+		"suggestions": [
+			"What's your experience with Redis and caching?",
+			"How many concurrent players have your systems handled?",
+			"Are you open to new opportunities right now?"
+		],
 		"tabs": {
 			"chat": "Chat",
 			"jdFit": "JD fit check"
@@ -368,5 +375,14 @@
 	},
 	"Loading": {
 		"label": "Loading…"
+	},
+	"CommandPalette": {
+		"trigger": "Search",
+		"placeholder": "Jump to a card or action…",
+		"groupCards": "Cards",
+		"groupActions": "Actions",
+		"groupLanguage": "Language",
+		"empty": "No matches",
+		"hint": "Navigate ↑↓ · Select ↵ · Close Esc"
 	}
 }

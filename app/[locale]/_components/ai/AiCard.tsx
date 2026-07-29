@@ -39,6 +39,22 @@ const snapshot: AiSnapshot = {
 	jdResult: null,
 };
 
+/**
+ * Set by the deck's AI card face (a question typed or picked as a suggestion
+ * chip before the modal has even opened) and consumed once by AiCard's mount
+ * effect, which sends it as the first chat turn. Module-level for the same
+ * reason as `snapshot`: HomePage and AiCard don't share a component tree.
+ */
+let pendingQuestion: string | null = null;
+export function queueAiQuestion(text: string) {
+	pendingQuestion = text;
+}
+function consumePendingAiQuestion() {
+	const question = pendingQuestion;
+	pendingQuestion = null;
+	return question;
+}
+
 /** Right-aligned counter that stays quiet until the input nears its limit. */
 function CharCount({ value, max }: { value: number; max: number }) {
 	if (value < max * 0.8) return null;
@@ -141,6 +157,20 @@ export default function AiCard({ locale }: { locale: 'en' | 'vi' }) {
 		setInput('');
 		requestChat(nextMessages);
 	}
+
+	// The deck's AI card face lets a visitor type or pick a question before the
+	// modal even opens; if one is waiting, send it as the first turn.
+	useEffect(() => {
+		const question = consumePendingAiQuestion();
+		if (!question) return;
+		setTab('chat');
+		const nextMessages = [...snapshot.messages, { role: 'user' as const, content: question }];
+		setMessages(nextMessages);
+		requestChat(nextMessages);
+		// Runs once per mount (the modal re-mounts this component every time it
+		// opens), which is exactly when a freshly queued question should fire.
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, []);
 
 	// After a failure the visitor's message is still the last turn, so replay the
 	// same history instead of making them retype it.

@@ -13,15 +13,17 @@ import {
 	EnvelopeSimple,
 	GithubLogo,
 	LinkedinLogo,
+	MagnifyingGlass,
 	Sparkle,
 	X,
 } from '@phosphor-icons/react';
 import { useLocale, useTranslations } from 'next-intl';
+import { useRouter } from '@/i18n/routing';
 import { Button } from '@/components/ui/button';
 import { Carousel, type CarouselApi, CarouselContent, CarouselItem } from '@/components/ui/carousel';
 import { LanguageSwitcher } from '@/components/LanguageSwitcher';
 import SystemVisualization from '@/components/SystemVisualization';
-import AiCard from '@/app/[locale]/_components/ai/AiCard';
+import AiCard, { queueAiQuestion } from '@/app/[locale]/_components/ai/AiCard';
 import {
 	capabilityGroups,
 	experienceEntries,
@@ -322,9 +324,9 @@ function WorkCarousel({
 
 	return (
 		<Carousel setApi={setApi} opts={{ align: 'start', duration: 24 }} className="w-full">
-			{/* pr-16 (no competing px utility) keeps the controls clear of the
-			    modal's absolute close button in the top-right corner. */}
-			<div className="sticky top-0 z-10 -mx-6 mb-2 flex items-center justify-between gap-4 bg-[var(--operator-bg)]/85 py-3 pl-6 pr-16 backdrop-blur-sm sm:-mx-9 sm:pl-9">
+			{/* pr-28 (no competing px utility) keeps the controls clear of the
+			    modal's absolute prev/next/close button cluster in the top-right corner. */}
+			<div className="sticky top-0 z-10 -mx-6 mb-2 flex items-center justify-between gap-4 bg-[var(--operator-bg)]/85 py-3 pl-6 pr-28 backdrop-blur-sm sm:-mx-9 sm:pl-9">
 				<p className="deck-label">{labels.eyebrow}</p>
 				<div className="flex items-center gap-3">
 					<span className="font-mono text-xs tabular-nums text-slate-400">
@@ -377,6 +379,121 @@ function WorkCarousel({
 	);
 }
 
+type PaletteCommand = { id: string; group: string; label: string; action: () => void };
+
+/**
+ * ⌘K / Ctrl+K command palette — jump to any deck card or run a top-level
+ * action (blog, download CV, email, language) without hunting across the
+ * grid. Only ever mounted while `open`, so its own state (query, active
+ * index) doesn't need resetting elsewhere.
+ */
+function CommandPalette({
+	open,
+	onClose,
+	commands,
+}: {
+	open: boolean;
+	onClose: () => void;
+	commands: PaletteCommand[];
+}) {
+	const t = useTranslations('CommandPalette');
+	const [query, setQuery] = useState('');
+	const [activeIndex, setActiveIndex] = useState(0);
+	const inputRef = useRef<HTMLInputElement>(null);
+
+	useEffect(() => {
+		if (!open) return;
+		setQuery('');
+		setActiveIndex(0);
+		const id = requestAnimationFrame(() => inputRef.current?.focus());
+		return () => cancelAnimationFrame(id);
+	}, [open]);
+
+	if (!open) return null;
+
+	const needle = query.trim().toLowerCase();
+	const filtered = needle ? commands.filter((c) => c.label.toLowerCase().includes(needle)) : commands;
+	const groups = Array.from(new Set(filtered.map((c) => c.group)));
+
+	function runCommand(index: number) {
+		const command = filtered[index];
+		if (!command) return;
+		onClose();
+		command.action();
+	}
+
+	function onKeyDown(event: React.KeyboardEvent) {
+		if (event.key === 'Escape') {
+			event.stopPropagation();
+			onClose();
+		} else if (event.key === 'ArrowDown') {
+			event.preventDefault();
+			setActiveIndex((i) => Math.min(i + 1, filtered.length - 1));
+		} else if (event.key === 'ArrowUp') {
+			event.preventDefault();
+			setActiveIndex((i) => Math.max(i - 1, 0));
+		} else if (event.key === 'Enter') {
+			event.preventDefault();
+			runCommand(activeIndex);
+		}
+	}
+
+	return (
+		<div className="fixed inset-0 z-[70] flex items-start justify-center p-4 pt-[15vh]">
+			<div className="fixed inset-0 bg-[#040a14]/80" onClick={onClose} aria-hidden />
+			<div
+				role="dialog"
+				aria-modal="true"
+				aria-label={t('placeholder')}
+				onKeyDown={onKeyDown}
+				className="overlay-surface relative z-10 w-full max-w-lg overflow-hidden"
+			>
+				<div className="flex items-center gap-2 border-b border-white/10 px-4 py-3">
+					<input
+						ref={inputRef}
+						value={query}
+						onChange={(event) => setQuery(event.target.value)}
+						placeholder={t('placeholder')}
+						aria-label={t('placeholder')}
+						className="w-full bg-transparent text-sm text-white placeholder:text-slate-500 outline-none"
+					/>
+					<span className="deck-label-muted shrink-0">Esc</span>
+				</div>
+				<div className="max-h-80 overflow-y-auto p-2">
+					{filtered.length === 0 && (
+						<p className="px-3 py-6 text-center text-sm text-slate-400">{t('empty')}</p>
+					)}
+					{groups.map((group) => (
+						<div key={group} className="mb-2 last:mb-0">
+							<p className="deck-label-muted px-3 py-1.5">{group}</p>
+							{filtered.map((command, index) =>
+								command.group !== group ? null : (
+									<button
+										key={command.id}
+										type="button"
+										onMouseEnter={() => setActiveIndex(index)}
+										onClick={() => runCommand(index)}
+										className={`block w-full px-3 py-2 text-left text-sm transition-colors ${
+											index === activeIndex
+												? 'bg-cyan-300/10 text-cyan-100'
+												: 'text-slate-200 hover:bg-white/5'
+										}`}
+									>
+										{command.label}
+									</button>
+								),
+							)}
+						</div>
+					))}
+				</div>
+				<div className="border-t border-white/10 px-4 py-2">
+					<p className="deck-label-muted">{t('hint')}</p>
+				</div>
+			</div>
+		</div>
+	);
+}
+
 export default function HomePage() {
 	const locale = useLocale();
 	const blogHref = `/${locale}/blog`;
@@ -392,11 +509,20 @@ export default function HomePage() {
 	const tContact = useTranslations('Contact');
 	const tBlog = useTranslations('Blog');
 	const tAi = useTranslations('AI');
+	const tLanguages = useTranslations('Languages');
+	const tCommandPalette = useTranslations('CommandPalette');
+	const router = useRouter();
 
 	const reduceMotion = useReducedMotion();
 	const [overlay, setOverlay] = useState<{ id: CardId; fromRect: DOMRect; phase: MorphPhase } | null>(null);
+	const [aiQuickInput, setAiQuickInput] = useState('');
+	const [paletteOpen, setPaletteOpen] = useState(false);
 	const panelRef = useRef<HTMLDivElement>(null);
-	const cardRefs = useRef<Partial<Record<CardId, HTMLButtonElement>>>({});
+	// HTMLElement (not HTMLButtonElement): every card is a single <button>
+	// except 'ai', whose face has a separate interactive input row sitting
+	// beside — not inside — its open-trigger button (see the 'ai' card below),
+	// so its ref is the outer container div.
+	const cardRefs = useRef<Partial<Record<CardId, HTMLElement>>>({});
 	// Mirrors `overlay` synchronously (updated during render, not in an effect)
 	// so requestClose can read the latest value without depending on it —
 	// keeps the callback identity stable across overlay changes.
@@ -445,6 +571,121 @@ export default function HomePage() {
 
 	const resolveCardEl = useCallback((id: CardId) => cardRefs.current[id] ?? null, []);
 
+	// Opens any card's overlay from its live grid position — shared by card()'s
+	// onClick, the command palette, and the AI card face's quick-question row
+	// (`question` gets queued for AiCard to auto-send once mounted, see
+	// AiCard's consumePendingAiQuestion).
+	const openCard = useCallback(
+		(id: CardId, question?: string) => {
+			const cardEl = cardRefs.current[id];
+			const fromRect = cardEl ? cardEl.getBoundingClientRect() : new DOMRect();
+			if (question) queueAiQuestion(question);
+			setOverlay({ id, fromRect, phase: reduceMotion ? 'open' : 'opening' });
+			const url = new URL(window.location.href);
+			url.searchParams.set('card', id);
+			window.history.pushState({ cardId: id }, '', url);
+		},
+		[reduceMotion],
+	);
+
+	// Swaps which card the open dialog shows, in place — no re-morph, since by
+	// the time the dialog is fully 'open' the card "face" has already faded
+	// out (see MorphSurface), so only the static overlay-surface chrome is
+	// visible and unaffected by which card's content sits behind it.
+	const navigateCard = useCallback((direction: 1 | -1) => {
+		const current = overlayRef.current;
+		if (!current || current.phase !== 'open') return;
+		const index = EXPANDABLE.indexOf(current.id);
+		if (index === -1) return;
+		const nextId = EXPANDABLE[(index + direction + EXPANDABLE.length) % EXPANDABLE.length];
+		setOverlay((prev) => (prev && prev.phase === 'open' ? { ...prev, id: nextId } : prev));
+		const url = new URL(window.location.href);
+		url.searchParams.set('card', nextId);
+		window.history.replaceState({ cardId: nextId }, '', url);
+	}, []);
+
+	// Cmd/Ctrl+K toggles the command palette — skipped while a card overlay is
+	// already open to avoid stacking two modal systems.
+	useEffect(() => {
+		function onKeyDown(event: KeyboardEvent) {
+			if (!(event.metaKey || event.ctrlKey) || event.key.toLowerCase() !== 'k') return;
+			event.preventDefault();
+			if (overlayRef.current) return;
+			setPaletteOpen((prev) => !prev);
+		}
+		window.addEventListener('keydown', onKeyDown);
+		return () => window.removeEventListener('keydown', onKeyDown);
+	}, []);
+
+	function cardLabel(id: CardId): string {
+		switch (id) {
+			case 'identity':
+				return tNav('hero');
+			case 'proof':
+				return tNav('proof');
+			case 'work':
+				return tNav('work');
+			case 'ai':
+				return tAi('eyebrow');
+			case 'capabilities':
+				return tNav('capabilities');
+			case 'experience':
+				return tNav('experience');
+			case 'principles':
+				return tPrinciples('eyebrow');
+			case 'contact':
+				return tNav('contact');
+			default:
+				return id;
+		}
+	}
+
+	const paletteCommands: PaletteCommand[] = [
+		...EXPANDABLE.map((id) => ({
+			id: `card-${id}`,
+			group: tCommandPalette('groupCards'),
+			label: cardLabel(id),
+			action: () => openCard(id),
+		})),
+		{
+			id: 'action-blog',
+			group: tCommandPalette('groupActions'),
+			label: tBlog('homeCta'),
+			action: () => router.push('/blog'),
+		},
+		{
+			id: 'action-download',
+			group: tCommandPalette('groupActions'),
+			label: tContact('download'),
+			action: () => {
+				const link = document.createElement('a');
+				link.href = '/files/MyCV.pdf';
+				link.download = 'CV_BE_ThaiThanhNam.pdf';
+				link.click();
+			},
+		},
+		{
+			id: 'action-email',
+			group: tCommandPalette('groupActions'),
+			label: tContact('mail'),
+			action: () => {
+				window.location.href = 'mailto:thanhnam.thai01@gmail.com';
+			},
+		},
+		{
+			id: 'lang-en',
+			group: tCommandPalette('groupLanguage'),
+			label: tLanguages('english'),
+			action: () => router.replace('/', { locale: 'en' }),
+		},
+		{
+			id: 'lang-vi',
+			group: tCommandPalette('groupLanguage'),
+			label: tLanguages('vietnamese'),
+			action: () => router.replace('/', { locale: 'vi' }),
+		},
+	];
+
 	const handleMorphSettled = useCallback((phase: MorphPhase) => {
 		if (phase === 'opening') {
 			setOverlay((current) => (current && current.phase === 'opening' ? { ...current, phase: 'open' } : current));
@@ -455,14 +696,30 @@ export default function HomePage() {
 
 	useEffect(() => {
 		const onKey = (event: KeyboardEvent) => {
-			if (event.key === 'Escape') requestClose();
+			if (event.key === 'Escape') {
+				requestClose();
+				return;
+			}
+			// Leave the arrow keys alone if something else already handled them
+			// (the work card's own project carousel calls preventDefault()) or if
+			// the visitor is typing (the AI card's chat input / JD textarea).
+			if (event.defaultPrevented) return;
+			const target = event.target as HTMLElement | null;
+			if (target && (target.tagName === 'INPUT' || target.tagName === 'TEXTAREA')) return;
+			if (event.key === 'ArrowRight') navigateCard(1);
+			else if (event.key === 'ArrowLeft') navigateCard(-1);
 		};
 		window.addEventListener('keydown', onKey);
 		return () => window.removeEventListener('keydown', onKey);
-	}, [requestClose]);
+	}, [requestClose, navigateCard]);
 
 	useEffect(() => {
 		if (overlay?.id) panelRef.current?.focus();
+	}, [overlay?.id]);
+
+	const detailScrollRef = useRef<HTMLDivElement>(null);
+	useEffect(() => {
+		if (overlay) detailScrollRef.current?.scrollTo({ top: 0 });
 	}, [overlay?.id]);
 
 	// Focus returns to the card that opened the modal once it's fully closed —
@@ -565,19 +822,7 @@ export default function HomePage() {
 				// returns the moment closing starts so the shrinking surface
 				// dissolves onto real card content instead of an empty slot.
 				style={overlay?.id === id && overlay.phase !== 'closing' ? { visibility: 'hidden' as const } : {}}
-				onClick={(event) => {
-					setOverlay({
-						id,
-						fromRect: event.currentTarget.getBoundingClientRect(),
-						phase: reduceMotion ? 'open' : 'opening',
-					});
-					// Push a history entry so Back closes the modal (see the
-					// popstate effect) instead of leaving the page, and the URL
-					// becomes shareable/deep-linkable.
-					const url = new URL(window.location.href);
-					url.searchParams.set('card', id);
-					window.history.pushState({ cardId: id }, '', url);
-				}}
+				onClick={() => openCard(id)}
 				aria-haspopup="dialog"
 				{...entry(index)}
 			>
@@ -923,6 +1168,15 @@ export default function HomePage() {
 					</div>
 					<p className="deck-label-muted hidden lg:block">{tDeck('hint')}</p>
 					<div className="flex items-center gap-3">
+						<button
+							type="button"
+							onClick={() => setPaletteOpen(true)}
+							className="hidden items-center gap-2 border border-white/15 px-3 py-1.5 font-mono text-[10px] tracking-[0.16em] text-slate-300 uppercase transition-colors hover:border-cyan-300/50 hover:text-white sm:flex"
+						>
+							<MagnifyingGlass className="h-3.5 w-3.5" />
+							{tCommandPalette('trigger')}
+							<span className="text-slate-500">⌘K</span>
+						</button>
 						<LanguageSwitcher />
 						<Button asChild variant="deckOutline" className="px-4">
 							<Link href={blogHref}>{tBlog('homeCta')}</Link>
@@ -1056,22 +1310,96 @@ export default function HomePage() {
 						);
 					})()}
 
-					{card(
-						'ai',
-						4,
-						<>
-							<div className="flex items-start justify-between gap-3">
-								<CardLabel>{tAi('eyebrow')}</CardLabel>
-								<Sparkle className="h-4 w-4 shrink-0 text-cyan-200" />
-							</div>
-							<h3 className="mt-3 text-lg font-semibold tracking-[-0.03em] text-white xl:text-xl">
-								{tAi('title')}
-							</h3>
-							<p className="mt-2 line-clamp-3 text-xs leading-6 text-slate-300 xl:text-sm xl:leading-7">
-								{tAi('cardTeaser')}
-							</p>
-						</>,
-					)}
+					{(() => {
+						const suggestions = tAi.raw('suggestions') as string[];
+						const submitQuickQuestion = (event: React.FormEvent) => {
+							event.preventDefault();
+							const text = aiQuickInput.trim();
+							if (!text) return;
+							setAiQuickInput('');
+							openCard('ai', text);
+						};
+						// Not the shared card() helper: the AI card face carries a live
+						// input + suggestion chips beside its open-trigger button, and a
+						// <button> can't validly nest another <button>/<input>. The
+						// button covers only the label/title/teaser (click to open, no
+						// question); the row below is a sibling that opens the card
+						// *with* a question queued (see openCard above).
+						return (
+							<motion.div
+								key="ai"
+								ref={(el: HTMLDivElement | null) => {
+									if (el) cardRefs.current.ai = el;
+									else delete cardRefs.current.ai;
+								}}
+								// Not in the Tab order (the button inside is the real stop) —
+								// only here so the close-focus-restore effect has something
+								// focusable to land on, since it targets cardRefs.current[id]
+								// generically for every card.
+								tabIndex={-1}
+								className={`deck-card relative flex min-h-0 flex-col overflow-hidden p-5 text-left ${CARD_GRID.ai} hover:border-cyan-300/40`}
+								style={
+									overlay?.id === 'ai' && overlay.phase !== 'closing'
+										? { visibility: 'hidden' as const }
+										: {}
+								}
+								{...entry(4)}
+							>
+								<button
+									type="button"
+									onClick={() => openCard('ai')}
+									aria-haspopup="dialog"
+									className="group relative flex flex-1 cursor-pointer flex-col text-left"
+								>
+									<OpenHint label={tDeck('open')} />
+									<div className="flex items-start justify-between gap-3">
+										<CardLabel>{tAi('eyebrow')}</CardLabel>
+										<Sparkle className="h-4 w-4 shrink-0 text-cyan-200" />
+									</div>
+									<h3 className="mt-2 text-lg font-semibold tracking-[-0.03em] text-white xl:text-xl">
+										{tAi('title')}
+									</h3>
+									<p className="mt-1 line-clamp-1 text-xs leading-6 text-slate-300 cramped:line-clamp-2 xl:text-sm">
+										{tAi('cardTeaser')}
+									</p>
+								</button>
+								{/* Hidden in the `cramped` band (see globals.css): the deck's
+							    fixed-height grid rows at those heights don't leave room
+							    for this on top of the label/title/teaser above. */}
+								<div className="mt-2 shrink-0 cramped:hidden space-y-1.5">
+									<div className="flex flex-wrap gap-1.5">
+										{suggestions.slice(0, 2).map((question) => (
+											<button
+												key={question}
+												type="button"
+												onClick={() => openCard('ai', question)}
+												className="line-clamp-1 border border-white/10 px-2 py-0.5 text-left font-mono text-[10px] text-slate-300 transition-colors hover:border-cyan-300/50 hover:text-cyan-100"
+											>
+												{question}
+											</button>
+										))}
+									</div>
+									<form onSubmit={submitQuickQuestion} className="flex gap-1.5">
+										<input
+											value={aiQuickInput}
+											onChange={(event) => setAiQuickInput(event.target.value)}
+											placeholder={tAi('chat.placeholder')}
+											aria-label={tAi('chat.placeholder')}
+											className="deck-field min-w-0 flex-1 px-2.5 py-1 text-xs text-white placeholder:text-slate-500 outline-none focus:border-cyan-300/50"
+										/>
+										<button
+											type="submit"
+											disabled={!aiQuickInput.trim()}
+											aria-label={tAi('chat.send')}
+											className="border border-white/15 px-2 text-slate-300 transition-colors hover:border-cyan-300/50 hover:text-white disabled:cursor-not-allowed disabled:opacity-30"
+										>
+											<ArrowRight className="h-3.5 w-3.5" />
+										</button>
+									</form>
+								</div>
+							</motion.div>
+						);
+					})()}
 
 					{card(
 						'experience',
@@ -1150,6 +1478,8 @@ export default function HomePage() {
 				))}
 			</div>
 
+			<CommandPalette open={paletteOpen} onClose={() => setPaletteOpen(false)} commands={paletteCommands} />
+
 			{overlay && (
 				<>
 					<div
@@ -1186,20 +1516,43 @@ export default function HomePage() {
 							)}
 							<div className="relative flex min-h-0 w-full" style={detailStyle}>
 								<div
+									ref={detailScrollRef}
 									data-lenis-prevent
 									className="min-h-0 w-full overflow-y-auto overscroll-contain p-6 sm:p-9"
 								>
 									{renderDetail(overlay.id)}
 								</div>
 								{/* Sibling of the scroller, not inside it: stays visible however far the content scrolls. */}
-								<button
-									type="button"
-									onClick={() => requestClose()}
-									aria-label={tDeck('close')}
-									className="absolute top-4 right-4 z-10 border border-white/10 bg-slate-950/60 p-2 text-slate-400 transition-colors hover:border-cyan-300/50 hover:text-white"
-								>
-									<X className="h-4 w-4" />
-								</button>
+								<div className="absolute top-4 right-4 z-10 flex items-center gap-2">
+									{overlay.phase === 'open' && (
+										<>
+											<button
+												type="button"
+												onClick={() => navigateCard(-1)}
+												aria-label={tDeck('prevCard')}
+												className="border border-white/10 bg-slate-950/60 p-2 text-slate-400 transition-colors hover:border-cyan-300/50 hover:text-white"
+											>
+												<ArrowLeft className="h-4 w-4" />
+											</button>
+											<button
+												type="button"
+												onClick={() => navigateCard(1)}
+												aria-label={tDeck('nextCard')}
+												className="border border-white/10 bg-slate-950/60 p-2 text-slate-400 transition-colors hover:border-cyan-300/50 hover:text-white"
+											>
+												<ArrowRight className="h-4 w-4" />
+											</button>
+										</>
+									)}
+									<button
+										type="button"
+										onClick={() => requestClose()}
+										aria-label={tDeck('close')}
+										className="border border-white/10 bg-slate-950/60 p-2 text-slate-400 transition-colors hover:border-cyan-300/50 hover:text-white"
+									>
+										<X className="h-4 w-4" />
+									</button>
+								</div>
 							</div>
 						</div>
 					</div>

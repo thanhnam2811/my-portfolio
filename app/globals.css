@@ -4,6 +4,12 @@
 @custom-variant dark (&:is(.dark *));
 /* Single-viewport bento deck only engages when the viewport is tall enough. */
 @custom-variant tall (@media (min-height: 720px));
+/* The narrow band where the deck is height-constrained (`lg:tall:grid-rows-6`)
+ * but too short for the AI card's quick-input row to fit without clipping —
+ * common laptop heights like 1366×768 land here. Below `lg` or above this
+ * band, rows aren't fixed-height (or there's enough of it), so no clipping
+ * risk exists and the row shows normally. */
+@custom-variant cramped (@media (min-width: 1024px) and (min-height: 720px) and (max-height: 959px));
 
 @theme inline {
 	--color-background: var(--background);
