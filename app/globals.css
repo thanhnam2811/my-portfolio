@@ -113,6 +113,12 @@
 	--operator-node-fill: #0a1626;
 	--operator-node-stroke: rgba(255, 255, 255, 0.12);
 	--operator-node-dot: #94a3b8;
+
+	/* Long-form reading on the operator surface (blog) — mirrors the slate-200/300 text ladder in DESIGN_SYSTEM.md §2. */
+	--operator-prose-heading: #ffffff;
+	--operator-prose-fg: rgb(226 232 240);
+	--operator-prose-muted: rgb(203 213 225);
+	--operator-prose-border: rgb(255 255 255 / 0.08);
 }
 
 .dark {
@@ -316,7 +322,7 @@ aside {
 }
 
 .blog-prose {
-	color: rgb(226 232 240);
+	color: var(--operator-prose-fg);
 	font-size: 1.05rem;
 	line-height: 1.95;
 }
@@ -330,7 +336,7 @@ aside {
 	scroll-margin-top: 6rem;
 	font-weight: 600;
 	letter-spacing: -0.03em;
-	color: white;
+	color: var(--operator-prose-heading);
 }
 
 .blog-prose h2 {
@@ -346,7 +352,7 @@ aside {
 .blog-prose p,
 .blog-prose li {
 	max-width: 72ch;
-	color: rgb(203 213 225);
+	color: var(--operator-prose-muted);
 }
 
 .blog-prose ul,
@@ -359,9 +365,9 @@ aside {
 }
 
 .blog-prose strong {
-	color: white;
+	color: var(--operator-prose-heading);
 }
 
 .blog-prose img {
-	border: 1px solid rgb(255 255 255 / 0.08);
+	border: 1px solid var(--operator-prose-border);
 }

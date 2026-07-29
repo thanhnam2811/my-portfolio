@@ -243,7 +243,7 @@ export default function AiCard({ locale }: { locale: 'en' | 'vi' }) {
 						)}
 						{chatError && (
 							<div className="mr-auto flex flex-col items-start gap-2">
-								<p className="text-xs text-red-300">{t('chat.error')}</p>
+								<p className="text-xs text-rose-300">{t('chat.error')}</p>
 								<button
 									type="button"
 									onClick={() => retryChat()}
@@ -307,7 +307,7 @@ export default function AiCard({ locale }: { locale: 'en' | 'vi' }) {
 						</Button>
 						<CharCount value={jobDescription.length} max={MAX_JD_CHARS} />
 					</div>
-					{jdError && <p className="text-xs text-red-300">{t('jdFit.error')}</p>}
+					{jdError && <p className="text-xs text-rose-300">{t('jdFit.error')}</p>}
 					{jdResult && (
 						<div className="mt-2 divide-y divide-white/10 border-t border-white/10">
 							<div className="grid gap-2 py-4 md:grid-cols-[140px_minmax(0,1fr)]">

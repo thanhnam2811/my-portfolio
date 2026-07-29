@@ -69,10 +69,14 @@ status", everything else is a quiet slate ladder on near-black blue.
 | `text-slate-500`            | faint mono meta (indices, dates) — **never body copy** |
 | `text-cyan-200/70…cyan-300` | accent labels, links, interactive highlights           |
 | `text-emerald-200/300`      | status = good (availability badge, status dot)         |
+| `text-amber-300`            | status = caution (e.g. near-limit counters)            |
+| `text-rose-300`             | status = bad (form/request errors, weak-fit verdict)   |
 
 Rules:
 
-- **One accent.** Cyan is the only "look here" hue. Emerald is reserved for status semantics, never decoration.
+- **One accent.** Cyan is the only "look here" hue. Emerald/amber/rose are reserved for status semantics (good/caution/
+  bad), never decoration. Don't reach for `red`, `orange`, or any other hue for these meanings — it fragments what
+  should read as one consistent status ladder.
 - Borders/hairlines come from the utilities below — don't write `border-white/10` by hand in new code.
 - Buttons on this surface: primary = `bg-cyan-300 text-slate-950 hover:bg-cyan-200`, secondary = `variant="outline"` +
   `border-white/15 bg-transparent text-white hover:bg-white/5`, always `rounded-none`.
@@ -187,7 +191,9 @@ Everything here follows the **semantic tokens** (`background`, `foreground`, `pr
 `muted-foreground`… defined for light + `.dark` in OKLCH):
 
 - Panels: `glass` / `glass-panel` / `glass-card` utilities (used by `components/ui/card.tsx`).
-- Long-form: `.blog-prose` — `~1.05rem` size, `1.95` line-height, `max-width: 72ch`, headings `-0.03em`.
+- Long-form: `.blog-prose` — `~1.05rem` size, `1.95` line-height, `max-width: 72ch`, headings `-0.03em`. Text colors
+  come from the `--operator-prose-*` tokens (`globals.css`), which mirror the operator surface's `slate-200/300` ladder
+  — don't hardcode `rgb()`/`white` in new prose rules.
 - Radius: base `--radius: 1rem` (sm/md/lg/xl derived). Shadows: the soft `--shadow-*` family only.
 - Buttons/Badges: CVA variants in `components/ui/` — extend variants, never fork.
 - `--header-offset` drives `scroll-padding-top` for in-article anchors.
