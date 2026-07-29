@@ -9,6 +9,13 @@ import { useReducedMotion } from 'framer-motion';
  * packets flowing along the edges. Pure SVG + SMIL: no per-frame JS, no WebGL,
  * razor-sharp labels, and it reads as a real backend/game-server architecture.
  * Motion is skipped under `prefers-reduced-motion` (the topology still reads).
+ *
+ * Two orientations are always in the DOM — a wide horizontal pipeline for
+ * `md+` and a stacked vertical one below it — with Tailwind visibility
+ * classes picking one per breakpoint. At the horizontal SVG's viewBox
+ * (1000×200), the topology card's actual mobile width scales node titles
+ * down to a few illegible pixels; the vertical variant keeps every label
+ * near its natural size instead of relying on that scale-down.
  */
 
 interface SystemNode {
@@ -28,38 +35,32 @@ const NODES: SystemNode[] = [
 const EDGE_LABELS = ['connect', 'input', 'sync', 'persist'];
 const EDGE_LATENCY = ['2ms', '1ms', '0.4ms', '5ms'];
 
-const VIEW_W = 1000;
-const VIEW_H = 200;
-const NODE_W = 150;
-const NODE_H = 88;
-const AXIS_Y = 96;
-const MARGIN = 20;
+const TOPOLOGY_ARIA_LABEL = 'Realtime backend topology: player to gateway to game server to redis to database';
 
-const centerX = (index: number) => {
-	const first = MARGIN + NODE_W / 2;
-	const step = (VIEW_W - MARGIN * 2 - NODE_W) / (NODES.length - 1);
-	return first + index * step;
-};
+function HorizontalTopology({ reduceMotion, className }: { reduceMotion: boolean; className: string }) {
+	const VIEW_W = 1000;
+	const VIEW_H = 200;
+	const NODE_W = 150;
+	const NODE_H = 88;
+	const AXIS_Y = 96;
+	const MARGIN = 20;
 
-export default function SystemVisualization() {
-	const reduceMotion = useReducedMotion();
+	const centerX = (index: number) => {
+		const first = MARGIN + NODE_W / 2;
+		const step = (VIEW_W - MARGIN * 2 - NODE_W) / (NODES.length - 1);
+		return first + index * step;
+	};
 
 	return (
-		<svg
-			viewBox={`0 0 ${VIEW_W} ${VIEW_H}`}
-			className="h-auto w-full"
-			role="img"
-			aria-label="Realtime backend topology: player to gateway to game server to redis to database"
-		>
+		<svg viewBox={`0 0 ${VIEW_W} ${VIEW_H}`} className={className} role="img" aria-label={TOPOLOGY_ARIA_LABEL}>
 			<defs>
-				<linearGradient id="sv-edge" x1="0" y1="0" x2="1" y2="0">
+				<linearGradient id="sv-edge-h" x1="0" y1="0" x2="1" y2="0">
 					<stop offset="0%" stopColor="var(--operator-accent-deep)" stopOpacity="0.05" />
 					<stop offset="50%" stopColor="var(--operator-accent-deep)" stopOpacity="0.45" />
 					<stop offset="100%" stopColor="var(--operator-accent-deep)" stopOpacity="0.05" />
 				</linearGradient>
 			</defs>
 
-			{/* Edges + packets */}
 			{NODES.slice(0, -1).map((node, i) => {
 				const x1 = centerX(i) + NODE_W / 2;
 				const x2 = centerX(i + 1) - NODE_W / 2;
@@ -68,7 +69,7 @@ export default function SystemVisualization() {
 
 				return (
 					<g key={`edge-${node.id}`}>
-						<line x1={x1} y1={AXIS_Y} x2={x2} y2={AXIS_Y} stroke="url(#sv-edge)" strokeWidth={1.5} />
+						<line x1={x1} y1={AXIS_Y} x2={x2} y2={AXIS_Y} stroke="url(#sv-edge-h)" strokeWidth={1.5} />
 						<text
 							x={mid}
 							y={AXIS_Y - 12}
@@ -113,7 +114,6 @@ export default function SystemVisualization() {
 				);
 			})}
 
-			{/* Nodes */}
 			{NODES.map((node, i) => {
 				const cx = centerX(i);
 				const x = cx - NODE_W / 2;
@@ -171,5 +171,150 @@ export default function SystemVisualization() {
 				);
 			})}
 		</svg>
+	);
+}
+
+function VerticalTopology({ reduceMotion, className }: { reduceMotion: boolean; className: string }) {
+	const NODE_W = 220;
+	const NODE_H = 64;
+	const MARGIN = 24;
+	const GAP = 44;
+	const VIEW_W = 260;
+	const AXIS_X = VIEW_W / 2;
+	const VIEW_H = MARGIN * 2 + NODE_H * NODES.length + GAP * (NODES.length - 1);
+
+	const centerY = (index: number) => MARGIN + NODE_H / 2 + index * (NODE_H + GAP);
+
+	return (
+		<svg viewBox={`0 0 ${VIEW_W} ${VIEW_H}`} className={className} role="img" aria-label={TOPOLOGY_ARIA_LABEL}>
+			<defs>
+				<linearGradient id="sv-edge-v" x1="0" y1="0" x2="0" y2="1">
+					<stop offset="0%" stopColor="var(--operator-accent-deep)" stopOpacity="0.05" />
+					<stop offset="50%" stopColor="var(--operator-accent-deep)" stopOpacity="0.45" />
+					<stop offset="100%" stopColor="var(--operator-accent-deep)" stopOpacity="0.05" />
+				</linearGradient>
+			</defs>
+
+			{NODES.slice(0, -1).map((node, i) => {
+				const y1 = centerY(i) + NODE_H / 2;
+				const y2 = centerY(i + 1) - NODE_H / 2;
+				const path = `M ${AXIS_X} ${y1} L ${AXIS_X} ${y2}`;
+				const mid = (y1 + y2) / 2;
+
+				return (
+					<g key={`edge-${node.id}`}>
+						<line x1={AXIS_X} y1={y1} x2={AXIS_X} y2={y2} stroke="url(#sv-edge-v)" strokeWidth={1.5} />
+						<text
+							x={AXIS_X + 14}
+							y={mid - 4}
+							textAnchor="start"
+							className="fill-cyan-200/50 font-mono"
+							fontSize="9"
+							letterSpacing="1.5"
+						>
+							{EDGE_LABELS[i].toUpperCase()}
+						</text>
+						<text
+							x={AXIS_X + 14}
+							y={mid + 12}
+							textAnchor="start"
+							className="fill-slate-500 font-mono"
+							fontSize="8"
+						>
+							{EDGE_LATENCY[i]}
+						</text>
+
+						{!reduceMotion && (
+							<>
+								<circle r="3" fill="var(--operator-accent)">
+									<animateMotion
+										dur="2.2s"
+										repeatCount="indefinite"
+										path={path}
+										begin={`${i * 0.5}s`}
+									/>
+								</circle>
+								<circle r="2" fill="var(--operator-accent-strong)" opacity="0.7">
+									<animateMotion
+										dur="2.2s"
+										repeatCount="indefinite"
+										path={path}
+										begin={`${i * 0.5 + 1.1}s`}
+									/>
+								</circle>
+							</>
+						)}
+					</g>
+				);
+			})}
+
+			{NODES.map((node, i) => {
+				const cy = centerY(i);
+				const x = AXIS_X - NODE_W / 2;
+				const y = cy - NODE_H / 2;
+				const isServer = node.id === 'server';
+
+				return (
+					<g key={node.id}>
+						{isServer && !reduceMotion && (
+							<rect
+								x={x - 4}
+								y={y - 4}
+								width={NODE_W + 8}
+								height={NODE_H + 8}
+								fill="none"
+								stroke="var(--operator-accent-deep)"
+								strokeWidth="1"
+							>
+								<animate
+									attributeName="opacity"
+									values="0.6;0.1;0.6"
+									dur="2.4s"
+									repeatCount="indefinite"
+								/>
+							</rect>
+						)}
+						<rect
+							x={x}
+							y={y}
+							width={NODE_W}
+							height={NODE_H}
+							fill="var(--operator-node-fill)"
+							stroke={isServer ? 'var(--operator-accent-deep)' : 'var(--operator-node-stroke)'}
+							strokeWidth={isServer ? 1.5 : 1}
+						/>
+						<circle
+							cx={x + 18}
+							cy={y + 18}
+							r="3"
+							fill={isServer ? 'var(--operator-accent)' : 'var(--operator-node-dot)'}
+						/>
+						<text x={x + 30} y={y + 22} className="fill-slate-100" fontSize="15" fontWeight="600">
+							{node.title}
+						</text>
+						<text
+							x={x + 18}
+							y={y + 46}
+							className="fill-slate-400 font-mono"
+							fontSize="9"
+							letterSpacing="1.5"
+						>
+							{node.sub.toUpperCase()}
+						</text>
+					</g>
+				);
+			})}
+		</svg>
+	);
+}
+
+export default function SystemVisualization() {
+	const reduceMotion = useReducedMotion();
+
+	return (
+		<>
+			<HorizontalTopology reduceMotion={!!reduceMotion} className="hidden h-auto w-full md:block" />
+			<VerticalTopology reduceMotion={!!reduceMotion} className="block h-auto w-full md:hidden" />
+		</>
 	);
 }
