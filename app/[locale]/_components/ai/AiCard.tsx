@@ -271,11 +271,7 @@ export default function AiCard({ locale }: { locale: 'en' | 'vi' }) {
 							// 16px on mobile (text-base) stops iOS Safari from zooming on focus.
 							className="min-w-0 flex-1 deck-field px-3 py-2 text-base text-white placeholder:text-slate-500 outline-none focus:border-cyan-300/50 sm:text-sm"
 						/>
-						<Button
-							type="submit"
-							disabled={chatLoading || !input.trim()}
-							className="rounded-none bg-cyan-300 text-slate-950 hover:bg-cyan-200"
-						>
+						<Button type="submit" variant="deck" disabled={chatLoading || !input.trim()}>
 							{t('chat.send')}
 						</Button>
 					</form>
@@ -299,9 +295,10 @@ export default function AiCard({ locale }: { locale: 'en' | 'vi' }) {
 					<div className="flex shrink-0 items-center justify-between gap-3">
 						<Button
 							type="button"
+							variant="deck"
 							onClick={() => checkFit()}
 							disabled={jdLoading || !jobDescription.trim()}
-							className="w-fit rounded-none bg-cyan-300 text-slate-950 hover:bg-cyan-200"
+							className="w-fit"
 						>
 							{jdLoading ? t('jdFit.checking') : t('jdFit.submit')}
 						</Button>

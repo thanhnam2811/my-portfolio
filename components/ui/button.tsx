@@ -20,6 +20,12 @@ const buttonVariants = cva(
 				secondary: 'bg-secondary text-secondary-foreground hover:bg-secondary/80',
 				ghost: 'shadow-none hover:shadow-[var(--shadow-neu)] hover:bg-accent hover:text-accent-foreground dark:hover:bg-accent/50',
 				link: 'shadow-none text-primary underline-offset-4 hover:underline',
+				// Operator deck surface (homepage) — always dark, square corners, no
+				// editorial shadow. See docs/DESIGN_SYSTEM.md §2. Self-contained (not
+				// layered on `outline`) so no `dark:` editorial-token classes leak in.
+				deck: 'rounded-none bg-cyan-300 text-slate-950 shadow-none hover:bg-cyan-200',
+				deckOutline:
+					'rounded-none border border-white/15 bg-transparent text-white shadow-none hover:bg-white/5',
 			},
 			size: {
 				default: 'h-11 px-5 py-2 has-[>svg]:px-4',
@@ -28,6 +34,9 @@ const buttonVariants = cva(
 				icon: 'size-11',
 			},
 		},
+		// sm/lg redeclare rounded-md for their own variants; force square corners
+		// back for the deck variants regardless of size.
+		compoundVariants: [{ variant: ['deck', 'deckOutline'], size: ['sm', 'lg'], class: 'rounded-none' }],
 		defaultVariants: {
 			variant: 'default',
 			size: 'default',

@@ -760,17 +760,13 @@ export default function HomePage() {
 						</h2>
 						<p className="mt-4 text-base leading-8 text-slate-300">{tContact('intro')}</p>
 						<div className="mt-6 flex flex-wrap gap-3">
-							<Button asChild className="rounded-none bg-cyan-300 text-slate-950 hover:bg-cyan-200">
+							<Button asChild variant="deck">
 								<a href="/files/MyCV.pdf" download="CV_BE_ThaiThanhNam.pdf">
 									<DownloadSimple className="mr-2 h-4 w-4" />
 									{tContact('download')}
 								</a>
 							</Button>
-							<Button
-								asChild
-								variant="outline"
-								className="rounded-none border-white/15 bg-transparent text-white hover:bg-white/5"
-							>
+							<Button asChild variant="deckOutline">
 								<a href="mailto:thanhnam.thai01@gmail.com">{tContact('mail')}</a>
 							</Button>
 						</div>
@@ -832,17 +828,10 @@ export default function HomePage() {
 					</div>
 					<p className="deck-label-muted hidden lg:block">{tDeck('hint')}</p>
 					<div className="flex items-center gap-3">
-						<Button
-							asChild
-							variant="outline"
-							className="rounded-none border-white/15 bg-transparent px-4 text-white hover:bg-white/5"
-						>
+						<Button asChild variant="deckOutline" className="px-4">
 							<Link href={blogHref}>{tBlog('homeCta')}</Link>
 						</Button>
-						<Button
-							asChild
-							className="hidden rounded-none bg-cyan-300 px-4 text-slate-950 hover:bg-cyan-200 sm:inline-flex"
-						>
+						<Button asChild variant="deck" className="hidden px-4 sm:inline-flex">
 							<a href="/files/MyCV.pdf" download="CV_BE_ThaiThanhNam.pdf">
 								<DownloadSimple className="mr-2 h-4 w-4" />
 								{tHero('ctaDownload')}

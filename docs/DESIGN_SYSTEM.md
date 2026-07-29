@@ -82,8 +82,10 @@ Rules:
 - **Exactly two hairline opacities**: `white/10` (default — content borders, dividers, chips) and `white/15` (strong —
   interactive frames: buttons, pills, avatar/control outlines). Don't introduce a third (no `/8`, `/12`, etc. outside
   `operator-header`'s reserved `border-soft`) — fold new cases into one of these two.
-- Buttons on this surface: primary = `bg-cyan-300 text-slate-950 hover:bg-cyan-200`, secondary = `variant="outline"` +
-  `border-white/15 bg-transparent text-white hover:bg-white/5`, always `rounded-none`.
+- Buttons on this surface: `variant="deck"` (primary, cyan) / `variant="deckOutline"` (secondary) on the shared `Button`
+  component (`components/ui/button.tsx`) — square corners, no editorial `shadow-neu`, self-contained (not layered on
+  `outline`, so no `dark:` editorial-token classes leak in). Never hand-roll `rounded-none bg-cyan-300…` again; extend
+  the variant if a new deck button shape is needed.
 
 ---
 
