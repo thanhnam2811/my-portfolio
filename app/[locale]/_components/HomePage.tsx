@@ -397,22 +397,51 @@ export default function HomePage() {
 	const [overlay, setOverlay] = useState<{ id: CardId; fromRect: DOMRect; phase: MorphPhase } | null>(null);
 	const panelRef = useRef<HTMLDivElement>(null);
 	const cardRefs = useRef<Partial<Record<CardId, HTMLButtonElement>>>({});
+	// Mirrors `overlay` synchronously (updated during render, not in an effect)
+	// so requestClose can read the latest value without depending on it —
+	// keeps the callback identity stable across overlay changes.
+	const overlayRef = useRef(overlay);
+	overlayRef.current = overlay;
+	// The card to return focus to once the close animation finishes unmounting.
+	const closingIdRef = useRef<CardId | null>(null);
 
 	// Close = reverse morph back to the card's current slot, then unmount.
-	const requestClose = useCallback(() => {
-		setOverlay((current) => {
-			if (!current || current.phase === 'closing') return current;
-			if (reduceMotion) return null;
-			const cardEl = cardRefs.current[current.id];
-			const fromRect = cardEl ? cardEl.getBoundingClientRect() : current.fromRect;
-			return { ...current, fromRect, phase: 'closing' };
-		});
-		// Safety net: if transitionend is swallowed (e.g. tab hidden mid-close),
-		// still unmount once the morph duration has passed.
-		window.setTimeout(() => {
-			setOverlay((current) => (current?.phase === 'closing' ? null : current));
-		}, MORPH_CLOSE_MS + 250);
-	}, [reduceMotion]);
+	// Also unwinds the history entry pushed on open (see card()'s onClick) so
+	// the browser Back button and the in-page close button do the same thing;
+	// `skipHistory` is set when we're reacting to a popstate that already
+	// happened (see the popstate effect below).
+	const requestClose = useCallback(
+		(opts?: { skipHistory?: boolean }) => {
+			const current = overlayRef.current;
+			if (!current || current.phase === 'closing') return;
+			closingIdRef.current = current.id;
+
+			setOverlay((prev) => {
+				if (!prev || prev.phase === 'closing') return prev;
+				if (reduceMotion) return null;
+				const cardEl = cardRefs.current[prev.id];
+				const fromRect = cardEl ? cardEl.getBoundingClientRect() : prev.fromRect;
+				return { ...prev, fromRect, phase: 'closing' };
+			});
+			// Safety net: if transitionend is swallowed (e.g. tab hidden mid-close),
+			// still unmount once the morph duration has passed.
+			window.setTimeout(() => {
+				setOverlay((prev) => (prev?.phase === 'closing' ? null : prev));
+			}, MORPH_CLOSE_MS + 250);
+
+			if (!opts?.skipHistory) {
+				const state = window.history.state as { cardId?: CardId } | null;
+				if (state?.cardId === current.id) {
+					window.history.back();
+				} else {
+					const url = new URL(window.location.href);
+					url.searchParams.delete('card');
+					window.history.replaceState(null, '', url);
+				}
+			}
+		},
+		[reduceMotion],
+	);
 
 	const resolveCardEl = useCallback((id: CardId) => cardRefs.current[id] ?? null, []);
 
@@ -435,6 +464,45 @@ export default function HomePage() {
 	useEffect(() => {
 		if (overlay?.id) panelRef.current?.focus();
 	}, [overlay?.id]);
+
+	// Focus returns to the card that opened the modal once it's fully closed —
+	// covers every close path (Esc/backdrop/✕, the reduced-motion instant
+	// close, and the transitionend safety-net timeout), since they all funnel
+	// through setOverlay(null).
+	useEffect(() => {
+		if (overlay === null && closingIdRef.current) {
+			const id = closingIdRef.current;
+			closingIdRef.current = null;
+			cardRefs.current[id]?.focus();
+		}
+	}, [overlay]);
+
+	// Deep link: `?card=<id>` opens that card's overlay on load, morphing from
+	// its live grid position like a real click would.
+	useEffect(() => {
+		const rawId = new URLSearchParams(window.location.search).get('card');
+		if (!rawId || !(EXPANDABLE as readonly string[]).includes(rawId)) return;
+		const id = rawId as CardId;
+		const cardEl = cardRefs.current[id];
+		const fromRect = cardEl ? cardEl.getBoundingClientRect() : new DOMRect();
+		setOverlay({ id, fromRect, phase: reduceMotion ? 'open' : 'opening' });
+		window.history.replaceState({ cardId: id }, '', window.location.href);
+		// Intentionally run once on mount — this only ever applies to the URL
+		// present when the page first loaded.
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, []);
+
+	// Browser Back should close the modal instead of leaving the page: opening
+	// a card pushes a history entry (see card()'s onClick), so popping back to
+	// the entry beneath it (no `cardId`) closes locally instead of navigating.
+	useEffect(() => {
+		function onPopState(event: PopStateEvent) {
+			const state = event.state as { cardId?: CardId } | null;
+			if (!state?.cardId) requestClose({ skipHistory: true });
+		}
+		window.addEventListener('popstate', onPopState);
+		return () => window.removeEventListener('popstate', onPopState);
+	}, [requestClose]);
 
 	// Lock background scroll (native + Lenis) while the overlay is mounted so
 	// the close morph returns to a card that hasn't moved underneath it.
@@ -497,13 +565,19 @@ export default function HomePage() {
 				// returns the moment closing starts so the shrinking surface
 				// dissolves onto real card content instead of an empty slot.
 				style={overlay?.id === id && overlay.phase !== 'closing' ? { visibility: 'hidden' as const } : {}}
-				onClick={(event) =>
+				onClick={(event) => {
 					setOverlay({
 						id,
 						fromRect: event.currentTarget.getBoundingClientRect(),
 						phase: reduceMotion ? 'open' : 'opening',
-					})
-				}
+					});
+					// Push a history entry so Back closes the modal (see the
+					// popstate effect) instead of leaving the page, and the URL
+					// becomes shareable/deep-linkable.
+					const url = new URL(window.location.href);
+					url.searchParams.set('card', id);
+					window.history.pushState({ cardId: id }, '', url);
+				}}
 				aria-haspopup="dialog"
 				{...entry(index)}
 			>
@@ -814,6 +888,24 @@ export default function HomePage() {
 		}
 	}
 
+	// Same detail content as the overlay, minus the interactive carousel and
+	// the AI widget (a tool, not CV content) — used below to keep every card's
+	// full detail in the server HTML for crawlers, since renderDetail() only
+	// ever runs while a card's overlay is mounted.
+	function renderStaticDetail(id: CardId) {
+		if (id === 'ai') return null;
+		if (id === 'work') {
+			return (
+				<>
+					{featuredWork.map((item) => (
+						<div key={item.id}>{renderWorkDetail(item.id)}</div>
+					))}
+				</>
+			);
+		}
+		return renderDetail(id);
+	}
+
 	return (
 		<div className="operator-shell relative min-h-dvh overflow-x-hidden text-white">
 			<div className="operator-atmosphere pointer-events-none absolute inset-0" />
@@ -1049,6 +1141,15 @@ export default function HomePage() {
 				</div>
 			</main>
 
+			{/* Full detail content for every card, present in the HTML but visually
+			    hidden — indexed like any accordion/tab panel; visitors reach the
+			    same content through the modal above. */}
+			<div hidden aria-hidden="true">
+				{EXPANDABLE.map((id) => (
+					<div key={id}>{renderStaticDetail(id)}</div>
+				))}
+			</div>
+
 			{overlay && (
 				<>
 					<div
@@ -1058,7 +1159,7 @@ export default function HomePage() {
 							opacity: overlay.phase === 'closing' ? 0 : 1,
 							transition: 'opacity 380ms ease',
 						}}
-						onClick={requestClose}
+						onClick={() => requestClose()}
 					/>
 					<div className="pointer-events-none fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-8">
 						<div
@@ -1093,7 +1194,7 @@ export default function HomePage() {
 								{/* Sibling of the scroller, not inside it: stays visible however far the content scrolls. */}
 								<button
 									type="button"
-									onClick={requestClose}
+									onClick={() => requestClose()}
 									aria-label={tDeck('close')}
 									className="absolute top-4 right-4 z-10 border border-white/10 bg-slate-950/60 p-2 text-slate-400 transition-colors hover:border-cyan-300/50 hover:text-white"
 								>
