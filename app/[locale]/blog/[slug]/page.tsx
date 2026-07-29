@@ -92,8 +92,8 @@ export default async function BlogArticlePage({ params }: { params: Promise<{ lo
 	});
 
 	return (
-		<div className="min-h-screen bg-[#07111f] text-white">
-			<div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_18%_0%,rgba(53,88,166,0.24),transparent_28%),radial-gradient(circle_at_84%_16%,rgba(39,146,175,0.12),transparent_22%),linear-gradient(180deg,#0a1528_0%,#09111d_40%,#050a13_100%)]" />
+		<div className="operator-shell min-h-screen text-white">
+			<div className="operator-atmosphere pointer-events-none absolute inset-0" />
 			<div className="relative mx-auto max-w-[1380px] px-4 py-10 sm:px-6 lg:px-10 lg:py-14">
 				<header className="border-b border-white/10 pb-8">
 					<div className="flex flex-wrap items-center gap-3">
