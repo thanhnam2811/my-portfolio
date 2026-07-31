@@ -2,6 +2,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import matter from 'gray-matter';
 import { routing } from '@/i18n/routing';
+import { SITE_URL } from '@/lib/site';
 
 const BLOG_ROOT = path.join(process.cwd(), 'content', 'blog');
 const DEFAULT_LOCALE = 'en';
@@ -163,7 +164,7 @@ export function getBlogStaticParams() {
 }
 
 export function getBlogSitemapEntries() {
-	const baseUrl = 'https://thanhnam2811.vercel.app';
+	const baseUrl = SITE_URL;
 
 	return routing.locales.flatMap((locale) => {
 		const posts = getAllBlogPosts(locale);

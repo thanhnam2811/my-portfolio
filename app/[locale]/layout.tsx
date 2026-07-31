@@ -20,8 +20,9 @@ const geistMono = Geist_Mono({
 });
 
 import { getTranslations } from 'next-intl/server';
+import { SITE_URL } from '@/lib/site';
 
-const siteUrl = 'https://thanhnam2811.vercel.app';
+const siteUrl = SITE_URL;
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
 	const { locale } = await params;

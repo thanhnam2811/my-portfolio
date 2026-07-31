@@ -1,9 +1,10 @@
 import { MetadataRoute } from 'next';
 import { routing } from '@/i18n/routing';
 import { getBlogSitemapEntries } from '@/lib/blog';
+import { SITE_URL } from '@/lib/site';
 
 export default function sitemap(): MetadataRoute.Sitemap {
-	const baseUrl = 'https://thanhnam2811.vercel.app';
+	const baseUrl = SITE_URL;
 	const locales = routing.locales;
 	const homepageEntries: MetadataRoute.Sitemap = locales.map((locale) => ({
 		url: `${baseUrl}/${locale}`,

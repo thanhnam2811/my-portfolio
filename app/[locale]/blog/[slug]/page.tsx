@@ -11,6 +11,7 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { LanguageSwitcher } from '@/components/LanguageSwitcher';
 import { getAdjacentBlogPosts, getBlogPost, getBlogStaticParams, type BlogLocale } from '@/lib/blog';
+import { SITE_URL } from '@/lib/site';
 
 function formatDate(locale: BlogLocale, value: string) {
 	return new Intl.DateTimeFormat(locale === 'vi' ? 'vi-VN' : 'en-US', {
@@ -44,16 +45,16 @@ export async function generateMetadata({
 			title: post.title,
 			description: post.description,
 			alternates: {
-				canonical: `https://thanhnam2811.vercel.app/${locale}/blog/${post.slug}`,
+				canonical: `${SITE_URL}/${locale}/blog/${post.slug}`,
 				languages: {
-					en: `https://thanhnam2811.vercel.app/en/blog/${post.slug}`,
-					vi: `https://thanhnam2811.vercel.app/vi/blog/${post.slug}`,
+					en: `${SITE_URL}/en/blog/${post.slug}`,
+					vi: `${SITE_URL}/vi/blog/${post.slug}`,
 				},
 			},
 			openGraph: {
 				title: post.title,
 				description: post.description,
-				url: `https://thanhnam2811.vercel.app/${locale}/blog/${post.slug}`,
+				url: `${SITE_URL}/${locale}/blog/${post.slug}`,
 				siteName: 'Thai Thanh Nam',
 			},
 			twitter: {
