@@ -6,6 +6,7 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { LanguageSwitcher } from '@/components/LanguageSwitcher';
 import { getAllBlogPosts, type BlogLocale } from '@/lib/blog';
+import { SITE_URL } from '@/lib/site';
 
 function formatDate(locale: BlogLocale, value: string) {
 	return new Intl.DateTimeFormat(locale === 'vi' ? 'vi-VN' : 'en-US', {
@@ -25,7 +26,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: B
 		openGraph: {
 			title: t('title'),
 			description: t('description'),
-			url: `https://thanhnam2811.vercel.app/${locale}/blog`,
+			url: `${SITE_URL}/${locale}/blog`,
 			siteName: 'Thai Thanh Nam',
 		},
 		twitter: {

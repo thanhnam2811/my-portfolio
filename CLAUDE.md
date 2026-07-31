@@ -9,8 +9,7 @@ front.
 ## What this is
 
 Localized single-page portfolio + MDX blog for a backend engineer. Next.js 15 App Router, React 19, TypeScript (strict),
-Tailwind CSS v4, `next-intl`, GSAP, Radix UI. Package manager is **pnpm**. Deployed on Vercel
-(`https://thanhnam2811.vercel.app`).
+Tailwind CSS v4, `next-intl`, GSAP, Radix UI. Package manager is **pnpm**. Deployed on Vercel (`https://namtt.dev`).
 
 ## Commands
 
