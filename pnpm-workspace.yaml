@@ -8,3 +8,8 @@ onlyBuiltDependencies:
     - '@swc/core'
     - '@tailwindcss/oxide'
     - sharp
+
+overrides:
+    tinypool: ^2.2.0
+    postcss: ^8.5.31
+    sharp: ^0.35.5
